@@ -1,0 +1,61 @@
+# Git Ignore
+
+# Environment and secrets
+.env
+.env.*
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+secrets/
+credentials/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.pytype/
+venv/
+.venv/
+ENV/
+
+# Node / frontend
+node_modules/
+.npm/
+.pnpm-store/
+.next/
+out/
+dist/
+build/
+
+# Editors and IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Logs and runtime artifacts
+*.log
+logs/
+tmp/
+temp/
+*.tmp
+
+# Local data and caches
+.cache/
+coverage/
+*.sqlite3
+*.db
+
+# Miscellaneous local files
+.local/
+.local-dev/
+
+# Do not add project-specific exclusions before the stack is chosen unless they are clearly required.
