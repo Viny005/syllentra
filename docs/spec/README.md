@@ -34,8 +34,8 @@ Für jeden Block sind Name, Rolle, aktueller Status und Pfad aufgeführt. Nicht 
   - Pfad: docs/spec/P2-architekturueberblick.md
 
 - F1 — F1-geschaeftsprozesse.md
-  - Rolle: Beschreibung der Geschäftsprozesse, die das System unterstützen.
-  - Status: Geplant
+  - Rolle: Beschreibung der Studien-, Lern- und Verwaltungsprozesse mit Auslösern, Akteuren, Aktivitäten, Ergebnissen und fachlichen Grenzen.
+  - Status: Zur Prüfung
   - Pfad: docs/spec/F1-geschaeftsprozesse.md
 
 - F2 — F2-anwendungsfaelle.md
