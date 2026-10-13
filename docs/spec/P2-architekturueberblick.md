@@ -1,11 +1,11 @@
 # P2 — Architekturüberblick
 
-**Projekt:** Syllentra AI  
-**Dokument:** P2 — Architekturüberblick  
-**Version:** 0.5 — konsolidierter Entwurf  
-**Stand:** 12.10.2026  
-**Status:** Zur Prüfung durch den Projektinhaber  
-**Spezifikationsmethode:** Bausteine nach Johannes Siedersleben  
+**Projekt:** Syllentra AI\
+**Dokument:** P2 — Architekturüberblick\
+**Version:** 0.6\
+**Stand:** 13.10.2026\
+**Status:** Zur Prüfung durch den Projektinhaber\
+**Spezifikationsmethode:** Bausteine nach Johannes Siedersleben\
 **Geltungsbereich:** Fachlicher Zielumfang der ersten Produktversion (V1)
 
 ---
@@ -23,7 +23,10 @@ Dieser Baustein ordnet Syllentra AI in seine Systemumgebung ein. Er benennt Benu
 Syllentra AI umfasst aus Benutzersicht die folgenden Verantwortlichkeiten:
 
 - Individuelle Lernbegleitung und Prüfungsvorbereitung einschließlich Text-, Sprach- und weiterer geeigneter Medienformen.
-- Studienberatung sowie semester- und prüfungsbezogene Organisation.
+- Einen geschützten Bereich „Mein Profil“ mit relevanten persönlichen Angaben, Foto oder Avatar, Sprachen, Hochschule, Studiengang, Abschluss, aktuellem und früheren Semestern, Modulen, Noten, ECTS, Zielen, Kompetenzen, Zertifikaten, Projekten, Erfahrungen und Lernpräferenzen.
+- Gespeicherte „Unterhaltungen“, die der Nutzer anlegen, fortsetzen, umbenennen, durchsuchen, sortieren, organisieren, zuordnen, archivieren und kontrolliert löschen kann.
+- Studienberatung sowie semester- und prüfungsbezogene Organisation in selbst verwaltbaren Semester-, Modul- und Kursarbeitsbereichen mit Lernzielen, Kapiteln, Themen, Materialien, Übungen, Bewertungen, Gesprächen, Terminen, Fortschritt und Kompetenzen.
+- Persönliche, akademische und berufliche Projekte mit Beschreibung, Zielen, Ressourcen, Dateien, Unterhaltungen, Aufgaben, Fristen, Fortschritt, Kompetenzen und optional ausdrücklich freigegebenen Repository-Bezügen; unabhängig oder mit mehreren Modulen verbunden.
 - Einen **eigenen internen Studienkalender** mit Vorlesungen, Prüfungen, Fristen und Lernphasen.
 - Ein langfristiges, nachweisorientiertes Kompetenzportfolio.
 - Verarbeitung, Verdichtung und zweckgebundene Speicherung persönlicher Lerninformationen.
@@ -32,11 +35,15 @@ Syllentra AI umfasst aus Benutzersicht die folgenden Verantwortlichkeiten:
 - Einen **Administrationsbereich**, in dem der Systeminhaber unterstützte Inhalte, Darstellungsmerkmale, Integrationen, Berechtigungen und Verhaltensparameter konfigurieren kann.
 - Freigabe, Nachvollziehbarkeit und Kontrolle sensibler Aktionen.
 
-Der interne Studienkalender, das Kompetenzportfolio und der Administrationsbereich **sind Bestandteile von Syllentra AI und keine externen Nachbarsysteme**.
+Profil, Unterhaltungen, Semester-, Modul-, Kurs- und Projektarbeitsbereiche, Dokumenten- und Ressourcenverwaltung, interner Studienkalender, persönliche pädagogische Erinnerung, Kompetenzportfolio, Integrationskatalog und Administrationsbereich **sind fachliche Bestandteile von Syllentra AI und keine externen Nachbarsysteme**. Diese Aufzählung beschreibt Verantwortlichkeiten, keine technische Zerlegung in Komponenten oder Dienste.
+
+Begriffe und Zielumfang entsprechen P1.4 K bis P. Ein Kurs bezeichnet eine Lehrveranstaltung im Studienkontext, ein Modul die zugehörige akademische Einheit. Projekte können unabhängig sein, mehrere Module verbinden und Semestergrenzen überschreiten. Dokumente und Unterhaltungen können mehreren fachlichen Kontexten zugeordnet sein. Die genaue Beziehungsmodellierung bleibt D1/D2 vorbehalten.
 
 ### P2.1.3 Benutzer und Systemgrenze
 
-In V1 gibt es einen persönlichen Benutzer, der zugleich Systeminhaber und Administrator ist. Er kann Syllentra auf Android-Smartphones, iPhones, Tablets, Laptops und Desktop-Computern verwenden.
+In V1 gibt es einen persönlichen Benutzer, der zugleich Systeminhaber und Administrator ist. Er kann Syllentra auf Android-Smartphones, iPhones, Tablets, Laptops und Desktop-Computern verwenden. Auf Android und iOS muss eine installierbare Anwendung mit eigener Identität, eigenem Symbol und Start vom Startbildschirm bereitstehen; eine ausschließlich über eine Website erreichbare Oberfläche genügt nicht. Die mobile Oberfläche wird für Smartphone und Tablet angepasst. Framework und Vertrieb bleiben offen.
+
+Nutzer und Administrator sind menschliche Rollen derselben Person. Der KI-Assistent ist eine interne Assistenzfunktion, kein unabhängiger Akteur mit eigenen Entscheidungsrechten. Lehrende, Beratungsstellen und Hochschule bleiben externe fachliche Verantwortliche; Dienstanbieter verantworten ihre jeweiligen Nachbarsysteme. Eine Gerätefreigabe ist keine neue Benutzerrolle.
 
 Außerhalb der fachlichen Systemgrenze befinden sich öffentliche Websites, Hochschulplattformen, Studienverwaltungsportale, E-Mail-Dienste, externe Kalender, mobile Betriebssystem-Kalenderfunktionen, GitHub und ausdrücklich freigegebene Projektquellen, externe KI- und Werkzeuganbieter sowie gegebenenfalls Benachrichtigungs- und Speicherdienste.
 
@@ -46,19 +53,22 @@ Die später mögliche Mehrbenutzerfähigkeit ist zu berücksichtigen, ohne für 
 
 ```mermaid
 flowchart LR
-    U["Student / Systeminhaber"] <--> SYS["Syllentra AI"]
-    SYS <--> WEB["Öffentliche Webquellen"]
-    SYS <--> UNI["Autorisierte Hochschulsysteme"]
-    MAIL["E-Mail-Dienste"] <--> SYS
-    EXT["Externe Kalender: nur lesen"] --> SYS
-    MOBILE["Gerätekalender: nur lesen"] --> SYS
-    GH["Freigegebene GitHub-Repositories: nur lesen"] --> SYS
-    SYS <--> TOOLS["Zugelassene KI- und Werkzeugdienste"]
-    SYS --> PUSH["Benachrichtigungsdienste"]
-    SYS <--> OTHER["Weitere autorisierte Integrationen"]
+    U["Student / Systeminhaber"] <--> SYS["Syllentra AI einschließlich Profil, Unterhaltungen, Arbeitsbereichen und Studienkalender"]
+    DEV["NB-01: Geräte- und Betriebssystemumgebung"] <--> SYS
+    SYS <--> WEB["NB-02: Öffentliche Webquellen"]
+    SYS <--> LMS["NB-03: Hochschulische Lernplattformen"]
+    SYS <--> UNI["NB-04: Studienverwaltungsportale"]
+    MAIL["NB-05: E-Mail-Dienste"] <--> SYS
+    EXT["NB-06: Externe Online-Kalender, nur lesen"] --> SYS
+    GH["NB-07: Freigegebene Projektquellen, nur lesen"] --> SYS
+    SYS <--> TOOLS["NB-08: Zugelassene KI- und Mediendienste"]
+    SYS --> PUSH["NB-09: Benachrichtigungsdienste"]
+    SYS <--> STORE["NB-10: Optionaler externer Speicher"]
+    SYS <--> OTHER["NB-11: Weitere geprüfte Integrationen"]
+    MOBILE["NB-12: Android-/iOS-Kalender, nur lesen"] --> SYS
 ```
 
-Das Diagramm zeigt **logische Informationsbeziehungen**, keine bereits gewählten technischen Verbindungen. Bidirektionale Verbindungen gestatten nicht automatisch Schreibaktionen. Insbesondere bleiben **persönliche externe Kalender ausschließlich lesbar**; der Studienkalender wird intern geführt.
+Das Diagramm zeigt **logische Informationsbeziehungen**, keine bereits gewählten technischen Verbindungen. Bei lesenden Quellen zeigen die Pfeile die Übermittlung der Nutzdaten an Syllentra; zulässige Abrufanfragen ändern keine Quelldaten. NB-01 bezeichnet das Geräteumfeld, nicht eine externe Auslagerung der Syllentra-Clients. Bidirektionale Verbindungen gestatten nicht automatisch Schreibaktionen. Insbesondere bleiben **persönliche externe Kalender ausschließlich lesbar**; der Studienkalender wird intern geführt.
 
 ### P2.1.5 Leitprinzipien
 
@@ -80,7 +90,7 @@ Die Bezeichnungen sind zunächst **fachliche Systemkategorien** und keine Zusage
 
 | ID | Nachbarsystem / Kategorie | Aufgabe | Richtung und zulässiger Umfang | Voraussetzung |
 |---|---|---|---|---|
-| NB-01 | Benutzergeräte und Client-Anwendungen | Interaktion, Medienaufnahme, Anzeige, Administration und Freigaben | Bidirektional zwischen Benutzer und Syllentra | Berechtigter Benutzer |
+| NB-01 | Benutzergeräte und ihre Betriebssystemumgebung | Gerätebedienung, Medienaufnahme und Berechtigungen für Syllentra-Clients | Bidirektionale Ein- und Ausgaben; synchronisierte Daten nur auf freigegebenen Geräten | Berechtigter Benutzer, Gerätefreigabe und erforderliche Betriebssystemrechte |
 | NB-02 | Öffentliche Websites und Informationsquellen | Fachliche Recherche und Verifikation | Rechercheanfrage und Informationsabruf; keine unzulässigen Änderungen | Rechtlich und technisch zulässiger Zugriff |
 | NB-03 | Hochschulische Lernplattformen | Kursunterlagen, Aufgaben, Ankündigungen und Fristen | Grundsätzlich lesend; andere Aktionen nur separat autorisiert | Freigegebener Zugang und verfügbare Anbindung |
 | NB-04 | Studienverwaltungsportale | Module, Prüfungen, Leistungen und offizielle Regeln | Grundsätzlich lesend; verbindliche Aktionen nur mit Freigabe | Freigegebener Zugang und verfügbare Anbindung |
@@ -93,9 +103,15 @@ Die Bezeichnungen sind zunächst **fachliche Systemkategorien** und keine Zusage
 | NB-11 | Weitere integrierbare Anwendungen und Werkzeuge | Künftig ergänzte fachliche Fähigkeiten | Von der freigegebenen Integration abhängig | Prüfung und Autorisierung |
 | NB-12 | Lokale Kalenderfunktionen von Android/iOS | Auf dem Gerät verfügbare Termine und freie Zeiträume ermitteln | **Ausschließlich lesend**, keine Änderung am Gerätekalender | Betriebssystemberechtigung |
 
-### P2.2.2 NB-01 — Benutzergeräte und Client-Anwendungen
+### P2.2.2 NB-01 — Benutzergeräte und ihre Betriebssystemumgebung
 
-Die Anwendung soll auf den in P1 definierten Geräteklassen bedienbar sein. Der Benutzer kann über die unterstützten Geräte Lernmaterialien bereitstellen, schriftlich oder sprachlich lernen, den internen Studienkalender verwenden, Daten verwalten und administrative Einstellungen ändern. Die konkrete Client-Technologie bleibt offen.
+Die Anwendung muss auf den in P1 definierten Geräteklassen bedienbar und auf Android und iOS installierbar sein. Der Benutzer kann Lernmaterialien bereitstellen, schriftlich oder sprachlich lernen, Profil und Unterhaltungen verwalten, Semester, Module, Kurse und Projekte organisieren, den internen Studienkalender verwenden sowie Daten und administrative Einstellungen ändern. Die konkrete Client-Technologie bleibt offen.
+
+Die Syllentra-Client-Anwendungen gehören zum Produkt. Als Nachbar NB-01 wird die umgebende Geräte- und Betriebssystemfunktionalität betrachtet, über die Benutzeraktionen, Aufnahme und Berechtigungen vermittelt werden; die bisherige Kennung bleibt erhalten. Profil und Identität werden nicht als feste persönliche Angaben im Client hinterlegt.
+
+Mikrofon-, Kalender- und Benachrichtigungszugriffe benötigen die vorgesehenen Berechtigungen. Ablehnen oder Widerrufen darf weder umgangen werden noch weiterhin mögliche Text- oder manuelle Organisationsfunktionen blockieren. Kalendereinträge der Geräte werden ausschließlich über den lesenden Umfang von NB-12 berücksichtigt.
+
+Freigegebene Profil-, Verlaufs-, Studien-, Projekt-, Kalender- und Konfigurationsdaten müssen nach abgeschlossener Synchronisation auf den autorisierten Geräten konsistent verfügbar sein. Geräte können freigegeben und entzogen werden; nach Entzug sind weitere Zugriffe ausgeschlossen. Bereits lokal vorhandene Daten, Verbindungsunterbrechungen und Bearbeitungskonflikte benötigen transparente Behandlung nach N2. Ein veralteter Stand darf nicht unbemerkt einen neueren überschreiben. Text- und Sprachwechsel erhält den verfügbaren Gesprächskontext; nicht verfügbare Teile sind kenntlich zu machen. Vollständige Offline-Nutzung ist nicht zugesagt.
 
 Direkt hochgeladene Dateien, Notizen und Aufzeichnungen werden über die Client-Anwendung eingebracht. **Benutzerdateien sind Eingaben, kein eigenständiges Nachbarsystem.**
 
@@ -160,7 +176,7 @@ Die Entscheidung über einen externen Speicheranbieter ist offen. Falls ein solc
 
 Neue unterstützte Dienste sollen über einen **Integrationskatalog** hinzugefügt und verwaltet werden können. Dieser kann vordefinierte Anbieter und geeignete benutzerkonfigurierbare Verbindungen enthalten.
 
-Das Einfügen einer URL stellt **für sich allein keine funktionsfähige oder vertrauenswürdige Integration** her. Der Dienst muss ein unterstütztes Verbindungsverfahren bieten, und die Verbindung muss vor ihrer Aktivierung auf Berechtigungen und Sicherheit geprüft werden. Neue Protokolle oder bislang nicht unterstützte Fähigkeiten können zusätzliche Entwicklungsarbeit erfordern.
+Das Einfügen einer URL stellt **für sich allein keine funktionsfähige oder vertrauenswürdige Integration** her. Der Dienst muss ein unterstütztes Verbindungsverfahren bieten, und die Verbindung muss vor ihrer Aktivierung auf Berechtigungen und Sicherheit geprüft werden. Eine Dienstadresse allein darf insbesondere keinen unbekannten Konnektor installieren oder ausführen. Anbieteridentität, unterstütztes Verfahren, Datenumfang, Rechte und Verarbeitungsbedingungen sind vor Aktivierung zu prüfen. Neue Protokolle oder bislang nicht unterstützte Fähigkeiten können zusätzliche Entwicklungsarbeit erfordern.
 
 ### P2.2.13 NB-12 — Lokale Android-/iOS-Kalender
 
@@ -193,9 +209,9 @@ Der interne Studienkalender soll auf drei Wegen befüllt werden können:
 2. **Import eines Stundenplans oder geeigneter Studienunterlagen**, wobei die erkannten Termine vor der Übernahme geprüft und bestätigt werden.
 3. **Automatisch vorbereitete Vorschläge des Assistenten**, beispielsweise Lernzeiten, Wiederholungen und Klausurvorbereitung, die erst nach Bestätigung übernommen werden.
 
-Eine vom Benutzer direkt vorgenommene und gespeicherte manuelle Bearbeitung ist bereits eine bewusste Benutzeraktion; dafür ist nicht zusätzlich ein zweiter KI-Freigabedialog erforderlich. **Vom Assistenten vorbereitete Einträge, Imports und wesentliche Änderungen müssen vor der Übernahme überprüfbar und freigegeben sein.**
+Eine vom Benutzer direkt vorgenommene und gespeicherte manuelle Bearbeitung ist bereits eine bewusste Benutzeraktion; dafür ist nicht zusätzlich ein zweiter KI-Freigabedialog erforderlich. **Vom Assistenten vorbereitete Einträge und Änderungen sowie Imports müssen vor der Übernahme überprüfbar und freigegeben sein.** Destruktive Löschungen behalten ihre angemessene Bestätigung nach P1; diese Regel begründet keinen zusätzlichen Dialog für gewöhnliche manuelle Speicherung.
 
-Der Studienkalender soll Semester, Module, Prüfungsphasen, Lernfortschritt, Abgaben und persönliche Verfügbarkeiten berücksichtigen. Die Konsistenz des Studienkalenders über die unterstützten Geräte hinweg ist ein Ziel; der konkrete technische Synchronisationsmechanismus bleibt offen.
+Der Studienkalender soll Semester, Module, Prüfungsphasen, Lernfortschritt, Abgaben und persönliche Verfügbarkeiten berücksichtigen. Die Konsistenz des Studienkalenders über die autorisierten unterstützten Geräte hinweg ist erforderlich; der konkrete technische Synchronisationsmechanismus bleibt offen. Herkunft, Zuordnungen zu Kursen, Modulen oder Projekten, Zeitzonen, mögliche Dubletten und Überschneidungen müssen erkennbar berücksichtigt werden. Imports dürfen bei Wiederholung keine unbemerkten Dubletten oder Überschreibungen erzeugen.
 
 ### P2.3.3 Umgang mit persönlichen Kalenderdaten
 
@@ -211,7 +227,7 @@ Kann ein externer Kalender nicht gelesen werden, muss Syllentra diese Einschrän
 
 ### P2.4.1 Katalog in der Benutzeroberfläche
 
-Syllentra soll eine Verwaltungsansicht **„Integrationen & Plugins“** bereitstellen. Dort sollen unterstützte KI-Anbieter, Hochschuldienste, Informationsquellen, Kalender, E-Mail- und Entwicklungswerkzeuge auffindbar sein.
+Syllentra soll eine Verwaltungsansicht **„Integrationen & Plugins“** bereitstellen. Dort sollen unterstützte KI-Anbieter, darunter ChatGPT, Claude und weitere kompatible Dienste, Hochschuldienste, Informationsquellen, Kalender, E-Mail- und Entwicklungswerkzeuge gesucht, nach Kategorie gefiltert und ausgewählt werden können.
 
 Für jeden Eintrag soll angezeigt werden können:
 
@@ -228,13 +244,17 @@ Für jeden Eintrag soll angezeigt werden können:
 
 Der Systeminhaber soll unterstützte Integrationen aus einer Liste auswählen und deren offizielle Verbindung einrichten können. Für geeignete Verbindungstypen kann alternativ eine geprüfte Dienstadresse oder Konfiguration eingegeben werden.
 
-Nach erfolgreicher Autorisierung sollen die freigegebenen Fähigkeiten erkennbar sein. Eine Verbindung soll deaktiviert und, soweit vom Anbieter unterstützt, widerrufen werden können. Zugangstoken und Geheimnisse dürfen nicht als normale Texteinstellungen oder im öffentlichen Repository gespeichert werden.
+Die Eingabe einer Adresse darf nur einen bereits unterstützten Verbindungstyp konfigurieren. Sie darf keinen fremden Konnektor installieren oder ungeprüften Code ausführen. Vor Aktivierung sind Anbieteridentität, unterstütztes Verfahren, erforderliche Rechte, Kosten und Verarbeitungsbedingungen zu prüfen. Nicht unterstützte Adressen werden mit einer verständlichen Einschränkung abgewiesen.
+
+Nach erfolgreicher Autorisierung sollen die freigegebenen Fähigkeiten erkennbar sein. Eine Verbindung muss deaktiviert und ihre Freigabe in Syllentra entzogen werden können; weitere Aufrufe werden dadurch unterbunden. Ein zusätzlich erforderlicher anbieterbezogener Widerruf und dessen erreichter Status müssen angezeigt werden, soweit das offizielle Verfahren ihn unterstützt. Der Entzug darf keine bereits an Dritte übermittelten Daten als automatisch gelöscht ausgeben. Zugangstoken und Geheimnisse dürfen nicht als normale Texteinstellungen oder im öffentlichen Repository gespeichert werden.
 
 ### P2.4.3 Nutzung mehrerer KI-Dienste
 
 Der Benutzer soll einen unterstützten KI-Dienst auswählen, bevorzugen oder die Auswahl geeigneter Werkzeuge dem Assistenten überlassen können. Die Auswahl muss bestehende Nutzungslimits, zu erwartende Zusatzkosten, fachliche Eignung und Datenschutzbedingungen berücksichtigen.
 
 **Unbekannte oder kostenpflichtige Dienste werden nicht stillschweigend als Ersatz verwendet.** Ist ein Dienst nicht verfügbar, muss der Benutzer über die Einschränkung und gegebenenfalls geeignete Alternativen informiert werden.
+
+Vorhandene Abonnements ersetzen keine gesonderte API-Berechtigung. Offizielle Nutzbarkeit ist für Anbieter und Betriebsform zu prüfen; weder externe Gesprächsverläufe noch fremde Erinnerungen werden allein durch die Verbindung zugänglich. Ausgaben sind nur im ausdrücklich autorisierten Umfang zulässig. Verbrauch, Kontingente, Kostenrahmen und Grenzen eines Anbieter- oder Modellwechsels müssen sichtbar sein. Bei ausgeschöpftem Limit oder ungeeigneten Datenschutzbedingungen darf kein stillschweigender Ersatzaufruf erfolgen.
 
 ### P2.4.4 Grenzen der Erweiterbarkeit
 
@@ -246,7 +266,7 @@ Ein vorhandener, kompatibler Konnektor kann administrativ aktiviert oder konfigu
 
 ### P2.5.1 Grundsatz: Konfiguration statt Quellcodeänderung
 
-**Alle ausdrücklich vorgesehenen und dafür geeigneten Einstellungen der Anwendung sollen zur Laufzeit über das Administratorkonto verwaltbar sein.** Der Systeminhaber soll für normale redaktionelle, gestalterische, organisatorische und fachliche Anpassungen keinen Quellcode öffnen oder neu bereitstellen müssen.
+**Alle ausdrücklich vorgesehenen und dafür geeigneten Einstellungen der Anwendung müssen zur Laufzeit über das Administratorkonto verwaltbar sein.** Der Systeminhaber soll für normale redaktionelle, gestalterische, organisatorische und fachliche Anpassungen keinen Quellcode öffnen oder neu bereitstellen müssen.
 
 Einstellungen sollen als **strukturierte, persistente Konfigurationsdaten** behandelt werden. Dabei handelt es sich nicht um die Forderung, jede Softwarefunktion durch eine einzelne Programmvariable ersetzen zu können. Welche Optionen administrierbar sind, wird im jeweiligen Funktionsbaustein spezifiziert und durch die Anwendung unterstützt.
 
@@ -267,8 +287,16 @@ Einstellungen sollen als **strukturierte, persistente Konfigurationsdaten** beha
 | CFG-11 | Kostenkontrolle | Erlaubte kostenpflichtige Funktionen, Ausgabenlimits, Warnschwellen und entsprechende Freigaben verwalten |
 | CFG-12 | Datenschutz und Datenhaltung | Daten einsehen, korrigieren, exportieren und löschen sowie zulässige Aufbewahrungseinstellungen verwalten |
 | CFG-13 | Rollen und Aktionsfreigaben | Persönliche Verwaltungsberechtigungen und unterstützte Freigaberegeln innerhalb verbindlicher Sicherheitsgrenzen verwalten |
+| CFG-14 | Mein Profil | Unterstützte Profilfelder, Sichtbarkeit, Sprachen, Präferenzen und Nachweiskennzeichnungen konfigurieren; persönliche Feldwerte bleiben geschützte Nutzerdaten |
+| CFG-15 | Unterhaltungen | Unterstützte Ordnungs-, Such-, Sortier-, Zuordnungs- und Archivoptionen sowie Aufbewahrung und Kontextpräferenzen verwalten; Erinnerung und Nachrichtenverlauf getrennt behandeln |
+| CFG-16 | Kurse und Projekte | Unterstützte Vorlagen, Metadaten, Kategorien, Lernziele, Fortschrittsdarstellungen und Zuordnungsoptionen für Module, Kurse und Projekte konfigurieren; unabhängige und modulübergreifende Projekte erhalten |
+| CFG-17 | Mobile Navigation | Namen, Reihenfolge und Sichtbarkeit vorhandener mobiler Menüpunkte, Bereiche und Dashboard-Widgets konfigurieren; wesentliche Bedienung, Freigaben und Datenkontrolle erreichbar halten |
 
 **Beispiel:** Soll aus einer Seite „Mein Studium“ später „Studienübersicht“ werden, soll der Administrator die entsprechende Beschriftung in der Anwendung bearbeiten und speichern können, **ohne eine Quellcodedatei zu ändern**. Dasselbe gilt für andere unterstützte Seitentitel, Schaltflächenbeschriftungen, Menünamen und Branding-Angaben.
+
+CFG-14 bis CFG-17 präzisieren die bereichsbezogenen Optionen innerhalb der allgemeinen Bereiche CFG-01 bis CFG-13; sie schaffen keine voneinander unabhängigen widersprüchlichen Einstellungen. Persönliche Profilwerte, Gesprächsinhalte und konkrete Projektressourcen sind Nutzerdaten, keine öffentlich sichtbaren Administrationsparameter. Das Verbergen eines Bereichs ändert keine Datenzugriffsrechte.
+
+Administrativ verwaltbare Anwendungsidentität, Logos und Symbole werden soweit möglich durch Konfiguration berücksichtigt. Vom Betriebssystem oder Installationspaket festgelegte Merkmale können zusätzlich eine aktualisierte Installation erfordern; damit wird kein beliebiges Umbenennen einer bereits installierten Anwendung außerhalb der Plattformregeln zugesagt.
 
 ### P2.5.3 Sicherer Konfigurationsprozess
 
@@ -278,16 +306,20 @@ Für wesentliche Einstellungen soll die Administrationsoberfläche — soweit f�
 2. Neuen Wert eingeben oder aus unterstützten Optionen auswählen.
 3. Eingaben validieren und unzulässige Werte zurückweisen.
 4. Änderungen vor ihrer Veröffentlichung in einer Vorschau prüfen.
-5. Änderungen speichern und nach Möglichkeit nachvollziehbar versionieren.
-6. Bei geeigneten Einstellungen eine vorherige gültige Fassung wiederherstellen.
+5. Gültige Änderungen geschützt und persistent speichern; wesentliche Änderungen nachvollziehbar versionieren.
+6. Bei geeigneten Einstellungen eine vorherige gültige Fassung wiederherstellen und dabei aktuelle Schutzgrenzen erneut prüfen.
 
 Gespeicherte Einstellungen sollen in den unterstützten Clients konsistent berücksichtigt werden. Änderungen müssen nach einem Neustart der Anwendung bestehen bleiben, sofern sie als dauerhaft konfiguriert wurden.
+
+Nur der berechtigte Administrator darf diese Konfigurationen ändern. Ungültige Eingaben müssen vor Wirksamwerden abgewiesen werden; widersprüchliche gleichzeitige Änderungen dürfen nicht unbemerkt gespeichert werden. Vorschau und Rücknahme beziehen sich auf Konfigurationen, nicht auf eine automatische Rückabwicklung versandter Nachrichten, verbrauchter Kosten oder endgültig gelöschter Daten.
 
 ### P2.5.4 Unveränderliche Schutzgrenzen
 
 Der Administrationsbereich darf nicht durch bloße Text- oder Variablenänderungen:
 
-- Unzulässige Zugriffe auf externe Systeme erlauben.
+- Unzulässige Zugriffe auf externe Systeme oder nicht freigegebene Geräte erlauben.
+- Schreibzugriffe auf persönliche externe Kalender aktivieren.
+- Nicht autorisierte Ausgaben oder eine stillschweigende Erweiterung von Kostenfreigaben zulassen.
 - Verbindliche Sicherheitskontrollen umgehen.
 - Geheimnisse als öffentlich sichtbare Einstellungen offenlegen.
 - Nicht unterstützte externe APIs als bereits funktionsfähig ausgeben.
@@ -308,18 +340,30 @@ Dieser Baustein legt den fachlichen Anspruch an administrative Konfigurierbarkei
 
 Informationen gelangen entweder durch direkte Bereitstellung des Benutzers oder durch einen autorisierten Abruf in das System. Für die Studienbegleitung sollen sie ausgewertet, bei Bedarf verdichtet, mit Quellen und Studienkontext verknüpft und nur im erforderlichen Umfang aufbewahrt werden.
 
+Die fachlichen Austauschrichtungen sind in P2.2 katalogisiert: Hochschul- und öffentliche Quellen liefern Daten auf zulässige Abrufe; Kalender liefern nur Verfügbarkeit; ausgewählte Repositories liefern lesend Projektinformationen. Aufgabenbezogene Eingaben an KI-Anbieter und deren Ergebnisse sind kontrollierter Austausch, keine unbeschränkte Weitergabe des Profils oder vollständiger Verläufe. Externe Nachrichten und verbindliche Vorgänge sind separate bestätigungspflichtige Ausgaben. Geräte erhalten nur die für sie freigegebenen Daten.
+
 ### P2.6.2 Fachliche Datenklassen
 
 | ID | Datenklasse | Grundregel |
 |---|---|---|
-| DK-01 | Temporäre Rohdaten (z. B. Uploads, Audio, Verarbeitungskopien) | Nur solange nötig aufbewahren und anschließend regelgerecht löschen |
-| DK-02 | Extrahierte Zwischeninformationen (z. B. Transkripte, Textauszüge) | Relevanz prüfen; entbehrliche Zwischenstände entfernen |
-| DK-03 | Persönliche Wissensgrundlage (z. B. Zusammenfassungen, Erkenntnisse, Quellenhinweise) | Zweckgebunden und mit Benutzerkontrolle langfristig nutzbar halten |
-| DK-04 | Studien- und Kompetenzinformationen (Semester, Noten, ECTS, Lernfortschritt, Nachweise) | Semesterübergreifend dokumentieren, korrigieren und bei Bedarf löschen |
-| DK-05 | Berechtigungs- und Konfigurationseinträge | Geschützt und nachvollziehbar verwalten |
+| DK-01 | Temporäre Rohdaten und Verarbeitungskopien (z. B. flüchtige Uploadkopien oder Audio ohne Aufbewahrungszweck) | Nur solange nötig aufbewahren und anschließend regelgerecht löschen; bewusst gespeicherte Originale sind DK-10 zuzuordnen |
+| DK-02 | Extrahierte Zwischeninformationen (z. B. vorläufige Transkripte und Textauszüge) | Relevanz prüfen; entbehrliche Zwischenstände entfernen, dauerhaft ausgewählte Inhalte mit Herkunft DK-03, DK-08 oder DK-10 zuordnen |
+| DK-03 | Persönliche pädagogische Wissensgrundlage (Zusammenfassungen, Kenntnisse, Schwierigkeiten, Quellenhinweise und Lernpräferenzen) | Autorisiert und zweckgebunden langfristig nutzbar halten; von vollständigen Nachrichtenverläufen trennen und Ableitungen nachvollziehbar führen |
+| DK-04 | Studien- und Kompetenzinformationen (aktuelle und frühere Semester, Hochschule, Studiengang, Abschluss, Module, Kurse, Lernziele, Kapitel, Themen, Übungen, Bewertungen, Noten, ECTS, Termine, Fortschritt und Nachweise) | Semesterübergreifend dokumentieren, korrigieren und kontrolliert löschen; offizielle Nachweise, manuelle Angaben und KI-Schätzungen unterscheiden |
+| DK-05 | Berechtigungs- und Konfigurationseinträge (Integrationen, Gerätefreigaben, Kostenlimits, CFG-01 bis CFG-17 und Aufbewahrungsregeln) | Geschützt, persistent, validiert und nachvollziehbar verwalten; Geheimnisse nicht als sichtbare Parameter führen |
 | DK-06 | An externe Anbieter übertragene Verarbeitungsdaten | Nur erforderlich und autorisiert übermitteln; Aufbewahrung und Löschung beim Anbieter prüfen |
+| DK-07 | Persönliches Profil (persönliche Angaben, Foto oder Avatar, Sprachen, akademische Ziele, Zertifikate, Erfahrungen und Präferenzen) | Geschützt anlegen, einsehen und ändern; Herkunft und Bestätigungsstand getrennt führen, akademische und Kompetenzbezüge zu DK-04 statt widersprüchlicher Kopien erhalten |
+| DK-08 | Nachrichten- und Gesprächshistorie (Text, gespeicherte Sprachbeiträge oder Transkripte, Titel, Zeitangaben, Thema, Zuordnungen und Archivstatus) | Wiederauffindbar und fortsetzbar halten; Aufbewahrung und bestätigte Löschung getrennt von DK-03 steuern, verfügbare Kontextteile kenntlich machen |
+| DK-09 | Projekte und Arbeitsorganisation (Art, Beschreibung, Ziele, Aufgaben, Fristen, Fortschritt, Kompetenzen und freigegebene Repository-Bezüge) | Unabhängig oder modulübergreifend verwalten; Ressourcen- und Gesprächsbezüge erhalten, Semestergrenzen verursachen keine automatische Löschung |
+| DK-10 | Bewusst gespeicherte Dokumente und Ressourcen (Kursunterlagen, Dateien, Notizen, Aufzeichnungen und Nachweise) | Aufbewahrungszweck, Nutzungsrechte, Herkunft und Kontext dokumentieren; Original und abgeleitete Information unterscheiden, keine automatische Einstufung als temporärer Upload |
+| DK-11 | Beziehungen und Herkunftsmetadaten (Semester-, Modul-, Kurs-, Projekt-, Gesprächs-, Dokumenten- und Kompetenzbezüge, Quelle, Aktualität, Bestätigung und Nachweis) | Mehrfachzuordnungen konsistent halten; Verknüpfungsentfernung und Inhaltslöschung trennen, fehlende Quellen und Beziehungen nach Löschung kenntlich machen |
+| DK-12 | Interne Studienkalenderdaten und externe Verfügbarkeitsangaben | Herkunft und Schreibzuständigkeit unterscheiden; interne Termine nach Freigaberegeln verwalten, externe Verfügbarkeit zweckbegrenzt lesen und keine vollständige dauerhafte Privatkalenderkopie anlegen |
 
-Die Klassen sind **fachliche Unterscheidungen**, keine Vorentscheidung für eine Datenbank oder Speichertechnik.
+Die Klassen können fachlich zusammenhängen: DK-06 kennzeichnet zusätzlich den Übermittlungsstatus von Daten anderer Klassen, DK-11 beschreibt deren Beziehungen. Sie sind keine disjunkten Speicherbereiche. Die Klassen sind **fachliche Unterscheidungen**, keine Vorentscheidung für eine Datenbank oder Speichertechnik.
+
+Herkunft und Bestätigung sind unabhängige Merkmale: Eine Angabe kann manuell erfasst, importiert oder KI-geschätzt sein und separat vom Nutzer geprüft oder durch einen offiziellen Nachweis belegt werden. Eine Bestätigung durch den Nutzer macht eine KI-Schätzung nicht zu einer amtlichen Studienleistung.
+
+Semester enthalten akademische Modul- und Kursbezüge; Projekte können unabhängig bestehen oder mehrere Module und Semester betreffen. Unterhaltungen und Ressourcen können mehreren Modulen, Kursen, Projekten oder Themen zugeordnet werden. Das Entfernen einer Zuordnung darf den geteilten Inhalt nicht löschen. Vor einer folgenreichen Löschung werden betroffene Inhalte, Ableitungen und Verknüpfungen angezeigt. Datenfelder, Kardinalitäten und Wertebereiche werden erst in D1/D2 festgelegt.
 
 ### P2.6.3 Verdichtung ohne unbemerkten Informationsverlust
 
@@ -331,13 +375,15 @@ Der Assistent soll umfangreiche Quellen in geeignete Zusammenfassungen, thematis
 
 Zusammenfassungen, Lernfortschritte, erworbene Kenntnisse, Kompetenznachweise, Semesterhistorien und bestätigte Präferenzen sollen für die langfristige Begleitung erhalten bleiben können. Sie müssen überprüfbar, korrigierbar und grundsätzlich auf Löschanforderung hin behandelbar sein. Veraltete Angaben dürfen nicht ungeprüft als aktuell gelten.
 
+Der gespeicherte Verlauf in DK-08 ist von der verdichteten pädagogischen Erinnerung in DK-03 zu unterscheiden. Neue Gespräche, Wiederaufnahme, Umbenennen, Suchen, Sortieren, Organisieren, Zuordnen und Archivieren dürfen die freigegebene Erinnerung nicht unbemerkt verändern. Archivierung ist keine Löschung. Eine Verlaufslöschung benötigt eine angemessene Bestätigung; der Benutzer kann den Löschumfang ausdrücklich auf abgeleitete Erinnerungen erweitern. Getrennt erhaltene Erkenntnisse behalten eine nachvollziehbare Herkunft und einen Hinweis auf nicht mehr verfügbare Originale. Externe Anbietererinnerungen werden nicht als Syllentra-Erinnerung vorausgesetzt.
+
 ### P2.6.5 Datenlöschung und externe Anbieter
 
 Temporäre Rohdaten sollen nach Ende ihres erforderlichen Verarbeitungszwecks entfernt werden, sofern kein zulässiger Aufbewahrungsgrund entgegensteht. Die Löschung eines Originals darf nicht automatisch alle zuvor bewusst gespeicherten und rechtmäßig abgeleiteten Lernerkenntnisse entfernen. Der Benutzer soll aber ausdrücklich auch die Löschung solcher Ableitungen verlangen können.
 
 Vor der Verwendung externer KI- oder Speicheranbieter müssen deren Zwecke, Aufbewahrungsfristen, Löschmöglichkeiten, eventuelle Weiterverwendung und Sicherheitsbedingungen geprüft werden. **Ist ein Anbieter mit den festgelegten Anforderungen nicht vereinbar, darf er die betreffenden Daten nicht erhalten.** Syllentra kann eine sofortige und vollständige Löschung durch fremde Anbieter nicht ohne geeignete Nachweise garantieren.
 
-Bei einer Löschanforderung soll der Benutzer den betroffenen Umfang, die möglichen Folgen und den Status der tatsächlich durchgeführten Schritte nachvollziehen können. Irreversible Löschungen müssen ausdrücklich bestätigt werden. Konkrete Löschfristen, Sicherungskopien und Verfahren gehören in N2.
+Bei einer Löschanforderung soll der Benutzer den betroffenen Umfang, die möglichen Folgen und den Status der tatsächlich durchgeführten Schritte nachvollziehen können. Irreversible Löschungen müssen ausdrücklich bestätigt werden. Konkrete Löschfristen, Sicherungskopien und Verfahren gehören in N2. Profil, Verlauf, Arbeitsbereiche, Ressourcen, Herkunft und pädagogische Erinnerung müssen einsehbar, korrigierbar und in einem unterstützten nachvollziehbaren Format exportierbar sein. Export und Löschung berücksichtigen freigegebene Geräte und Beziehungen; die Rücknahme einer Administrationskonfiguration darf gelöschte persönliche Daten nicht unbemerkt wiederherstellen.
 
 ---
 
@@ -360,7 +406,11 @@ Soweit Betriebssysteme, Zugriffsrechte und Betriebsmodell dies unterstützen, so
 | KI-Vorschläge und Stundenplanimporte in den Syllentra-Kalender übernehmen | Erst nach Sichtung und Bestätigung |
 | Externe Nachrichten versenden oder verbindliche Hochschulvorgänge ausführen | Nur nach ausdrücklicher Freigabe und bei zulässiger Integration |
 | Persönliche Daten endgültig löschen | Nach Beschreibung und erforderlicher Bestätigung |
-| Kostenpflichtige Dienste aktivieren | Nur nach bewusster Freigabe |
+| Kostenpflichtige Dienste oder zusätzliche Ausgaben auslösen | Nur innerhalb einer bewussten, zweck- und umfangsbezogenen Freigabe; kein stillschweigendes Überschreiten von Limits |
+| Hochschuldaten in Profil oder Arbeitsbereiche importieren | Herkunft, Konflikte und Änderungen vor der Speicherung prüfen und bestätigen |
+| Unterstützte Integrationen aktivieren | Erst nach Prüfung von Identität, Verfahren, Datenumfang, Rechten, Datenschutz und Kosten; keine Ausführung unbekannter Konnektoren durch URL-Eingabe |
+| Konfiguration ändern oder frühere Fassung wiederherstellen | Nur berechtigt, validiert und innerhalb unveränderlicher Schutzgrenzen |
+| Daten zwischen Geräten bereitstellen | Nur für autorisierte Geräte; Widerruf und erkennbare Synchronisationskonflikte beachten |
 
 ### P2.7.3 Nicht vertrauenswürdige Inhalte
 
@@ -374,14 +424,14 @@ Webseiten, E-Mails, Dokumente, Repositories und Werkzeugantworten gelten als Dat
 |---|---|
 | P1 | Ziele, Zielumfang V1, verbindliche Rahmenbedingungen und Erfolgskriterien |
 | F1 | Unterstützte Studien-, Lern- und Verwaltungsprozesse |
-| F2 | Anwendungsfälle einschließlich Kalender, Integrationskatalog und Admin-Konfiguration |
+| F2 | Anwendungsfälle einschließlich Profil, Unterhaltungen, Arbeitsbereichen, Kalender, Integrationskatalog und Admin-Konfiguration |
 | F3 | Fachliche Funktionen und Regeln der Informationsverarbeitung |
-| D1 / D2 | Fachliche Datenstrukturen für Quellen, Semester, Kalender, Kompetenzen und Konfiguration |
-| B1 | Benutzeroberflächen, Adminbereich, Dialoge, Vorschau und Freigaben |
+| D1 / D2 | Fachliche Datenstrukturen und Wertebereiche für Profil, Unterhaltungen, Semester, Module, Kurse, Projekte, Ressourcen, Beziehungen, Herkunft, Kalender, Kompetenzen und Konfiguration |
+| B1 | Benutzeroberflächen einschließlich mobiler Navigation, Profil, Unterhaltungen und Arbeitsbereichen; Adminbereich, Vorschau und Freigaben |
 | B2 | Wiederkehrende Prüfungen und Hintergrundaufgaben |
 | B3 | Berichte, Exporte und Kompetenzbilanzen |
 | S1 | Konkrete Nachbarsysteme, zulässige Schnittstellen und Datenaustausch |
-| S2 | Import vorhandener Studien- und Lerndaten |
+| S2 | Einmalige Migration vorhandener Studien-, Profil- und Lerndaten; laufende fachliche Imports werden in F2/F3 und S1 beschrieben |
 | S3 | Inbetriebnahme und Konfigurationsvoraussetzungen |
 | N1 | Qualität, Leistung, Barrierefreiheit, Verfügbarkeit und Bedienbarkeit |
 | N2 | Übergreifende Konzepte für Konfiguration, Berechtigungen, Sicherheit, Datenschutz, Löschung und Nachvollziehbarkeit |
@@ -390,12 +440,16 @@ Webseiten, E-Mails, Dokumente, Repositories und Werkzeugantworten gelten als Dat
 
 - [P1 — Ziele und Rahmenbedingungen](P1-ziele-rahmenbedingungen.md)
 - [Spezifikationsindex und Leseanleitung](README.md)
-- [Projektvision](../PROJECT_VISION.md)
-- [Bisherige Anforderungen](../REQUIREMENTS.md)
-- [Architekturentscheidungen](../ARCHITECTURE_DECISIONS.md)
-- [Roadmap](../ROADMAP.md)
+- [Projektvision](../PROJECT_VISION.md), insbesondere „Expected capabilities“ und „Design principles“
+- [Bisherige Anforderungen](../REQUIREMENTS.md), insbesondere Abschnitte 1, 3 und 6
+- [Architekturentscheidungen](../ARCHITECTURE_DECISIONS.md), insbesondere „Current position“
+- [Roadmap](../ROADMAP.md), insbesondere Phasen 2 bis 5
 
-Die freigegebene Spezifikation ist bei Widersprüchen zu älteren Entwürfen maßgeblich; Differenzen sind nachvollziehbar zu prüfen.
+**Methodische Referenz:** [Herold-Spezifikation von Carsten Lucke](https://github.com/carstenlucke/herold/tree/main/docs/spec), insbesondere [P2 — Architecture Overview](https://github.com/carstenlucke/herold/blob/main/docs/spec/P2-architekturueberblick.md): Nachbarsysteme vollständig benennen und Austauschrichtungen erläutern; technische Komponenten, Schichten und Bereitstellung bleiben außerhalb von P2. Die konkreten Herold-Anbieter und Betriebsgrenzen sind keine Vorgaben für Syllentra.
+
+Die freigegebene Spezifikation ist bei Widersprüchen zu älteren Entwürfen maßgeblich; Differenzen sind nachvollziehbar zu prüfen. Diese Fassung und P1 Version 0.5 stehen zur Prüfung; bisherige fachliche Entscheidungen bleiben erhalten. Der unveränderte Spezifikationsindex kann einen historischen Bearbeitungsstand enthalten.
+
+**Änderungsnachweis 0.6:** NB-01 bis NB-12, CFG-01 bis CFG-13, DK-01 bis DK-06 und P2-R-01 bis P2-R-07 bleiben erhalten. NB-01 unterscheidet nun die Syllentra-Clients vom benachbarten Geräteumfeld. CFG-14 bis CFG-17 präzisieren Profil, Gespräche, Kurse/Projekte und mobile Navigation. DK-07 bis DK-12 ergänzen die fachlichen Datenklassen; DK-01/DK-02 trennen temporäre Verarbeitung von bewusst aufbewahrten Originalen. P1 und P2 verwenden dieselben Regeln für externe Kalender, interne Planung, Gerätefreigaben, Verlauf und Erinnerung, Kosten, Integrationen und Konfiguration. Keine technische Architekturentscheidung wird dadurch getroffen.
 
 ---
 
@@ -434,10 +488,15 @@ Die freigegebene Spezifikation ist bei Widersprüchen zu älteren Entwürfen ma�
 10. Wie werden Anbieterwechsel, Nichtverfügbarkeit und ausgeschöpfte KI-Kontingente behandelt?
 11. Welche Synchronisationsform ist für den internen Studienkalender auf mehreren Endgeräten geeignet?
 12. Welche technischen Qualitäts- und Sicherheitsprüfungen müssen neue Integrationen vor ihrer Aktivierung bestehen?
+13. Welche unterstützten Profilfelder, Nachweisarten, Wertebereiche und Sichtbarkeiten werden in D1/D2 und B1 festgelegt?
+14. Wie werden Mehrfachzuordnungen und Löschfolgen für gemeinsam genutzte Dokumente, Gespräche und modulübergreifende Projekte detailliert dargestellt?
+15. Wie werden Geräteautorisierung, Entzug, bereits lokal vorhandene Daten, Offline-Stände und gleichzeitige Bearbeitungskonflikte behandelt?
+16. Welche Installations- und Vertriebswege sowie Betriebssystemversionen werden unterstützt, und welche Identitätsmerkmale erfordern eine aktualisierte Installation?
+17. Welche Exportformate und Aufbewahrungsfristen gelten für Profil, Gesprächsverlauf, Originalressourcen und getrennte pädagogische Erinnerung?
 
 Diese offenen Punkte präzisieren die spätere Umsetzung. Sie streichen keine bereits bestätigten fachlichen Ziele ohne erneute Entscheidung des Projektinhabers.
 
 ---
 
-**Ende von P2 — Architekturüberblick.**  
-**Freigabestatus:** Zur Prüfung. Nach Bestätigung wird der Dokumentstatus auf „Freigegeben“ gesetzt und der Spezifikationsindex entsprechend aktualisiert.
+**Ende von P2 — Architekturüberblick.**\
+**Freigabestatus:** Zur Prüfung. Version 0.6 ist gemeinsam mit P1 Version 0.5 zu validieren. Die spätere Aktualisierung des Spezifikationsindex erfolgt gesondert; diese Überarbeitung betrifft ausschließlich P1 und P2.
