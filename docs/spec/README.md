@@ -39,8 +39,8 @@ Für jeden Block sind Name, Rolle, aktueller Status und Pfad aufgeführt. Nicht 
   - Pfad: docs/spec/F1-geschaeftsprozesse.md
 
 - F2 — F2-anwendungsfaelle.md
-  - Rolle: Anwendungsfälle (Use Cases) in verständlicher Form.
-  - Status: Geplant
+  - Rolle: Nutzerbezogene Anwendungsfälle mit Vor- und Nachbedingungen, Abläufen, Varianten, Schutzgrenzen und Abnahmebeispielen; Zuordnung zu GP-01 bis GP-15 und FE-01 bis FE-09.
+  - Status: Zur Prüfung
   - Pfad: docs/spec/F2-anwendungsfaelle.md
 
 - F3 — F3-anwendungsfunktionen.md
