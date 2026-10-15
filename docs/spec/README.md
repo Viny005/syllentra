@@ -49,8 +49,8 @@ Für jeden Block sind Name, Rolle, aktueller Status und Pfad aufgeführt. Nicht 
   - Pfad: docs/spec/F3-anwendungsfunktionen.md
 
 - D1 — D1-datenmodell.md
-  - Rolle: Konzeptionelles Datenmodell.
-  - Status: Geplant
+  - Rolle: Konzeptionelle Entitäten, Attribute, Beziehungen, Kardinalitäten, Herkunft, Eigentum und Löschfolgen; Rückverfolgung zu Anwendungsfällen und bestätigten Entscheidungen.
+  - Status: Zur Prüfung
   - Pfad: docs/spec/D1-datenmodell.md
 
 - D2 — D2-datentypen.md
