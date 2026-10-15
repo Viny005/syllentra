@@ -69,8 +69,8 @@ Für jeden Block sind Name, Rolle, aktueller Status und Pfad aufgeführt. Nicht 
   - Pfad: docs/spec/B2-batch.md
 
 - B3 — B3-druckausgaben.md
-  - Rolle: Vorgaben zu Druckausgaben / Reporting (falls zutreffend).
-  - Status: Geplant / ggf. Nicht anwendbar (bei Nicht‑Nutzung angeben)
+  - Rolle: Fachliche Berichts-, Druck- und Datenexportvorgaben mit geschütztem ausdrücklichem Notenexport, Formatgrenzen und nachvollziehbaren Quellen.
+  - Status: Zur Prüfung
   - Pfad: docs/spec/B3-druckausgaben.md
 
 - S1 — S1-nachbarsysteme.md
