@@ -59,8 +59,8 @@ Für jeden Block sind Name, Rolle, aktueller Status und Pfad aufgeführt. Nicht 
   - Pfad: docs/spec/D2-datentypen.md
 
 - B1 — B1-dialogspezifikation.md
-  - Rolle: Dialog- und Interaktionsspezifikation (für Chat-/Konversationsflows etc.).
-  - Status: Geplant
+  - Rolle: Fachliche GUI-Statik und GUI-Dynamik für Navigation, geschützte Fachansichten, Text-/Sprachinteraktion und freiwilligen Hörmodus; Zustände, Freigaben und Abnahmebeispiele.
+  - Status: Zur Prüfung
   - Pfad: docs/spec/B1-dialogspezifikation.md
 
 - B2 — B2-batch.md
