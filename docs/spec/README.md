@@ -54,8 +54,8 @@ Für jeden Block sind Name, Rolle, aktueller Status und Pfad aufgeführt. Nicht 
   - Pfad: docs/spec/D1-datenmodell.md
 
 - D2 — D2-datentypen.md
-  - Rolle: Verzeichnis der Datentypen und Strukturen.
-  - Status: Geplant
+  - Rolle: Fachliche Datentypen, Wertebereiche, Vergleichs- und Validierungsregeln; geschützte Notenansicht, Neubewertung von Erinnerungen und datensparsame KI-Statistik.
+  - Status: Zur Prüfung
   - Pfad: docs/spec/D2-datentypen.md
 
 - B1 — B1-dialogspezifikation.md
