@@ -44,8 +44,8 @@ Für jeden Block sind Name, Rolle, aktueller Status und Pfad aufgeführt. Nicht 
   - Pfad: docs/spec/F2-anwendungsfaelle.md
 
 - F3 — F3-anwendungsfunktionen.md
-  - Rolle: Detaillierte Anwendungsfunktionen mit Schnittstellenreferenzen.
-  - Status: Geplant
+  - Rolle: Fachliche algorithmische Verarbeitungsvorschriften mit Eingaben, Ausgaben, Invarianten, Prüfbeispielen und UC-/GP-/FE-Rückverweisen; KI-Zugangs-, Auswahl- und Erinnerungsregeln.
+  - Status: Zur Prüfung
   - Pfad: docs/spec/F3-anwendungsfunktionen.md
 
 - D1 — D1-datenmodell.md
