@@ -64,8 +64,8 @@ Für jeden Block sind Name, Rolle, aktueller Status und Pfad aufgeführt. Nicht 
   - Pfad: docs/spec/B1-dialogspezifikation.md
 
 - B2 — B2-batch.md
-  - Rolle: Beschreibung geplanter Batch‑Prozesse.
-  - Status: Geplant
+  - Rolle: Fachliche Hintergrundabläufe für autorisierte Quellenprüfungen, Fristerinnerungen, Digest und Zustellung; Freigaben, Wiederanlauf, Datenkontrolle und prüfbare Grenzen.
+  - Status: Zur Prüfung
   - Pfad: docs/spec/B2-batch.md
 
 - B3 — B3-druckausgaben.md
