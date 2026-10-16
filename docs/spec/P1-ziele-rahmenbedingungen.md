@@ -2,8 +2,8 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** P1 — Ziele und Rahmenbedingungen\
-**Version:** 0.5\
-**Stand:** 13.10.2026\
+**Version:** 0.6\
+**Stand:** 16.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Spezifikationsmethode:** Bausteine nach Johannes Siedersleben\
 **Geltungsbereich:** Fachlicher Zielumfang der ersten Produktversion (V1)
@@ -62,9 +62,9 @@ Ein integriertes Kompetenzportfolio soll bereits vorhandene sowie während der N
 
 Die Anwendung soll eine moderne, professionelle, attraktive und lernförderliche Benutzeroberfläche besitzen. Visuelle Fortschrittsanzeigen und zurückhaltende motivierende Elemente sollen die regelmäßige Nutzung unterstützen, ohne den Lernprozess zu einem überwiegend spielerischen Erlebnis zu machen.
 
-Die erste Produktversion ist für einen einzelnen Nutzer vorgesehen, der gleichzeitig Eigentümer und Administrator des Systems ist.
+V1 erlaubt die offene Registrierung mehrerer Studierender. Jedes verifizierte Konto verwaltet ausschließlich seine eigenen persönlichen Daten. Genau ein Super Admin verantwortet die getrennte Administration; sekundäre Administratoren besitzen nur ausdrücklich zugewiesene Rechte (FE-59 bis FE-72).
 
-Eine spätere Erweiterung für weitere Studierende, Hochschulen und internationale Bildungskontexte soll grundsätzlich möglich bleiben.
+Studierende unterschiedlicher Hochschulen und Länder können bereits in V1 getrennte Konten nutzen. Lehrenden-, Hochschul- und gemeinsame Gruppenfunktionen bleiben mögliche spätere Erweiterungen.
 
 ### P1.1.3 Leitprinzip
 
@@ -134,10 +134,10 @@ Sie legen noch keine konkrete Implementierung, Technologie oder Systemarchitektu
 | G-26 | Eine moderne, professionelle, attraktive und lernförderliche Benutzeroberfläche bereitstellen. |
 | G-27 | Eine motivierende, aber zurückhaltende Fortschrittsdarstellung mit Kapitelabschluss, Lernzielen und Kompetenzentwicklung ermöglichen. |
 | G-28 | Eine konzentrierte Lernumgebung mit möglichst geringen visuellen Ablenkungen anbieten. |
-| G-29 | Installierbare Anwendungen mit eigener Identität und eigenem Symbol für Android und iOS, Start vom Startbildschirm sowie bedienbare Oberflächen für Smartphones, Tablets, Laptops und Desktop-Computer bereitstellen; Framework und Verteilung bleiben offen. |
+| G-29 | Eine installierbare PWA mit eigener Identität und eigenem Symbol auf kompatiblen Android-/iOS-Geräten sowie bedienbare Oberflächen auf Tablets und Computern bereitstellen; native Apps bleiben eine spätere Option. Nicht verfügbare Betriebssystemfunktionen erfordern gekennzeichnete Rückfallwege (FE-55). |
 | G-30 | Dem Systeminhaber die Verwaltung und Konfiguration vorgesehener Inhalte, Funktionen, Darstellungsoptionen, Daten und Berechtigungen ermöglichen. |
-| G-31 | Eine datenschutzorientierte, sichere und möglichst kostenfreie Nutzung anstreben, ohne sicherheitsrelevante Mindestanforderungen zugunsten niedriger Kosten aufzugeben. |
-| G-32 | Eine langfristige Erweiterung des Systems für weitere Nutzer, Hochschulen und Einsatzkontexte grundsätzlich ermöglichen. |
+| G-31 | Eine sichere datenschutzorientierte V1 ohne verpflichtende bezahlte Software-/API-Abhängigkeit und mit kommerziell geeigneten kostenfreien Lizenzen bereitstellen; reale Infrastrukturkosten und optionale autorisierte Zusatznutzung getrennt ausweisen (FE-53). |
+| G-32 | Die offene Mehrbenutzer-V1 langfristig für zusätzliche Hochschulkontexte und später gesondert freizugebende Rollen/Einsatzformen erweitern können (FE-59). |
 
 ### P1.2.6 Persönliche Arbeitsbereiche und verbundene Nutzung
 
@@ -150,6 +150,12 @@ Sie legen noch keine konkrete Implementierung, Technologie oder Systemarchitektu
 | G-37 | Einen internen Studienkalender manuell pflegen und bestätigte Hochschulimporte sowie KI-Planungsvorschläge übernehmen; persönliche externe Kalender ausschließlich lesend für Verfügbarkeiten berücksichtigen. |
 | G-38 | Einen durchsuchbaren Katalog „Integrationen & Plugins“ mit geprüften Verbindungen, Anbieterwahl, aufgabenbezogener Modellauswahl, Rechteverwaltung sowie Kosten- und Nutzungskontrolle bereitstellen. |
 | G-39 | Freigegebene Profil-, Gesprächs-, Studien-, Projekt-, Kalender- und Konfigurationsdaten zwischen autorisierten Geräten konsistent verfügbar machen; Gerätefreigaben, Aktualität und Konflikte nachvollziehbar halten. |
+| G-40 | Mehrere verifizierte Studierende mit strikter Kontoisolation, sicherer Registrierung und getrennten administrativen Rollen unterstützen (FE-59 bis FE-72). |
+| G-41 | Eine eigenständige installierbare PWA mit EU-Cloud, selektivem Offlinebestand und geräteübergreifender sicherer Wiederaufnahme bereitstellen (FE-33 bis FE-42, FE-55). |
+| G-42 | Manuelle Hochschulimporte, sichere Archive und bestätigte Quell-/Ableitungsrevisionen ermöglichen (FE-27 bis FE-29, FE-48 bis FE-52, FE-86, FE-87). |
+| G-43 | Sensible Dokumente einschließlich Ableitungen schützen, persönliche Schlüsselhoheit und explizite vorgangsbezogene Cloudanalyse ermöglichen (FE-75 bis FE-79). |
+| G-44 | Konfiguration, Quoten und kontrollierte Funktionsveröffentlichung ohne private Admininhaltsrechte ermöglichen (FE-57 bis FE-72). |
+| G-45 | Kontrollierte Sicherung, Wiederherstellung, Papierkorb, endgültige Löschung und Kontopausen anbieten (FE-40, FE-41, FE-80 bis FE-83). |
 
 ---
 
@@ -157,20 +163,16 @@ Sie legen noch keine konkrete Implementierung, Technologie oder Systemarchitektu
 
 ### P1.3.1 Benutzer der ersten Produktversion
 
-Die erste Version von Syllentra AI ist für einen einzigen persönlichen Nutzer vorgesehen.
+V1 unterstützt mehrere voneinander isolierte Studierende mit offener Selbstregistrierung. Erst nach E-Mail-/Passwortregistrierung und E-Mail-OTP-Verifikation ist Zugriff auf Anwendungsdaten möglich. Freigegebene Funktionen sind danach ohne manuelle Kontoannahme verfügbar; Quoten und serverseitig geprüfte Funktionsrechte gelten pro Konto.
 
-Diese Person verwendet das System für das eigene Studium, die Lernbegleitung, Studienorganisation, Kompetenzverwaltung und persönliche Entwicklung.
-
-Gleichzeitig übernimmt dieselbe Person die Rolle des Systeminhabers und Administrators.
-
-Eine eigenständige Mehrbenutzerverwaltung ist für diese Produktversion nicht erforderlich. Mehrere autorisierte Geräte desselben Nutzers sind jedoch Bestandteil von V1; sie begründen keine zusätzlichen Benutzerrollen.
+Lernende verwalten jeweils ihren eigenen Studienkontext und mehrere autorisierte Geräte. Genau ein Super Admin verwaltet die separate Administrationskonsole und ausschließlich selbst die sekundären Administratoren. Administrationsrechte erlauben keinen standardmäßigen Zugriff auf private Lerninhalte. Zeitlich begrenzte, zweckgebundene Supportfreigaben sind freiwillig, widerrufbar und protokolliert; ihr Standard ist nur lesend.
 
 ### P1.3.2 Beteiligte und Rollen
 
 | Rolle | Beschreibung | Interessen und Aufgaben |
 |---|---|---|
 | Student / Nutzer | Hauptnutzer des Systems | Lernen, Prüfungen vorbereiten, Studienverlauf organisieren, Beratung erhalten und Kompetenzen verfolgen. |
-| Systeminhaber / Administrator | In V1 identisch mit dem Studenten | Daten, Einstellungen, Berechtigungen, Inhalte und vorgesehene Systemfunktionen verwalten. |
+| Super Admin / sekundäre Administratoren | Vom persönlichen Lernkonto getrennte Rechte; genau ein Super Admin | Unterstützte Konfigurationen und freigegebene Verwaltungsaufgaben steuern; kein pauschaler Einblick in private Inhalte. |
 | KI-Assistent | Automatisierte Assistenzfunktion des Systems, keine eigenständige menschliche Benutzerrolle | Informationen analysieren, unterrichten, Fortschritte auswerten, Empfehlungen erzeugen und erlaubte Aktionen vorbereiten. |
 | Lehrende und Hochschulberatungsstellen | Externe Ansprechpartner | Fachliche oder administrative Auskünfte und Entscheidungen bereitstellen. |
 | Hochschule | Verantwortliche Institution für offizielle Studieninformationen | Studienordnungen, Module, Prüfungen und verbindliche Regelungen veröffentlichen. |
@@ -180,8 +182,7 @@ Eine eigenständige Mehrbenutzerverwaltung ist für diese Produktversion nicht e
 
 In späteren Produktversionen können weitere Benutzergruppen vorgesehen werden, beispielsweise:
 
-- Studierende anderer Studiengänge und Hochschulen.
-- Studierende in anderen Ländern.
+Studierende anderer Studiengänge, Hochschulen und Länder gehören bereits zur offenen V1-Zielgruppe. Erst später mögliche zusätzliche Rollen sind:
 - Lehrende und Tutoren mit definierten Berechtigungen.
 - Hochschuladministratoren.
 - Benutzer freiwilliger Lern- oder Austauschgruppen.
@@ -428,7 +429,7 @@ Folgende Funktionen sind für spätere Erweiterungen vorgesehen oder derzeit nic
 
 | ID | Abgrenzung | Begründung |
 |---|---|---|
-| NG-01 | Allgemeine Registrierung und parallele Verwaltung mehrerer Studenten | V1 wird zunächst persönlich genutzt. |
+| NG-01 | **Historisch aufgehobenes Nichtziel:** Allgemeine Registrierung und parallele Verwaltung mehrerer Studenten | Durch FE-59/FE-60 am 16.10.2026 ausdrücklich in V1 aufgenommen; Kennung bleibt als Entscheidungsnachweis erhalten. |
 | NG-02 | Soziale Netzwerke, Lerngruppen und Austauschplattformen zwischen Studierenden | Zukünftige Erweiterungsmöglichkeit. |
 | NG-03 | Institutionelle Konten und Verwaltungsfunktionen für Hochschulen | Noch kein bestätigter Bedarf für V1. |
 | NG-04 | Verbindliche Anerkennung von Studienleistungen oder offizielle Studienentscheidungen durch die KI | Zuständigkeit der jeweiligen Hochschule. |
@@ -453,11 +454,11 @@ Rahmenbedingungen definieren Vorgaben, innerhalb derer die spätere Lösung entw
 
 | ID | Rahmenbedingung |
 |---|---|
-| CON-01 | Die erste Produktversion ist für einen persönlichen Nutzer vorgesehen. |
-| CON-02 | Der persönliche Nutzer verfügt über administrative Verwaltungsrechte für seine Instanz. |
-| CON-03 | Die Anwendung muss auf Android-Smartphones und iPhones installierbar, vom Startbildschirm mit eigener Identität und eigenem Symbol startbar sowie auf Tablets und Computern bedienbar sein; Framework und Verteilung bleiben offen. |
+| CON-01 | V1 unterstützt offene Selbstregistrierung mehrerer voneinander isolierter Konten; E-Mail/Passwort und E-Mail-OTP sind vor Zugriff auf Anwendungsdaten erforderlich (FE-59, FE-60). |
+| CON-02 | Persönliche Datenhoheit und Administration sind getrennt. Genau ein Super Admin verwaltet sekundäre Administratoren; diese dürfen weder sich selbst erweitern noch andere Administratoren verwalten (FE-63, FE-70 bis FE-72). |
+| CON-03 | V1 ist eine installierbare PWA mit Startbildschirmidentität auf unterstützten Geräten; konkrete Frameworks und native spätere Verteilung bleiben offen. PWA-/OS-Berechtigungen und Fähigkeiten werden geprüft, fehlende Funktionen transparent ersetzt (FE-55). |
 | CON-04 | Die Anwendung soll unterschiedliche Fachgebiete, Lerninhalte und individuelle Lernsituationen unterstützen. |
-| CON-05 | Die spätere Erweiterung für weitere Nutzer soll grundsätzlich möglich bleiben, ohne bereits in V1 eine Mehrbenutzerplattform zu verlangen. |
+| CON-05 | Mehrbenutzerfähigkeit mit strikter Kontoisolation ist V1-Umfang. Lehrenden-, Team- oder Hochschulverwaltungsrollen und gemeinsame private Arbeitsbereiche sind dadurch nicht eingeführt. |
 
 ### P1.5.2 Datenschutz und Benutzerkontrolle
 
@@ -490,8 +491,8 @@ Rahmenbedingungen definieren Vorgaben, innerhalb derer die spätere Lösung entw
 
 | ID | Rahmenbedingung |
 |---|---|
-| CON-23 | Für die erste Produktversion werden möglichst kostenfreie technische Lösungen bevorzugt. |
-| CON-24 | Kostenpflichtige Dienste und jede zusätzliche Ausgabe erfordern eine bewusste, zweck- und umfangsbezogene Freigabe des Systeminhabers; genehmigte Limits dürfen nicht stillschweigend überschritten werden. |
+| CON-23 | V1 darf keine verpflichtende kostenpflichtige Software oder API voraussetzen. Software, Modellgewichte und Unterabhängigkeiten müssen kostenfrei nutzbar und für die beabsichtigte kommerzielle Nutzung lizenziert sein; ungeprüfte Lizenzketten sind nicht freigegeben. Hardware-, Hosting-, Speicher- und Rechenkosten bleiben gesondert sichtbar (FE-53). |
+| CON-24 | Optionale kostenpflichtige Zusatzdienste dürfen nur nach ausdrücklicher zweck-, umfangs- und limitbezogener Ausgabenfreigabe genutzt werden; sie sind keine Voraussetzung für den V1-Kern. Ein Verbraucherabonnement beweist weder API-Zugang noch kostenlose API-Nutzung (FE-30, FE-53). |
 | CON-25 | Technische Machbarkeitsprüfungen müssen die Kosten, Datenschutzfolgen, Zuverlässigkeit und Funktionsqualität geeigneter Lösungen berücksichtigen. |
 | CON-26 | Sicherheitsanforderungen dürfen nicht allein zugunsten kostenloser Lösungen aufgegeben werden. |
 | CON-27 | Externe Hochschulsysteme dürfen nur über zulässige und tatsächlich unterstützte Zugriffsmöglichkeiten angebunden werden. |
@@ -508,6 +509,13 @@ Rahmenbedingungen definieren Vorgaben, innerhalb derer die spätere Lösung entw
 | CON-33 | Integrationen dürfen nur über geprüfte, unterstützte Verbindungen aktiviert werden; eine URL allein darf keine Installation oder Ausführung unbekannter Konnektoren auslösen. Rechte sind auf den Zweck zu begrenzen und entziehbar zu halten. |
 | CON-34 | Vorhandene KI-Abonnements dürfen nur über offiziell erlaubte Verfahren genutzt werden; API-Berechtigungen, Modelle, Nutzungslimits und zusätzliche Kosten sind gesondert zu prüfen. |
 | CON-35 | Dauerhafte Erinnerung und Nutzerdaten bleiben einsehbar, korrigierbar, exportierbar und kontrolliert löschbar. Entbehrliche temporäre Daten werden entfernt; externe Anbieter müssen die Verarbeitungs- und Aufbewahrungsvorgaben erfüllen. |
+| CON-36 | Hauptdaten und Sicherungen liegen in der EU; eigene zentrale Cloud arbeitet unabhängig vom persönlichen PC; Anbieter und konkrete Infrastruktur bleiben offen (FE-42, FE-75). |
+| CON-37 | Vor Anwendungsdatenzugriff E-Mail-OTP; Admin-MFA obligatorisch; Gerät, Sitzung, lokale Sperre und Dokumentenschlüssel sind getrennte Grenzen (FE-36 bis FE-39, FE-60 bis FE-62, FE-70). |
+| CON-38 | Externe Konnektoren starten standardmäßig manuell; Automatik benötigt pro Verbindung widerrufbares Opt-in und Frequenz. Nach Entzug keine weiteren Abrufe oder Retries (FE-84, FE-85). |
+| CON-39 | FE-56 ist offen: automatische Postfachlektüre ist nicht V1-freigegeben. Hochschulmaterial wird V1 manuell bereitgestellt; offizielle optionale Konnektoren benötigen Nachweis und Opt-in (FE-27). |
+| CON-40 | Sensible Dokumente haben geräteseitigen Zusatzschutz; keine privaten Klartextschlüssel bei Backend/Admin. Eigene Cloudanalyse braucht pro Vorgang freigegebene minimale temporäre Klartextausschnitte; Ableitungen erben Schutz (FE-76 bis FE-79). |
+| CON-41 | Quoten, Fristen, Grenzwerte und Retryzahlen werden konfigurierbar spezifiziert, aber nicht ohne Entscheidung beziffert. Funktionsschalter und Rollen werden serverseitig geprüft; neue Funktionen benötigen Entwicklung (FE-58, FE-64 bis FE-69, FE-88). |
+| CON-42 | Endgültige Löschungen gelten auch für Offlineabgleich, Restore und Historien; Konto-Pause, administrative Sperre, Papierkorb und endgültige Löschung sind verschieden. Notwendige Restaufbewahrung bleibt transparent (FE-80 bis FE-83). |
 
 ### P1.5.6 Entwicklungsrahmen
 
@@ -579,7 +587,7 @@ Detaillierte Testfälle, repräsentative Lernmaterialien und fachliche Bewertung
 | SC-27 | Der Nutzer kann eine semesterbezogene Übersicht seiner Studienleistungen und Kompetenzentwicklung erhalten. |
 | SC-28 | Fortschrittsanzeigen unterscheiden zwischen der Bearbeitung eines Kapitels, dem geschätzten Wissensstand und dem Nachweis einer Kompetenz. |
 | SC-29 | Der Nutzer kann vorgesehene Darstellungs- und Benachrichtigungseinstellungen selbst verändern. |
-| SC-30 | Auf Android-Smartphone und iPhone lässt sich Syllentra installieren und über das eigene Symbol vom Startbildschirm öffnen. Auf Smartphone, Tablet und Computer lassen sich Profil, Unterhaltungen, Module, Projekte, Kalender und Verwaltung ohne verdeckte zentrale Bedienelemente bedienen; Text- und Sprachwechsel wird gemäß SC-07 geprüft. |
+| SC-30 | Auf in N1 zu prüfenden unterstützten Android-/iOS-Konfigurationen lässt sich die PWA mit eigener Identität installieren und vom Startbildschirm öffnen. Profil, Unterhaltungen, Module, Projekte und Kalender sind auf Smartphone, Tablet und Computer bedienbar; Administration ist rollenbeschränkt. Fehlende OS-Fähigkeiten werden mit nutzbarem Rückfallweg ausgewiesen. |
 | SC-31 | Ein ablenkungsarmer Lernmodus kann aktiviert werden. |
 
 ### P1.6.5 Verwaltung, Sicherheit und Kosten
@@ -610,6 +618,17 @@ Detaillierte Testfälle, repräsentative Lernmaterialien und fachliche Bewertung
 | SC-48 | Der Nutzer kann einen unterstützten KI-Anbieter auswählen und eine aufgabenbezogene Modellauswahl nachvollziehen. Ohne gesondert nachgewiesene Berechtigung wird aus einem ChatGPT- oder Claude-Abonnement kein API-Zugriff abgeleitet; erschöpfte Limits und ungeeignete Datenschutzbedingungen verhindern den betreffenden Aufruf. |
 | SC-49 | Der Administrator kann für CFG-01 bis CFG-17 die jeweils unterstützten Parameter ohne Quellcodeänderung bearbeiten. Gültige Werte bleiben nach Neustart erhalten; ungültige oder unberechtigte Änderungen werden abgewiesen. Geeignete Änderungen lassen sich vorab ansehen und auf eine gültige frühere Fassung zurücksetzen, ohne Schutzgrenzen aufzuheben. |
 | SC-50 | Freigegebene pädagogische Erinnerung bleibt über Sitzungs- und Semesterwechsel erhalten. Der Nutzer kann Profil, Verlauf, Arbeitsbereiche, Quellen und Erinnerungen einsehen, korrigieren und exportieren sowie eine Löschung mit ausgewiesenem Umfang bestätigen; entbehrliche temporäre Daten werden nach den festgelegten Regeln entfernt und verbleibende externe Aufbewahrung wird kenntlich gemacht. |
+| SC-51 | Zwei verifizierte Konten können getrennt arbeiten; Liste, Suche, Export, Hintergrundlauf und Wiederherstellung liefern niemals fremde Inhalte (FE-59, FE-63). |
+| SC-52 | Vor gültiger E-Mail-OTP bleiben Anwendungsdaten gesperrt; lokale Entsperrung erneuert keine abgelaufene Serversitzung (FE-60 bis FE-62). |
+| SC-53 | Ein sekundärer Administrator kann weder sich selbst erweitern noch andere Administratoren verwalten; privater Inhalt bleibt ohne enge aktive Supportfreigabe unsichtbar (FE-63, FE-71, FE-72). |
+| SC-54 | Bei voller Quote bleibt vorhandener eigener Inhalt verfügbar; neue betroffene Aufnahme wird erklärt gesperrt. Unveröffentlichtes Feature scheitert auch per Direktaufruf (FE-58, FE-64, FE-65). |
+| SC-55 | Ein abgesagter Release erzeugt keine Ankündigung; deaktivierte Funktion bewahrt Daten und sperrt neue Wirkungen (FE-66 bis FE-69). |
+| SC-56 | GitHub-Scope „alle meine öffentlichen Repositories“ erfasst keine privaten Repositories und erlaubt keine Schreiboperation. Fremdspeicher bleibt datei-/ordnerbegrenzt nur lesend (FE-43, FE-50). |
+| SC-57 | Nach Konnektorwiderruf scheitert auch der nächste Retry; eigene importierte Kopien bleiben zugänglich und letzter Erfolg wird bei Fehler nicht fortgeschrieben (FE-84, FE-85, FE-88). |
+| SC-58 | Pfadflucht/Bombe/ausführbarer Archiveintrag wird nicht ausgeführt oder unkontrolliert importiert; Originalarchiv und Extrakt bleiben unabhängig löschbar (FE-28, FE-29). |
+| SC-59 | Ohne konkrete Freigabe verlässt kein sensibler Klartext das Gerät; Backend/Admin besitzen keine privaten Klartextschlüssel und eine Ableitung behält den Quellschutz (FE-77 bis FE-79). |
+| SC-60 | Ein Restore oder alter Offlinebestand kann endgültig gelöschtes Material nicht zurückbringen; Ableitungslöschung löscht kein unabhängiges Original (FE-80, FE-81). |
+| SC-61 | Neue Quellenfassung und spätere Lerninhaltsaktualisierung benötigen jeweils ihre fachliche Prüfung; erfolgloser Abruf behauptet keine Aktualität, sichere Wiederholung keine doppelte Wirkung (FE-86 bis FE-89). |
 
 ### P1.6.7 Zuordnung der ergänzten Ziele
 
@@ -726,6 +745,13 @@ Studiennoten dürfen nicht als alleiniger Beweis für die Wirksamkeit des System
 | R-31 | Eine unbekannte Plugin-Adresse löst unsichere Ausführung oder übermäßige Berechtigungen aus. | Nur geprüfte unterstützte Konnektoren aktivieren; Identität, Rechte und Verarbeitung prüfen; Widerruf ermöglichen. |
 | R-32 | KI-Abonnements werden mit API-Rechten verwechselt oder Modellwechsel verursachen zusätzliche Kosten. | Offizielle Nutzbarkeit nachweisen, Kontingente prüfen und Ausgaben nur im autorisierten Umfang erlauben. |
 | R-33 | Administrative Änderungen beeinträchtigen Datenschutz, Navigation oder Datenaufbewahrung. | Werte und Rechte validieren, geeignete Vorschau und Rücknahme anbieten; unveränderliche Schutzgrenzen durchsetzen. |
+| R-34 | Kontoübergreifender Zugriff oder zu breite Support-/Adminrechte. | Aktuelle objektbezogene Rechteprüfung, MFA, minimale befristete Supportfreigabe und negative Isolationstests. |
+| R-35 | PWA-/OS-Funktion fehlt oder funktioniert im Hintergrund nicht. | Kompatibilitätsmatrix und getestete Datei-/Manuelleingabefallbacks; kein pauschales natives Funktionsversprechen. |
+| R-36 | Modell-/Unterabhängigkeitslizenz oder kostenlose Nutzung nicht kommerziell zulässig. | Lizenzkette vor Freigabe prüfen, unklare Option sperren; Infrastrukturkosten getrennt ausweisen. |
+| R-37 | Schlüsselverlust, missverständliche Cloudklartextfreigabe oder ungeschützte Ableitung. | Getrennte persönliche Schlüsselwiederherstellung technisch prüfen; konkrete Klartexthinweise und konsequente Schutzvererbung. |
+| R-38 | Endgültige Löschung wird durch Backup oder Offlinegerät rückgängig gemacht. | Minimale Löschmarkierungen und Wiederherstellungsfilter, endliche Retention und Nachweise tatsächlicher Bereinigung. |
+| R-39 | Automatische externe Abrufe überschreiten Scope oder erzeugen doppelte Kosten/Wirkung. | Standard manuell, pro Verbindung Opt-in, begrenzte Retries mit Rechte-/Kosten-/Wirkungsprüfung. |
+| R-40 | Ungeprüfte Quellenaktualisierung verfälscht Lernwissen oder Releaseankündigung geht zu früh heraus. | Getrennte bestätigte Quellen-/Inhaltsrevisionen; serverseitige Releaseprüfung vor Ankündigung. |
 
 ---
 
@@ -762,7 +788,7 @@ Die technische Architektur und ihre wesentlichen Entscheidungen werden später g
 
 Die folgenden bereits vorhandenen Dokumente bleiben erhalten:
 
-- [P2 — Architekturüberblick](P2-architekturueberblick.md), fachlicher Kontext zu P1 Version 0.5
+- [P2 — Architekturüberblick](P2-architekturueberblick.md), fachlicher Kontext zu P1 Version 0.6
 - [Spezifikationsindex und Leseanleitung](README.md)
 - [Projektvision](../PROJECT_VISION.md), insbesondere „Expected capabilities“ und „Design principles“
 - [Bisherige Anforderungen](../REQUIREMENTS.md), insbesondere Abschnitte 1, 3 und 6
@@ -814,3 +840,9 @@ Erforderliche Änderungen des fachlichen Zielumfangs werden ausdrücklich mit de
 **Ende von P1 — Ziele und Rahmenbedingungen**
 
 **Freigabestatus:** Zur Prüfung. Version 0.5 harmonisiert und erweitert die zuvor freigegebene Version 0.4; die Freigabe der Änderungen durch den Projektinhaber steht aus.
+
+### P1.10.1 Harmonisierung vom 16.10.2026
+
+Die Entscheidungen FE-27 bis FE-89 ergänzen den Bestand; mit Ausnahme von **FE-56 (offen)** sind ihre fachlichen Vorgaben bestätigt. Die vollständige deutsche Entscheidungsmatrix und die zwölf Nachbarverträge stehen in [S1](S1-nachbarsysteme.md). Eine fachliche Entscheidung ist keine Aussage über implementierte Funktionen oder aktuell erteilte Anbieterrechte. Alle Bausteine bleiben **Zur Prüfung**. Historische Prüfstände, frühere FE-Teilmengen und alte Versionsbezüge bezeichnen ausschließlich ihre damalige Grundlage; maßgeblich ist der aktuelle Index mit [Änderungs- und Prüfnachweis](E3-pruefnachweis.md).
+
+Neue Kennungen: G-40 bis G-45, CON-36 bis CON-42, SC-51 bis SC-61 und R-34 bis R-40. NG-01 bleibt als ausdrücklich durch FE-59 aufgehobenes Nichtziel dokumentiert; es wurde nicht still gelöscht. PWA-V1 präzisiert G-29/CON-03/SC-30 gemäß FE-55. Die bisherigen persönlichen Lern-, Profil-, Gesprächs-, Studien- und Projektanforderungen bleiben je Konto erhalten.

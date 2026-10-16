@@ -2,13 +2,13 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** D2 — Datentypen\
-**Version:** 0.1 — geprüfter fachlicher Vollentwurf\
-**Stand:** 15.10.2026\
+**Version:** 0.2\
+**Stand:** 16.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
-**Bezugsstand:** P1 v0.5, P2 v0.6, F1 v0.2, F2 v0.1, F3 v0.1, D1 v0.1 auf `docs/spec/p1-p2-mobile-workspaces` (zuletzt geprüfter Commit `fefa9a674771cd217c9b63adadfb6dd28c4ea30e`).\
+**Bezugsstand:** Harmonisierung FE-01 bis FE-89 vom 16.10.2026; Ausgangs-HEAD `ace1d80e80245379beed02296c3c4dd184c8dd70`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1. Aktuelle Versionen siehe [Index](README.md).\
 **Methode:** Spezifikationsbaustein nach Johannes Siedersleben, fachlich vergleichbar mit der [Herold-D2-Referenz](https://github.com/carstenlucke/herold/blob/main/docs/spec/D2-datentypen.md).
 
-> **Freigabegrenze:** FE-01 bis FE-17 sind bestätigte Entscheidungen. Die Ergänzung über eine abgeschirmte, nach Hochschule aufklappbare Notenansicht ist vom Nutzer ausdrücklich vorgegeben. Der beschriebene öffentliche GitHub-V1-Ausschnitt ist ein aus fachlicher und technischer Machbarkeit abgeleiteter **Vorschlag zur Prüfung**, nicht eine behauptete fertige oder formell freigegebene Integration. D1 und F2 werden durch D2 nicht stillschweigend umnummeriert oder umgeschrieben.
+> **Freigabegrenze:** FE-01 bis FE-17 sind bestätigte Entscheidungen. Die Ergänzung über eine abgeschirmte, nach Hochschule aufklappbare Notenansicht ist vom Nutzer ausdrücklich vorgegeben. FE-43 bestätigt den öffentlichen V1-Umfang (Auswahl oder alle eigenen öffentlichen Repositories) und freiwillige offizielle Kontoverbindung; dies ist keine Behauptung einer fertig implementierten oder technisch verfügbaren Integration. D1 und F2 werden durch D2 nicht stillschweigend umnummeriert oder umgeschrieben.
 
 ## D2.1 Auftrag und Abgrenzung
 
@@ -945,17 +945,17 @@ Die nachfolgenden Typen sind als fachliche Kontrakte zu lesen: `Werte/Felder` is
 ### DT-57 — GitHubProfilReferenzDT
 
 **Art:** Struktur\
-**Betroffene D1-Entitäten:** DM-14, DM-19, DM-23
+**Betroffene D1-Entitäten:** DM-14, DM-19, DM-23, DM-44
 
-**Zweck:** Öffentlicher GitHub-Profil- oder selektierter Repository-Verweis für begrenzte V1-Kompetenzsicht.
+**Zweck:** Freiwillige offizielle GitHub-Kontoverbindung und öffentliche Leseanalyse gemäß FE-43.
 
-**Werte beziehungsweise Felder:** `profil_url?`, `repository_urls[0..n]`, `auswahl`, `zugriff=oeffentlich_lesend`, `pruefstand`, `nutzungsfreigabe`, `kontohoheitsnachweis?`; mindestens ein ausgewählter öffentlicher Bezug für eine Analyse.
+**Werte beziehungsweise Felder:** `profil_url?`, `verbundenes_konto`, `scope` = `ausgewaehlte_oeffentliche_repositories` oder `alle_eigenen_oeffentlichen_repositories`, `repository_urls[0..n]`, `zugriff=oeffentlich_lesend`, `pruefstand`, `freigabe`, `quellrevision`, `urheberschaftsnachweis?`.
 
-**Fachliche Regeln:** Nur explizit ausgewählte öffentliche Quellen. Ohne Login/privaten Token nutzbar, soweit GitHub-API-Limits und Nutzungsbedingungen erlauben. Private Repositories, fremde Social-Konten und Multi-Plattform-Aggregation nicht als V1 zugesagt. D1-Erweiterung für dauerhafte Profilverknüpfung als offener Anpassungsbedarf, nicht still neue DM-Entität.
+**Fachliche Regeln:** Scope bewusst wählen. Einzelauswahl erweitert sich nicht still; Gesamtauswahl kann neue eigene öffentliche Repositories nur unter gültiger Synchronisationsregel berücksichtigen. Private Repositories und Schreibzugriff sind in V1 ausgeschlossen. Offizieller Zugang und Limits sind vor Nutzung nachzuweisen; URL allein ist kein Kontonachweis. Dauerhafter optionaler Profilbezug ist in D1 DM-19/DM-23/DM-44 präzisiert.
 
-**Abwesenheit, Kardinalität und Vergleich:** Profil-URL 0..1, ausgewählte Repository-URLs 0..n; bei Analyse mindestens eine ausgewählte erlaubte Quelle. Gleicher Profilname beweist weder Kontohoheit noch Urheberschaft; das dauerhafte Profilverhältnis ist in D1/F2 noch zu präzisieren.
+**Abwesenheit, Kardinalität und Vergleich:** Profil-URL 0..1; Repositoryauswahl 0..n, bei Einzelanalyse mindestens ein erlaubtes öffentliches Ziel. Leere Gesamtauswahl ist möglich und wird nicht mit Fehler oder Zugriffsrecht auf andere Konten verwechselt. Identität, Scope und aktuelle Freigabe sind gemeinsam zu prüfen; Repositorysprache beweist keine individuelle Urheberschaft.
 
-**Prüfbeispiel:** Benutzer verknüpft sein öffentliches Profil und wählt 2 Repos.
+**Prüfbeispiel:** „Alle meine öffentlichen Repositories“ liest ein neues eigenes öffentliches Repository nur im aktiven erlaubten Sync, niemals ein privates und niemals schreibend.
 
 ### DT-58 — DatenschutzSichtbarkeitDT
 
@@ -1112,13 +1112,13 @@ Die feinere Unterscheidung der zwei Fehler-/Teilwirkungswerte präzisiert die ge
 
 **Akzeptanz:** Profilübersicht zeigt keine einzelne Note. Bereich „Noten“ geöffnet, aber keine Hochschule gewählt: keine automatisch offengelegten fremden Systeme. Erst Auswahl der berechtigten Studienzugehörigkeit zeigt zugehörige Originalnoten, Quellen und gegebenenfalls *getrennt markierte* indikative Äquivalenzen.
 
-### D2.5.2 Vorschlag für V1: Öffentliche GitHub-Nachweise
+### D2.5.2 Bestätigter V1-Umfang: Öffentliche GitHub-Nachweise
 
-Als **Vorschlag zur fachlichen Abnahme** wird für V1 eine öffentliche GitHub-Profil-URL mit manuell ausgewählten öffentlichen Repositories im Lesemodus beschrieben. Diese vorgeschlagene Begrenzung ist keine bereits beschlossene Einschränkung der allgemeineren autorisierten Repository-Analyse aus UC-42. `DM-19 RepositoryBezug`, `DM-23 Informationsquelle` und `DM-14 Kompetenzbeleg` sind bereits in D1 angelegt. Mit `DT-57 GitHubProfilReferenzDT` und `DT-56 KompetenzBelegDT` kann Syllentra Herkunft, Auswahl, Zeitpunkt, Beitragszuordnung und Evidenzgrad beschreiben.
+FE-43 bestätigt die freiwillige offizielle GitHub-Kontoverbindung mit der bewussten Wahl einzelner oder aller eigenen öffentlichen Repositories im ausschließlichen Lesemodus. DM-19, DM-23 und DM-44 beschreiben den optionalen dauerhaften Bezug, DT-57 den Scope und DT-56 die vorsichtige nachweisbezogene Kompetenzsicht. Die technische Verfügbarkeit und aktuelle offizielle Rechte sind separat nachzuweisen.
 
 Ein öffentliches GitHub-Profil muss nicht die Kontohoheit des Nutzers beweisen: Der Nutzer benennt es als sein Profil, Syllentra kennzeichnet den Bestätigungsstand. Programmiersprache, Repository-Beschreibung oder Beitragsstatistik allein sind **kein sicherer Nachweis persönlicher Beherrschung**. Tatsächliche eigene Beiträge, Teamarbeit und KI-generierte Inhalte werden nur soweit belegbar unterschieden; Kompetenzvorschläge bleiben ggf. vorläufig nach FE-11. Kein automatisches Schreiben in Repositories.
 
-Die offiziell zulässigen Abrufverfahren und aktuellen Limits für öffentliche Repository-, Sprach- und Beitragsmetadaten sind bei Umsetzung anhand folgender Quellen zu überprüfen: [GitHub REST API – rate limits](https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api), [GitHub REST – repositories, languages, contributors](https://docs.github.com/en/rest/repos/repos). Zugriffsfehler und Limits werden angezeigt, nicht umgangen. **Private Repositories, LinkedIn und weitere Plattformen sind durch diesen Vorschlag nicht zugesagt**; eine spätere Erweiterung erfordert eine gesonderte fachliche Entscheidung und offiziell erlaubte Verfahren mit minimalen Berechtigungen. Der Verweis auf eine künftige Version ist keine Zusage.
+Die offiziell zulässigen Abrufverfahren und aktuellen Limits für öffentliche Repository-, Sprach- und Beitragsmetadaten sind bei Umsetzung anhand folgender Quellen zu überprüfen: [GitHub REST API – rate limits](https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api), [GitHub REST – repositories, languages, contributors](https://docs.github.com/en/rest/repos/repos). Zugriffsfehler und Limits werden angezeigt, nicht umgangen. **Private Repositories, LinkedIn und weitere Plattformen sind durch diesen V1-Umfang nicht zugesagt**; eine spätere Erweiterung erfordert eine gesonderte fachliche Entscheidung und offiziell erlaubte Verfahren mit minimalen Berechtigungen. Der Verweis auf eine künftige Version ist keine Zusage.
 
 **Quellenprüfstand:** Der Abruf der offiziellen GitHub-Dokumentation wurde am 15.10.2026 auch mit erweiterter Ausführungsberechtigung durch HTTP 403 blockiert. Deshalb bestätigt dieser Entwurf weder aktuelle API-Limits noch konkrete Zugangsrechte oder vollständige Beitragsdaten. Öffentliche Sichtbarkeit beweist weder Kontohoheit noch beliebige Weiterverwendungsrechte.
 
@@ -1157,7 +1157,7 @@ Die offiziell zulässigen Abrufverfahren und aktuellen Limits für öffentliche 
 
 ## D2.7 Rückverfolgbarkeit der 52 Entitäten
 
-Die Zuordnung zeigt für jede D1-Entität die in D2 ausdrücklich relevanten Typen, einschließlich mittelbarer Ansichten, Quellen- und Prüfbezüge. Sie behauptet keine neuen direkten Pflichtattribute oder Beziehungen: etwa gehören Notenwerte weiter zu DM-12, die Studienzugehörigkeit DM-04 liefert ihren Kontext. DT-57 bleibt bei allen Bezügen ein noch nicht freigegebener GitHub-V1-Vorschlag. DT-01 und DT-63 gelten zusätzlich als allgemeine Identitäts- und Datenklassentypen, wenn fachlich erforderlich.
+Die Zuordnung zeigt für jede D1-Entität die in D2 ausdrücklich relevanten Typen, einschließlich mittelbarer Ansichten, Quellen- und Prüfbezüge. Sie behauptet keine neuen direkten Pflichtattribute oder Beziehungen: etwa gehören Notenwerte weiter zu DM-12, die Studienzugehörigkeit DM-04 liefert ihren Kontext. DT-57 bleibt bei allen Bezügen ein bestätigter GitHub-V1-Umfang (FE-43), dessen technische Verfügbarkeit separat nachzuweisen ist. DT-01 und DT-63 gelten zusätzlich als allgemeine Identitäts- und Datenklassentypen, wenn fachlich erforderlich.
 
 | D1 | Fachliches Objekt | Relevante D2-Typen |
 |---|---|---|
@@ -1324,7 +1324,7 @@ Die nachfolgenden Prüfkerne sind Verweise auf D1 und keine Änderung der dort m
 
 | D1-Regel | Referenzierter Prüfkern |
 |---|---|
-| INV-01 | Alle personenbezogenen Objekte gehören einem autorisierten Nutzerkontext; V1 besitzt genau einen menschlichen Eigentümer; Datenzugriff wird trotz Gerätefreigabe und Administratorrolle geprüft. |
+| INV-01 | Alle personenbezogenen Objekte gehören einem autorisierten Nutzerkontext; V1 unterstützt getrennte verifizierte Nutzerkonten; jedes persönliche Objekt besitzt genau einen Eigentümer; Datenzugriff wird trotz Gerätefreigabe und Administratorrolle geprüft. |
 | INV-02 | Fehlende optionale Profilfelder sperren keine allgemeinen Lern- und Gesprächsfunktionen; fehlende für eine Spezialfunktion notwendige Eingaben betreffen nur diese Funktion. |
 | INV-03 | Semester, Modul, Kurs, Prüfung und Studienleistung besitzen eigene Identität; erneute Prüfungsversuche überschreiben alte Ergebnisse nicht. |
 | INV-04 | Nur tatsächlich als abgeschlossen geprüfte Elemente dürfen nach Nutzerbestätigung archiviert werden. Offene Prüfungen, Kurse und Projekte bleiben aktiv. |
@@ -1426,7 +1426,7 @@ Die bestehenden Kennungen `CFG-01`; `CFG-02`; `CFG-03`; `CFG-04`; `CFG-05`; `CFG
 
 1. **Notensysteme:** Keine pauschale numerische Umrechnungsformel. Hochschulregel und Quelle je System nachweisen, selbst wenn das UI mehrsprachig ist.
 2. **Noten-UI:** Verschachtelte, geschützte Darstellung nach Nutzerwunsch ist eine fachliche Anforderung; B1 spezifiziert Navigation, Tastatur- und mobile Bedienung; N2 die Exposition sensibler Angaben.
-3. **Externe Profile:** Der öffentliche GitHub-V1-Ausschnitt ist ein Vorschlag mit bestehenden D1-Bezügen, keine bereits implementierte Integration. Das optionale dauerhaft verlinkte Profil kann später eine klar markierte D1/F2-Präzisierung erfordern. Private Repos, Organisationen und weitere Plattformen werden gesondert geplant; keine Rechte durch URL allein.
+3. **Externe Profile:** FE-43 bestätigt den öffentlichen GitHub-V1-Umfang mit bestehenden D1-Bezügen; dies behauptet keine implementierte Integration. Der optionale dauerhafte Profilbezug ist in D1 präzisiert; technische Kontonachweise bleiben zu prüfen. Private Repos, Organisationen und weitere Plattformen werden gesondert geplant; keine Rechte durch URL allein.
 4. **Wertebereiche:** Konkrete Dauergrenzen, Speicherquoten, zulässige Dateiformate/-größen, tatsächliche Token-/Kostenmetriken und Ablaufregeln benötigen aktuelle Quellen und später N1/N2/S1.
 5. **Bildungsbewertungen:** Schwierigkeitsskalen, Nachweisqualität und adaptive Bewertungsmaßstäbe sind fachlich zu evaluieren; bloßes Anwenden einer heuristischen Kategorie ist kein amtlicher Leistungsbeleg.
 6. **Datenhaltung:** Verschlüsselung, physisches Schema, Sync-Protokoll, Sicherungen und revisionssichere Löschverfahren sind N2/Architektur; D2 schreibt keine technische Lösung vor.
@@ -1443,7 +1443,7 @@ Die bestehenden Kennungen `CFG-01`; `CFG-02`; `CFG-03`; `CFG-04`; `CFG-05`; `CFG
 - [Spezifikationsindex](README.md): Zuständigkeiten und Statuskonventionen.
 - Historische Quellen: [Projektvision](../PROJECT_VISION.md), Abschnitte „Project vision“ und „Design principles“; [Anforderungen](../REQUIREMENTS.md), Abschnitte 1 und 3; [Architekturentscheidungen](../ARCHITECTURE_DECISIONS.md), Abschnitt „Current position“; [Roadmap](../ROADMAP.md), Phasen 2 und 3. Sie begründen keine neue technische Festlegung in D2.
 
-Der aktuelle Branch-/PR-Bezugsstand stimmt mit dem gelieferten SHA überein. P1 bis D1 bleiben unverändert. FE-15 bis FE-17 sowie die geschützte Notenansicht sind mit dieser D2-Mission bestätigt; ältere Bausteine enthalten sie noch nicht vollständig. Der dauerhafte Bezug einer Leistung zu einer Studienzugehörigkeit ist in D1 nicht für alle Fälle ohne Modul-/Semesterbezug ausdrücklich beschrieben. D2 macht die Gruppierungsinformation typisierbar, behauptet diese zusätzliche Beziehung jedoch nicht als bereits abgenommen; sie ist zusammen mit dem optionalen GitHub-Profilbezug später in D1/F2 abzugleichen.
+**Historischer Prüfstand 15.10.2026:** Der damalige D2-Auftrag änderte ältere Bausteine nicht. **Aktueller Abgleich 16.10.2026:** DM-12 besitzt jetzt den optionalen direkten DM-04-Studienzugehörigkeitsbezug; DM-19/DM-23/DM-44 präzisieren dauerhafte optionale GitHub-Bezüge. FE-43 ersetzt den damaligen Produktvorschlag. Neue technische Detailtypen bleiben zur Prüfung; kein Implementierungsnachweis.
 
 ### D2.11.2 Korrekturen gegenüber dem gelieferten Vollentwurf
 
@@ -1455,6 +1455,227 @@ Der aktuelle Branch-/PR-Bezugsstand stimmt mit dem gelieferten SHA überein. P1 
 | Noten mit möglicher Anzeigeausnahme in einem Prüffall | Keine ungefragt sichtbaren Einzelnoten in Profil, Dashboard, Vorschau oder Benachrichtigungen; geschützte Institutionsauswahl verbindlich, Umrechnung getrennt und indikativ. |
 | FE-16-Transition nur aus vorläufigem Stand beschrieben | Auch bestätigte überholte/widersprüchliche Einschätzungen zur Neubewertung; keine pauschale Löschung, keine Blockade autorisierter Löschung. |
 | Ein globaler Messstand und Euro-Einheit zu eng | Messstand je Kennzahl, Geldwerte mit Währung und zeitbezogener Grundlage; keine erfundenen feinen Perioden aus gröberen Summen. |
-| GitHub-Ausschnitt könnte als festgelegte Produktgrenze gelesen werden | V1-Vorschlag von bestätigten Vorgaben getrennt; keine zugesagten privaten Repositories, weitere Plattformen oder aktuellen API-Rechte. Quellenabruf blockiert, spätere offizielle Prüfung erforderlich. |
+| GitHub-Ausschnitt könnte als festgelegte Produktgrenze gelesen werden | Historischer V1-Vorschlag durch FE-43 ersetzt; bestätigter öffentlicher Scope bei weiterhin ausstehender technischer Rechteprüfung; keine zugesagten privaten Repositories, weitere Plattformen oder aktuellen API-Rechte. Quellenabruf blockiert, spätere offizielle Prüfung erforderlich. |
 
-**Freigabestatus:** Zur Prüfung — D2 v0.1. Git-Commit und Push ersetzen keine gemeinsame fachliche Abnahme.
+**Freigabestatus:** Zur Prüfung — D2 v0.2. Git-Commit und Push ersetzen keine gemeinsame fachliche Abnahme.
+
+
+## D2.12 Ergänzende Datentypen für Konten und sichere Lebenszyklen
+
+Die Entscheidungen FE-27 bis FE-89 ergänzen den Bestand; mit Ausnahme von **FE-56 (offen)** sind ihre fachlichen Vorgaben bestätigt. Die vollständige deutsche Entscheidungsmatrix und die zwölf Nachbarverträge stehen in [S1](S1-nachbarsysteme.md). Eine fachliche Entscheidung ist keine Aussage über implementierte Funktionen oder aktuell erteilte Anbieterrechte. Alle Bausteine bleiben **Zur Prüfung**. Historische Prüfstände, frühere FE-Teilmengen und alte Versionsbezüge bezeichnen ausschließlich ihre damalige Grundlage; maßgeblich ist der aktuelle Index mit [Änderungs- und Prüfnachweis](E3-pruefnachweis.md).
+
+Die folgenden Wertbereiche sind fachliche Typen, keine ausgewählten Kryptoverfahren oder API-Payloads. Strukturfelder mit `_optional` dürfen fehlen; notwendige Rechte werden bei Abwesenheit nicht angenommen. Kennungen gehören zum jeweiligen Eigentumskontext.
+
+### DT-65 — KontostatusDT
+
+**Art / Verwendung:** Fachlicher Zustands-/Wertebereich; DM-01.
+
+**Werte beziehungsweise Felder:** `registriert_unbestaetigt; aktiv_verifiziert; freiwillig_pausiert; administrativ_gesperrt; loeschung_bestaetigt; bereinigung_laufend; geloescht`.
+
+**Validität und Vergleich:** Keine Adminannahme zwischen Verifikation und allgemeiner Freigabe; Sperre und Pause bewahren Daten. Unbekannte Pflichtangaben führen zu „nicht prüfbar“ oder Sperre, nicht zu erfundenem Erfolg. Gleichheit benötigt passenden Eigentümer, Zweck und aktuelle Revision; Statusnamen allein erteilen keine Erlaubnis.
+
+**Prüfbeispiel:** Ein Wert außerhalb des beschriebenen Bereichs wird sichtbar zurückgewiesen, ohne vorhandene gültige Daten zu überschreiben.
+
+### DT-66 — EMailAdressrolleDT
+
+**Art / Verwendung:** Fachlicher Zustands-/Wertebereich; DM-53.
+
+**Werte beziehungsweise Felder:** `privat_primaer; privat_zusaetzlich; hochschule`.
+
+**Validität und Vergleich:** Genau eine private verifizierte Primäradresse; Rolle gewährt kein Postfachrecht. Unbekannte Pflichtangaben führen zu „nicht prüfbar“ oder Sperre, nicht zu erfundenem Erfolg. Gleichheit benötigt passenden Eigentümer, Zweck und aktuelle Revision; Statusnamen allein erteilen keine Erlaubnis.
+
+**Prüfbeispiel:** Ein Wert außerhalb des beschriebenen Bereichs wird sichtbar zurückgewiesen, ohne vorhandene gültige Daten zu überschreiben.
+
+### DT-67 — VerifikationszweckDT
+
+**Art / Verwendung:** Fachlicher Zustands-/Wertebereich; DM-54.
+
+**Werte beziehungsweise Felder:** `registrierung; neue_adresse; neues_geraet; kontorecovery; administrative_mfa; sensible_aktion`.
+
+**Validität und Vergleich:** Nachweis ist zweckgebunden, befristet und bei Einmalverfahren nur einmal verbrauchbar. Unbekannte Pflichtangaben führen zu „nicht prüfbar“ oder Sperre, nicht zu erfundenem Erfolg. Gleichheit benötigt passenden Eigentümer, Zweck und aktuelle Revision; Statusnamen allein erteilen keine Erlaubnis.
+
+**Prüfbeispiel:** Ein Wert außerhalb des beschriebenen Bereichs wird sichtbar zurückgewiesen, ohne vorhandene gültige Daten zu überschreiben.
+
+### DT-68 — SitzungsstatusDT
+
+**Art / Verwendung:** Fachlicher Zustands-/Wertebereich; DM-55.
+
+**Werte beziehungsweise Felder:** `aktiv; lokal_gesperrt; server_abgelaufen; abgemeldet; widerrufen`.
+
+**Validität und Vergleich:** Lokaler Zustand kann mit Serverablauf zusammenfallen; diese Achsen werden getrennt gespeichert, nicht als technisch exklusive Gesamtzustände missverstanden. Unbekannte Pflichtangaben führen zu „nicht prüfbar“ oder Sperre, nicht zu erfundenem Erfolg. Gleichheit benötigt passenden Eigentümer, Zweck und aktuelle Revision; Statusnamen allein erteilen keine Erlaubnis.
+
+**Prüfbeispiel:** Ein Wert außerhalb des beschriebenen Bereichs wird sichtbar zurückgewiesen, ohne vorhandene gültige Daten zu überschreiben.
+
+### DT-69 — AdministrationsrechtDT
+
+**Art / Verwendung:** Fachlicher Zustands-/Wertebereich; DM-56.
+
+**Werte beziehungsweise Felder:** `branding; konfiguration; quota; feature_test; feature_release; kontosperre; super_admin_exklusiv`.
+
+**Validität und Vergleich:** Versionierter unterstützter Rechtekatalog plus individuelle Zuweisung; sekundäre Rollen haben nie Administratorverwaltung oder Selbstbeförderung. Unbekannte Pflichtangaben führen zu „nicht prüfbar“ oder Sperre, nicht zu erfundenem Erfolg. Gleichheit benötigt passenden Eigentümer, Zweck und aktuelle Revision; Statusnamen allein erteilen keine Erlaubnis.
+
+**Prüfbeispiel:** Ein Wert außerhalb des beschriebenen Bereichs wird sichtbar zurückgewiesen, ohne vorhandene gültige Daten zu überschreiben.
+
+### DT-70 — SupportumfangDT
+
+**Art / Verwendung:** Struktur; DM-58.
+
+**Werte beziehungsweise Felder:** `objektkennungen, zweck, beguenstigter, lesen, gesondertes_aenderungsrecht, beginn, ende, widerruf`.
+
+**Validität und Vergleich:** Nicht leere eindeutige Ziele, genau ein Zweck, endliche Gültigkeit; Standard nur lesend. Unbekannte Pflichtangaben führen zu „nicht prüfbar“ oder Sperre, nicht zu erfundenem Erfolg. Gleichheit benötigt passenden Eigentümer, Zweck und aktuelle Revision; Statusnamen allein erteilen keine Erlaubnis.
+
+**Prüfbeispiel:** Ein Wert außerhalb des beschriebenen Bereichs wird sichtbar zurückgewiesen, ohne vorhandene gültige Daten zu überschreiben.
+
+### DT-71 — QuotarahmenDT
+
+**Art / Verwendung:** Struktur; DM-59.
+
+**Werte beziehungsweise Felder:** `dimension, einheit, grundwert, kontoausnahme, verbrauch, warnschwelle`.
+
+**Validität und Vergleich:** Nichtnegative konsistente Werte; Einheiten vergleichbar; konkrete Zahlen erst nach Entscheidung, fehlende Pflichtwerte nicht als unendlich deuten. Unbekannte Pflichtangaben führen zu „nicht prüfbar“ oder Sperre, nicht zu erfundenem Erfolg. Gleichheit benötigt passenden Eigentümer, Zweck und aktuelle Revision; Statusnamen allein erteilen keine Erlaubnis.
+
+**Prüfbeispiel:** Ein Wert außerhalb des beschriebenen Bereichs wird sichtbar zurückgewiesen, ohne vorhandene gültige Daten zu überschreiben.
+
+### DT-72 — FeatureSichtbarkeitDT
+
+**Art / Verwendung:** Fachlicher Zustands-/Wertebereich; DM-60.
+
+**Werte beziehungsweise Felder:** `verborgen; bald; ausgewaehlte_tester; oeffentlich; deaktiviert`.
+
+**Validität und Vergleich:** Sichtbarkeit allein ist keine serverseitige Aktionsberechtigung; deaktiviert bewahrt Daten. Unbekannte Pflichtangaben führen zu „nicht prüfbar“ oder Sperre, nicht zu erfundenem Erfolg. Gleichheit benötigt passenden Eigentümer, Zweck und aktuelle Revision; Statusnamen allein erteilen keine Erlaubnis.
+
+**Prüfbeispiel:** Ein Wert außerhalb des beschriebenen Bereichs wird sichtbar zurückgewiesen, ohne vorhandene gültige Daten zu überschreiben.
+
+### DT-73 — ReleaseStatusDT
+
+**Art / Verwendung:** Fachlicher Zustands-/Wertebereich; DM-61.
+
+**Werte beziehungsweise Felder:** `entwurf; vorschau; intern_getestet; testerphase; geplant; verfuegbar; abgesagt; zurueckgenommen`.
+
+**Validität und Vergleich:** Vorschau verändert aktive Fassung nicht; nur aktuelle zulässige Verfügbarkeit gestattet Ankündigung. Unbekannte Pflichtangaben führen zu „nicht prüfbar“ oder Sperre, nicht zu erfundenem Erfolg. Gleichheit benötigt passenden Eigentümer, Zweck und aktuelle Revision; Statusnamen allein erteilen keine Erlaubnis.
+
+**Prüfbeispiel:** Ein Wert außerhalb des beschriebenen Bereichs wird sichtbar zurückgewiesen, ohne vorhandene gültige Daten zu überschreiben.
+
+### DT-74 — IntegrationslaufstatusDT
+
+**Art / Verwendung:** Fachlicher Zustands-/Wertebereich; DM-62.
+
+**Werte beziehungsweise Felder:** `angefordert; laeuft; teilweise; erfolgreich; unterbrochen; fehler; wirkung_unbekannt; widerrufen`.
+
+**Validität und Vergleich:** Unbekannter Ausgang ist kein belegter Fehler und keine Erlaubnis zum doppelten Aufruf. Unbekannte Pflichtangaben führen zu „nicht prüfbar“ oder Sperre, nicht zu erfundenem Erfolg. Gleichheit benötigt passenden Eigentümer, Zweck und aktuelle Revision; Statusnamen allein erteilen keine Erlaubnis.
+
+**Prüfbeispiel:** Ein Wert außerhalb des beschriebenen Bereichs wird sichtbar zurückgewiesen, ohne vorhandene gültige Daten zu überschreiben.
+
+### DT-75 — SyncModusDT
+
+**Art / Verwendung:** Fachlicher Zustands-/Wertebereich; DM-63.
+
+**Werte beziehungsweise Felder:** `manuell; automatisch_opt_in`.
+
+**Validität und Vergleich:** Automatik verlangt gültiges Opt-in, Intervall und aktuellen Scope; interner Geräteabgleich ist gesondert. Unbekannte Pflichtangaben führen zu „nicht prüfbar“ oder Sperre, nicht zu erfundenem Erfolg. Gleichheit benötigt passenden Eigentümer, Zweck und aktuelle Revision; Statusnamen allein erteilen keine Erlaubnis.
+
+**Prüfbeispiel:** Ein Wert außerhalb des beschriebenen Bereichs wird sichtbar zurückgewiesen, ohne vorhandene gültige Daten zu überschreiben.
+
+### DT-76 — QuellrevisionDT
+
+**Art / Verwendung:** Struktur; DM-21, DM-23, DM-38.
+
+**Werte beziehungsweise Felder:** `quellkennung, externe_revision_optional, hash_optional, aenderungszeit_optional, abrufzeit, gewissheit`.
+
+**Validität und Vergleich:** Fehlende Revision/Hash ist unbekannt und kein Gleichheitsbeweis; Dateiname reicht nicht. Unbekannte Pflichtangaben führen zu „nicht prüfbar“ oder Sperre, nicht zu erfundenem Erfolg. Gleichheit benötigt passenden Eigentümer, Zweck und aktuelle Revision; Statusnamen allein erteilen keine Erlaubnis.
+
+**Prüfbeispiel:** Ein Wert außerhalb des beschriebenen Bereichs wird sichtbar zurückgewiesen, ohne vorhandene gültige Daten zu überschreiben.
+
+### DT-77 — SchutzstufeDT
+
+**Art / Verwendung:** Fachlicher Zustands-/Wertebereich; DM-64.
+
+**Werte beziehungsweise Felder:** `persoenlich_standard; sensibel_geraeteseitig`.
+
+**Validität und Vergleich:** Bei mehreren Quellen gilt mindestens deren höchster Schutz; explizite Herabstufung nachvollziehbar und rechtlich zulässig. Unbekannte Pflichtangaben führen zu „nicht prüfbar“ oder Sperre, nicht zu erfundenem Erfolg. Gleichheit benötigt passenden Eigentümer, Zweck und aktuelle Revision; Statusnamen allein erteilen keine Erlaubnis.
+
+**Prüfbeispiel:** Ein Wert außerhalb des beschriebenen Bereichs wird sichtbar zurückgewiesen, ohne vorhandene gültige Daten zu überschreiben.
+
+### DT-78 — SchlüsselverfügbarkeitDT
+
+**Art / Verwendung:** Fachlicher Zustands-/Wertebereich; DM-65.
+
+**Werte beziehungsweise Felder:** `geraet_berechtigt; schluessel_verfuegbar; wiederherstellung_noetig; entzogen; unbekannt`.
+
+**Validität und Vergleich:** Als getrennte Merkmale von Berechtigung und Verfügbarkeit auswerten; Kontoverifikation erzeugt keinen Schlüssel. Unbekannte Pflichtangaben führen zu „nicht prüfbar“ oder Sperre, nicht zu erfundenem Erfolg. Gleichheit benötigt passenden Eigentümer, Zweck und aktuelle Revision; Statusnamen allein erteilen keine Erlaubnis.
+
+**Prüfbeispiel:** Ein Wert außerhalb des beschriebenen Bereichs wird sichtbar zurückgewiesen, ohne vorhandene gültige Daten zu überschreiben.
+
+### DT-79 — VerarbeitungsumfangDT
+
+**Art / Verwendung:** Struktur; DM-66.
+
+**Werte beziehungsweise Felder:** `operation, ziel, zweck, dokumentrevisionen, notwendige_ausschnitte, gueltigkeit, widerruf`.
+
+**Validität und Vergleich:** Eigene Cloud sieht temporär freigegebenen Klartext; kein Schlüsseltransfer, kein dauerhaftes Klartextduplikat und kein fingiertes Ende-zu-Ende-Versprechen für diese Operation. Unbekannte Pflichtangaben führen zu „nicht prüfbar“ oder Sperre, nicht zu erfundenem Erfolg. Gleichheit benötigt passenden Eigentümer, Zweck und aktuelle Revision; Statusnamen allein erteilen keine Erlaubnis.
+
+**Prüfbeispiel:** Ein Wert außerhalb des beschriebenen Bereichs wird sichtbar zurückgewiesen, ohne vorhandene gültige Daten zu überschreiben.
+
+### DT-80 — PapierkorbstatusDT
+
+**Art / Verwendung:** Fachlicher Zustands-/Wertebereich; DM-67, DM-68.
+
+**Werte beziehungsweise Felder:** `im_papierkorb; wiederhergestellt; endgueltige_bereinigung_laufend; endgueltig_bereinigt`.
+
+**Validität und Vergleich:** Keine abgeschlossene Löschung vor tatsächlichem Erfolg; Sicherungsreste und Fristen gesondert. Unbekannte Pflichtangaben führen zu „nicht prüfbar“ oder Sperre, nicht zu erfundenem Erfolg. Gleichheit benötigt passenden Eigentümer, Zweck und aktuelle Revision; Statusnamen allein erteilen keine Erlaubnis.
+
+**Prüfbeispiel:** Ein Wert außerhalb des beschriebenen Bereichs wird sichtbar zurückgewiesen, ohne vorhandene gültige Daten zu überschreiben.
+
+### DT-81 — SicherungsstatusDT
+
+**Art / Verwendung:** Fachlicher Zustands-/Wertebereich; DM-69.
+
+**Werte beziehungsweise Felder:** `vorgesehen; laeuft; verfuegbar; unvollstaendig; abgelaufen; bereinigt`.
+
+**Validität und Vergleich:** Nur vollständig belegte, zugängliche eigene Sicherung als verfügbar anbieten; EU und Verschlüsselung verpflichtend. Unbekannte Pflichtangaben führen zu „nicht prüfbar“ oder Sperre, nicht zu erfundenem Erfolg. Gleichheit benötigt passenden Eigentümer, Zweck und aktuelle Revision; Statusnamen allein erteilen keine Erlaubnis.
+
+**Prüfbeispiel:** Ein Wert außerhalb des beschriebenen Bereichs wird sichtbar zurückgewiesen, ohne vorhandene gültige Daten zu überschreiben.
+
+### DT-82 — WiederherstellungsstatusDT
+
+**Art / Verwendung:** Fachlicher Zustands-/Wertebereich; DM-70.
+
+**Werte beziehungsweise Felder:** `ausgewaehlt; differenzen_geprueft; bestaetigt; laeuft; teilweise; abgeschlossen; abgebrochen`.
+
+**Validität und Vergleich:** Bestätigung gilt nur für geprüfte Fassung und Auswahl; Löschmarkierungen werden erneut vor Wirkung geprüft. Unbekannte Pflichtangaben führen zu „nicht prüfbar“ oder Sperre, nicht zu erfundenem Erfolg. Gleichheit benötigt passenden Eigentümer, Zweck und aktuelle Revision; Statusnamen allein erteilen keine Erlaubnis.
+
+**Prüfbeispiel:** Ein Wert außerhalb des beschriebenen Bereichs wird sichtbar zurückgewiesen, ohne vorhandene gültige Daten zu überschreiben.
+
+### DT-83 — ArchivExtraktionsstatusDT
+
+**Art / Verwendung:** Fachlicher Zustands-/Wertebereich; DM-71.
+
+**Werte beziehungsweise Felder:** `ungeprueft; sicher_pruefbar; teilweise_zulaessig; abgewiesen; extrahiert`.
+
+**Validität und Vergleich:** Nicht unterstützt, beschädigt, ausführbar, Pfadflucht und Limitüberschreitung getrennt begründen; keine Ausführung. Unbekannte Pflichtangaben führen zu „nicht prüfbar“ oder Sperre, nicht zu erfundenem Erfolg. Gleichheit benötigt passenden Eigentümer, Zweck und aktuelle Revision; Statusnamen allein erteilen keine Erlaubnis.
+
+**Prüfbeispiel:** Ein Wert außerhalb des beschriebenen Bereichs wird sichtbar zurückgewiesen, ohne vorhandene gültige Daten zu überschreiben.
+
+### DT-84 — SprachpräferenzenDT
+
+**Art / Verwendung:** Struktur; DM-02, DM-09, DM-25, DM-48.
+
+**Werte beziehungsweise Felder:** `ui_sprache, ki_sprache, uebungssprache, audiosprache, kontext_override`.
+
+**Validität und Vergleich:** UI V1 FR/DE/EN; vier Bereiche unabhängig, bewusster Kontextwert vor allgemeiner Präferenz; Originalterminologie bleibt. Unbekannte Pflichtangaben führen zu „nicht prüfbar“ oder Sperre, nicht zu erfundenem Erfolg. Gleichheit benötigt passenden Eigentümer, Zweck und aktuelle Revision; Statusnamen allein erteilen keine Erlaubnis.
+
+**Prüfbeispiel:** Ein Wert außerhalb des beschriebenen Bereichs wird sichtbar zurückgewiesen, ohne vorhandene gültige Daten zu überschreiben.
+
+### DT-85 — GeheimnisNachweisDT
+
+**Art / Verwendung:** Struktur; DM-54, DM-65.
+
+**Werte beziehungsweise Felder:** `geschuetzter_verweis, zweck, ausgabezeit, ablauf, verbrauchsstatus`.
+
+**Validität und Vergleich:** Opaker geschützter Nachweis, kein sichtbares Geheimnisfeld. Keine Passwörter, OTP, Recoverycodes, Tokens oder privaten Schlüssel in Ausgabe/Repository/Logs; konkretes Schutzverfahren N2. Unbekannte Pflichtangaben führen zu „nicht prüfbar“ oder Sperre, nicht zu erfundenem Erfolg. Gleichheit benötigt passenden Eigentümer, Zweck und aktuelle Revision; Statusnamen allein erteilen keine Erlaubnis.
+
+**Prüfbeispiel:** Ein Wert außerhalb des beschriebenen Bereichs wird sichtbar zurückgewiesen, ohne vorhandene gültige Daten zu überschreiben.
+
+### Übernahme der ergänzten Integritätsregeln
+
+INV-26 bis INV-31 aus [D1](D1-datenmodell.md) gelten unverändert auch für die neuen Datentypen. DT-57 wird im folgenden Änderungsvermerk auf FE-43 präzisiert: Scope `ausgewaehlte_oeffentliche_repositories` oder `alle_eigenen_oeffentlichen_repositories`, freiwilliger offizieller Kontobezug, V1 ausschließlich lesend; private Quellen und automatische Scoperweiterung sind ausgeschlossen.

@@ -2,11 +2,11 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** F3 — Anwendungsfunktionen\
-**Version:** 0.1 — fachlicher Entwurf\
-**Stand:** 15.10.2026\
+**Version:** 0.2\
+**Stand:** 16.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Spezifikationsmethode:** Bausteine nach Johannes Siedersleben\
-**Bezugsstand:** P1 v0.5, P2 v0.6, F1 v0.2, F2 v0.1 auf `docs/spec/p1-p2-mobile-workspaces`, Commit `c52629109ad2d08be0950f3a2d40eeff9f86ccc9`\
+**Bezugsstand:** Harmonisierung FE-01 bis FE-89 vom 16.10.2026; Ausgangs-HEAD `ace1d80e80245379beed02296c3c4dd184c8dd70`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1. Aktuelle Versionen siehe [Index](README.md).\
 **Fachlich bestätigt:** FE-01 bis FE-11; FE-10 und FE-11 werden mit diesem Entwurf erstmals in F3 beschrieben.
 
 ## F3.1 Zweck, Abgrenzung und Begriffe
@@ -984,3 +984,106 @@ Diese überarbeitete Fassung enthält 27 algorithmisch begründete Anwendungsfun
 Zur späteren Detaillierung in D1/D2, N1/N2, S1, B1 und Architektur bleiben insbesondere offen: konkrete erlaubte Anbieteranbindungen und ihr jeweiliger Gratis-/Abo-Status; überprüfbare Qualitätskriterien und Mindestleistung; Gebühren- und Quotalimits einschließlich unbekannter Provider-Verbrauchszustände; genaue Speicher-, Export- und Aufbewahrungsformate; Löschfristen und Backupprozesse; fachliche Kardinalitäten; Synchronisationskonfliktregeln und Authentisierungsdetails. Diese offenen Punkte berechtigen **nicht**, FE-01 bis FE-11 still umzudeuten oder Ereignisse in persönlichen externen Kalendern anzulegen, zu ändern oder zu löschen.
 
 **Freigabestatus:** Zur Prüfung durch den Projektinhaber. Die Aufnahme dieser Dokumentfassung in die Spezifikationsbranche ist keine fachliche Freigabe und kein Nachweis implementierter Funktionen. P1, P2, F1 und F2 werden durch diese Überarbeitung nicht geändert.
+
+
+## F3.11 Ergänzte fachliche Prüf- und Auswahlfunktionen
+
+Die Entscheidungen FE-27 bis FE-89 ergänzen den Bestand; mit Ausnahme von **FE-56 (offen)** sind ihre fachlichen Vorgaben bestätigt. Die vollständige deutsche Entscheidungsmatrix und die zwölf Nachbarverträge stehen in [S1](S1-nachbarsysteme.md). Eine fachliche Entscheidung ist keine Aussage über implementierte Funktionen oder aktuell erteilte Anbieterrechte. Alle Bausteine bleiben **Zur Prüfung**. Historische Prüfstände, frühere FE-Teilmengen und alte Versionsbezüge bezeichnen ausschließlich ihre damalige Grundlage; maßgeblich ist der aktuelle Index mit [Änderungs- und Prüfnachweis](E3-pruefnachweis.md).
+
+Diese Funktionen beschreiben fachliche Entscheidungen, keine Kryptographie, Middleware oder technische Authentifizierungsimplementierung.
+
+### AF-28 — Berechtigungsschnittmenge und Supportumfang bestimmen
+
+**Aufrufer:** UC-53, UC-54, UC-63; zugehörige B1-/B2-Abläufe.
+
+**Eingabe:** Konto, Rolle, Objekt, Sitzung, Gerät, Feature, Freigabezweck und Ablauf.
+
+**Vorbedingung:** Eigentum und tatsächliche Verfügbarkeit sind bekannt oder ausdrücklich unklar; unklare Pflichtberechtigung ist keine Erlaubnis.
+
+**Regel und Ergebnis:** Nur die Schnittmenge aktueller Rechte ist zulässig; explizite Verbote und Widerruf sperren. Support ist zeit- und objektgebunden standardmäßig lesend. Das Ergebnis ist zulässig, gesperrt oder prüfbedürftig mit nachvollziehbarem Grund; die Funktion selbst erzeugt keine externe Nebenwirkung.
+
+**Abnahmebeispiel:** Sekundäradministrator kann sich trotz eigener Anfrage kein Super-Admin-Recht verleihen.
+
+### AF-29 — Quotenwirkung und Neuaufnahme beurteilen
+
+**Aufrufer:** UC-55, UC-59; zugehörige B1-/B2-Abläufe.
+
+**Eingabe:** Globale Quotenvorgabe, Kontoausnahme, bestätigter Verbrauch und Neuaufnahmeumfang.
+
+**Vorbedingung:** Eigentum und tatsächliche Verfügbarkeit sind bekannt oder ausdrücklich unklar; unklare Pflichtberechtigung ist keine Erlaubnis.
+
+**Regel und Ergebnis:** Ausdrückliche Kontoausnahme geht dem Grundwert vor; neue Konten erben Grundwerte. Bei Überschreitung nur neue betroffene Aufnahmen sperren und vor Grenzerreichung warnen. Das Ergebnis ist zulässig, gesperrt oder prüfbedürftig mit nachvollziehbarem Grund; die Funktion selbst erzeugt keine externe Nebenwirkung.
+
+**Abnahmebeispiel:** Volle Medienquote lässt vorhandene Dokumente und Konto zugänglich.
+
+### AF-30 — Funktionssichtbarkeit und Veröffentlichungsreife prüfen
+
+**Aufrufer:** UC-55; zugehörige B1-/B2-Abläufe.
+
+**Eingabe:** Featurefassung, Zustand, Testerrolle, Termin, unterstützte Funktion und aktuelles Recht.
+
+**Vorbedingung:** Eigentum und tatsächliche Verfügbarkeit sind bekannt oder ausdrücklich unklar; unklare Pflichtberechtigung ist keine Erlaubnis.
+
+**Regel und Ergebnis:** Verborgen, bald, ausgewählte Tester und öffentlich unterscheiden; Termin allein ersetzt keinen tatsächlich erfolgreichen Release. Deaktivierung bewahrt Daten und sperrt neue Wirkungen. Das Ergebnis ist zulässig, gesperrt oder prüfbedürftig mit nachvollziehbarem Grund; die Funktion selbst erzeugt keine externe Nebenwirkung.
+
+**Abnahmebeispiel:** Abgesagte Veröffentlichung erzeugt keine Ankündigung und keinen Direktzugriff.
+
+### AF-31 — Quellversionsunterschiede und Ableitungsbedarf bestimmen
+
+**Aufrufer:** UC-57; zugehörige B1-/B2-Abläufe.
+
+**Eingabe:** Eigentümer, Quellidentität, belegte Revisionen, Annahme und Ableitungsbeziehungen.
+
+**Vorbedingung:** Eigentum und tatsächliche Verfügbarkeit sind bekannt oder ausdrücklich unklar; unklare Pflichtberechtigung ist keine Erlaubnis.
+
+**Regel und Ergebnis:** Änderungsvorschlag vor Quellenübernahme; erst nach bestätigter neuer Version abhängige Ableitungen markieren und Aktualisierung zur Inhaltsprüfung vorbereiten. Das Ergebnis ist zulässig, gesperrt oder prüfbedürftig mit nachvollziehbarem Grund; die Funktion selbst erzeugt keine externe Nebenwirkung.
+
+**Abnahmebeispiel:** Dateiname allein beweist keine identische Quelle; eine Ableitung wird nicht ungefragt ersetzt.
+
+### AF-32 — Schutzvererbung und Analyseumfang bestimmen
+
+**Aufrufer:** UC-58; zugehörige B1-/B2-Abläufe.
+
+**Eingabe:** Quellschutz, abgeleitete Objekte, Geräte-/Schlüsselzustand und Vorgangsfreigabe.
+
+**Vorbedingung:** Eigentum und tatsächliche Verfügbarkeit sind bekannt oder ausdrücklich unklar; unklare Pflichtberechtigung ist keine Erlaubnis.
+
+**Regel und Ergebnis:** Schutz erbt auf alle Ableitungen und Nebenansichten; lokale Verarbeitung bevorzugen; nur notwendiger eigener Cloudausschnitt pro ausdrücklich freigegebenem Vorgang. Das Ergebnis ist zulässig, gesperrt oder prüfbedürftig mit nachvollziehbarem Grund; die Funktion selbst erzeugt keine externe Nebenwirkung.
+
+**Abnahmebeispiel:** Eine Zusammenfassung sensibler Quellen wird nicht als öffentlich indexierbar ausgegeben.
+
+### AF-33 — Sichere Archivaufnahme fachlich qualifizieren
+
+**Aufrufer:** UC-59; zugehörige B1-/B2-Abläufe.
+
+**Eingabe:** Formaterkennung, Eintragsliste, Ordnerstruktur, Rechte, Quoten und bekannte Extraktionsgrenzen.
+
+**Vorbedingung:** Eigentum und tatsächliche Verfügbarkeit sind bekannt oder ausdrücklich unklar; unklare Pflichtberechtigung ist keine Erlaubnis.
+
+**Regel und Ergebnis:** Pfadflucht, Bomben, ausführbare Inhalte und beschädigte Teile ablehnen beziehungsweise isolieren; Original und Extrakte getrennt, Provenienz und Fehlteile kenntlich. Das Ergebnis ist zulässig, gesperrt oder prüfbedürftig mit nachvollziehbarem Grund; die Funktion selbst erzeugt keine externe Nebenwirkung.
+
+**Abnahmebeispiel:** Ein abgewiesener Teil gilt nicht als erfolgreich importiert; kein Extrakt überschreibt ein anderes Objekt.
+
+### AF-34 — Wiederherstellungsmenge gegen Löschmarkierungen abgleichen
+
+**Aufrufer:** UC-60, UC-61; zugehörige B1-/B2-Abläufe.
+
+**Eingabe:** Eigene Sicherung, aktueller Objektstand, bestätigter Umfang und endgültige Löschmarkierungen.
+
+**Vorbedingung:** Eigentum und tatsächliche Verfügbarkeit sind bekannt oder ausdrücklich unklar; unklare Pflichtberechtigung ist keine Erlaubnis.
+
+**Regel und Ergebnis:** Gelöschte Ziele und widerrufene Zugänge ausnehmen; neuere Fassungen schützen; Konflikte vor Übernahme anzeigen. Das Ergebnis ist zulässig, gesperrt oder prüfbedürftig mit nachvollziehbarem Grund; die Funktion selbst erzeugt keine externe Nebenwirkung.
+
+**Abnahmebeispiel:** Ältere Sicherung und Offlinekopie heben eine endgültige Löschung nicht auf.
+
+### AF-35 — Integrationswiederaufnahme und Historie qualifizieren
+
+**Aufrufer:** UC-56; zugehörige B1-/B2-Abläufe.
+
+**Eingabe:** Verbindungszustand, Scope, Einwilligung, Quellstand, Ergebnisnachweis und Restversuche.
+
+**Vorbedingung:** Eigentum und tatsächliche Verfügbarkeit sind bekannt oder ausdrücklich unklar; unklare Pflichtberechtigung ist keine Erlaubnis.
+
+**Regel und Ergebnis:** Manuell als Standard; Automatik nur pro Verbindung opt-in. Vor jedem begrenzten Retry Rechte, Kosten und tatsächliche frühere Wirkung prüfen; private minimale Historie führen. Das Ergebnis ist zulässig, gesperrt oder prüfbedürftig mit nachvollziehbarem Grund; die Funktion selbst erzeugt keine externe Nebenwirkung.
+
+**Abnahmebeispiel:** Widerruf beendet geplante Läufe; unbekannter Erfolg wird nicht blind erneut ausgeführt.

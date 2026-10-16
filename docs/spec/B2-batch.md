@@ -2,11 +2,11 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** B2 — Batch-Prozesse\
-**Version:** 0.1 — geprüfter fachlicher Vollentwurf\
-**Stand:** 15.10.2026\
+**Version:** 0.2\
+**Stand:** 16.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Methode:** Bausteinspezifikation nach Johannes Siedersleben; periodische und zeitversetzte Fachabläufe\
-**Bezugsstand:** P1 v0.5, P2 v0.6, F1 v0.2, F2 v0.1, F3 v0.1, D1 v0.1, D2 v0.1 und B1 v0.1; PR #1, Branch `docs/spec/p1-p2-mobile-workspaces`, lesender Ausgangsstand `ecf919d90b4c13cf8f84bf26d03fb22e7bcd85ae`\
+**Bezugsstand:** Harmonisierung FE-01 bis FE-89 vom 16.10.2026; Ausgangs-HEAD `ace1d80e80245379beed02296c3c4dd184c8dd70`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1. Aktuelle Versionen siehe [Index](README.md).\
 
 **Geltung und Freigabe:** FE-01 bis FE-24 gelten als fachliche Nutzerentscheidungen. FE-22 bis FE-24 werden in B2 erstmals konkretisiert. Die Dokumente P1 bis B1 sind nicht rückwirkend überarbeitet; ihre fehlenden Querbezüge werden als Folgearbeit ausgewiesen. Dieses Dokument spezifiziert Zielverhalten, keine bereits bereitgestellten Scheduler, Push-Dienste, APIs, Hintergrundrechte oder produktiven Jobs. Angaben zu Prüffrequenzen sind Produktvorgaben unter tatsächlichen Betriebsbedingungen, keine Zustellgarantien.
 
@@ -58,7 +58,7 @@ Jeder `BAT-xx` ist eine stabile **B2-Arbeitsablaufkennung**; er bezeichnet eine 
 | [BAT-15](#bat-15--angenommene-wirkungen-nach-unklarem-ausgang-abgleichen) | Angenommene Wirkungen nach unklarem Ausgang abgleichen | Vorschläge | Unklare oder teilweise Wirkung nach Annahme / Wiederaufnahme | Fachlicher Zielumfang |
 | [BAT-16](#bat-16--temporäre-daten-und-freigegebene-löschfolgen-pflegen) | Temporäre Daten und freigegebene Löschfolgen pflegen | Datenschutz | Rechtmäßig festgelegtes Zweckende / bestätigter Löschumfang | Fachlicher Zielumfang |
 | [BAT-17](#bat-17--asynchrone-materialaufbereitung-nach-nutzerauftrag) | Asynchrone Materialaufbereitung nach Nutzerauftrag | Materialien | Bewusster Nutzerauftrag, asynchron nur soweit unterstützt | Fachlicher Zielumfang |
-| [BAT-18](#bat-18--optionale-öffentliche-github-nachweise-aktualisieren) | Optionale öffentliche GitHub-Nachweise aktualisieren | Projekte (bedingt) | Nutzerauftrag; Wiederholung nur nach gesonderter Freigabe und Unterstützung | Bedingter V1-Vorschlag |
+| [BAT-18](#bat-18--optionale-öffentliche-github-nachweise-aktualisieren) | Optionale öffentliche GitHub-Nachweise aktualisieren | Projekte (bedingt) | Nutzerauftrag; Wiederholung nur nach gesonderter Freigabe und Unterstützung | Bestätigter Umfang FE-43, technische Verfügbarkeit bedingt |
 | [BAT-19](#bat-19--berechtigte-benachrichtigungen-zustellen-und-zustellstand-führen) | Berechtigte Benachrichtigungen zustellen und Zustellstand führen | Benachrichtigungen | Dringlicher Hinweis / Digest / zulässiges Zustellfenster | Fachlicher Zielumfang |
 
 ## B2.4 Gemeinsamer Ablaufvertrag
@@ -135,7 +135,7 @@ Alle tatsächlich erkannten, noch zulässig aufbewahrten Hinweise bleiben im ges
 | Merkmal | Fachliche Festlegung |
 | --- | --- |
 | Typ / Verantwortlichkeit | Quellen |
-| Auslöser | konfigurierter Wiederholungslauf (standardmäßig täglich), berechtigter manueller Abruf, erhöhte Dringlichkeit bei naher Frist |
+| Auslöser | Berechtigter manueller Abruf; täglicher Zielcheck nur für erlaubte allgemeine Informationsquellen nach FE-22. Externe Konnektoren laufen nur nach verbindungsspezifischem Opt-in und Frequenz nach FE-85 automatisch. |
 | Eingaben / Vorbedingungen | DM-23 Informationsquelle, DM-38 Quellenbeobachtung, Quellenfreigabe DM-44 soweit benötigt, Quellkennung und bekannter Stand |
 | Ergebnis / Nachbedingung | Neuer DM-38-Beobachtungsstand und gegebenenfalls Kandidat für DM-52; bei Fehler „Stand unbekannt“ |
 | Wiederholungs-/Duplikatschlüssel | Fachliche Eindeutigkeit: Eigentümer + Quellkennung + fachlicher Quellstand + Prüffenster. |
@@ -156,32 +156,26 @@ Alle tatsächlich erkannten, noch zulässig aufbewahrten Hinweise bleiben im ges
 ### BAT-02 — Zugelassene Mitteilungen und Studiennachrichten sichten
 
 | Merkmal | Fachliche Festlegung |
-| --- | --- |
-| Typ / Verantwortlichkeit | Quellen |
-| Auslöser | konfigurierter Wiederholungslauf und manueller Start bei offiziell unterstützter Verbindung |
-| Eingaben / Vorbedingungen | ausdrücklich autorisierter Postfach-/Meldungsbereich, Quelle DM-23 und Berechtigung DM-44 |
-| Ergebnis / Nachbedingung | fachlich relevante Änderungskandidaten mit nachvollziehbarer Quelle; nicht relevante private Inhalte werden nicht pauschal gespeichert |
-| Wiederholungs-/Duplikatschlüssel | Fachliche Eindeutigkeit: Berechtigung + nachweisbare Nachrichtenkennung + sachliche Änderung. |
-| Fehler / Wiederaufnahme | Fehlende Verbindung, widerrufene Berechtigung oder unzugängliches Postfach stoppen den Lauf mit sichtbarem „nicht verfügbar“. |
-| Schutz- und Freigabegrenzen | Keine allgemeine Postfachüberwachung ohne Freigabe; keine automatisch gesendeten E-Mails; kein Nachrichteninhalt in Push-Vorschau. |
-| Rückverweise | UC-36, UC-45, UC-47; GP-07, GP-13; AF-01, AF-02, AF-14; DM-23, DM-38, DM-44, DM-52; FE-22, FE-23 |
+|---|---|
+| Typ / Verantwortlichkeit | Quellen; V1 verarbeitet freiwillig manuell bereitgestellte Dateien |
+| Auslöser | Nutzerauftrag nach manuellem Import; kein V1-Inbox-Polling |
+| Eingaben / Vorbedingungen | Eigene rechtmäßig bereitgestellte Mitteilung, DM-23-Herkunft; kein Postfachzugang vorausgesetzt |
+| Ergebnis / Nachbedingung | Quellenbezogener Änderungskandidat ohne ungefragte Kalenderübernahme |
+| Wiederholungs-/Duplikatschlüssel | Eigentümer, nachweisbare Nachrichten-/Dateiidentität, Quellrevision und Sachverhalt |
+| Fehler / Wiederaufnahme | Unlesbare/unsichere Datei kenntlich machen; begrenzte sichere Wiederaufnahme nach FE-88 |
+| Schutz- und Freigabegrenzen | FE-27: manuell zuerst; FE-56: Postfachlesen offen und nicht als V1 aktiviert. OTP-/Sicherheitsversand über NB-05 ist davon unabhängig. |
+| Rückverweise | UC-36, UC-45, UC-47, UC-59; GP-03, GP-07, GP-13; AF-14, AF-31; FE-27, FE-56, FE-85; S1 NB-05 |
 
-**Hauptablauf**
+**Hauptablauf:** 1. Bereitstellung, Eigentum und Verarbeitungsrecht prüfen. 2. Nur notwendige Inhalte der bereitgestellten Datei auswerten. 3. Nachweisbare Dubletten erkennen; Unsicherheit nicht als Identität ausgeben. 4. Amtliche und informelle Quelle unterscheiden. 5. Kandidat an BAT-04 weitergeben, keine Antwort und keinen Postfachabruf auslösen.
 
-1. Prüfen, ob der konkrete Anbieter, Zugang und die vereinbarten Ordner/Quellen unterstützt werden.
-2. Nur ausgewählte und zwecknotwendige Metadaten oder zugelassene Inhalte abrufen.
-3. Neue/alte Nachrichten fachlich vergleichen, nachweisbar gleiche Sachverhalte als Duplikate oder Weiterleitungen erkennen. Unsichere Ähnlichkeit nicht zum Löschen oder Verschmelzen unabhängiger Mitteilungen verwenden.
-4. Frist- und Prüfungsinformationen nur als potentiellen Quellstand kennzeichnen; offizielle und informelle Quelle unterscheiden.
-5. Relevantes zur Prüfung nach BAT-04 weiterreichen; keine Antwort versenden.
-
-**Abnahmebeispiel:** Eine doppelt zugestellte Nachricht erzeugt einen Änderungshinweis statt zwei; nach Widerruf erfolgen keine weiteren Abrufe.
+**Abnahmebeispiel:** Zweifacher manueller Import derselben belegbar identischen Meldung erzeugt keinen doppelten Hinweis. Eine hinterlegte Hochschuladresse startet keinerlei Inboxzugriff. Ein späterer Postfachzweig bedarf erst einer Entscheidung zu FE-56 und einer ergänzten S1-Freigabe.
 
 ### BAT-03 — Externe Kalenderverfügbarkeit lesend aktualisieren
 
 | Merkmal | Fachliche Festlegung |
 | --- | --- |
 | Typ / Verantwortlichkeit | Planung |
-| Auslöser | für eine autorisierte interne Planungsberechnung oder beim konfigurierten Bedarf an Aktualität |
+| Auslöser | bewusster manueller Abruf für interne Planung; automatischer externer Abruf nur mit verbindungsspezifischem Opt-in und Frequenz (FE-85) |
 | Eingaben / Vorbedingungen | DM-36 ExterneKalenderLesefreigabe, gewünschtes Planungsintervall und bereits bekannte Verfügbarkeitsfenster |
 | Ergebnis / Nachbedingung | zeitlich begrenzte, minimierte Belegt-/Frei-Information mit Quellenstand; keine externe Änderung |
 | Wiederholungs-/Duplikatschlüssel | Fachliche Eindeutigkeit: Berechtigung + Kalenderquelle + Zeitfenster + gültiger Abrufstand. |
@@ -527,24 +521,24 @@ Alle tatsächlich erkannten, noch zulässig aufbewahrten Hinweise bleiben im ges
 | --- | --- |
 | Typ / Verantwortlichkeit | Projekte (bedingt) |
 | Auslöser | bewusste Analyse eines ausgewählten öffentlichen Repositories; Wiederholung nur bei ausdrücklich aktivierter, unterstützter Überwachung |
-| Eingaben / Vorbedingungen | DM-19 ausgewählte öffentliche Repository-Referenz, GitHub-Profilbezug DT-57 sofern im noch zu bestätigenden Umfang vorgesehen; nachweislich erlaubter Lesekanal |
+| Eingaben / Vorbedingungen | DM-19 ausgewählte öffentliche Repository-Referenz, GitHub-Profilbezug DT-57 sofern im bestätigten Umfang nach FE-43 vorgesehen; nachweislich erlaubter Lesekanal |
 | Ergebnis / Nachbedingung | zeitbezogene Quellenhinweise und vorläufige DM-14-Kompetenzbelege; keine amtliche Kompetenzanerkennung |
 | Wiederholungs-/Duplikatschlüssel | Fachliche Eindeutigkeit: Eigentümer + ausgewähltes Repository + nachweisbare Version/Commit + Analyseziel. |
 | Fehler / Wiederaufnahme | Nicht unterstützte oder gesperrte GitHub-Schnittstelle: keine Analyse behaupten, keine Ratenlimit-Umgehung, kein Zugriff auf private Repos. |
-| Schutz- und Freigabegrenzen | B2 beschreibt hier eine BEDINGTE V1-Option, keine erfolgte Freigabe, implementierte Verbindung oder garantierte API-Verfügbarkeit. |
+| Schutz- und Freigabegrenzen | FE-43 bestätigt den V1-Produktumfang; B2 behauptet weder eine implementierte Verbindung noch garantierte API-Verfügbarkeit. |
 | Rückverweise | UC-42, UC-43, UC-45; GP-09, GP-11, GP-13; AF-01, AF-02, AF-23; DM-14, DM-19, DM-23, DM-44; DT-57, DT-64; FE-08, FE-10, FE-22 |
 
 **Hauptablauf**
 
-1. Feststellen, ob die öffentliche, gezielt ausgewählte Repository-Analyse tatsächlich in V1 freigegeben/implementiert wurde.
+1. Tatsächlich unterstützte offizielle Kontoverbindung, aktuellen bestätigten Scope (Auswahl oder alle eigenen öffentlichen Repositories) und manuellen Auftrag beziehungsweise verbindungsspezifisches Opt-in prüfen.
 2. Öffentliche Quellberechtigung, API-Limits und aktuelle Geschäftsbedingungen prüfen.
-3. Nur gewünschte Repositories und erkennbare Beiträge lesen; Team- und KI-Anteile nicht als eigene Fähigkeiten zusichern.
+3. Nur öffentliche Repositories des gewählten Umfangs und erkennbare Beiträge lesen; Team- und KI-Anteile nicht als eigene Fähigkeiten zusichern.
 4. Auswertungen mit Verweis, Zeitpunkt, Unsicherheit und belegbarer oder ausdrücklich unbekannter Urheberschaft als vorläufig markieren.
 5. Nur innerhalb einer tatsächlich vorhandenen fachlichen Freigabe aktualisierte Belege beziehungsweise vorläufige Vorschläge im Portfolio bereitstellen; keine private Kontoauthentifizierung ohne separates unterstütztes Verfahren.
 
 **Abnahmebeispiel:** Ein öffentliches Teamrepository zeigt TypeScript; Syllentra schlägt eine vorläufige Erfahrung vor und verweigert die Aussage „eigenständig vollständig beherrscht“.
 
-**Abgrenzung der Version:** Diese fachliche Beschreibung fixiert keine allgemeine GitHub-Kontoanmeldung in V1. Die öffentliche, gezielt ausgewählte Read-only-Auswertung ist ein noch zu beschließender Implementierungsumfang aus D2/B1; periodische Repository-Beobachtung wird in V1 **nicht** automatisch aktiviert.
+**Abgrenzung der Version:** FE-43 legt die freiwillige offizielle GitHub-Kontoverbindung in V1 fest; ihre technische Verfügbarkeit und Rechte sind gesondert nachzuweisen. Die lesende Auswertung ausgewählter oder aller eigenen öffentlichen Repositories ist ein durch FE-43 bestätigter Produktumfang mit gesondert nachzuweisender technischer Verfügbarkeit; periodische Repository-Beobachtung wird in V1 **nicht** automatisch aktiviert.
 
 ### BAT-19 — Berechtigte Benachrichtigungen zustellen und Zustellstand führen
 
@@ -817,7 +811,7 @@ Ein **nicht direkt durch BAT ausgelöster** Use Case ist nicht „ungedeckt“: 
 | AT-32 | FE-22 | Batch auf zwei Geräten gestartet | Deduplizierter Quellstand; Endgerät-Sync keine zweite Wirkung. |
 | AT-33 | FE-09, FE-13 | Datensparsame Bereinigung nach explizitem Löschumfang | Weder anderes geteiltes Original noch fremde Verknüpfung heimlich gelöscht. |
 | AT-34 | FE-10 | ChatGPT-Consumerabo vorhanden, API-Recht nicht bestätigt | Kein API-Aufruf allein wegen Consumerabo. |
-| AT-35 | V1-Vorschlag GitHub | Öffentlich ausgewähltes Repository, read-only Zugriff tatsächlich erlaubt | Nur vorläufige nachweisbezogene Kompetenzhinweise; keine privaten Projekte, kein Schreibzugriff. |
+| AT-35 | Bestätigter GitHub-V1-Umfang (FE-43) | Öffentlich ausgewähltes Repository, read-only Zugriff tatsächlich erlaubt | Nur vorläufige nachweisbezogene Kompetenzhinweise; keine privaten Projekte, kein Schreibzugriff. |
 | AT-36 | Berechtigung | Unbekannte Quelle enthält angeblichen Admin-Befehl | Inhalt wird als Daten behandelt und löst keine Berechtigungserweiterung aus. |
 | AT-37 | FE-23 | Tagesdigest wurde gebildet, Benachrichtigungsdienst nicht erreichbar | In-App-Historie bleibt zugänglich, Zustellung nicht als Erfolg behauptet. |
 | AT-38 | FE-24 | Zwei Fristen am selben Kalendertag | Beide separat dedupliziert; gleiche Pushdarstellung verschmilzt nicht Ereignisidentität. |
@@ -833,12 +827,12 @@ Die folgenden Punkte bleiben **bewusst offen**. Ihre noch fehlende technische Pr
 - **D1/D2:** fachliche Träger für Lauf-/Erinnerungskandidaten, konkrete Zeitfenster, Kanalzustände und Digestzustellungen **nur falls** wirklich als eigene persistente Entitäten nötig; vorhandene DM-/DT-IDs nicht heimlich neu belegen.
 - **F2/F3/D1/D2:** FE-18..FE-24 und DLG-26, DLG-50 mit vorhandenen UCs/AFs und Typen harmonisieren, ohne Umnummerierung oder rückwirkende Freigabe zu behaupten.
 - **B1:** Nutzerbedienung zur Quellenfrequenz, Digest-Zeit, Ruhezeit, Kanalberechtigung, Fristregel pro Ereignis und Fehlerstand vervollständigen, sobald fachlich geprüft.
-- **Produktentscheidung GitHub V1:** nur öffentliche, gezielt ausgewählte Repositories in Betracht; rechtliche/technische Unterstützung gesondert verifizieren, kein automatischer Zugang zu privaten Konten oder garantierte periodische Analyse.
+- **Bestätigter Produktumfang GitHub V1 (FE-43):** freiwillige offizielle Kontoverbindung, ausgewählte oder alle eigenen öffentlichen Repositories nur lesend; rechtliche/technische Unterstützung gesondert verifizieren, kein automatischer Zugang zu privaten Konten oder garantierte periodische Analyse.
 - **Datenschutz:** konkrete Aufbewahrungsfristen und zulässige Backup-/Provider-Löschfolgen nach gesonderter Entscheidung; FE-13 wird nicht durch unveränderliche Erinnerungs-Vollkopien verletzt.
 - **Betrieb:** ob Hintergrundprüfungen bei geschlossener App per zulässigem Serverbetrieb ausführbar sind, ist offen; keine Architektur- oder Anbieterfestlegung im B2-Fachentwurf.
 
 ## B2.15 Prüfstand, Abgrenzung und Änderungsnachweis
-**Quelle und Lieferumfang:** Der vor Bearbeitung geprüfte lokale und entfernte Branch-/PR-Stand entspricht `ecf919d90b4c13cf8f84bf26d03fb22e7bcd85ae` auf `docs/spec/p1-p2-mobile-workspaces`. Der vollständige gelieferte Entwurf wird als B2 v0.1 ergänzt; nur der B2-Eintrag im [Index](README.md) wird mitgeändert. P1 bis B1 bleiben unverändert. Commit und Push erfolgen ausschließlich über die bestehende PR #1, ohne Zusammenführung nach main und ohne Produktjobs, Benachrichtigungen oder Dienste auszuführen. B2 bleibt zur Prüfung; ein späterer Git-Stand ist kein fachlicher Freigabenachweis.
+**Quelle und Lieferumfang:** Der vor Bearbeitung geprüfte lokale und entfernte Branch-/PR-Stand entspricht `ecf919d90b4c13cf8f84bf26d03fb22e7bcd85ae` auf `docs/spec/p1-p2-mobile-workspaces`. Der vollständige gelieferte Entwurf wird als B2 v0.2 ergänzt; nur der B2-Eintrag im [Index](README.md) wird mitgeändert. Dieser historische B2-Prüfstand änderte P1 bis B1 nicht; die aktuelle Harmonisierung aktualisiert sie. Commit und Push erfolgen ausschließlich über die bestehende PR #1, ohne Zusammenführung nach main und ohne Produktjobs, Benachrichtigungen oder Dienste auszuführen. B2 bleibt zur Prüfung; ein späterer Git-Stand ist kein fachlicher Freigabenachweis.
 
 **Neu bestätigte Fachentscheidungen:** FE-22 täglicher konfigurierbarer Quellencheck mit fristnaher zulässiger Anpassung; FE-23 zeitnahe dringliche Hinweise und gebündelte sekundäre Information; FE-24 Erinnerung J−5/J−1 mit pro Ereignis abweichenden Regeln. Diese Entscheidungen ergänzen FE-01..FE-21, ersetzen sie nicht.
 
@@ -863,3 +857,70 @@ Die folgenden Punkte bleiben **bewusst offen**. Ihre noch fehlende technische Pr
 **Auslöserabgleich:** Der Katalog unterscheidet nun tatsächliche Quellereignisse, Bedarfsprüfungen, Nutzeraufträge und Wiederaufnahme. Insbesondere sind BAT-12 kein pauschaler kostenpflichtiger Pollingauftrag und BAT-15 kein periodischer Erstausführer; BAT-18 erhält durch FE-22 keine automatische Überwachungsfreigabe.
 
 **Noch nicht freigegeben:** die konkrete Anzahl/Teilung der 19 fachlichen BAT-Abläufe, ihre physischen Laufträger, Pflicht-/Optionalbeziehungen, endgültigen Zeitgrenzen, Berechtigungs-/Aufbewahrungsprotokolle und Betriebsziele. Der vorliegende Text trägt deshalb den Status `Zur Prüfung`. Dokumentationsprüfungen sind keine automatisierten Produkttests.
+
+
+## B2.16 Ergänzte Hintergrundverarbeitung und globale Ausführungsgrenzen
+
+Die Entscheidungen FE-27 bis FE-89 ergänzen den Bestand; mit Ausnahme von **FE-56 (offen)** sind ihre fachlichen Vorgaben bestätigt. Die vollständige deutsche Entscheidungsmatrix und die zwölf Nachbarverträge stehen in [S1](S1-nachbarsysteme.md). Eine fachliche Entscheidung ist keine Aussage über implementierte Funktionen oder aktuell erteilte Anbieterrechte. Alle Bausteine bleiben **Zur Prüfung**. Historische Prüfstände, frühere FE-Teilmengen und alte Versionsbezüge bezeichnen ausschließlich ihre damalige Grundlage; maßgeblich ist der aktuelle Index mit [Änderungs- und Prüfnachweis](E3-pruefnachweis.md).
+
+Jeder externe Konnektor startet standardmäßig manuell. FE-22 ist ein Ziel für autorisierte allgemeine Quellenchecks und schaltet keine Hochschul-, Postfach-, GitHub-, Drive- oder Kalenderverbindung automatisch ein. Interne Gerätesynchronisation und interne Erinnerungen sind davon getrennt. Alle Wiederaufnahmen sind begrenzt konfigurierbar, prüfen Rechte/Einwilligung/Kosten erneut und gleichen unbekannte Wirkung vor einem erneuten Aufruf ab (FE-88).
+
+### BAT-20 — Quelländerung und Ableitungsprüfung vorbereiten
+
+| Merkmal | Festlegung |
+|---|---|
+| Auslöser | Erlaubter manueller Import/Abruf oder ausdrücklich aktivierter externer Sync; akzeptierte neue Quellversion für die Ableitungsphase |
+| Eingaben und Rückverweise | DM-21, DM-22, DM-38, DM-39, DM-40, DM-62; UC-57; AF-31; FE-86, FE-87 |
+| Ergebnis und Ablauf | Quellenunterschied zunächst nur vorschlagen; nach Quellenannahme betroffene Ableitungen als veraltet markieren, Aktualisierung vorbereiten und Inhalt bestätigen lassen. |
+| Fachlicher Duplikatschlüssel | Eigentümer + Quelle + alte/neue Revision + Ableitungsziel + Phase |
+| Schutzgrenzen | Keine Überschreibung, keine ungeprüfte Inhaltsübernahme, keine Wiederbelebung gelöschter Historie. |
+| Fehler / Wiederaufnahme | Fortschritt und letzter tatsächlicher Erfolg sichtbar; unbekannter Ausgang wird zuerst abgeglichen; begrenzter sicherer Retry mit erneuter Berechtigungs- und Kostenprüfung; bei fehlendem Recht stoppen. |
+
+**Abnahmebeispiel:** Wiederholung desselben zulässigen Auftrags erzeugt keine doppelte fachliche Wirkung. Widerruf vor einem Retry blockiert die weitere Ausführung, ohne vorhandene zulässige Daten zu löschen.
+
+### BAT-21 — Veröffentlichungstermine und Ankündigungen kontrollieren
+
+| Merkmal | Festlegung |
+|---|---|
+| Auslöser | Bestätigter geplanter Release oder bewusster sofortiger Veröffentlichungsauftrag |
+| Eingaben und Rückverweise | DM-56, DM-57, DM-60, DM-61; UC-55; AF-30; FE-66 bis FE-69 |
+| Ergebnis und Ablauf | Aktuelle Rechte, Tests, Zielgruppe und nicht abgesagte Fassung prüfen; erst tatsächlich verfügbare Funktion ankündigen, schließbaren Hinweis je Nutzer führen. |
+| Fachlicher Duplikatschlüssel | Feature + Releasefassung + Zielgruppe/Nutzer + Kanal |
+| Schutzgrenzen | Terminänderung/Absage stoppt alte Aufträge; deaktivierte Funktion bewahrt Daten und erlaubt keine neuen Schreibwirkungen. |
+| Fehler / Wiederaufnahme | Fortschritt und letzter tatsächlicher Erfolg sichtbar; unbekannter Ausgang wird zuerst abgeglichen; begrenzter sicherer Retry mit erneuter Berechtigungs- und Kostenprüfung; bei fehlendem Recht stoppen. |
+
+**Abnahmebeispiel:** Wiederholung desselben zulässigen Auftrags erzeugt keine doppelte fachliche Wirkung. Widerruf vor einem Retry blockiert die weitere Ausführung, ohne vorhandene zulässige Daten zu löschen.
+
+### BAT-22 — Sitzungs- und Freigabeabläufe kontrollieren
+
+| Merkmal | Festlegung |
+|---|---|
+| Auslöser | Tatsächlicher Ablauf, Widerruf, Konto-/Gerätesperre oder aktueller Zugriff mit Zustandsprüfung |
+| Eingaben und Rückverweise | DM-03, DM-44, DM-54, DM-55, DM-58, DM-63; UC-52, UC-54, UC-56; AF-28, AF-35; FE-36, FE-62, FE-63, FE-84 |
+| Ergebnis und Ablauf | Abgelaufene oder widerrufene Rechte sperren; offenen Lauf sicher stoppen; tatsächlichen Zustand sichtbar machen und minimale Auditnachweise führen. |
+| Fachlicher Duplikatschlüssel | Eigentümer + Rechtsobjekt + Revision + Zustandsübergang |
+| Schutzgrenzen | Kein Batch nötig, damit ein bereits abgelaufenes Recht unwirksam wird; jeder Zugriff prüft aktuell. Kein stilles Reconnect. |
+| Fehler / Wiederaufnahme | Fortschritt und letzter tatsächlicher Erfolg sichtbar; unbekannter Ausgang wird zuerst abgeglichen; begrenzter sicherer Retry mit erneuter Berechtigungs- und Kostenprüfung; bei fehlendem Recht stoppen. |
+
+**Abnahmebeispiel:** Wiederholung desselben zulässigen Auftrags erzeugt keine doppelte fachliche Wirkung. Widerruf vor einem Retry blockiert die weitere Ausführung, ohne vorhandene zulässige Daten zu löschen.
+
+### BAT-23 — EU-Sicherungen und kontrollierte Wiederherstellung vorbereiten
+
+| Merkmal | Festlegung |
+|---|---|
+| Auslöser | Autorisierter automatischer Sicherungszeitpunkt oder konkret bestätigte eigene Wiederherstellung |
+| Eingaben und Rückverweise | DM-68, DM-69, DM-70; UC-60; AF-34; FE-40, FE-41, FE-75, FE-81 |
+| Ergebnis und Ablauf | Verschlüsselte EU-Sicherung erzeugen und Prüfbarkeit belegen; vor Restore aktuelle Löschmarkierungen und neuere Revisionen filtern, Konflikte zeigen, nur bestätigte zulässige Auswahl übernehmen. |
+| Fachlicher Duplikatschlüssel | Eigentümer + Sicherungsrevision + Auftragskennung + bestätigte Auswahlfassung |
+| Schutzgrenzen | Keine überholten Freigaben/Secrets restaurieren; unvollständige Sicherung nicht als vollständig melden; endgültige Löschungen haben Vorrang. |
+| Fehler / Wiederaufnahme | Fortschritt und letzter tatsächlicher Erfolg sichtbar; unbekannter Ausgang wird zuerst abgeglichen; begrenzter sicherer Retry mit erneuter Berechtigungs- und Kostenprüfung; bei fehlendem Recht stoppen. |
+
+**Abnahmebeispiel:** Wiederholung desselben zulässigen Auftrags erzeugt keine doppelte fachliche Wirkung. Widerruf vor einem Retry blockiert die weitere Ausführung, ohne vorhandene zulässige Daten zu löschen.
+
+### Präzisierungen vorhandener Verarbeitung
+
+- **BAT-01/BAT-03/BAT-18:** Vor Abruf gilt DM-63: manuell als Standard, automatische Intervalle nur explizit pro Verbindung. Bereits autorisierter allgemeiner öffentlicher Quellencheck nach FE-22 begründet keinen neuen Konnektor-Scope.
+- **BAT-14:** Zentrale interne Cloud gleicht eigene Geräte einschließlich Änderungen und Löschungen ab. Selektiv heruntergeladene Daten sind offline bearbeitbar; Rückkehr prüft Revisionen und Löschmarkierungen. Ein ausgeschalteter persönlicher PC ist kein Hindernis des Cloudbetriebs.
+- **BAT-16:** Private Papierkorbfristen, sofortige endgültige Bereinigung auf bestätigten Wunsch und endliche Sicherungsretention beachten. Löschmarkierungen verhindern Wiederbelebung; eine Ableitungslöschung löscht nicht ihr Original. Keine Datenbereinigung allein wegen Feature-Deaktivierung oder Kontosperre.
+- **BAT-17:** Lange Audio-/Videodateien werden importiert; native Aufnahme ist nicht erforderlich. Lokale Transkription bevorzugen; Drittverarbeitung nur rechtmäßig und freigegeben. Strukturierte Definitionen, Methoden, Beispiele, Erklärungen und prüfungsrelevante Notizen vor Bereinigung des überwiegend temporären Transkripts prüfen. Bewusstes Original ist getrennt und kann kontrolliert gelöscht werden.
+- **BAT-19:** Hauptgerät standardmäßig, weitere Geräte freiwillig; Hinweisidentität gemeinsam, Zustellversuch pro autorisiertem Gerät/Kanal deduplizieren. In-App und erlaubter Push als Standard, Erinnerungsmail nur opt-in; OTP/Sicherheitspost hat einen getrennten Zweck. Releasehinweis erst nach tatsächlicher Verfügbarkeit aus BAT-21.

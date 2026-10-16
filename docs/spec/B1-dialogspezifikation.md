@@ -2,11 +2,11 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** B1 — Dialogspezifikation\
-**Version:** 0.1 — geprüfter fachlicher Vollentwurf\
-**Stand:** 15.10.2026\
+**Version:** 0.2\
+**Stand:** 16.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Methode:** Spezifikationsbaustein nach Johannes Siedersleben (GUI-Statik und GUI-Dynamik), nach der [methodischen Herold-B1-Referenz](https://github.com/carstenlucke/herold/blob/main/docs/spec/B1-dialogspezifikation.md), ohne Übernahme ihrer Authentifizierungs- oder Produktentscheidungen\
-**Verifizierter Quellstand:** `docs/spec/p1-p2-mobile-workspaces` in `Viny005/syllentra`, PR #1; P1 v0.5, P2 v0.6, F1 v0.2, F2 v0.1, F3 v0.1, D1 v0.1, D2 v0.1; unveränderter Ausgangsstand `459787027ab941456d61d61da040649fb87709c3`.\
+**Verifizierter Quellstand:** `docs/spec/p1-p2-mobile-workspaces` in `Viny005/syllentra`, PR #1; P1 v0.6, P2 v0.7, F1 v0.3, F2 v0.2, F3 v0.2, D1 v0.2, D2 v0.2; unveränderter Ausgangsstand `459787027ab941456d61d61da040649fb87709c3`.\
 **Freigegebene fachliche Entscheidungen:** FE-01 bis FE-20 aus dem Gespräch; **FE-21** ist eine vom Projektinhaber jetzt hinzugefügte B1-Anforderung, deren Abgleich mit F2/F3/D1/D2 noch aussteht. Die fachliche Abnahme von B1 ist nicht erfolgt.
 
 > **Zweck und Grenze.** Dieses Dokument bestimmt *welche* Dialoge Syllentra anbietet, *welche Informationen* der Eigentümer sieht, *welche Aktionen* er auslösen kann und *welche Reaktionen* er beobachten muss. Es spezifiziert keine Frameworks, CSS-Pixelwerte, API-Endpunkte, Authentifizierungsmethoden, konkreten TTS-Anbieter, Mobilbetriebssystem-Implementierung oder zugesicherte Verfügbarkeit fremder Dienste. Die einzelnen UC-01 bis UC-50, AF-01 bis AF-27, DM-01 bis DM-52, DT-01 bis DT-64, GP-01 bis GP-15, INV-01 bis INV-25 und CFG-01 bis CFG-17 werden nicht umnummeriert oder neu definiert. Die DLG-Kennungen sind neu und gelten zunächst nur für B1.
@@ -20,7 +20,7 @@
 
 Bereits verbindlich: FE-01 optionale Einführung; FE-02 bestätigungspflichtige KI-Dokumentzuordnung; FE-03 adaptive Verständnisfragen; FE-04 automatische, sichtbare und korrigierbare Kurs-/Projektchatzuteilung; FE-05 bestätigungspflichtige interne Neuplanung nach Prüfungsänderung; FE-06 selektive Semesterarchivierung; FE-07 abgestufte Hilfen mit vollständiger Lösung auf Wunsch; FE-08 ein zentral und lokal sichtbarer Vorschlag; FE-09 gemeinsames Dokumentoriginal; FE-10 autorisierte adaptive Modellwahl; FE-11 vorläufige Erinnerung; FE-12 Versionen; FE-13 löschbare Erinnerungshistorie; FE-14 datensparsame KI-Statistik; FE-15 originale institutionelle Notenskala und getrennt gekennzeichnete Äquivalenz; FE-16 „Zur Neubewertung“ bei veralteten oder widersprüchlichen Einschätzungen, ohne willkürliche Löschung und ohne Sperre einer autorisierten Löschung; FE-17 nur vorhandene Statistikgranularität.
 
-Die ergänzend erklärte **geschützte Notennavigation** lautet `Mein Profil > Noten > Institution > einzelne Studienleistung`; Einzelnoten bleiben auf Dashboard, in Profilzusammenfassungen, Suchvorschauen und sämtlichen Benachrichtigungen verborgen. **GitHub V1** bleibt gemäß D2 ein *Vorschlag*: öffentliche, gezielt ausgewählte Repositories nur lesend; private Quellen und weitergehende Plattformen erst nach eigener Rechte- und Umfangsklärung. Die institutionelle Beziehung frei erfasster Noten erfordert eine ergänzende D1-/F2-Abstimmung.
+Die ergänzend erklärte **geschützte Notennavigation** lautet `Mein Profil > Noten > Institution > einzelne Studienleistung`; Einzelnoten bleiben auf Dashboard, in Profilzusammenfassungen, Suchvorschauen und sämtlichen Benachrichtigungen verborgen. **GitHub V1** ist durch FE-43 fachlich bestätigt: ausgewählte oder alle eigenen öffentlichen Repositories nur lesend; private Quellen und weitergehende Plattformen erst nach eigener Rechte- und Umfangsklärung. Die institutionelle Beziehung frei erfasster Noten erfordert eine ergänzende D1-/F2-Abstimmung.
 
 ## B1.2 Navigation und Verantwortlichkeiten
 
@@ -1411,7 +1411,7 @@ Jeder Dialog hat eine **fachliche Zielbeschreibung**, **Einstieg**, **GUI Statik
 | Element/Feld | Art | Bezug | Anfangs- und Darstellungsregel |
 |---|---|---|---|
 | Profil-Link | Eingabe/Auswahl und Anzeige | DT-57 | noch kein Kontonachweis |
-| öffentliche Repositories | Eingabe/Auswahl und Anzeige | DM-19 | nach eindeutiger Auswahl |
+| öffentliche Repositories | Eingabe/Auswahl und Anzeige | DM-19, DT-57 | einzelne oder alle eigenen öffentlichen Repositories nach freiwilliger offizieller Kontoverbindung |
 | Quellenzugriff und Freigabe | Anzeige | DT-11, DT-15, DT-16; DM-44 bei tatsächlich verbundener Integration | öffentlich ist eine Zugriffseigenschaft, kein Berechtigungsstatus; aktiv/deaktiviert/widerrufen/unbekannt getrennt prüfen |
 | Kompetenzvorschläge | Anzeige | DM-14 | mit Quelle |
 
@@ -1419,14 +1419,14 @@ Jeder Dialog hat eine **fachliche Zielbeschreibung**, **Einstieg**, **GUI Statik
 
 | Aktion | Beobachtbare Wirkung / Navigation |
 |---|---|
-| Profil-Link hinzufügen | prüfbaren Locator erfassen |
-| Repositories wählen | lesender Umfang |
+| Konto offiziell verbinden / Profil-Link zuordnen | tatsächliches Verfahren, Rechte und Kontobezug prüfen; bloßer Locator ist kein Identitätsnachweis |
+| Repositories wählen | einzelne oder alle eigenen öffentlichen Repositories, nur lesend; private ausgeschlossen |
 | Analysieren | nur offiziell erlaubte Daten |
 | Kompetenzvorschlag prüfen | DLG-44 |
 
-**Leere, Lade-, Fehler- und Konfliktzustände:** Leer: öffentlicher Profil-Link oder ausgewählte öffentliche Repository-Quelle im vorgeschlagenen Umfang. Lädt: Prüfung mit bekanntem Stand. Fehler: nicht erreichbare/private Quelle, HTTP 403/429 oder fehlendes Recht erklären; kein Login-Scraping und keine vollständige Beitragszuordnung behaupten.
+**Leere, Lade-, Fehler- und Konfliktzustände:** Leer: öffentlicher Profil-Link oder ausgewählte öffentliche Repository-Quelle im bestätigten Umfang. Lädt: Prüfung mit bekanntem Stand. Fehler: nicht erreichbare/private Quelle, HTTP 403/429 oder fehlendes Recht erklären; kein Login-Scraping und keine vollständige Beitragszuordnung behaupten.
 
-**Schutz- und Freigaberegeln:** Nur als **V1-Kandidat**: öffentliche Repos ohne stillen Privat-/Schreibzugriff; Linkbesitz beweist nicht Konto-Eigentum oder individuelle Urheberschaft; keine verdeckte Kontoüberwachung.
+**Schutz- und Freigaberegeln:** **Bestätigter V1-Umfang nach FE-43:** öffentliche Repos ohne stillen Privat-/Schreibzugriff; Linkbesitz beweist nicht Konto-Eigentum oder individuelle Urheberschaft; keine verdeckte Kontoüberwachung.
 
 **Abnahmebeispiel:** Aus öffentlichem Java-Repository entsteht ein vorläufiger Beleg, nicht „Java zertifiziert“.
 
@@ -1558,7 +1558,7 @@ Jeder Dialog hat eine **fachliche Zielbeschreibung**, **Einstieg**, **GUI Statik
 
 #### DLG-48 — Verwaltung und Oberflächenkonfiguration
 
-**Ziel und Einstieg:** Profil > Einstellungen > Administration.
+**Ziel und Einstieg:** Gesonderter Administrationseinstieg nach Rollenprüfung und verpflichtender MFA; persönliche Einstellungen bleiben im Nutzerbereich. DLG-53 bis DLG-56 ergänzen Rollen, Quoten und Veröffentlichungsablauf.
 
 **F2-Bezug:** UC-48.
 
@@ -1851,16 +1851,16 @@ Noten und andere sensible Inhalte dürfen nicht über TTS, automatisch erzeugte 
 
 ### B1.8.4 Verweise, Herkunft und Nachträge
 
-[P1](P1-ziele-rahmenbedingungen.md), [P2](P2-architekturueberblick.md), [F1](F1-geschaeftsprozesse.md), [F2](F2-anwendungsfaelle.md), [F3](F3-anwendungsfunktionen.md), [D1](D1-datenmodell.md), [D2](D2-datentypen.md) und der [Spezifikationsindex](README.md) bleiben unverändert als Quellen maßgeblich. Die vor Bearbeitung geprüfte Branch-/PR-Fassung stimmt mit dem gelieferten Ausgangs-SHA überein. Herold dient ausschließlich als methodische Strukturreferenz. Historische Grundlagen sind die [Projektvision](../PROJECT_VISION.md), insbesondere „Project vision“/„Design principles“, und die [Anforderungen](../REQUIREMENTS.md), Abschnitte 1 und 3; aus [Architekturentscheidungen](../ARCHITECTURE_DECISIONS.md), „Current position“, und [Roadmap](../ROADMAP.md), Phasen 2/3, wird keine technische Lösung übernommen.
+[P1](P1-ziele-rahmenbedingungen.md), [P2](P2-architekturueberblick.md), [F1](F1-geschaeftsprozesse.md), [F2](F2-anwendungsfaelle.md), [F3](F3-anwendungsfunktionen.md), [D1](D1-datenmodell.md), [D2](D2-datentypen.md) und der [Spezifikationsindex](README.md) wurden als Bestandsquellen gelesen und werden mit diesem Auftrag harmonisiert. Die vor Bearbeitung geprüfte Branch-/PR-Fassung stimmt mit dem gelieferten Ausgangs-SHA überein. Herold dient ausschließlich als methodische Strukturreferenz. Historische Grundlagen sind die [Projektvision](../PROJECT_VISION.md), insbesondere „Project vision“/„Design principles“, und die [Anforderungen](../REQUIREMENTS.md), Abschnitte 1 und 3; aus [Architekturentscheidungen](../ARCHITECTURE_DECISIONS.md), „Current position“, und [Roadmap](../ROADMAP.md), Phasen 2/3, wird keine technische Lösung übernommen.
 
 | Herkunft | Status und Abgrenzung |
 |---|---|
 | P1 bis D2, FE-01 bis FE-17 | Übernommene fachliche Vorgaben und Schutzgrenzen; deren jeweiliger dokumentierter Prüfstand bleibt bestehen. |
 | Mit der B1-Mission bestätigte FE-18 bis FE-21 | Dashboardstart, adaptive Navigation, optionale Sprachformen und freiwilliger Hörmodus; keine Abnahme des gesamten Dialogentwurfs oder Beschaffung eines Sprachdienstes. |
 | B1-Präzisierungen | 50 DLG-Zuordnungen, konkrete Felder, Rücksprünge, Medien- und Fehlerreaktionen sind zur Prüfung; keine Änderung bestehender UC-/AF-/DM-/DT-Identitäten. |
-| GitHub V1 | Öffentlicher Profil-Link und manuell ausgewählte öffentliche Repositories bleiben ein Vorschlag. D2 dokumentiert den blockierten offiziellen Quellenabruf (HTTP 403 am 15.10.2026); B1 behauptet keine erneute erfolgreiche Rechteprüfung, keine aktuellen Quoten oder privaten Zugänge. |
+| GitHub V1 | FE-43 bestätigt freiwillige offizielle Kontoverbindung und ausgewählte oder alle eigenen öffentlichen Repositories nur lesend. D2 dokumentiert den blockierten offiziellen Quellenabruf (HTTP 403 am 15.10.2026); B1 behauptet keine erneute erfolgreiche Rechteprüfung, keine aktuellen Quoten oder privaten Zugänge. |
 
-**Nachtragsliste für eine später autorisierte Bearbeitung:** F2 muss FE-18 bis FE-21 und die ergänzten Bedienpfade abgleichen, ohne bestehende UC-Titel umzudeuten. F3 prüft benötigte fachliche TTS-/Audioauswahlregeln getrennt von bestehenden Algorithmen. D1/D2 klären Hörmoduspräferenzen, etwaige kurzlebige Audioverweise, Löschfolgen, dauerhafte Institutionszuordnung freier Leistungen sowie den vorgeschlagenen optionalen GitHub-Profilbezug. S1/N1/N2 müssen tatsächliche Anbieter-/Plattformrechte, Datenübertragung, Kosten, Audio-/Barrierefreiheitsqualität und Grenzen bei Offlinegeräten oder Hintergrundausgabe bestimmen. Diese Nachträge werden in dieser Lieferung nicht umgesetzt.
+**Nachtragsliste für eine später autorisierte Bearbeitung:** F2 muss FE-18 bis FE-21 und die ergänzten Bedienpfade abgleichen, ohne bestehende UC-Titel umzudeuten. F3 prüft benötigte fachliche TTS-/Audioauswahlregeln getrennt von bestehenden Algorithmen. D1/D2 klären Hörmoduspräferenzen, etwaige kurzlebige Audioverweise, Löschfolgen, dauerhafte Institutionszuordnung freier Leistungen sowie den vorgeschlagenen optionalen GitHub-Profilbezug. S1/N1/N2 müssen tatsächliche Anbieter-/Plattformrechte, Datenübertragung, Kosten, Audio-/Barrierefreiheitsqualität und Grenzen bei Offlinegeräten oder Hintergrundausgabe bestimmen. Der aktuelle Nachtrag präzisiert Sprachpräferenzen, Institutionsbezug, GitHub, Konten und Schutz in den jeweils zuständigen Bausteinen; konkrete TTS-Anbieter, Darstellungstests und plattformspezifische Implementierung bleiben offen.
 
 **Korrekturen gegenüber dem vollständigen Anhang:** FE-20 verweist auf Sprachdialoge statt auf DLG-20 (Dokumentverknüpfung); DT-64 nutzt seine tatsächlichen Prüfergebniswerte; die Zahlen im THM-Beispiel behaupten keine ungeprüfte institutionelle Skala. „Zur Neubewertung“ wird DT-45 zugeordnet. Entscheidungs- und Wirkungsausgaben entsprechen F2/D2 einschließlich Gegenstandsentfall, Fehler und Teilübernahme. Katalog, Dialogeinträge und UC-Matrix sind abgeglichen; Quellen-, Rechte-, Noten- und TTS-Grenzen sind präzisiert. Jeder Dialog besitzt eigene Leer-/Lade-/Fehler-/Konfliktfälle statt austauschbarer Standardabsätze.
 
@@ -1923,9 +1923,184 @@ Die DM-/DT-Angaben in jeder GUI-Statik verweisen auf die vollständigen Kataloge
 1. **B1 zur Prüfung:** 50 Dialogkennungen sind beschreibende B1-Entwurfskandidaten, nicht 50 fertige implementierte Screens. Einzelne können später mit Begründung als Schritte, Panels oder modale Dialoge zusammengeführt werden; UC-Verfolgbarkeit muss bestehen bleiben.
 2. **FE-21:** Nutzerwunsch bestätigt, aber text-to-speech-spezifische Ergänzungen zu F2/F3/D1/D2 sowie messbare Qualitätsziele und Verfügbarkeitskriterien sind noch abzustimmen. Keine Änderung älterer Dokumente in diesem Arbeitsauftrag.
 3. **Notenbezug:** D2 erlaubt Notenansicht nach Institution; D1/F2 brauchen die explizite, eindeutige Beziehung für Studienleistungen ohne Modul-/Prüfungsbezug; B1 simuliert keine bereits modellierte Relation.
-4. **GitHub V1:** öffentliche Profil- und Repoanalyse bleibt bis zu offizieller API-/Nutzungsprüfung und Umfangsfreigabe ein Vorschlag. Keine privaten Repositories, keine Schreibrechte, keine unbewiesene Besitz- oder Kompetenzbehauptung.
+4. **GitHub V1:** öffentliche Profil- und Repoanalyse ist im Umfang von FE-43 fachlich bestätigt; technische API-/Nutzungsprüfung bleibt Voraussetzung tatsächlicher Verfügbarkeit. Keine privaten Repositories, keine Schreibrechte, keine unbewiesene Besitz- oder Kompetenzbehauptung.
 5. **Geräte und Audio:** ob Vorlesen im Hintergrund, bei gesperrtem Bildschirm, offline oder bei bestimmten Stimmen möglich ist, hängt von der erlaubten und tatsächlich gewählten Plattform-/Anbieterfähigkeit ab; kein unbedingtes Versprechen. Anbieterabhängige Kosten und Sprachqualität sind nicht durch die UI geklärt.
 6. **V1-Priorisierung:** Für die erste Auslieferung dürfen nach gesonderter Priorisierung einzelne Dialoge reduziert werden, solange kein als V1 verbindlich bestätigter UC verschwindet. Nicht unterstützte Optionen müssen als solche klar sichtbar sein; ein nicht implementierter Dialog darf nicht als funktionsfähig bezeichnet werden.
 7. **Methodischer Stand:** Herold B1 dient der Struktur-Referenz; spezifische Herold-Sicherheitsverfahren (API-Key/TOTP), VoiceNote-Prozess und Screens werden nicht auf Syllentra übertragen.
 
 **Freigabestatus:** `Zur Prüfung` — die Dokumenterstellung oder ein späterer Commit ersetzt nicht die ausdrückliche fachliche Abnahme. Die Lieferung erfolgt über die bestehende PR #1; keine Zusammenführung nach `main` und keine Produktimplementierung.
+
+
+## B1.10 Ergänzende Dialogverträge und getrennte Administration
+
+Die Entscheidungen FE-27 bis FE-89 ergänzen den Bestand; mit Ausnahme von **FE-56 (offen)** sind ihre fachlichen Vorgaben bestätigt. Die vollständige deutsche Entscheidungsmatrix und die zwölf Nachbarverträge stehen in [S1](S1-nachbarsysteme.md). Eine fachliche Entscheidung ist keine Aussage über implementierte Funktionen oder aktuell erteilte Anbieterrechte. Alle Bausteine bleiben **Zur Prüfung**. Historische Prüfstände, frühere FE-Teilmengen und alte Versionsbezüge bezeichnen ausschließlich ihre damalige Grundlage; maßgeblich ist der aktuelle Index mit [Änderungs- und Prüfnachweis](E3-pruefnachweis.md).
+
+Alle neuen Dialoge sind mit Tastatur und auf schmalen Geräten bedienbar. Sie zeigen verständliche deutsche Beschriftungen; UI-Sprachwahl FR/DE/EN ändert die Sprache dieser Spezifikation nicht. Pflichtfelder werden kontextabhängig validiert, Fehler am Eingabefeld und in einer erreichbaren Zusammenfassung erläutert. Abbruch erhält unbestätigte Ausgangsdaten. Kein Dialog zeigt Secrets in Vorschau oder Protokoll.
+
+### DLG-51 — Registrierung und E-Mail-Bestätigung
+
+**Einstieg und Recht:** UC-51; GP-01. Anmeldung/Verifikation sind eingeschränkte Zugänge, Administration verlangt aktuelle MFA und genau das betreffende Recht.
+
+**Sichtbare Informationen:** Ein Interessent registriert sich mit E-Mail und Passwort. Syllentra sendet den angeforderten OTP an die private Primäradresse. Erst nach gültiger zweckgebundener Bestätigung entsteht ein verifizierter Anwendungszugang; freigegebene Funktionen benötigen keine manuelle Zulassung.
+
+**Aktionen und Rückmeldung:** Die Person prüft die konkrete Auswahl, kann korrigieren, bestätigen oder abbrechen. Normale direkte manuelle Eingaben erfordern keine künstliche zweite Bestätigung. Destruktive Aktionen, neue sensible Freigaben und relevante Umfangsänderungen zeigen eine gesonderte konkrete Wirkungsbestätigung. Erfolgreich, teilweise, ausstehend, gesperrt und Wirkung unbekannt werden getrennt angezeigt; bei längeren Vorgängen bleibt der Fortschritt erreichbar.
+
+**Grenzen und Fehler:** Unbestätigtes Konto darf nur Verifikations-/Recoveryfunktionen aufrufen, keine Anwendungsdaten oder Exporte. Ungültige, abgelaufene oder erneut verwendete OTP geben keinen Zugang. Fehlende Fähigkeit wird mit tatsächlich verfügbarem manuellem oder dateibasiertem Ersatz erläutert.
+
+**Abnahmebeispiel:** Konto A wird verifiziert; es erhält sein leeres Dashboard und niemals Inhalte von Konto B.
+
+### DLG-52 — Sitzungssperre und Wiederherstellung
+
+**Einstieg und Recht:** UC-52; GP-01, GP-15. Anmeldung/Verifikation sind eingeschränkte Zugänge, Administration verlangt aktuelle MFA und genau das betreffende Recht.
+
+**Sichtbare Informationen:** Ein verifiziertes Konto meldet sich mit Passwort an. Ein neues Gerät benötigt zusätzliche berechtigte Verifikation; Freigabe über ein bestehendes Gerät oder sichere Wiederherstellung bei Verlust. Lokale Sperre ist konfigurierbar und manuell auslösbar; Wiederherstellung nutzt verifizierte E-Mail plus persönlichen Einmalcode.
+
+**Aktionen und Rückmeldung:** Die Person prüft die konkrete Auswahl, kann korrigieren, bestätigen oder abbrechen. Normale direkte manuelle Eingaben erfordern keine künstliche zweite Bestätigung. Destruktive Aktionen, neue sensible Freigaben und relevante Umfangsänderungen zeigen eine gesonderte konkrete Wirkungsbestätigung. Erfolgreich, teilweise, ausstehend, gesperrt und Wirkung unbekannt werden getrennt angezeigt; bei längeren Vorgängen bleibt der Fortschritt erreichbar.
+
+**Grenzen und Fehler:** Schließen, lokale Sperre, Abmelden und Serversitzungsablauf sind verschieden. Lokales OS-Biometrie-/PIN-Entsperren verlängert keine abgelaufene Serversitzung. Kontorecovery ersetzt keine Dokumentenschlüssel. Fehlende Fähigkeit wird mit tatsächlich verfügbarem manuellem oder dateibasiertem Ersatz erläutert.
+
+**Abnahmebeispiel:** Ein abgelaufener Serverzugang bleibt trotz erfolgreicher lokaler Biometrie gesperrt; verlorene Geräte bleiben widerrufen.
+
+### DLG-53 — Rollenverwaltung und Administrationszugang
+
+**Einstieg und Recht:** UC-53; GP-14. Anmeldung/Verifikation sind eingeschränkte Zugänge, Administration verlangt aktuelle MFA und genau das betreffende Recht.
+
+**Sichtbare Informationen:** Genau ein Super Admin betritt die getrennte Administrationskonsole mit verpflichtender MFA. Nur er lädt sekundäre Administratoren ein und ändert, suspendiert oder widerruft deren Rollen mit Rechtevorschau. Rollenprofile und einzelne Rechte werden nachvollziehbar vergeben.
+
+**Aktionen und Rückmeldung:** Die Person prüft die konkrete Auswahl, kann korrigieren, bestätigen oder abbrechen. Normale direkte manuelle Eingaben erfordern keine künstliche zweite Bestätigung. Destruktive Aktionen, neue sensible Freigaben und relevante Umfangsänderungen zeigen eine gesonderte konkrete Wirkungsbestätigung. Erfolgreich, teilweise, ausstehend, gesperrt und Wirkung unbekannt werden getrennt angezeigt; bei längeren Vorgängen bleibt der Fortschritt erreichbar.
+
+**Grenzen und Fehler:** Kein sekundärer Administrator darf sich selbst erweitern, andere Administratoren verwalten oder exklusive Super-Admin-Rechte übernehmen. Sensible Änderungen benötigen erneute Bestätigung. Private Lerninhalte sind standardmäßig unsichtbar. Fehlende Fähigkeit wird mit tatsächlich verfügbarem manuellem oder dateibasiertem Ersatz erläutert.
+
+**Abnahmebeispiel:** Ein sekundärer Administrator scheitert auch bei direktem Aufruf an der Selbstbeförderung; ein revisionsbezogener Auditnachweis enthält keine Secrets.
+
+### DLG-54 — Befristete Supportfreigabe
+
+**Einstieg und Recht:** UC-54; GP-15. Anmeldung/Verifikation sind eingeschränkte Zugänge, Administration verlangt aktuelle MFA und genau das betreffende Recht.
+
+**Sichtbare Informationen:** Der Kontoinhaber wählt freiwillig Supportperson, konkreten Gegenstand, Zweck, Umfang und Ablaufzeit. Nach verständlicher Prüfung bestätigt er eine standardmäßig nur lesende Freigabe. Er kann sie vor Ablauf widerrufen.
+
+**Aktionen und Rückmeldung:** Die Person prüft die konkrete Auswahl, kann korrigieren, bestätigen oder abbrechen. Normale direkte manuelle Eingaben erfordern keine künstliche zweite Bestätigung. Destruktive Aktionen, neue sensible Freigaben und relevante Umfangsänderungen zeigen eine gesonderte konkrete Wirkungsbestätigung. Erfolgreich, teilweise, ausstehend, gesperrt und Wirkung unbekannt werden getrennt angezeigt; bei längeren Vorgängen bleibt der Fortschritt erreichbar.
+
+**Grenzen und Fehler:** Globale Adminrolle und bloße Supportanfrage reichen nicht. Verändernde Hilfe benötigt eine gesonderte explizite Freigabe. Ablauf oder Widerruf blockieren weitere Zugriffe. Fehlende Fähigkeit wird mit tatsächlich verfügbarem manuellem oder dateibasiertem Ersatz erläutert.
+
+**Abnahmebeispiel:** Support sieht das gewählte Dokument, aber weder andere Unterhaltungen noch weitere Konten; nach Widerruf scheitert erneut versuchter Zugriff.
+
+### DLG-55 — Quotenverwaltung
+
+**Einstieg und Recht:** UC-55; GP-14. Anmeldung/Verifikation sind eingeschränkte Zugänge, Administration verlangt aktuelle MFA und genau das betreffende Recht.
+
+**Sichtbare Informationen:** Berechtigte Administration pflegt globale Quoten mit ausdrücklichen Kontoausnahmen. Neue Konten erben die Grundwerte. Unterstützte Funktionen durchlaufen Entwurf, Vorschau, eigenen Nutzertest, ausgewählte Tester und sofortige oder geplante Veröffentlichung; Termin ist änder- und widerrufbar.
+
+**Aktionen und Rückmeldung:** Die Person prüft die konkrete Auswahl, kann korrigieren, bestätigen oder abbrechen. Normale direkte manuelle Eingaben erfordern keine künstliche zweite Bestätigung. Destruktive Aktionen, neue sensible Freigaben und relevante Umfangsänderungen zeigen eine gesonderte konkrete Wirkungsbestätigung. Erfolgreich, teilweise, ausstehend, gesperrt und Wirkung unbekannt werden getrennt angezeigt; bei längeren Vorgängen bleibt der Fortschritt erreichbar.
+
+**Grenzen und Fehler:** Keine erfundenen Zahlen. Eine volle Quote blockiert neue betroffene Aufnahmen, nicht Konto oder vorhandene Daten. Neue programmierte Funktionen sind anfangs verborgen. Deaktivierung bewahrt Daten und erlaubt nur sichere Lesezugriffe; Server prüft Rechte vor jeder Wirkung. Fehlende Fähigkeit wird mit tatsächlich verfügbarem manuellem oder dateibasiertem Ersatz erläutert.
+
+**Abnahmebeispiel:** Ein nicht freigegebenes Feature bleibt per Direktaufruf gesperrt; eine abgesagte Veröffentlichung erzeugt keine Neuigkeitsmeldung.
+
+### DLG-56 — Feature-Test und Veröffentlichung
+
+**Einstieg und Recht:** UC-55; GP-14. Anmeldung/Verifikation sind eingeschränkte Zugänge, Administration verlangt aktuelle MFA und genau das betreffende Recht.
+
+**Sichtbare Informationen:** Berechtigte Administration pflegt globale Quoten mit ausdrücklichen Kontoausnahmen. Neue Konten erben die Grundwerte. Unterstützte Funktionen durchlaufen Entwurf, Vorschau, eigenen Nutzertest, ausgewählte Tester und sofortige oder geplante Veröffentlichung; Termin ist änder- und widerrufbar.
+
+**Aktionen und Rückmeldung:** Die Person prüft die konkrete Auswahl, kann korrigieren, bestätigen oder abbrechen. Normale direkte manuelle Eingaben erfordern keine künstliche zweite Bestätigung. Destruktive Aktionen, neue sensible Freigaben und relevante Umfangsänderungen zeigen eine gesonderte konkrete Wirkungsbestätigung. Erfolgreich, teilweise, ausstehend, gesperrt und Wirkung unbekannt werden getrennt angezeigt; bei längeren Vorgängen bleibt der Fortschritt erreichbar.
+
+**Grenzen und Fehler:** Keine erfundenen Zahlen. Eine volle Quote blockiert neue betroffene Aufnahmen, nicht Konto oder vorhandene Daten. Neue programmierte Funktionen sind anfangs verborgen. Deaktivierung bewahrt Daten und erlaubt nur sichere Lesezugriffe; Server prüft Rechte vor jeder Wirkung. Fehlende Fähigkeit wird mit tatsächlich verfügbarem manuellem oder dateibasiertem Ersatz erläutert.
+
+**Abnahmebeispiel:** Ein nicht freigegebenes Feature bleibt per Direktaufruf gesperrt; eine abgesagte Veröffentlichung erzeugt keine Neuigkeitsmeldung.
+
+### DLG-57 — Integrationsumfang, Synchronisation und Historie
+
+**Einstieg und Recht:** UC-56; GP-13. Anmeldung/Verifikation sind eingeschränkte Zugänge, Administration verlangt aktuelle MFA und genau das betreffende Recht.
+
+**Sichtbare Informationen:** Der Nutzer verbindet einen tatsächlich verfügbaren geprüften Konnektor offiziell, wählt Zweck, Kategorie und minimalen Umfang und startet standardmäßig manuell. Für jede Verbindung kann er Automatik mit eigener Frequenz freiwillig aktivieren und widerrufen. Private Historie zeigt Berechtigungen, Quellen, Importe, Erfolge und Fehler.
+
+**Aktionen und Rückmeldung:** Die Person prüft die konkrete Auswahl, kann korrigieren, bestätigen oder abbrechen. Normale direkte manuelle Eingaben erfordern keine künstliche zweite Bestätigung. Destruktive Aktionen, neue sensible Freigaben und relevante Umfangsänderungen zeigen eine gesonderte konkrete Wirkungsbestätigung. Erfolgreich, teilweise, ausstehend, gesperrt und Wirkung unbekannt werden getrennt angezeigt; bei längeren Vorgängen bleibt der Fortschritt erreichbar.
+
+**Grenzen und Fehler:** GitHub: ausgewählte oder alle eigenen öffentlichen Repositories, niemals private oder Schreibzugriff. Drive/OneDrive/Dropbox: ausgewählte Dateien/Ordner nur lesend. Ablauf/Widerruf stoppt Abrufe und Reconnect erfolgt freiwillig; importierte Kopien bleiben zulässig verfügbar. Fehlende Fähigkeit wird mit tatsächlich verfügbarem manuellem oder dateibasiertem Ersatz erläutert.
+
+**Abnahmebeispiel:** Wechsel von Einzelrepo zu allen öffentlichen braucht eine sichtbare Umfangsentscheidung; widerrufene Verbindung startet keinen Retry.
+
+### DLG-58 — Quellversionsvergleich und Aktualisierungsprüfung
+
+**Einstieg und Recht:** UC-57; GP-03, GP-07. Anmeldung/Verifikation sind eingeschränkte Zugänge, Administration verlangt aktuelle MFA und genau das betreffende Recht.
+
+**Sichtbare Informationen:** Ein erlaubter neuer Quellenstand wird mit belegbarer Identität, Revision/Hash oder Änderungszeit gegenübergestellt. Der Nutzer prüft Unterschiede und akzeptiert eine neue Version oder lehnt ab. Erst nach Annahme werden betroffene Ableitungen und Erinnerungen als veraltet markiert; vorbereitete Aktualisierungen benötigen eigene Inhaltsbestätigung.
+
+**Aktionen und Rückmeldung:** Die Person prüft die konkrete Auswahl, kann korrigieren, bestätigen oder abbrechen. Normale direkte manuelle Eingaben erfordern keine künstliche zweite Bestätigung. Destruktive Aktionen, neue sensible Freigaben und relevante Umfangsänderungen zeigen eine gesonderte konkrete Wirkungsbestätigung. Erfolgreich, teilweise, ausstehend, gesperrt und Wirkung unbekannt werden getrennt angezeigt; bei längeren Vorgängen bleibt der Fortschritt erreichbar.
+
+**Grenzen und Fehler:** Kein automatisches Überschreiben, keine erfundene Aktualität und keine pauschale Löschung. Historische Versionen bleiben im zulässigen Aufbewahrungsrahmen; echte Löschungen haben Vorrang. Fehlende Fähigkeit wird mit tatsächlich verfügbarem manuellem oder dateibasiertem Ersatz erläutert.
+
+**Abnahmebeispiel:** Neue Folie ändert eine Definition: Originalfassung bleibt nachvollziehbar; altes Lernblatt wird markiert und erst nach Prüfung ersetzt.
+
+### DLG-59 — Schutz und Dokumentenschlüssel
+
+**Einstieg und Recht:** UC-58; GP-03, GP-15. Anmeldung/Verifikation sind eingeschränkte Zugänge, Administration verlangt aktuelle MFA und genau das betreffende Recht.
+
+**Sichtbare Informationen:** Der Nutzer schützt ausgewählte Dokumente zusätzlich geräteseitig. Autorisierte Geräte erhalten sicher zugängliche Schlüsselbezüge; persönliche Schlüsselwiederherstellung ist getrennt von Kontorecovery. Verarbeitung erfolgt bevorzugt lokal. Eigene Cloudanalyse erfordert pro Vorgang die Freigabe notwendiger entschlüsselter Ausschnitte mit Klartextoffenlegung.
+
+**Aktionen und Rückmeldung:** Die Person prüft die konkrete Auswahl, kann korrigieren, bestätigen oder abbrechen. Normale direkte manuelle Eingaben erfordern keine künstliche zweite Bestätigung. Destruktive Aktionen, neue sensible Freigaben und relevante Umfangsänderungen zeigen eine gesonderte konkrete Wirkungsbestätigung. Erfolgreich, teilweise, ausstehend, gesperrt und Wirkung unbekannt werden getrennt angezeigt; bei längeren Vorgängen bleibt der Fortschritt erreichbar.
+
+**Grenzen und Fehler:** Backend und Administration erhalten keine privaten Klartextschlüssel oder dauerhaften Klartextkopien. Der Server sieht den ausdrücklich übertragenen Ausschnitt während der Operation. Ableitungen, Indizes, Vorschauen, Push und Sicherungen erben den Schutz. Fehlende Fähigkeit wird mit tatsächlich verfügbarem manuellem oder dateibasiertem Ersatz erläutert.
+
+**Abnahmebeispiel:** Ohne Vorgangsfreigabe geht kein sensibler Ausschnitt an die Cloud; eine Freigabe für Dokument X gilt nicht für Y.
+
+### DLG-60 — Archiv- und Mehrfachimport
+
+**Einstieg und Recht:** UC-59; GP-03. Anmeldung/Verifikation sind eingeschränkte Zugänge, Administration verlangt aktuelle MFA und genau das betreffende Recht.
+
+**Sichtbare Informationen:** Der Nutzer liefert mehrere Dateien, Ordner oder ZIP/7z einschließlich Bildern, Stundenplan-PDF und langen Audio-/Videodateien. Vor der Übernahme werden Rechte, Quoten, tatsächliche Formatunterstützung und sichere Extraktionsgrenzen geprüft. Struktur und Herkunft bleiben sichtbar; Klassifikation und Kalenderimport werden zur Bestätigung angeboten.
+
+**Aktionen und Rückmeldung:** Die Person prüft die konkrete Auswahl, kann korrigieren, bestätigen oder abbrechen. Normale direkte manuelle Eingaben erfordern keine künstliche zweite Bestätigung. Destruktive Aktionen, neue sensible Freigaben und relevante Umfangsänderungen zeigen eine gesonderte konkrete Wirkungsbestätigung. Erfolgreich, teilweise, ausstehend, gesperrt und Wirkung unbekannt werden getrennt angezeigt; bei längeren Vorgängen bleibt der Fortschritt erreichbar.
+
+**Grenzen und Fehler:** Pfadflucht, Bomben, unzulässige Verschachtelung, ausführbare und beschädigte Inhalte werden isoliert und nicht ausgeführt. Originalarchiv und Extrakte sind unabhängig löschbar. Dateiimport benötigt keine Mikrofonfreigabe. Fehlende Fähigkeit wird mit tatsächlich verfügbarem manuellem oder dateibasiertem Ersatz erläutert.
+
+**Abnahmebeispiel:** Ein Archiv mit ../pfad wird abgewiesen; eine erlaubte Vorlesungsaufnahme erzeugt geprüfte Lernnotizen statt unkontrollierter dauerhafter Rohkopien.
+
+### DLG-61 — Sicherung und Wiederherstellung
+
+**Einstieg und Recht:** UC-60; GP-15. Anmeldung/Verifikation sind eingeschränkte Zugänge, Administration verlangt aktuelle MFA und genau das betreffende Recht.
+
+**Sichtbare Informationen:** Automatische verschlüsselte EU-Sicherungen und freiwillige manuelle Exporte stehen getrennt von operativer Synchronisation. Bei Wiederherstellung wählt der Nutzer eine eigene Sicherung, sieht vollständige oder selektive Differenzen und bestätigt die erlaubte Übernahme bevorzugt als neue Version.
+
+**Aktionen und Rückmeldung:** Die Person prüft die konkrete Auswahl, kann korrigieren, bestätigen oder abbrechen. Normale direkte manuelle Eingaben erfordern keine künstliche zweite Bestätigung. Destruktive Aktionen, neue sensible Freigaben und relevante Umfangsänderungen zeigen eine gesonderte konkrete Wirkungsbestätigung. Erfolgreich, teilweise, ausstehend, gesperrt und Wirkung unbekannt werden getrennt angezeigt; bei längeren Vorgängen bleibt der Fortschritt erreichbar.
+
+**Grenzen und Fehler:** Neuere Daten und endgültige Löschmarkierungen werden berücksichtigt. Fremde Konten sind ausgeschlossen. Endliche Retention und tatsächliche Restfristen werden ausgewiesen; kein Wiederherstellen gelöschter Secrets oder Widerrufe. Fehlende Fähigkeit wird mit tatsächlich verfügbarem manuellem oder dateibasiertem Ersatz erläutert.
+
+**Abnahmebeispiel:** Eine Sicherung vor der endgültigen Löschung eines Dokuments kann dieses Dokument nicht wiederbeleben.
+
+### DLG-62 — Papierkorb und KI-Löschbestätigung
+
+**Einstieg und Recht:** UC-61; GP-15. Anmeldung/Verifikation sind eingeschränkte Zugänge, Administration verlangt aktuelle MFA und genau das betreffende Recht.
+
+**Sichtbare Informationen:** Der Nutzer benennt einen Löschwunsch auch in natürlicher Sprache. Syllentra identifiziert konkrete Objekte und Beziehungen, zeigt Umfang und Folgen und verlangt die passende destruktive Bestätigung. Papierkorb erlaubt innerhalb festgelegter Frist Wiederherstellung oder sofortige endgültige Bereinigung.
+
+**Aktionen und Rückmeldung:** Die Person prüft die konkrete Auswahl, kann korrigieren, bestätigen oder abbrechen. Normale direkte manuelle Eingaben erfordern keine künstliche zweite Bestätigung. Destruktive Aktionen, neue sensible Freigaben und relevante Umfangsänderungen zeigen eine gesonderte konkrete Wirkungsbestätigung. Erfolgreich, teilweise, ausstehend, gesperrt und Wirkung unbekannt werden getrennt angezeigt; bei längeren Vorgängen bleibt der Fortschritt erreichbar.
+
+**Grenzen und Fehler:** Mehrdeutigkeit führt zur Rückfrage. Die Löschung einer Ableitung löscht kein unabhängiges Original. Offlinegeräte, Indizes und Sicherungswiederherstellung beachten Löschmarkierungen; zulässige Restaufbewahrung wird erklärt. Fehlende Fähigkeit wird mit tatsächlich verfügbarem manuellem oder dateibasiertem Ersatz erläutert.
+
+**Abnahmebeispiel:** „Lösche die Zusammenfassung“ löscht nach eindeutiger Auswahl nur diese Ableitung und erzeugt keine Originalkaskade.
+
+### DLG-63 — Konto pausieren oder löschen
+
+**Einstieg und Recht:** UC-62; GP-15. Anmeldung/Verifikation sind eingeschränkte Zugänge, Administration verlangt aktuelle MFA und genau das betreffende Recht.
+
+**Sichtbare Informationen:** Der verifizierte Kontoinhaber wählt reversible freiwillige Pause oder endgültige Löschung. Vor Löschung zeigt Syllentra den Umfang und bietet optional eigenen Export an. Nach Identitätsprüfung und Bestätigung werden Sitzungen beendet, Integrationen widerrufen und die tatsächlichen Bereinigungsstufen verfolgt.
+
+**Aktionen und Rückmeldung:** Die Person prüft die konkrete Auswahl, kann korrigieren, bestätigen oder abbrechen. Normale direkte manuelle Eingaben erfordern keine künstliche zweite Bestätigung. Destruktive Aktionen, neue sensible Freigaben und relevante Umfangsänderungen zeigen eine gesonderte konkrete Wirkungsbestätigung. Erfolgreich, teilweise, ausstehend, gesperrt und Wirkung unbekannt werden getrennt angezeigt; bei längeren Vorgängen bleibt der Fortschritt erreichbar.
+
+**Grenzen und Fehler:** Pause erhält Daten und ist kein Löschauftrag. Löschung behauptet keinen Sofortabschluss vor tatsächlichen Purges; gesetzlich notwendige Reste und endliche Sicherungsfristen werden getrennt erläutert. Fehlende Fähigkeit wird mit tatsächlich verfügbarem manuellem oder dateibasiertem Ersatz erläutert.
+
+**Abnahmebeispiel:** Eine pausierte Person kann nach sicherer Reaktivierung fortsetzen; ein gelöschtes Konto erhält keinen Zugang über eine alte Sitzung.
+
+### DLG-64 — Kontosperre begründen und überprüfen
+
+**Einstieg und Recht:** UC-63; GP-14. Anmeldung/Verifikation sind eingeschränkte Zugänge, Administration verlangt aktuelle MFA und genau das betreffende Recht.
+
+**Sichtbare Informationen:** Ein Super Admin oder hierfür ausdrücklich berechtigter sekundärer Administrator sperrt ein Konto mit Grund, dokumentiert die Entscheidung, veranlasst eine neutrale Mitteilung und ermöglicht Überprüfung. Daten bleiben erhalten. Eine Aufhebung prüft den aktuellen Rechtszustand.
+
+**Aktionen und Rückmeldung:** Die Person prüft die konkrete Auswahl, kann korrigieren, bestätigen oder abbrechen. Normale direkte manuelle Eingaben erfordern keine künstliche zweite Bestätigung. Destruktive Aktionen, neue sensible Freigaben und relevante Umfangsänderungen zeigen eine gesonderte konkrete Wirkungsbestätigung. Erfolgreich, teilweise, ausstehend, gesperrt und Wirkung unbekannt werden getrennt angezeigt; bei längeren Vorgängen bleibt der Fortschritt erreichbar.
+
+**Grenzen und Fehler:** Kontosperre ist weder freiwillige Pause noch Löschung. Sperrbefugnis gibt keinen Inhaltseinblick und keine Administratorverwaltung. Die Behandlung des einzigen Super Admin wird nicht eigenmächtig durch eine zweite Eigentümerrolle gelöst. Fehlende Fähigkeit wird mit tatsächlich verfügbarem manuellem oder dateibasiertem Ersatz erläutert.
+
+**Abnahmebeispiel:** Ein nur für Branding berechtigter Administrator darf kein Konto sperren; eine zulässige Sperre löscht keine Lernhistorie.

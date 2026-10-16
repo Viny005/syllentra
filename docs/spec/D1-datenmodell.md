@@ -2,11 +2,11 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** D1 — Datenmodell\
-**Version:** 0.1 — geprüfter fachlicher Entwurf\
-**Stand:** 15.10.2026\
+**Version:** 0.2\
+**Stand:** 16.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Spezifikationsmethode:** Bausteine nach Johannes Siedersleben\
-**Bezugsstand:** P1 v0.5, P2 v0.6, F1 v0.2, F2 v0.1, F3 v0.1 auf `docs/spec/p1-p2-mobile-workspaces`; PR #1, Git-Stand `4b97b26f33d73d6b70a301b319f02852fcb458d7`.
+**Bezugsstand:** Harmonisierung FE-01 bis FE-89 vom 16.10.2026; Ausgangs-HEAD `ace1d80e80245379beed02296c3c4dd184c8dd70`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1. Aktuelle Versionen siehe [Index](README.md).
 
 > **Freigabe:** FE-01 bis FE-14 sind bestätigte fachliche Entscheidungen; die dokumentübergreifende Abnahme dieses D1-Entwurfs steht noch aus. Dieses Dokument beschreibt **kein implementiertes Datenbankschema**, keinen fertigen Dienst und keine beschaffte Anbieterberechtigung.
 
@@ -88,7 +88,7 @@ flowchart TB
 
 | Kennung | Entitätstyp | Bereich | Kernaussage |
 |---|---|---|---|
-| DM-01 | Nutzerkonto | Identität | Einziger persönlicher Eigentümer der ersten Produktversion; fachliche Identität ohne Festlegung des Authentifizierungsverfahrens. |
+| DM-01 | Nutzerkonto | Identität | Einzelnes isoliertes Nutzerkonto der Mehrbenutzer-V1; E-Mail/Passwort und E-Mail-OTP, getrennt von administrativen Rollen. |
 | DM-02 | PersönlichesProfil | Identität | Bearbeitbare persönliche Angaben, akademischer Kontext und Präferenzen mit erkennbarer Herkunft und Bestätigung. |
 | DM-03 | Gerätefreigabe | Identität | Berechtigung eines konkret autorisierten Geräts zur Nutzung und Synchronisation. |
 | DM-04 | Studienzugehörigkeit | Studium | Zeitbezogene Verbindung zwischen persönlichem Profil und Hochschule beziehungsweise Studiengang. |
@@ -149,13 +149,13 @@ Jede Entität wird mit einem minimalen fachlichen Attributvorrat beschrieben. `0
 
 #### DM-01 — Nutzerkonto
 
-Einziger persönlicher Eigentümer der ersten Produktversion; fachliche Identität ohne Festlegung des Authentifizierungsverfahrens.
+Einzelnes isoliertes Nutzerkonto der Mehrbenutzer-V1; E-Mail/Passwort und E-Mail-OTP, getrennt von administrativen Rollen.
 
 | Modellmerkmal | Fachliche Festlegung |
 |---|---|
 | **Wesentliche Attribute** | Kennung; Zugangsstatus; Anlagezeitpunkt; letzter bestätigter Zugriff [optional] |
 | **Wesentliche Bezüge** | DM-02, DM-03, DM-48 |
-| **Integrität und Grenzen** | V1 kennt einen persönlichen Eigentümer, der zugleich die Rolle des Administrators wahrnimmt. Konto und Profil bleiben getrennt; keine Zugangsdaten im öffentlichen Repository. |
+| **Integrität und Grenzen** | V1 kennt mehrere isolierte Konten; die fachliche Eigentümerschaft eines persönlichen Objekts ist eindeutig. Genau ein Super Admin verwaltet sekundäre Administratoren, ohne privaten Inhaltszugriff zu erhalten. Konto und Profil bleiben getrennt; keine Zugangsdaten im öffentlichen Repository. |
 | **Eigentum und Kardinalität** | Eigene persönliche Identität; 0..1 Profil, 0..n Geräte und Konfigurationen. |
 | **Löschfolgen und Herkunftsgrenze** | Kontolöschung umfasst ausdrücklich gewählte persönliche Daten und Freigaben; keine behauptete Löschung fremder Anbieterbestände. |
 
@@ -298,8 +298,8 @@ Benotete Leistung, ECTS-Zuordnung oder anderweitiger akademischer Leistungsnachw
 
 | Modellmerkmal | Fachliche Festlegung |
 |---|---|
-| **Wesentliche Attribute** | Kennung; Modul-/Prüfungsbezug [optional]; Wert/Note [optional]; ECTS [optional]; Leistungsart; Herkunft; Nachweisstatus; Nachweisbezug [optional] |
-| **Wesentliche Bezüge** | DM-06, DM-08, DM-11, DM-14, DM-20 |
+| **Wesentliche Attribute** | Kennung; direkter Studienzugehörigkeitsbezug DM-04 [optional]; Modul-/Prüfungsbezug [optional]; Wert/Note [optional]; ECTS [optional]; Leistungsart; Herkunft; Nachweisstatus; Nachweisbezug [optional] |
+| **Wesentliche Bezüge** | DM-04, DM-06, DM-08, DM-11, DM-14, DM-20 |
 | **Integrität und Grenzen** | Offizielle Nachweise, manuelle Werte und KI-Einschätzungen bleiben semantisch getrennt; bloße KI-Aussage wird keine Hochschulnote. |
 | **Eigentum und Kardinalität** | Genau ein DM-01; jeweils 0..1 Modul-, SemesterModul- und Prüfungsbezug, sofern bekannt; 0..n Belege. |
 | **Löschfolgen und Herkunftsgrenze** | Leistungswert löschen oder korrigieren betrifft abhängige Nachweise; ECTS-Soll des Moduls und tatsächlich erworbene ECTS bleiben getrennt. |
@@ -951,7 +951,7 @@ Diese Regeln gelten unabhängig von Datenbank, Synchronisationsmechanismus oder 
 
 | Kennung | Regel | Entitäten | Nachweisbezug |
 |---|---|---|---|
-| **INV-01** — Eigentümerschaft und Rechte | Alle personenbezogenen Objekte gehören einem autorisierten Nutzerkontext; V1 besitzt genau einen menschlichen Eigentümer; Datenzugriff wird trotz Gerätefreigabe und Administratorrolle geprüft. | DM-01, DM-03, DM-44 | UC-02, UC-04, UC-05, UC-45, UC-49; AF-01 |
+| **INV-01** — Eigentümerschaft und Rechte | Alle personenbezogenen Objekte gehören einem autorisierten Nutzerkontext; V1 unterstützt getrennte verifizierte Nutzerkonten; jedes persönliche Objekt besitzt genau einen Eigentümer; Datenzugriff wird trotz Gerätefreigabe und Administratorrolle geprüft. | DM-01, DM-03, DM-44 | UC-02, UC-04, UC-05, UC-45, UC-49; AF-01 |
 | **INV-02** — Freiwilliger Einstieg | Fehlende optionale Profilfelder sperren keine allgemeinen Lern- und Gesprächsfunktionen; fehlende für eine Spezialfunktion notwendige Eingaben betreffen nur diese Funktion. | DM-02, DM-25, DM-28 | UC-01, UC-17, UC-23; FE-01 |
 | **INV-03** — Studienkontext historisierbar | Semester, Modul, Kurs, Prüfung und Studienleistung besitzen eigene Identität; erneute Prüfungsversuche überschreiben alte Ergebnisse nicht. | DM-04..DM-12 | UC-06..UC-10 |
 | **INV-04** — Statuswechsel am Semesterende | Nur tatsächlich als abgeschlossen geprüfte Elemente dürfen nach Nutzerbestätigung archiviert werden. Offene Prüfungen, Kurse und Projekte bleiben aktiv. | DM-05, DM-11, DM-16, DM-39..DM-42 | UC-10; FE-06 |
@@ -1256,3 +1256,221 @@ Die Folgedokumente werden hier **nur namentlich referenziert und nicht als berei
 | UC-Titel sowie GP-/AF-/CFG-Nachweise fehlten im D1-Verzeichnis | Exakte bestehende Titel und Zuordnungen ergänzt; alle 50 UC, 15 GP, 27 AF und 17 CFG nachverfolgbar. |
 
 **Freigabestatus:** `Zur Prüfung`. Dieser Baustein darf vor seiner gemeinsamen Abnahme nicht als freigegeben bezeichnet werden. Die Ablage und der Git-Commit ersetzen keine fachliche Abnahme und nehmen keine technische Architekturentscheidung vor.
+
+
+## D1.14 Fachlicher Modellnachtrag zu Konten, Schutz und Lebenszyklus
+
+Die Entscheidungen FE-27 bis FE-89 ergänzen den Bestand; mit Ausnahme von **FE-56 (offen)** sind ihre fachlichen Vorgaben bestätigt. Die vollständige deutsche Entscheidungsmatrix und die zwölf Nachbarverträge stehen in [S1](S1-nachbarsysteme.md). Eine fachliche Entscheidung ist keine Aussage über implementierte Funktionen oder aktuell erteilte Anbieterrechte. Alle Bausteine bleiben **Zur Prüfung**. Historische Prüfstände, frühere FE-Teilmengen und alte Versionsbezüge bezeichnen ausschließlich ihre damalige Grundlage; maßgeblich ist der aktuelle Index mit [Änderungs- und Prüfnachweis](E3-pruefnachweis.md).
+
+Die nachfolgenden Entitäten sind ein fachlicher Modellnachtrag. Alte DM-Kennungen behalten ihre Bedeutung. Besitz ist je persönlichem Objekt eindeutig; globale Konfiguration und Audit erhalten gesonderte Rechte statt eines fiktiven Lernkontoeigentums.
+
+### DM-53 — EMailAdresse
+
+**Attribute:** `kennung`, adresse, rolle, primaer, verifikationsstand, zeitpunkt; Herkunft, Revision und Zeit soweit fachlich erforderlich.
+
+**Beziehungen und Kardinalität:** DM-01 1 : 1..n DM-53; genau eine verifizierte private Primäradresse vor Anwendungsdatenzugang.
+
+**Integrität und Lebenszyklus:** Hochschuladresse ist optional und erlaubt weder Inboxlesen noch automatische Reminder. Entzug/Verifikation/Sperre sind keine Löschung. Tatsächliche Löschfolgen und notwendige Restfristen werden im kontoeigenen Löschauftrag DM-50 ausgewiesen; gelöschte Inhalte bleiben nicht in Metadaten rekonstruierbar.
+
+**Prüfbeispiel:** Unverifizierte Zusatzadresse ersetzt die Primäradresse nicht.
+
+### DM-54 — Verifikationsvorgang
+
+**Attribute:** `kennung`, zweck, empfaengerbezug, ausgabezeit, ablauf, verbrauchsstatus, geschuetzter_nachweis; Herkunft, Revision und Zeit soweit fachlich erforderlich.
+
+**Beziehungen und Kardinalität:** DM-01 1 : 0..n DM-54; E-Mail-Bezug DM-53 0..1; Gerät DM-03 0..1.
+
+**Integrität und Lebenszyklus:** OTP und persönliche Einmal-Recoverycodes zweckgebunden, kurzlebig und niemals in sichtbaren Logs; Werte und technische Nachweise N2. Entzug/Verifikation/Sperre sind keine Löschung. Tatsächliche Löschfolgen und notwendige Restfristen werden im kontoeigenen Löschauftrag DM-50 ausgewiesen; gelöschte Inhalte bleiben nicht in Metadaten rekonstruierbar.
+
+**Prüfbeispiel:** Verbrauchter Einmalcode kann keine zweite Verifikation autorisieren.
+
+### DM-55 — Sitzung
+
+**Attribute:** `kennung`, beginn, letzter_zulaessiger_zugriff, serverablauf, lokalsperre, widerruf; Herkunft, Revision und Zeit soweit fachlich erforderlich.
+
+**Beziehungen und Kardinalität:** DM-01 1 : 0..n DM-55; jede Sitzung genau ein Gerätebezug DM-03.
+
+**Integrität und Lebenszyklus:** Mehrtagessitzung ist Ziel ohne erfundene Frist; lokale Sperre, OS-Entsperren, Schließen, Abmelden und Ablauf getrennt. Entzug/Verifikation/Sperre sind keine Löschung. Tatsächliche Löschfolgen und notwendige Restfristen werden im kontoeigenen Löschauftrag DM-50 ausgewiesen; gelöschte Inhalte bleiben nicht in Metadaten rekonstruierbar.
+
+**Prüfbeispiel:** Lokaler Unlock hebt Serverablauf nicht auf.
+
+### DM-56 — RollenZuweisung
+
+**Attribute:** `kennung`, rollenprofil, einzelne_rechte, ausschluesse, vergeben_durch, gueltigkeit; Herkunft, Revision und Zeit soweit fachlich erforderlich.
+
+**Beziehungen und Kardinalität:** DM-01 1 : 0..n DM-56; genau ein globaler Super Admin, sekundäre Rechte nur durch ihn.
+
+**Integrität und Lebenszyklus:** Sekundäre verwalten weder sich selbst noch andere Administratoren; exklusive Rechte nicht delegierbar. Entzug/Verifikation/Sperre sind keine Löschung. Tatsächliche Löschfolgen und notwendige Restfristen werden im kontoeigenen Löschauftrag DM-50 ausgewiesen; gelöschte Inhalte bleiben nicht in Metadaten rekonstruierbar.
+
+**Prüfbeispiel:** Branding-Recht enthält kein Kontosperrrecht.
+
+### DM-57 — Administrationsaudit
+
+**Attribute:** `kennung`, akteur, recht, aktion, zielkennung, zeit, grund, ergebnis; Herkunft, Revision und Zeit soweit fachlich erforderlich.
+
+**Beziehungen und Kardinalität:** DM-01 Akteur 1 : 0..n DM-57; Ziele referenziert, kein privater Vollinhalt.
+
+**Integrität und Lebenszyklus:** Änderungsnachweis geschützt und endlich aufbewahrt; keine OTP, Schlüssel, Tokens oder Gesprächskopien. Entzug/Verifikation/Sperre sind keine Löschung. Tatsächliche Löschfolgen und notwendige Restfristen werden im kontoeigenen Löschauftrag DM-50 ausgewiesen; gelöschte Inhalte bleiben nicht in Metadaten rekonstruierbar.
+
+**Prüfbeispiel:** Supportwiderruf ist nachvollziehbar ohne Dokumenttext.
+
+### DM-58 — Supportfreigabe
+
+**Attribute:** `kennung`, geber, supportperson, zweck, objektumfang, rechte, beginn, ende, widerruf; Herkunft, Revision und Zeit soweit fachlich erforderlich.
+
+**Beziehungen und Kardinalität:** DM-01 Geber 1 : 0..n DM-58; Begünstigter 1; eigener Gegenstand 1..n.
+
+**Integrität und Lebenszyklus:** Standard nur lesend; Änderung braucht gesonderte ausdrückliche Freigabe; Ablauf/Widerruf sperrt Folgezugriffe. Entzug/Verifikation/Sperre sind keine Löschung. Tatsächliche Löschfolgen und notwendige Restfristen werden im kontoeigenen Löschauftrag DM-50 ausgewiesen; gelöschte Inhalte bleiben nicht in Metadaten rekonstruierbar.
+
+**Prüfbeispiel:** Freigabe eines Kurses erschließt kein fremdes Konto.
+
+### DM-59 — Nutzerquota
+
+**Attribute:** `kennung`, dimension, grundwertbezug, kontowert, verbrauch, warnstatus; Herkunft, Revision und Zeit soweit fachlich erforderlich.
+
+**Beziehungen und Kardinalität:** DM-01 1 : 0..n DM-59; globale unterstützte Grundwerte DM-48.
+
+**Integrität und Lebenszyklus:** Speicher, Dateigröße, Medienlänge, Archiv- und Rechenumfang getrennt; Zahlen offen. Volle Quote sperrt nur betroffene Neuaufnahme. Entzug/Verifikation/Sperre sind keine Löschung. Tatsächliche Löschfolgen und notwendige Restfristen werden im kontoeigenen Löschauftrag DM-50 ausgewiesen; gelöschte Inhalte bleiben nicht in Metadaten rekonstruierbar.
+
+**Prüfbeispiel:** Speichergrenze löscht keine vorhandene Datei.
+
+### DM-60 — Funktionsfreigabe
+
+**Attribute:** `kennung`, funktionskennung, sichtbarkeit, zielrollen, tester, aktiv, sichere_lesesicht; Herkunft, Revision und Zeit soweit fachlich erforderlich.
+
+**Beziehungen und Kardinalität:** DM-60 global 1 : 0..n DM-61 Fassungen; Rechteprüfung je DM-01.
+
+**Integrität und Lebenszyklus:** Neue programmierte Funktion zunächst verborgen; Deaktivierung erhält Daten und sperrt neue Schreibwirkungen. Entzug/Verifikation/Sperre sind keine Löschung. Tatsächliche Löschfolgen und notwendige Restfristen werden im kontoeigenen Löschauftrag DM-50 ausgewiesen; gelöschte Inhalte bleiben nicht in Metadaten rekonstruierbar.
+
+**Prüfbeispiel:** Versteckte Funktion bleibt auch per Direktaufruf unzugänglich.
+
+### DM-61 — Veröffentlichungsfassung
+
+**Attribute:** `kennung`, entwurf, vorschau, testnachweis, zielgruppe, termin, status, vorgaenger, hinweistext; Herkunft, Revision und Zeit soweit fachlich erforderlich.
+
+**Beziehungen und Kardinalität:** DM-60 1 : 0..n DM-61; aktive Fassung höchstens 1 je Geltungsbereich.
+
+**Integrität und Lebenszyklus:** Sofort und geplant; Termin ändern/absagen; nur tatsächliche Verfügbarkeit löst schließbare Ankündigung aus. Rollback revalidiert heutige Rechte. Entzug/Verifikation/Sperre sind keine Löschung. Tatsächliche Löschfolgen und notwendige Restfristen werden im kontoeigenen Löschauftrag DM-50 ausgewiesen; gelöschte Inhalte bleiben nicht in Metadaten rekonstruierbar.
+
+**Prüfbeispiel:** Abgesagter Termin löst keinen Release aus.
+
+### DM-62 — Integrationslauf
+
+**Attribute:** `kennung`, zweck, scopebezug, quellenkennungen, start, ende, ergebnis, fehlerklasse, letzter_erfolg; Herkunft, Revision und Zeit soweit fachlich erforderlich.
+
+**Beziehungen und Kardinalität:** DM-44 1 : 0..n DM-62; Besitzer über DM-44 eindeutig; DM-63 0..1.
+
+**Integrität und Lebenszyklus:** Privates Journal auch für Aktivierung, Umfang und Widerruf; keine Secrets und keine unnötigen Inhaltskopien. Endliche konfigurierbare Retention. Entzug/Verifikation/Sperre sind keine Löschung. Tatsächliche Löschfolgen und notwendige Restfristen werden im kontoeigenen Löschauftrag DM-50 ausgewiesen; gelöschte Inhalte bleiben nicht in Metadaten rekonstruierbar.
+
+**Prüfbeispiel:** Letzter Erfolg ändert sich bei 403 nicht.
+
+### DM-63 — Synchronisationsregel
+
+**Attribute:** `kennung`, modus, frequenz, opt_in_zeit, widerruf, naechster_zulaessiger_lauf; Herkunft, Revision und Zeit soweit fachlich erforderlich.
+
+**Beziehungen und Kardinalität:** DM-44 1 : 0..1 DM-63; keine externe Regel für interne Gerätesynchronisation.
+
+**Integrität und Lebenszyklus:** Pro externer Verbindung Standard manuell; automatisches Intervall nur freiwillig und widerrufbar. Entzug/Verifikation/Sperre sind keine Löschung. Tatsächliche Löschfolgen und notwendige Restfristen werden im kontoeigenen Löschauftrag DM-50 ausgewiesen; gelöschte Inhalte bleiben nicht in Metadaten rekonstruierbar.
+
+**Prüfbeispiel:** Cloud-Geräteabgleich läuft ohne Drive-Automatikrecht.
+
+### DM-64 — Schutzkennzeichnung
+
+**Attribute:** `kennung`, schutzstufe, ursprung, vererbungsbezug, explizite_abstufung; Herkunft, Revision und Zeit soweit fachlich erforderlich.
+
+**Beziehungen und Kardinalität:** Eigene Objekte DM-20/DM-21 und Ableitungen 1 : 1 DM-64; mehrere Quellen 0..n.
+
+**Integrität und Lebenszyklus:** Sensibler Quellschutz gilt auch für Lernnotizen, Erinnerung, Suchindex, Vorschau, Benachrichtigung und Backup; Herabstufung nur explizit. Entzug/Verifikation/Sperre sind keine Löschung. Tatsächliche Löschfolgen und notwendige Restfristen werden im kontoeigenen Löschauftrag DM-50 ausgewiesen; gelöschte Inhalte bleiben nicht in Metadaten rekonstruierbar.
+
+**Prüfbeispiel:** Sensible Zusammenfassung bleibt geschützt.
+
+### DM-65 — DokumentSchlüsselbezug
+
+**Attribute:** `kennung`, dokumentbezug, berechtigtes_geraet, geschuetzter_schluesselverweis, wiederherstellungsstatus; Herkunft, Revision und Zeit soweit fachlich erforderlich.
+
+**Beziehungen und Kardinalität:** DM-21/DM-64 1 : 0..n DM-65; DM-03 je Bezug genau 1.
+
+**Integrität und Lebenszyklus:** Nur autorisierte Geräte; keine privaten Klartextschlüssel im Backend oder bei Administratoren. Persönliche Schlüsselwiederherstellung getrennt von DM-54-Kontorecovery. Entzug/Verifikation/Sperre sind keine Löschung. Tatsächliche Löschfolgen und notwendige Restfristen werden im kontoeigenen Löschauftrag DM-50 ausgewiesen; gelöschte Inhalte bleiben nicht in Metadaten rekonstruierbar.
+
+**Prüfbeispiel:** Verifiziertes neues Konto besitzt damit noch keinen privaten Dokumentenschlüssel.
+
+### DM-66 — Verarbeitungsfreigabe
+
+**Attribute:** `kennung`, vorgang, zweck, ausschnittumfang, ziel, beginn, ende, widerruf; Herkunft, Revision und Zeit soweit fachlich erforderlich.
+
+**Beziehungen und Kardinalität:** DM-01 1 : 0..n DM-66; DM-64 1..n; genau eine konkrete Operation.
+
+**Integrität und Lebenszyklus:** Eigene Cloud darf ausdrücklich freigegebenen minimalen Klartext temporär sehen; keine privaten Schlüssel oder permanenten Klartextkopien. Dritt-KI benötigt zusätzlich Anbieter-/Kategorie-/Zweckrecht. Entzug/Verifikation/Sperre sind keine Löschung. Tatsächliche Löschfolgen und notwendige Restfristen werden im kontoeigenen Löschauftrag DM-50 ausgewiesen; gelöschte Inhalte bleiben nicht in Metadaten rekonstruierbar.
+
+**Prüfbeispiel:** Freigabe einer Seite erlaubt keine Übertragung des Gesamtarchivs.
+
+### DM-67 — Papierkorbeintrag
+
+**Attribute:** `kennung`, objektbezug, loeschzeit, frist, status, wiederherstellbarkeit; Herkunft, Revision und Zeit soweit fachlich erforderlich.
+
+**Beziehungen und Kardinalität:** DM-01 1 : 0..n DM-67; je persönlichem Ziel 0..1 aktiver Eintrag.
+
+**Integrität und Lebenszyklus:** Private Wiederherstellung vor Ablauf oder sofortige endgültige Bereinigung nach passender Bestätigung; nie durch Archivierung ersetzen. Entzug/Verifikation/Sperre sind keine Löschung. Tatsächliche Löschfolgen und notwendige Restfristen werden im kontoeigenen Löschauftrag DM-50 ausgewiesen; gelöschte Inhalte bleiben nicht in Metadaten rekonstruierbar.
+
+**Prüfbeispiel:** Archiviertes Gespräch gilt nicht als gelöscht.
+
+### DM-68 — Löschmarkierung
+
+**Attribute:** `kennung`, zielkennung, loeschrevision, zeit, umfang, abgleichstand; Herkunft, Revision und Zeit soweit fachlich erforderlich.
+
+**Beziehungen und Kardinalität:** DM-01 1 : 0..n DM-68; Referenz auf endgültig entferntes Ziel ohne dessen Inhalt.
+
+**Integrität und Lebenszyklus:** Verhindert Wiederbelebung durch Offlinegeräte und Backups; nur minimale Nachweise, endliche begründete Aufbewahrung ohne Inhalte. Entzug/Verifikation/Sperre sind keine Löschung. Tatsächliche Löschfolgen und notwendige Restfristen werden im kontoeigenen Löschauftrag DM-50 ausgewiesen; gelöschte Inhalte bleiben nicht in Metadaten rekonstruierbar.
+
+**Prüfbeispiel:** Alter Offlineupload ist kein neuer zulässiger Originalbestand.
+
+### DM-69 — Sicherungspunkt
+
+**Attribute:** `kennung`, eigentuemer, erstellzeit, revisionsstand, verschluesselungsbezug, eu_region, ablauf; Herkunft, Revision und Zeit soweit fachlich erforderlich.
+
+**Beziehungen und Kardinalität:** DM-01 1 : 0..n DM-69; fachlich begrenzter Sicherungsumfang.
+
+**Integrität und Lebenszyklus:** Automatische verschlüsselte EU-Sicherung; endliche Retention; kein genereller Administratorzugang zu entschlüsselten Inhalten. Entzug/Verifikation/Sperre sind keine Löschung. Tatsächliche Löschfolgen und notwendige Restfristen werden im kontoeigenen Löschauftrag DM-50 ausgewiesen; gelöschte Inhalte bleiben nicht in Metadaten rekonstruierbar.
+
+**Prüfbeispiel:** Abgelaufene Sicherung darf nicht als garantiert wiederherstellbar erscheinen.
+
+### DM-70 — Wiederherstellungsvorgang
+
+**Attribute:** `kennung`, sicherung, auswahl, differenzen, konfliktentscheidung, bestaetigung, ausfuehrungsstand; Herkunft, Revision und Zeit soweit fachlich erforderlich.
+
+**Beziehungen und Kardinalität:** DM-69 1 : 0..n DM-70; DM-01 Ziel genau derselbe Eigentümer.
+
+**Integrität und Lebenszyklus:** Selektiv/gesamt; neuere Daten und Löschmarkierungen abgleichen; vorzugsweise neue Version; keine Wiederbelebung alter Freigaben. Entzug/Verifikation/Sperre sind keine Löschung. Tatsächliche Löschfolgen und notwendige Restfristen werden im kontoeigenen Löschauftrag DM-50 ausgewiesen; gelöschte Inhalte bleiben nicht in Metadaten rekonstruierbar.
+
+**Prüfbeispiel:** Restore eines Kontos auf ein anderes scheitert.
+
+### DM-71 — Archivextraktionsbezug
+
+**Attribute:** `kennung`, originalarchiv, extrakt, relativer_pfad, format, pruefstand, fehlerklasse; Herkunft, Revision und Zeit soweit fachlich erforderlich.
+
+**Beziehungen und Kardinalität:** DM-20 Originalarchiv 1 : 0..n DM-71; Extrakt DM-20 1 je erfolgreichem Bezug.
+
+**Integrität und Lebenszyklus:** Ordnerstruktur und Provenienz erhalten, Extraktion sicher begrenzt; Originalarchiv und Extrakte unabhängig löschbar; kein ausgeführter Inhalt. Entzug/Verifikation/Sperre sind keine Löschung. Tatsächliche Löschfolgen und notwendige Restfristen werden im kontoeigenen Löschauftrag DM-50 ausgewiesen; gelöschte Inhalte bleiben nicht in Metadaten rekonstruierbar.
+
+**Prüfbeispiel:** Löschen eines Extrakts entfernt weder Archiv noch übrige Extrakte.
+
+### Ergänzungen bestehender Beziehungen
+
+- **DM-01:** Je Konto genau ein persönlicher Eigentumskontext; mehrere solche Konten in V1. Kontostatus DT-65, Adresse DM-53, Sitzung DM-55 und Rolle DM-56 sind getrennt. Genau ein Super Admin ist eine globale Rollenregel, keine Einschränkung der Nutzerzahl.
+- **DM-02:** Getrennte Präferenzen für UI, KI-Antworten, Übungen und Audio (DT-84), durch ausdrücklich gesetzte Kurs-/Gesprächspräferenzen überschreibbar; Originalfachbegriffe bleiben erhalten.
+- **DM-12:** Studienleistung erhält einen ausdrücklichen optionalen Bezug `0..1` auf Studienzugehörigkeit DM-04, unabhängig von optionalem Modul-/Semesterbezug. Eine Institution besitzt `0..n` zugehörige Leistungen. Ohne belegte Institution bleibt sie ungeklärt statt erfunden; Notenansicht gruppiert nur belegte Zuordnungen. Originalskala und indikative Äquivalenz sind getrennt (FE-15).
+- **DM-19/DM-23/DM-44:** Optionaler dauerhafter GitHub-Profil-/Kontobezug ohne erfundenen Identitätsnachweis; Scope DT-57 erlaubt ausgewählte oder alle eigenen öffentlichen Repositories. Projekt-/Kompetenzbelege bleiben zeitbezogen und bezüglich eigener Urheberschaft prüfbedürftig.
+- **DM-20/DM-21:** Dokumentkatalog, Originalarchiv und Extrakt sind unterscheidbar; externe Quellkennung und DT-76-Revision begründen Versionsvergleich. Neue Quelle bestätigt keine bestehende Ableitung.
+- **DM-03:** Gerät enthält Autorisierung, Entzug, Hauptbenachrichtigungsziel und freiwillige weitere Ziele sowie selektiven Offlinecache. Freigabe ersetzt keine Sitzung oder Dokumentenschlüssel.
+- **DM-48:** Unterstützte Übersetzungen FR/DE/EN, Navigation, Quoten, Sperr-/Retention-/Retryvorgaben, Konfigurationsentwurf und Release werden validiert und versioniert. Keine beliebige neue Softwarefunktion entsteht aus einem Wert.
+
+### Ergänzende Integritätsregeln
+
+| Kennung | Regel |
+|---|---|
+| INV-26 | Kontogrenzen gelten bei Liste, Suche, Cache, Export, Support, Hintergrundlauf und Wiederherstellung; Adminrolle ist kein privates Inhaltsrecht. |
+| INV-27 | Ohne erfolgreiche E-Mail-OTP-Verifikation kein Anwendungsdatenzugang; lokale Entsperrung ist keine Serversitzungserneuerung. |
+| INV-28 | Genau ein Super Admin verwaltet sekundäre Administratoren; sekundäre Rollen dürfen weder sich selbst erweitern noch andere Administratoren verwalten. |
+| INV-29 | Backend/Administration besitzen keine privaten Klartext-Dokumentenschlüssel; temporärer sensibler Cloudklartext benötigt eine konkrete Freigabe; Ableitungen erben Schutz. |
+| INV-30 | Externe Synchronisation ist manuell, sofern kein aktuelles verbindungsspezifisches Opt-in besteht; Widerruf sperrt auch Retries. |
+| INV-31 | Endgültige Löschung wird durch Backup, Offlinekopie, Versionshistorie und Konfigurationsrollback nicht rückgängig gemacht. |

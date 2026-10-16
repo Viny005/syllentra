@@ -2,11 +2,11 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** F1 — Geschäftsprozesse\
-**Version:** 0.2\
-**Stand:** 13.10.2026\
+**Version:** 0.3\
+**Stand:** 16.10.2026\
 **Status:** Zur Prüfung\
 **Spezifikationsmethode:** Bausteine nach Johannes Siedersleben\
-**Geltungsbereich:** Fachlicher Zielumfang der ersten Produktversion (V1), auf Grundlage von P1 Version 0.5 und P2 Version 0.6
+**Geltungsbereich:** Fachlicher Zielumfang der ersten Produktversion (V1), auf Grundlage von P1 Version 0.6 und P2 Version 0.7
 
 ---
 
@@ -18,7 +18,7 @@ Die Darstellung folgt der [methodischen F1-Referenz von Carsten Lucke](https://g
 
 F1 beschreibt keine Bildschirmfolge, API, interne Komponentenarchitektur oder Datenbankstruktur. F2 präzisiert später die systemunterstützten Anwendungsfälle, F3 die fachlichen Funktionen, D1/D2 die Daten und Beziehungen und B1 die Dialoge. Die Prozessbeschreibungen und ihre Varianten tragen die fachliche Aussage; die Diagramme veranschaulichen sie.
 
-V1 unterstützt einen persönlichen Nutzer, der zugleich Eigentümer und Administrator ist. Sein persönliches Profil ist ein fachlicher Datenbereich und keine Berechtigungsrolle. Die Rollen des Lernenden und des Administrators bleiben trotz derselben handelnden Person unterscheidbar. Arbeitsbereiche für Semester, Module, Kurse und Projekte strukturieren die Arbeit, sind aber keine Voraussetzung für jede allgemeine Unterhaltung oder Lerneinheit.
+V1 unterstützt mehrere isolierte Studierende nach offener Registrierung und E-Mail-OTP. Ein persönliches Profil ist keine Berechtigungsrolle. Genau ein Super Admin verwaltet sekundäre Administratoren; die getrennte Administration verleiht keinen privaten Inhaltszugriff (FE-59 bis FE-72). Arbeitsbereiche für Semester, Module, Kurse und Projekte strukturieren die Arbeit, sind aber keine Voraussetzung für jede allgemeine Unterhaltung oder Lerneinheit.
 
 Die sechs ausdrücklich bestätigten Entscheidungen sind in F1.6 unter FE-01 bis FE-06 dokumentiert. Ihr Bestätigungsstand ist von der noch ausstehenden Freigabe des gesamten Dokuments zu unterscheiden. Die folgenden Abläufe beschreiben den vorgesehenen Produktumfang, keine bereits implementierten Funktionen.
 
@@ -27,7 +27,7 @@ Die sechs ausdrücklich bestätigten Entscheidungen sind in F1.6 unter FE-01 bis
 | Akteur | Art | Fachliche Verantwortung |
 |---|---|---|
 | Lernender / persönlicher Nutzer | Mensch | Ziele und Anliegen bestimmen, Materialien rechtmäßig bereitstellen, lernen, Angaben prüfen, Vorschläge entscheiden und eigene Daten kontrollieren |
-| Eigentümer / Administrator | Mensch; in V1 dieselbe Person wie der Lernende | Unterstützte Konfigurationen, Integrationen, Berechtigungen, Gerätefreigaben, Aufbewahrung und Kostenrahmen verwalten |
+| Eigentümer / Administrator | Mensch mit gesonderten administrativen Rechten, ohne pauschalen Zugriff auf Lerninhalte | Unterstützte Konfigurationen, Integrationen, Berechtigungen, Gerätefreigaben, Aufbewahrung und Kostenrahmen verwalten |
 | Syllentra einschließlich KI-Assistent | Unterstützendes System | Informationen aufbereiten, Zusammenhänge und Unsicherheiten darstellen, Lernaktivitäten begleiten, Vorschläge vorbereiten und ausschließlich erlaubte Handlungen ausführen |
 | Lehrende, Prüfende und Beratungsstellen | Externe Menschen | Lehrinhalte und Feedback bereitstellen, Leistungen beurteilen und fachliche beziehungsweise organisatorische Auskünfte geben |
 | Hochschule und ihre Studienverwaltung | Externe Institution und Systeme | Verbindliche Studienregeln, Modulangebote, Prüfungstermine, Noten, ECTS und amtliche Entscheidungen verantworten |
@@ -36,7 +36,7 @@ Die sechs ausdrücklich bestätigten Entscheidungen sind in F1.6 unter FE-01 bis
 | Zugelassene KI-, Werkzeug- und gegebenenfalls Speicherdienste | Externe Systeme | Nur die freigegebene Aufgabe mit zulässigen Daten, Nutzungslimits und Verarbeitungsbedingungen unterstützen |
 | Geräteumgebung und Benachrichtigungsdienste | Unterstützende externe Systeme | Berechtigte Text- und Spracheingaben, Anzeige, erlaubte Benachrichtigungen und Nutzung auf autorisierten Geräten ermöglichen |
 
-Die installierbaren Android-/iOS-Anwendungen und die Nutzung auf Computern sind Zugangsformen zum selben fachlichen Produkt. Ein Gerätewechsel begründet weder eine neue Benutzerrolle noch eine neue Freigabe für Datenübermittlung an Dritte. Konkrete Frameworks und Vertriebswege bleiben offen. Externe Systeme entsprechen den Nachbarsystemkategorien NB-01 bis NB-12 in P2; der KI-Assistent ist keine unabhängige Instanz mit eigener Entscheidungsbefugnis.
+Die installierbaren Android-/iOS-Anwendungen und die Nutzung auf Computern sind Zugangsformen zum selben fachlichen Produkt. Ein Gerätewechsel begründet weder eine neue Benutzerrolle noch eine neue Freigabe für Datenübermittlung an Dritte. V1 verwendet eine installierbare PWA; Framework und spätere native Verteilung bleiben offen. Die zentrale EU-Cloud ist intern, externe Verbindungen bleiben optional. Externe Systeme entsprechen den Nachbarsystemkategorien NB-01 bis NB-12 in P2; der KI-Assistent ist keine unabhängige Instanz mit eigener Entscheidungsbefugnis.
 
 ## F1.3 Prozesslandkarte
 
@@ -599,9 +599,9 @@ Geplante Bausteine werden hier mit ihren Kennungen genannt und nicht mit Links a
 
 ## F1.10 Prüfstand, Grenzen und spätere Konkretisierung
 
-F1 Version 0.2 umfasst fünfzehn Prozesse mit Auslöser, Ende, Akteuren, geordneten Aktivitäten mit zugeordneten Verantwortlichkeiten, Artefakten, Varianten und Grenzen. Die Entscheidungen FE-01 bis FE-06 werden als bereits bestätigte fachliche Vorgaben übernommen. Das vollständige Dokument steht zur Prüfung; daraus folgt keine Behauptung bereits implementierter oder abgenommener Produktfunktionen.
+F1 Version 0.3 umfasst fünfzehn Prozesse mit Auslöser, Ende, Akteuren, geordneten Aktivitäten mit zugeordneten Verantwortlichkeiten, Artefakten, Varianten und Grenzen. Die Entscheidungen FE-01 bis FE-06 werden als bereits bestätigte fachliche Vorgaben übernommen. Das vollständige Dokument steht zur Prüfung; daraus folgt keine Behauptung bereits implementierter oder abgenommener Produktfunktionen.
 
-Die Prozessvorgaben konkretisieren P1 Version 0.5 und P2 Version 0.6. P1/P2 werden durch dieses Dokument weder stillschweigend umgeschrieben noch um technische Entscheidungen ergänzt. Bei später erkannten Widersprüchen ist eine ausdrückliche fachliche Klärung nötig; bis dahin dürfen Schutzgrenzen nicht durch großzügigere Interpretation eines Prozessschritts aufgehoben werden.
+Die Prozessvorgaben konkretisieren P1 Version 0.6 und P2 Version 0.7. P1/P2 werden durch dieses Dokument weder stillschweigend umgeschrieben noch um technische Entscheidungen ergänzt. Bei später erkannten Widersprüchen ist eine ausdrückliche fachliche Klärung nötig; bis dahin dürfen Schutzgrenzen nicht durch großzügigere Interpretation eines Prozessschritts aufgehoben werden.
 
 Für nachfolgende Arbeiten bleiben insbesondere zu konkretisieren:
 
@@ -619,3 +619,20 @@ Diese Punkte betreffen die spätere Detaillierung. Freiwilliger Einstieg, bestä
 
 **Ende von F1 — Geschäftsprozesse.**\
 **Freigabestatus:** Zur Prüfung. Die Prüfung dieser Dokumentfassung umfasst Prozessvollständigkeit, Verantwortlichkeiten, Übergänge und Konsistenz mit P1/P2; FE-01 bis FE-06 sind bereits bestätigt.
+
+
+## F1.11 Erweiterter V1-Prozessrahmen ohne neue Prozesskennungen
+
+Die Entscheidungen FE-27 bis FE-89 ergänzen den Bestand; mit Ausnahme von **FE-56 (offen)** sind ihre fachlichen Vorgaben bestätigt. Die vollständige deutsche Entscheidungsmatrix und die zwölf Nachbarverträge stehen in [S1](S1-nachbarsysteme.md). Eine fachliche Entscheidung ist keine Aussage über implementierte Funktionen oder aktuell erteilte Anbieterrechte. Alle Bausteine bleiben **Zur Prüfung**. Historische Prüfstände, frühere FE-Teilmengen und alte Versionsbezüge bezeichnen ausschließlich ihre damalige Grundlage; maßgeblich ist der aktuelle Index mit [Änderungs- und Prüfnachweis](E3-pruefnachweis.md).
+
+| Bestehender Prozess | Ergänzter fachlicher Ablauf und Abschluss |
+|---|---|
+| GP-01 | Offene Registrierung, private Primäradresse und OTP vor eigener Studienarbeit; UI FR/DE/EN und unabhängig wählbare KI-/Übungs-/Audiosprachen. |
+| GP-03 | Manuelle Hochschulmaterialien, Mehrfachupload/ZIP/7z mit Herkunft und sicheren Grenzen; lange Medien lokal bevorzugt aufbereiten; bestätigte strukturierte Lernnotizen statt unnötiger Transkriptbestände. |
+| GP-06/GP-07 | Manuelle ICS-/Bild-/PDF-Stundenpläne mit Versionsvergleich und Bestätigung; externe Kalender nur lesend und nur tatsächlich verfügbar. Quellenänderung markiert abhängige Lerninhalte erst nach Annahme der neuen Quelle und erneuter Inhaltsprüfung. |
+| GP-10 | Eigene zentrale EU-Cloud synchronisiert autorisierte Geräte einschließlich Löschungen; selektiver Offlinecache, Offlinebearbeitung und kontrollierte Konfliktlösung ohne zwingend eingeschalteten PC. |
+| GP-13 | Offizielle freiwillige Verbindung, Rechte-/Zweck-/Kategorieentscheidung, standardmäßig manuelle Synchronisation, private Historie und freiwillige Reauthentifizierung; bereits importierte erlaubte Daten bleiben bei Ausfall nutzbar. |
+| GP-14 | Separate Admin-MFA, ein Super Admin, kontrollierte sekundäre Rollen, Quoten, Entwurf/Vorschau/Test, geplante oder sofortige Freigabe; deaktivierte Funktionen bewahren Daten. |
+| GP-15 | Freiwilliger enger Support, sensible Geräteschlüssel, pro Vorgang erlaubte Cloudanalyse, verschlüsselte EU-Sicherung, Differenzrestore, Papierkorb, KI-Löschbestätigung und Konto-Pause/Löschung; administrative Sperre ist gesondert. |
+
+**Akteure und Ende:** Studierende sind jeweils eigene Dateninhaber. Administratoren führen ausschließlich zugewiesene Verwaltungsarbeit aus; Support endet bei Ablauf/Widerruf. Externe Dienste besitzen keine autonome Entscheidungsbefugnis. Produktiv verfügbares Ergebnis, fachliche Bestätigung, tatsächliche Ausführung und Prüfstatus bleiben unterscheidbar.

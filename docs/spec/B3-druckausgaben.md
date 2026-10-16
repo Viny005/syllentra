@@ -2,13 +2,13 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** B3 — Druckausgaben\
-**Version:** 0.1 — geprüfter fachlicher Vollentwurf\
-**Stand:** 15.10.2026\
+**Version:** 0.2\
+**Stand:** 16.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Methode:** Baustein B3 nach Johannes Siedersleben — fachlich prüfbare Ausgaben, unabhängig von Layoutbibliothek und Drucktechnik\
-**Bezugsstand:** P1 v0.5, P2 v0.6, F1 v0.2, F2 v0.1, F3 v0.1, D1 v0.1, D2 v0.1, B1 v0.1, B2 v0.1 auf `docs/spec/p1-p2-mobile-workspaces`, PR #1; HEAD vor Bearbeitung `c6b8d7012f446b4699e46098713fdf3d771512c6`.
+**Bezugsstand:** Harmonisierung FE-01 bis FE-89 vom 16.10.2026; Ausgangs-HEAD `ace1d80e80245379beed02296c3c4dd184c8dd70`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1. Aktuelle Versionen siehe [Index](README.md).
 
-> **Freigabe und Herkunft:** FE-01 bis FE-24 wurden in der bisherigen fachlichen Erarbeitung bestätigt; FE-25 und FE-26 sind mit dem aktuellen Auftrag ausdrücklich bestätigt. Der hier definierte konkrete B3-Entwurf, seine Berichtsgliederungen und seine späteren technischen Abnahmegrenzen bleiben **Zur Prüfung**. Es gibt noch keine implementierte Berichts- oder Exportfunktion. P1 bis B2 bleiben unverändert; ausschließlich der B3-Eintrag im Spezifikationsindex wird mitaktualisiert.
+> **Freigabe und Herkunft:** FE-01 bis FE-24 wurden in der bisherigen fachlichen Erarbeitung bestätigt; FE-25 und FE-26 sind mit dem aktuellen Auftrag ausdrücklich bestätigt. Der hier definierte konkrete B3-Entwurf, seine Berichtsgliederungen und seine späteren technischen Abnahmegrenzen bleiben **Zur Prüfung**. Es gibt noch keine implementierte Berichts- oder Exportfunktion. Der historische B3-Entwurf änderte zunächst nur B3 und den Index; die Harmonisierung vom 16.10.2026 aktualisiert die betroffenen Bausteine.
 
 ## B3.1 Auftrag, Abgrenzung und verbindliche Leitplanken
 
@@ -19,7 +19,7 @@ B3 beschreibt **welche nutzerbezogenen Druck- und Exporterzeugnisse** Syllentra 
 - **Keine automatische Publikation:** Bericht und strukturierter Export werden nur nach berechtigter Nutzerauswahl vorbereitet. Keine automatische Versendung per E-Mail, kein Upload zu GitHub oder Dritt-Cloud, kein Teilen per Link und kein Drucken auf ein Fremdgerät.
 - **Nicht-Ziel:** Ein visueller Lernbericht ist **kein** vollständiger persönlicher Datenexport. Ein Report ist **kein** amtliches Zeugnis, offizielles Transcript oder Kompetenzzertifikat.
 - **Quellen- und Evidenzgrenzen:** Herkunft, Zeitpunkt, belegte Quelle, Bestätigungsstand und Unsicherheit werden nicht durch grafische Aufbereitung zu vermeintlicher Gewissheit. Nicht verfügbare Daten sind keine Nullen; fehlende Originale keine wörtlich verfügbare Quelle.
-- **Ein-Nutzer-V1:** Alle Erzeugnisse gelten ausschließlich für den berechtigten persönlichen Eigentümer. Gast-, Team- und Mandantenberichte werden nicht eingeführt.
+- **Kontoisolation in V1:** Jeder Bericht enthält ausschließlich die eigenen ausdrücklich ausgewählten Informationen. Mehrere Konten sind möglich; kontoübergreifende Gast-, Team- und Administrationsberichte über private Lerninhalte werden nicht eingeführt.
 - **Berechtigungen:** Vor sensibler Vorschau, Erzeugung und Download sowie vor einem hier nicht automatisch erlaubten weiteren Übermittlungsschritt werden die aktuellen Rechte, das ausgewählte Gerät und Datenklassifikationen geprüft. Ein bereits exportiertes Exemplar außerhalb der Anwendung lässt sich nicht als nachträglich sicher zurückgerufen behaupten.
 
 **Begriffsunterscheidung:** *Bericht* = interpretierende formatierte Momentaufnahme; *geschützter Notenauszug* = begrenzte explizit gewählte Studienleistungsdarstellung; *strukturierter Datenexport* = tatsächliche im gewählten Umfang vorhandene Fachdatensätze und Beziehungen; *Drucken* = nutzerinitiierter Übergang an ein unterstütztes lokales Druckverfahren. Eine Ausgabe wird erst als **erfolgreich bereitgestellt** bezeichnet, wenn ihr tatsächlich zulässiger Bereitstellungszustand festgestellt ist; eine erfolgreiche externe Zustellung oder ein tatsächlich erfolgter Ausdruck ist eine andere Aussage.
@@ -117,7 +117,7 @@ Jedes Erzeugnis erfüllt die gemeinsamen Anforderungen von B3.4 bis B3.7. Die fo
 
 - Kein Kompetenzzertifikat durch bloßen Projektlink oder Programmiersprache behaupten.
 - Offizielle Notenwerte nicht automatisch als Belegtext abdrucken; beim Wunsch nach Einzelnoten gesonderter OUT-07-Ablauf.
-- Private Repository-Inhalte sind durch diesen B3-Entwurf nicht zugesagt. Der öffentliche, gezielt ausgewählte GitHub-V1-Ausschnitt bleibt ein bedingter Vorschlag; vorhandene anderweitige Quellenrechte werden nicht durch einen Bericht erweitert.
+- Private Repository-Inhalte sind durch diesen B3-Entwurf nicht zugesagt. Der GitHub-V1-Ausschnitt umfasst gemäß FE-43 ausgewählte oder alle eigenen öffentlichen Repositories; vorhandene anderweitige Quellenrechte werden nicht durch einen Bericht erweitert.
 
 **Abnahmebeispiel:** Ein gemeinsames GitHub-Projekt mit TypeScript wird als Hinweis auf mögliche Erfahrung ausgewiesen, nicht als Zertifikat eigenständiger Meisterschaft.
 
@@ -221,7 +221,7 @@ Jedes Erzeugnis erfüllt die gemeinsamen Anforderungen von B3.4 bis B3.7. Die fo
 
 - Zugang ausschließlich nach „Mein Profil → Noten → Institution → ausgewählte Studienleistung“ und Berechtigungsprüfung; nur bewusst gesetzte Aufnahmeoption, standardmäßig keine Einzelnoten.
 - Keine Noten in Dashboard, Vorschau-Listen, Dateinamen, Benachrichtigungen oder ungeschützter Vorschau; sensible Vorschau nur innerhalb geschützter Ansicht nach Wahl.
-- Nicht zuordenbare Leistung keiner Institution zuordnen; D1/F2-Nachtrag zur dauerhaften Institutionsrelation ist offen.
+- Nicht zuordenbare Leistung keiner Institution zuordnen; D1 DM-12 führt dafür den optionalen direkten DM-04-Bezug; ungeklärte Herkunft bleibt ungeklärt.
 
 **Abnahmebeispiel:** Der Nutzer öffnet THM, wählt zwei Leistungen und PDF-Erstellung. Eine andere Institution, ungeprüfte B+-Äquivalenz und alle anderen Noten erscheinen nicht.
 
@@ -336,7 +336,7 @@ flowchart TD
 
 **OUT-08 und ausdrücklich gewünschte Notendaten:** Die Auswahl eines strukturierten Datenexports und die Wahl CSV/JSON sind für sich keine Einwilligung, Einzelnoten automatisch aufzunehmen. Der gewählte Umfang muss den Einschluss von Studienleistungen und Noten ausdrücklich und verständlich ausweisen. Eine bewusst angeforderte vollständige eigene Datenauskunft darf andererseits Notendatensätze nicht still entfernen: enthaltene und ausgeschlossene Kategorien sowie bekannte Institutionsbezüge werden vor Erzeugung geschützt offengelegt und die sensible Aufnahme ausdrücklich gewählt. Dies ist eine Umfangswahl, kein zusätzlich erforderlicher PDF-Notenauszug und keine künstliche zweite Freigabe bereits eindeutig bestätigten Umfangs.
 
-OUT-07 bleibt der institutionsbezogene akademische Auszug mit expliziter Leistungswahl. OUT-08 enthält bei entsprechendem Auftrag die tatsächlich vorhandenen strukturierten Datensätze und kann ungeklärte Institutionsbezüge nur wahrheitsgemäß als ungeklärt ausweisen, niemals einer geratenen Institution zuordnen. Die noch fehlende dauerhafte DM-12-/DM-04-Beziehung wird dadurch nicht als abgenommen behauptet. Der genaue geschützte Bedienpfad für diese Umfangswahl, insbesondere bei ungeklärter Zuordnung, ist ein B1-/D1-/F2-Nachtrag zur Prüfung; eine ungeschützte institutionslose Notenübersicht wird nicht eingeführt. Kein PDF-Bericht ist Voraussetzung oder Ersatz für OUT-08.
+OUT-07 bleibt der institutionsbezogene akademische Auszug mit expliziter Leistungswahl. OUT-08 enthält bei entsprechendem Auftrag die tatsächlich vorhandenen strukturierten Datensätze und kann ungeklärte Institutionsbezüge nur wahrheitsgemäß als ungeklärt ausweisen, niemals einer geratenen Institution zuordnen. Die jetzt in D1 ausdrücklich modellierte optionale DM-12-/DM-04-Beziehung bleibt wie das gesamte Modell zur Prüfung. Der genaue geschützte Bedienpfad für diese Umfangswahl, insbesondere bei ungeklärter Zuordnung, ist ein B1-/D1-/F2-Nachtrag zur Prüfung; eine ungeschützte institutionslose Notenübersicht wird nicht eingeführt. Kein PDF-Bericht ist Voraussetzung oder Ersatz für OUT-08.
 
 ## B3.6 Bereitstellungsformate und Grenzen
 
@@ -549,15 +549,15 @@ Die Kurztexte dienen nur als Rückverfolgung: **FE-01..FE-24 bleiben in ihren je
 
 | Baustein | Gegenstand des bestehenden Dokuments | B3-Zuständigkeit / späterer Abgleich |
 |---|---|---|
-| P1 v0.5 | Ziele, Nachweisorientierung, Dateneinsicht/Export, Nichtziele | B3 enthält keine erfundenen amtlichen Leistungen oder zusätzlichen Rollen |
-| P2 v0.6 | Facharchitektur, CFG-01..CFG-17, DK-01..DK-12, Datenschutzgrenzen | CFG-08/CFG-12/CFG-14 und DK-03, DK-04, DK-07, DK-08, DK-09, DK-10, DK-11 sind relevante Quellenklassen |
-| F1 v0.2 | GP-01..GP-15 | Berichte unterstützen insbesondere GP-02, GP-04..GP-06, GP-09, GP-11, GP-12, GP-15; kein neuer verbindlicher Prozess |
-| F2 v0.1 | UC-01..UC-50 | UC-49 ist der bestehende Datenexport; keine stillschweigende neue UC-Nummer |
-| F3 v0.1 | AF-01..AF-27 | AF-02, AF-05, AF-12, AF-13, AF-15, AF-23, AF-26, AF-27 sind fachliche Vorverarbeitungen; keine neue Report-Engine als AF behaupten |
-| D1 v0.1 | DM-01..DM-52 und INV-01..INV-25 | Identitäten/Versionen/Nachweise schützen; Dateierzeugung, Berichtsversion und eigener Exportauftrag könnten D1-Nachtrag benötigen |
-| D2 v0.1 | DT-01..DT-64 | Typen für Zeit/Quelle/Noten/Statistik/Prüfstatus erhalten; konkrete Exportvertragstypen sind später zu ergänzen, nicht hier als bestehend deklarieren |
-| B1 v0.1 | DLG-01..DLG-50 | Einstiege und geschützte Dialoge nutzen; Exportauswahl/Vorschau/Bereitstellung später in B1 detaillieren |
-| B2 v0.1 | BAT-01..BAT-19 | Kein eigenständiger periodischer Report; ggf. berechtigt gestartete asynchrone Erstellung bedürfte ausdrücklicher neuer Spezifikation |
+| P1 v0.6 | Ziele, Nachweisorientierung, Dateneinsicht/Export, Nichtziele | B3 enthält keine erfundenen amtlichen Leistungen oder zusätzlichen Rollen |
+| P2 v0.7 | Facharchitektur, CFG-01..CFG-17, DK-01..DK-12, Datenschutzgrenzen | CFG-08/CFG-12/CFG-14 und DK-03, DK-04, DK-07, DK-08, DK-09, DK-10, DK-11 sind relevante Quellenklassen |
+| F1 v0.3 | GP-01..GP-15 | Berichte unterstützen insbesondere GP-02, GP-04..GP-06, GP-09, GP-11, GP-12, GP-15; kein neuer verbindlicher Prozess |
+| F2 v0.2 | UC-01..UC-50 | UC-49 ist der bestehende Datenexport; keine stillschweigende neue UC-Nummer |
+| F3 v0.2 | AF-01..AF-27 | AF-02, AF-05, AF-12, AF-13, AF-15, AF-23, AF-26, AF-27 sind fachliche Vorverarbeitungen; keine neue Report-Engine als AF behaupten |
+| D1 v0.2 | DM-01..DM-52 und INV-01..INV-25 | Identitäten/Versionen/Nachweise schützen; Dateierzeugung, Berichtsversion und eigener Exportauftrag könnten D1-Nachtrag benötigen |
+| D2 v0.2 | DT-01..DT-64 | Typen für Zeit/Quelle/Noten/Statistik/Prüfstatus erhalten; konkrete Exportvertragstypen sind später zu ergänzen, nicht hier als bestehend deklarieren |
+| B1 v0.2 | DLG-01..DLG-50 | Einstiege und geschützte Dialoge nutzen; Exportauswahl/Vorschau/Bereitstellung später in B1 detaillieren |
+| B2 v0.2 | BAT-01..BAT-19 | Kein eigenständiger periodischer Report; ggf. berechtigt gestartete asynchrone Erstellung bedürfte ausdrücklicher neuer Spezifikation |
 | S1 (geplant) | Nachbarsysteme und offiziell verfügbare Konverter/Dateizugänge | Keine Anbieter-/Word-/Cloud-Verfügbarkeit fingieren |
 | S2/S3 (geplant) | Migration und Inbetriebnahme | Portabilität und temporäre Exportablage gesondert definieren |
 | N1/N2 (geplant) | Qualität und Querschnitt (Daten-/Drucksicherheit, Formate, Dateilebensdauer) | Konkrete Qualitätsschwellen, technische Fehler- und Aufbewahrungsregeln dort ermitteln |
@@ -646,3 +646,18 @@ Sämtliche Beispiele sind **künftige fachliche Akzeptanztests**. Kein automatis
 8. Auskunftsumfang und Datenschutzverpflichtungen zum aktuellen Rechtsstand sind bei konkreter Umsetzung zu prüfen; B3 ersetzt keine Rechtsprüfung oder Rechtsberatung.
 
 **Nicht vorgenommen:** Produktimplementierung, technische Architekturentscheidungen, Verarbeitung echter Nutzerdaten, Berichtsgenerierung im Produkt, externe Datenübertragungen, automatische Reportjobs, neue PR oder Fusion. Die Dokumentlieferung erfolgt per Commit und Push in die bestehende Branch/PR #1; dies ersetzt keine fachliche Abnahme. Dokumentationsprüfungen sind keine Produkttests. Fachlicher Status: **Zur Prüfung durch den Projektinhaber**.
+
+
+## B3.14 Kontoisolation, Schlüssel- und Schutzgrenzen für Ausgaben
+
+Die Entscheidungen FE-27 bis FE-89 ergänzen den Bestand; mit Ausnahme von **FE-56 (offen)** sind ihre fachlichen Vorgaben bestätigt. Die vollständige deutsche Entscheidungsmatrix und die zwölf Nachbarverträge stehen in [S1](S1-nachbarsysteme.md). Eine fachliche Entscheidung ist keine Aussage über implementierte Funktionen oder aktuell erteilte Anbieterrechte. Alle Bausteine bleiben **Zur Prüfung**. Historische Prüfstände, frühere FE-Teilmengen und alte Versionsbezüge bezeichnen ausschließlich ihre damalige Grundlage; maßgeblich ist der aktuelle Index mit [Änderungs- und Prüfnachweis](E3-pruefnachweis.md).
+
+OUT-01 bis OUT-08 behalten ihre Bedeutung und werden weder automatisch veröffentlicht noch kontoübergreifend erzeugt. Alle neuen Konten-, Rollen-, Support-, Quoten- und Integrationszustände aus D1/D2 gelten vor Auswahl, Vorschau und tatsächlicher Ausgabe erneut.
+
+- Persönliche Exportauswahl enthält ausschließlich eigene rechtmäßig gewählte Daten. Administratorrechte allein erzeugen keinen Bericht über andere Personen; Supportzugriff ist keine allgemeine Exportberechtigung.
+- Sensible Quellen vererben ihren Schutz auf PDF, optionale Word-Datei, CSV/JSON, Vorschau und Zwischenprodukte. Entschlüsselter Export benötigt eine ausdrücklich gewählte sichere Ziel-/Schutzentscheidung; ein allgemeiner Exportknopf ist keine Cloud-Klartextfreigabe. Keine privaten Schlüssel, OTP, Tokens oder Passwörter exportieren.
+- OUT-08 umfasst auf ausdrückliche eigene Auswahl auch relevante neue persönliche Beziehungen DM-53 bis DM-71, soweit exportierbar und ohne Secrets; Systemaudit wird nicht ungeprüft in einen privaten Inhaltsbericht kopiert. Export ist keine automatische Sicherungswiederherstellung.
+- Institutionelle Noten behalten Originalskala und getrennt gekennzeichnete indikative Äquivalenz. Einzelnoten erscheinen nur im geschützten Detailpfad und bei ausdrücklich gewähltem Notenexport, niemals Dashboard, Suchvorschau oder Push.
+- Öffentliche GitHub-Belege dürfen aus ausgewählten oder allen eigenen öffentlichen Repositories im bestätigten Scope stammen; kein privates Repository und keine unbelegte individuelle Urheberschaft.
+
+**Zusätzliche Abnahmefälle:** Konto A kann keinen Export von B anfordern; widerrufene Supportfreigabe verhindert auch eine bereits vorbereitete Ausgabe; Wiederholung eines Exportauftrags veröffentlicht nichts automatisch; sensibler Quelldokumenttext erscheint ohne ausdrückliche Export-/Entschlüsselungswahl nicht in einem offenen Bericht.

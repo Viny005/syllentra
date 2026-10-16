@@ -2,8 +2,8 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** P2 — Architekturüberblick\
-**Version:** 0.6\
-**Stand:** 13.10.2026\
+**Version:** 0.7\
+**Stand:** 16.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Spezifikationsmethode:** Bausteine nach Johannes Siedersleben\
 **Geltungsbereich:** Fachlicher Zielumfang der ersten Produktversion (V1)
@@ -41,29 +41,30 @@ Begriffe und Zielumfang entsprechen P1.4 K bis P. Ein Kurs bezeichnet eine Lehrv
 
 ### P2.1.3 Benutzer und Systemgrenze
 
-In V1 gibt es einen persönlichen Benutzer, der zugleich Systeminhaber und Administrator ist. Er kann Syllentra auf Android-Smartphones, iPhones, Tablets, Laptops und Desktop-Computern verwenden. Auf Android und iOS muss eine installierbare Anwendung mit eigener Identität, eigenem Symbol und Start vom Startbildschirm bereitstehen; eine ausschließlich über eine Website erreichbare Oberfläche genügt nicht. Die mobile Oberfläche wird für Smartphone und Tablet angepasst. Framework und Vertrieb bleiben offen.
+V1 unterstützt mehrere isolierte verifizierte Nutzerkonten und eine getrennte Administration. Die installierbare PWA besitzt auf unterstützten Android-/iOS-Konfigurationen eigene Identität und ein Startbildschirmsymbol; Smartphone-, Tablet- und Computeroberflächen sind angepasst. Framework und spätere native Apps bleiben offen. PWA-/Browser-/OS-Fähigkeiten werden geprüft, fehlende Funktionen verständlich durch Datei- oder Manuelleingabe ersetzt.
 
-Nutzer und Administrator sind menschliche Rollen derselben Person. Der KI-Assistent ist eine interne Assistenzfunktion, kein unabhängiger Akteur mit eigenen Entscheidungsrechten. Lehrende, Beratungsstellen und Hochschule bleiben externe fachliche Verantwortliche; Dienstanbieter verantworten ihre jeweiligen Nachbarsysteme. Eine Gerätefreigabe ist keine neue Benutzerrolle.
+Lernende und Administratoren sind getrennte menschliche Rollen. V1 unterstützt mehrere isolierte Konten; genau ein Super Admin vergibt und entzieht die Rechte sekundärer Administratoren. Der KI-Assistent ist eine interne Assistenzfunktion, kein unabhängiger Akteur mit eigenen Entscheidungsrechten. Lehrende, Beratungsstellen und Hochschule bleiben externe fachliche Verantwortliche; Dienstanbieter verantworten ihre jeweiligen Nachbarsysteme. Eine Gerätefreigabe ist keine neue Benutzerrolle.
 
 Außerhalb der fachlichen Systemgrenze befinden sich öffentliche Websites, Hochschulplattformen, Studienverwaltungsportale, E-Mail-Dienste, externe Kalender, mobile Betriebssystem-Kalenderfunktionen, GitHub und ausdrücklich freigegebene Projektquellen, externe KI- und Werkzeuganbieter sowie gegebenenfalls Benachrichtigungs- und Speicherdienste.
 
-Die später mögliche Mehrbenutzerfähigkeit ist zu berücksichtigen, ohne für V1 eine Verwaltung mehrerer Studenten vorauszusetzen.
+Offene Registrierung und E-Mail-OTP vor Anwendungsdatenzugriff gehören zu V1. Administrations-MFA, serverseitige Rollen- und Funktionsprüfung sowie freiwillige befristete Supportfreigaben schützen die privaten Konten (FE-59 bis FE-72).
 
 ### P2.1.4 Kontextdiagramm
 
 ```mermaid
 flowchart LR
-    U["Student / Systeminhaber"] <--> SYS["Syllentra AI einschließlich Profil, Unterhaltungen, Arbeitsbereichen und Studienkalender"]
+    U["Verifizierte Studierende: getrennte Konten"] <--> SYS["Syllentra AI einschließlich Profil, Unterhaltungen, Arbeitsbereichen und Studienkalender"]
     DEV["NB-01: Geräte- und Betriebssystemumgebung"] <--> SYS
     SYS <--> WEB["NB-02: Öffentliche Webquellen"]
     SYS <--> LMS["NB-03: Hochschulische Lernplattformen"]
     SYS <--> UNI["NB-04: Studienverwaltungsportale"]
-    MAIL["NB-05: E-Mail-Dienste"] <--> SYS
+    SYS --> MAIL["NB-05: OTP / Sicherheit / optionale Reminder"]
+    ADM["Ein Super Admin / begrenzte sekundäre Admins"] <-->|"Konfiguration, keine privaten Inhalte"| SYS
     EXT["NB-06: Externe Online-Kalender, nur lesen"] --> SYS
     GH["NB-07: Freigegebene Projektquellen, nur lesen"] --> SYS
     SYS <--> TOOLS["NB-08: Zugelassene KI- und Mediendienste"]
     SYS --> PUSH["NB-09: Benachrichtigungsdienste"]
-    SYS <--> STORE["NB-10: Optionaler externer Speicher"]
+    STORE["NB-10: Externe Datei-/Ordnerquellen, nur lesen"] --> SYS
     SYS <--> OTHER["NB-11: Weitere geprüfte Integrationen"]
     MOBILE["NB-12: Android-/iOS-Kalender, nur lesen"] --> SYS
 ```
@@ -92,26 +93,26 @@ Die Bezeichnungen sind zunächst **fachliche Systemkategorien** und keine Zusage
 |---|---|---|---|---|
 | NB-01 | Benutzergeräte und ihre Betriebssystemumgebung | Gerätebedienung, Medienaufnahme und Berechtigungen für Syllentra-Clients | Bidirektionale Ein- und Ausgaben; synchronisierte Daten nur auf freigegebenen Geräten | Berechtigter Benutzer, Gerätefreigabe und erforderliche Betriebssystemrechte |
 | NB-02 | Öffentliche Websites und Informationsquellen | Fachliche Recherche und Verifikation | Rechercheanfrage und Informationsabruf; keine unzulässigen Änderungen | Rechtlich und technisch zulässiger Zugriff |
-| NB-03 | Hochschulische Lernplattformen | Kursunterlagen, Aufgaben, Ankündigungen und Fristen | Grundsätzlich lesend; andere Aktionen nur separat autorisiert | Freigegebener Zugang und verfügbare Anbindung |
-| NB-04 | Studienverwaltungsportale | Module, Prüfungen, Leistungen und offizielle Regeln | Grundsätzlich lesend; verbindliche Aktionen nur mit Freigabe | Freigegebener Zugang und verfügbare Anbindung |
-| NB-05 | E-Mail-Dienste | Studienrelevante Mitteilungen auswerten, Antworten vorbereiten | Lesen im genehmigten Umfang; Versand erst nach Einzelfreigabe | Autorisierte Verbindung |
+| NB-03 | Hochschulische Lernplattformen | V1-Materialimport; optional offizielle Lesekonnektoren | Manuell bereitgestellte Inhalte; automatische Abrufe nur nach nachgewiesener Unterstützung und Opt-in | Nutzungsrechte und ausdrückliche Aktivierung (FE-27) |
+| NB-04 | Studienverwaltungsportale | Freiwillig bereitgestellte Studieninformationen | V1 manuelle Importe; keine automatische Anmeldung oder verbindliche Hochschulaktion | Herkunft und Bestätigung; offizielle optionale Verbindung gesondert nachweisen (FE-27) |
+| NB-05 | E-Mail-Dienste | OTP/Sicherheitspost; optionale Erinnerungen | Systemversand zweckgebunden; keine automatische universitäre Postfachlese-V1 | Verifizierte private Primäradresse; Erinnerung opt-in, Inboxentscheidung FE-56 offen |
 | NB-06 | Externe Online-Kalender | Persönliche zeitliche Verfügbarkeit bestimmen | **Ausschließlich lesend**, keine Erstellung, Änderung oder Löschung | Autorisierte Verbindung |
-| NB-07 | GitHub und andere freigegebene Projektquellen | Projekt- und Kompetenzanalyse | **Lesend nur für ausgewählte Repositories** | Explizite Auswahl und Berechtigung |
+| NB-07 | GitHub und andere freigegebene Projektquellen | Projekt- und Kompetenzanalyse | **V1 nur lesend: ausgewählte oder alle eigenen öffentlichen Repositories** | Freiwillige offizielle Kontoverbindung und sichtbar bestätigter Umfang (FE-43) |
 | NB-08 | Externe KI- und Medienverarbeitungsdienste | Text, Sprache, Dokumente, Recherche, Bild, Audio und Video | Aufgabenabhängiger, kontrollierter Austausch | Unterstütztes Verfahren, Freigabe, Kosten- und Datenschutzprüfung |
 | NB-09 | Benachrichtigungsdienste | Relevante Hinweise außerhalb der aktiven Sitzung | Überwiegend ausgehend | Geräteberechtigung und geeigneter Betrieb |
-| NB-10 | Optionale externe Speicherdienste | Gesondert genehmigte Speicherung und Abrufe | Zweckgebunden bidirektional | Nachweis geeigneter Datenschutzbedingungen |
+| NB-10 | Optionale externe Speicherdienste | Freiwilliger Datei-/Ordnerimport | **Ausschließlich lesend**, keine externen Änderungen | Offizieller unterstützter Konnektor, gewählter Umfang; eigene Syllentra-Cloud ist intern (FE-50) |
 | NB-11 | Weitere integrierbare Anwendungen und Werkzeuge | Künftig ergänzte fachliche Fähigkeiten | Von der freigegebenen Integration abhängig | Prüfung und Autorisierung |
 | NB-12 | Lokale Kalenderfunktionen von Android/iOS | Auf dem Gerät verfügbare Termine und freie Zeiträume ermitteln | **Ausschließlich lesend**, keine Änderung am Gerätekalender | Betriebssystemberechtigung |
 
 ### P2.2.2 NB-01 — Benutzergeräte und ihre Betriebssystemumgebung
 
-Die Anwendung muss auf den in P1 definierten Geräteklassen bedienbar und auf Android und iOS installierbar sein. Der Benutzer kann Lernmaterialien bereitstellen, schriftlich oder sprachlich lernen, Profil und Unterhaltungen verwalten, Semester, Module, Kurse und Projekte organisieren, den internen Studienkalender verwenden sowie Daten und administrative Einstellungen ändern. Die konkrete Client-Technologie bleibt offen.
+Die Anwendung muss auf den in P1 definierten Geräteklassen bedienbar und auf Android und iOS installierbar sein. Der Benutzer kann Lernmaterialien bereitstellen, schriftlich oder sprachlich lernen, Profil und Unterhaltungen verwalten, Semester, Module, Kurse und Projekte organisieren, den internen Studienkalender verwenden sowie Daten und administrative Einstellungen ändern. V1 verwendet eine installierbare PWA; Framework und spätere native Apps bleiben offen. Tatsächliche PWA-/OS-Fähigkeiten werden geprüft und fehlende Zugänge durch manuelle oder dateibasierte Wege ersetzt (FE-55).
 
 Die Syllentra-Client-Anwendungen gehören zum Produkt. Als Nachbar NB-01 wird die umgebende Geräte- und Betriebssystemfunktionalität betrachtet, über die Benutzeraktionen, Aufnahme und Berechtigungen vermittelt werden; die bisherige Kennung bleibt erhalten. Profil und Identität werden nicht als feste persönliche Angaben im Client hinterlegt.
 
 Mikrofon-, Kalender- und Benachrichtigungszugriffe benötigen die vorgesehenen Berechtigungen. Ablehnen oder Widerrufen darf weder umgangen werden noch weiterhin mögliche Text- oder manuelle Organisationsfunktionen blockieren. Kalendereinträge der Geräte werden ausschließlich über den lesenden Umfang von NB-12 berücksichtigt.
 
-Freigegebene Profil-, Verlaufs-, Studien-, Projekt-, Kalender- und Konfigurationsdaten müssen nach abgeschlossener Synchronisation auf den autorisierten Geräten konsistent verfügbar sein. Geräte können freigegeben und entzogen werden; nach Entzug sind weitere Zugriffe ausgeschlossen. Bereits lokal vorhandene Daten, Verbindungsunterbrechungen und Bearbeitungskonflikte benötigen transparente Behandlung nach N2. Ein veralteter Stand darf nicht unbemerkt einen neueren überschreiben. Text- und Sprachwechsel erhält den verfügbaren Gesprächskontext; nicht verfügbare Teile sind kenntlich zu machen. Vollständige Offline-Nutzung ist nicht zugesagt.
+Freigegebene Profil-, Verlaufs-, Studien-, Projekt-, Kalender- und Konfigurationsdaten müssen nach abgeschlossener Synchronisation auf den autorisierten Geräten konsistent verfügbar sein. Geräte können freigegeben und entzogen werden; nach Entzug sind weitere Zugriffe ausgeschlossen. Bereits lokal vorhandene Daten, Verbindungsunterbrechungen und Bearbeitungskonflikte benötigen transparente Behandlung nach N2. Ein veralteter Stand darf nicht unbemerkt einen neueren überschreiben. Text- und Sprachwechsel erhält den verfügbaren Gesprächskontext; nicht verfügbare Teile sind kenntlich zu machen. Heruntergeladene eigene Daten sind offline les- und bearbeitbar; Änderungen werden zur konfliktgeprüften Synchronisation vorgemerkt. Nicht heruntergeladene Inhalte und Cloud-KI stehen offline nicht zur Verfügung (FE-34, FE-35).
 
 Direkt hochgeladene Dateien, Notizen und Aufzeichnungen werden über die Client-Anwendung eingebracht. **Benutzerdateien sind Eingaben, kein eigenständiges Nachbarsystem.**
 
@@ -123,17 +124,17 @@ Die Recherche muss Herkunft, Aktualität, Relevanz und Widersprüche berücksich
 
 ### P2.2.4 NB-03 — Hochschulische Lernplattformen
 
-Bei erteiltem Zugriff sollen Kursunterlagen, Mitteilungen, Aufgaben und Fristen abgerufen und mit den Lern- und Studieninformationen in Beziehung gesetzt werden können. Die konkret nutzbaren Funktionen einzelner Plattformen hängen von deren Schnittstellen und Nutzungsbedingungen ab.
+V1 übernimmt rechtmäßig manuell bereitgestellte Kursunterlagen, Aufgaben und Meldungen. Ein automatischer Moodle-/THM-Abruf setzt einen nachweislich funktionierenden offiziellen Konnektor und ausdrückliches Opt-in voraus; dessen Existenz wird nicht zugesagt (FE-27).
 
 Eine automatische Aufgabenabgabe oder Veröffentlichung ist durch einen bloßen Lesezugriff nicht autorisiert.
 
 ### P2.2.5 NB-04 — Hochschul- und Studienverwaltungsportale
 
-Autorisierte Informationen über Module, Studienleistungen, Prüfungszeiträume und Verwaltungsfristen sollen genutzt werden können. Verbindliche Vorgänge wie Prüfungsanmeldungen oder -abmeldungen setzen eine technisch zulässige Anbindung und eine gesonderte ausdrückliche Bestätigung voraus. Amtliche Entscheidungen trifft weiterhin die zuständige Institution.
+V1 verarbeitet freiwillig manuell bereitgestellte Informationen über Module, Leistungen, Prüfungszeiträume und Fristen. Eine automatische Portalanmeldung oder Prüfungsan-/abmeldung gehört nicht zur V1-Freigabe. Spätere verbindliche Vorgänge benötigen eine eigene fachliche Entscheidung, offizielle Anbindung und ausdrückliche Bestätigung. Amtliche Entscheidungen trifft weiterhin die Hochschule (FE-27).
 
 ### P2.2.6 NB-05 — E-Mail-Dienste
 
-Autorisierte E-Mails können zur Erkennung von Studieninformationen, Fristen, Terminänderungen und relevanten Mitteilungen ausgewertet und zusammengefasst werden. Der Assistent darf Antwortentwürfe vorbereiten. **Der Versand jeder externen Nachricht erfordert eine ausdrückliche Freigabe.** Der berechtigte Umfang des Postfachzugriffs ist zu begrenzen.
+V1 nutzt NB-05 ausgehend für angeforderte E-Mail-OTP, Sicherheits- und Kontomitteilungen sowie optional aktivierte Erinnerungen. Der jeweils ausgelöste Verifikationsvorgang beziehungsweise die Kanalwahl autorisiert diesen zweckgebundenen Systemversand ohne künstliche zweite Einzelbestätigung. Private verifizierte Primäradresse und zusätzliche Hochschuladresse sind getrennt. Manuell bereitgestellte Nachrichten dürfen als Dateien verarbeitet werden; sie erteilen keine Postfachberechtigung. **FE-56 bleibt offen: automatische Postfachlektüre, insbesondere Hochschulpost, ist nicht für V1 freigegeben.** Individuell entworfene externe Nachrichten benötigen weiterhin eine konkrete Versandfreigabe.
 
 ### P2.2.7 NB-06 — Externe Online-Kalender
 
@@ -143,7 +144,7 @@ Wo möglich, sollen reine Verfügbarkeitsangaben statt vollständiger privater T
 
 ### P2.2.8 NB-07 — GitHub und autorisierte Projektquellen
 
-Syllentra darf ausschließlich ausdrücklich ausgewählte Repositories analysieren, beispielsweise Dokumentation, Quellcode, Tests und nachvollziehbare Entwicklungsbeiträge. Der Zugriff auf ein Repository darf keine Freigabe sämtlicher Repositories des Kontos auslösen.
+Nach freiwilliger offizieller Kontoverbindung wählt der Nutzer ausdrücklich einzelne öffentliche Repositories oder den Umfang „alle meine öffentlichen Repositories“. Eine Einzelauswahl erweitert sich niemals still auf das gesamte Konto. Neue eigene öffentliche Repositories dürfen nur im ausdrücklich gewählten Gesamtumfang und nach dessen Synchronisationsregel berücksichtigt werden. Private Repositories und jegliche Schreiboperation sind in V1 ausgeschlossen (FE-43).
 
 Für Kompetenzbewertungen muss zwischen eigener Arbeit, Teambeiträgen und KI-generierten Anteilen differenziert werden, soweit entsprechende Nachweise vorliegen. Die reine Projektanalyse ist lesend. Eine zukünftige Schreibintegration wäre ein eigenständiger Berechtigungs- und Freigabefall.
 
@@ -170,7 +171,7 @@ Wichtige Änderungen und Hinweise sollen, soweit technisch unterstützt und erla
 
 ### P2.2.11 NB-10 — Optionale externe Speicherdienste
 
-Die Entscheidung über einen externen Speicheranbieter ist offen. Falls ein solcher Dienst benötigt wird, müssen Zugriff, Zweckbindung, Aufbewahrung, Datensicherheit und Löschmöglichkeiten geeignet sein. **Die persönliche Wissensgrundlage ist fachlich Teil von Syllentra**, unabhängig davon, wo sie später technisch gespeichert wird.
+Drive, OneDrive und Dropbox sind optionale externe Importquellen mit offiziell unterstütztem, freiwillig aktiviertem Lesezugriff auf ausgewählte Dateien oder Ordner. Syllentra erstellt, ändert und löscht dort nichts. Nach Widerruf stoppen weitere Zugriffe; zulässig importierte eigene Kopien bleiben erhalten. Die zentrale eigene Syllentra-Cloud mit EU-Datenhaltung und Sicherungen ist dagegen ein interner Produktbestandteil; ihr Anbieter ist offen (FE-33, FE-42, FE-50, FE-75).
 
 ### P2.2.12 NB-11 — Erweiterbare Anwendungen und Werkzeuge
 
@@ -391,7 +392,7 @@ Bei einer Löschanforderung soll der Benutzer den betroffenen Umfang, die mögli
 
 ### P2.7.1 Wiederkehrende Informationsprüfungen
 
-Syllentra soll autorisierte Quellen bei Bedarf wiederkehrend auf für den Nutzer wichtige Änderungen prüfen können: Kursmitteilungen, Fristen, Prüfungsinformationen, studienrelevante E-Mails und verfügbare Kalenderinformationen.
+Syllentra prüft zulässige Quellen im bestätigten Umfang: allgemeine Informationschecks nach FE-22, externe Verbindungen standardmäßig manuell und nur nach verbindungsspezifischem Opt-in wiederkehrend. Hochschulmeldungen und E-Mails werden V1 manuell bereitgestellt; FE-56 bleibt offen. Kalenderzugriffe bleiben nur lesend und tatsächlich unterstützungsabhängig.
 
 Soweit Betriebssysteme, Zugriffsrechte und Betriebsmodell dies unterstützen, sollen solche Prüfungen auch bei geschlossener Client-Anwendung möglich sein. Es wird **keine unbegrenzte Hintergrundaktivität auf mobilen Geräten** vorausgesetzt. Prüffrequenzen und Benachrichtigungsregeln sollen über unterstützte Administrationseinstellungen anpassbar sein.
 
@@ -447,7 +448,7 @@ Webseiten, E-Mails, Dokumente, Repositories und Werkzeugantworten gelten als Dat
 
 **Methodische Referenz:** [Herold-Spezifikation von Carsten Lucke](https://github.com/carstenlucke/herold/tree/main/docs/spec), insbesondere [P2 — Architecture Overview](https://github.com/carstenlucke/herold/blob/main/docs/spec/P2-architekturueberblick.md): Nachbarsysteme vollständig benennen und Austauschrichtungen erläutern; technische Komponenten, Schichten und Bereitstellung bleiben außerhalb von P2. Die konkreten Herold-Anbieter und Betriebsgrenzen sind keine Vorgaben für Syllentra.
 
-Die freigegebene Spezifikation ist bei Widersprüchen zu älteren Entwürfen maßgeblich; Differenzen sind nachvollziehbar zu prüfen. Diese Fassung und P1 Version 0.5 stehen zur Prüfung; bisherige fachliche Entscheidungen bleiben erhalten. Der unveränderte Spezifikationsindex kann einen historischen Bearbeitungsstand enthalten.
+Die freigegebene Spezifikation ist bei Widersprüchen zu älteren Entwürfen maßgeblich; Differenzen sind nachvollziehbar zu prüfen. Diese Fassung und P1 Version 0.6 stehen zur Prüfung; bisherige fachliche Entscheidungen bleiben erhalten. Der unveränderte Spezifikationsindex kann einen historischen Bearbeitungsstand enthalten.
 
 **Änderungsnachweis 0.6:** NB-01 bis NB-12, CFG-01 bis CFG-13, DK-01 bis DK-06 und P2-R-01 bis P2-R-07 bleiben erhalten. NB-01 unterscheidet nun die Syllentra-Clients vom benachbarten Geräteumfeld. CFG-14 bis CFG-17 präzisieren Profil, Gespräche, Kurse/Projekte und mobile Navigation. DK-07 bis DK-12 ergänzen die fachlichen Datenklassen; DK-01/DK-02 trennen temporäre Verarbeitung von bewusst aufbewahrten Originalen. P1 und P2 verwenden dieselben Regeln für externe Kalender, interne Planung, Gerätefreigaben, Verlauf und Erinnerung, Kosten, Integrationen und Konfiguration. Keine technische Architekturentscheidung wird dadurch getroffen.
 
@@ -499,4 +500,20 @@ Diese offenen Punkte präzisieren die spätere Umsetzung. Sie streichen keine be
 ---
 
 **Ende von P2 — Architekturüberblick.**\
-**Freigabestatus:** Zur Prüfung. Version 0.6 ist gemeinsam mit P1 Version 0.5 zu validieren. Die spätere Aktualisierung des Spezifikationsindex erfolgt gesondert; diese Überarbeitung betrifft ausschließlich P1 und P2.
+**Freigabestatus:** Zur Prüfung. Version 0.6 ist gemeinsam mit P1 Version 0.6 zu validieren. Die spätere Aktualisierung des Spezifikationsindex erfolgt gesondert; diese Überarbeitung betrifft ausschließlich P1 und P2.
+
+### P2.9.1 Abgeglichene Produktgrenzen und Informationsklassen
+
+Die Entscheidungen FE-27 bis FE-89 ergänzen den Bestand; mit Ausnahme von **FE-56 (offen)** sind ihre fachlichen Vorgaben bestätigt. Die vollständige deutsche Entscheidungsmatrix und die zwölf Nachbarverträge stehen in [S1](S1-nachbarsysteme.md). Eine fachliche Entscheidung ist keine Aussage über implementierte Funktionen oder aktuell erteilte Anbieterrechte. Alle Bausteine bleiben **Zur Prüfung**. Historische Prüfstände, frühere FE-Teilmengen und alte Versionsbezüge bezeichnen ausschließlich ihre damalige Grundlage; maßgeblich ist der aktuelle Index mit [Änderungs- und Prüfnachweis](E3-pruefnachweis.md).
+
+Die PWA, zentrale EU-Cloud, interne Datenhaltung, eigene KI-Verarbeitung, Administrationskonsole, Geräteabgleich und interne Sicherung gehören zu Syllentra. Geräte-/Browserumgebung, offizielle Konnektoren und tatsächlich externe KI bleiben Nachbarn. Diese Aussage legt keine interne technische Komponentenstruktur fest. Lokale KI benötigt geeignete Hardware; der künftige Zugriff vom Telefon auf ein PC-Modell wird nicht als V1 versprochen.
+
+**Akteure:** Mehrere verifizierte persönliche Konten; ein Super Admin; von ihm begrenzt berechtigte sekundäre Administratoren; freiwillig eng zugelassener Support. Ein Administrationskonto erschließt keine fremden Lerninhalte. Verifikation, Sitzung, Gerät, Rolle, Funktion und Inhaltsschutz werden unabhängig geprüft.
+
+**Datenklassen:** DK-05 umfasst zusätzlich Konten-, Rollen-, Sitzungs-, Verifikations- und Freigabemetadaten; DK-07 Geräteautorisation und selektiven Cache; DK-08 Gesprächskontext mit unabhängigen Sprachpräferenzen; DK-09 Projekte und erlaubte öffentliche GitHub-Bezüge; DK-10 Originalarchive/Extrakte und Dokumentrevisionen; DK-11 Beziehungen, Quellrevisionen, Schutzvererbung und Löschmarkierungen; DK-12 interne bestätigte Planung und getrennte externe reine Verfügbarkeit. Private Integrationshistorie, Sicherungen und Schlüsselverweise sind geschützte Betriebs-/Kontrolldaten, keine öffentlichen Kataloginhalte. D1/D2 konkretisieren Besitz, Kardinalitäten und Werte.
+
+**Konfiguration:** CFG-01 bis CFG-17 behalten ihre Bedeutung. Innerhalb der unterstützten Bereiche werden Übersetzungen, mobile Navigation, getrennte Sprachpräferenzen, Quoten, Rollenscope, Supportdauer, Aufbewahrung, Retrygrenzen und Funktionsfreigabe validiert verwaltet. Entwurf, Vorschau, Test, manuelle/geplante Veröffentlichung und Rücknahme verändern keine Sicherheitsgrenze. Deaktivierung bewahrt Daten; neue Softwarefähigkeiten benötigen Entwicklung.
+
+**Betriebsgrenzen:** Eigene Cloud und Sicherungen in der EU; kostenlose kommerziell zulässige Software-/Modelllizenzkette ohne verpflichtende bezahlte API, reale Infrastrukturkosten gesondert. Externe Synchronisation manuell, Automatik nur pro Verbindung opt-in. Allgemeine FE-22-Checks und interne Erinnerungen berechtigen nicht zu Postfachlektüre oder neuen externen Scopes. Kontowiederherstellung erzeugt keine Dokumentenschlüssel. Sensibler Cloudklartext nur minimal pro konkreter Freigabe, sichtbar erklärt und ohne dauerhafte Klartextkopie.
+
+**Folgebausteine:** [S1](S1-nachbarsysteme.md) enthält NB-Verträge und Abnahmeszenarien; [N1](N1-nichtfunktional.md) Qualitätsbedingungen, [N2](N2-querschnittskonzepte.md) Konten-, Rechte-, Schlüssel-, Audit- und Löschgrenzen. S2 präzisiert später Datenmigration und sichere Wiederherstellung; S3 sichere Inbetriebnahme und Bootstrap des einzigen Super Admin. Anbieter, Protokolle, Fristen und Zahlen bleiben dokumentierte offene technische Fragen.

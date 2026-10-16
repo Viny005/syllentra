@@ -2,11 +2,11 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** F2 — Anwendungsfälle\
-**Version:** 0.1\
-**Stand:** 14.10.2026\
+**Version:** 0.2\
+**Stand:** 16.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Spezifikationsmethode:** Bausteine nach Johannes Siedersleben\
-**Bezugsstand:** P1 v0.5, P2 v0.6, F1 v0.2 auf `docs/spec/p1-p2-mobile-workspaces`\
+**Bezugsstand:** Harmonisierung FE-01 bis FE-89 vom 16.10.2026; Ausgangs-HEAD `ace1d80e80245379beed02296c3c4dd184c8dd70`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1. Aktuelle Versionen siehe [Index](README.md).\
 **Geltungsbereich:** Fachlicher Zielumfang der ersten Produktversion (V1). Dieses Dokument beschreibt noch keine implementierten Funktionen.
 
 ---
@@ -19,7 +19,7 @@ Die Struktur folgt dem Anwendungsfallbegriff nach Johannes Siedersleben und orie
 
 **Abgrenzung:** F2 legt beobachtbares Verhalten, fachliche Vor-/Nachbedingungen, Hauptabläufe sowie Alternativen und Fehlerfälle fest. Interne Algorithmen (z. B. Retrieval, Transkription, KI-Prompts, Synchronisationsauflösung), konkrete Datentypen, Klassen, Datenbanken und API-Endpunkte gehören nicht hierher. Sie werden gegebenenfalls in F3, D1/D2, B1, S1, N1/N2 beziehungsweise der technischen Architektur spezifiziert. Kein Anwendungsfall setzt eine bereits implementierte Funktion voraus.
 
-**Zielgruppe und Rollen:** V1 besitzt einen persönlichen Nutzer, der zugleich Systeminhaber/Administrator ist. Die **fachliche Rolle „Nutzer/Lernender“** darf eigene Lern- und Studienarbeit verwalten; die **Rolle „Eigentümer/Administrator“** steuert Integrationen, Systemeinstellungen, Kosten und Berechtigungen. Beide Rollen liegen in V1 bei derselben Person, sind jedoch für Szenarien und Sicherheitsgrenzen getrennt. Unterstützende Akteure sind autorisierte Geräte- und Betriebssystemumgebungen, Hochschulquellen und erlaubte externe Dienste.
+**Zielgruppe und Rollen:** V1 unterstützt offene Registrierung mehrerer voneinander isolierter Nutzerkonten. Die **fachliche Rolle „Nutzer/Lernender“** darf eigene Lern- und Studienarbeit verwalten; die **Rolle „Eigentümer/Administrator“** steuert Integrationen, Systemeinstellungen, Kosten und Berechtigungen. Persönliche Datenhoheit bleibt beim jeweiligen Lernenden; genau ein Super Admin verwaltet sekundäre Administratoren, deren Rechte keine fremden privaten Inhalte erschließen. Unterstützende Akteure sind autorisierte Geräte- und Betriebssystemumgebungen, Hochschulquellen und erlaubte externe Dienste.
 
 ### F2.1.1 Schreib- und Bestätigungsgrenzen
 
@@ -34,11 +34,11 @@ Die Struktur folgt dem Anwendungsfallbegriff nach Johannes Siedersleben und orie
 
 Ein Abbruch vor der betreffenden bewussten Speicher- oder Ausführungsaktion übernimmt die noch nicht entschiedenen Änderungen nicht. Bereits zulässig ausgeführte Verarbeitung wird dadurch nicht unbemerkt rückgängig gemacht; ihr tatsächlicher Stand bleibt nachvollziehbar.
 
-Soweit der Zugang zur persönlichen Instanz betroffen ist, bedeutet „Nutzer“ ausschließlich den berechtigten persönlichen Dateninhaber. Private Daten und entsprechende Verwaltungsfunktionen dürfen anderen Personen oder nicht autorisierten Geräten nicht zugänglich werden. Das konkrete Authentifizierungsverfahren ist offen. Pflichtangaben sind nur für einen tatsächlich benötigten fachlichen Vorgang zulässig; optionale Profileingaben sperren keine allgemeine Nutzung.
+Soweit der Zugang zur persönlichen Instanz betroffen ist, bedeutet „Nutzer“ ausschließlich den berechtigten persönlichen Dateninhaber. Private Daten und entsprechende Verwaltungsfunktionen dürfen anderen Personen oder nicht autorisierten Geräten nicht zugänglich werden. E-Mail und Passwort sowie E-Mail-OTP vor dem Zugriff auf Anwendungsdaten sind festgelegt (FE-60); technische Verfahren und Anbieter bleiben offen. Pflichtangaben sind nur für einen tatsächlich benötigten fachlichen Vorgang zulässig; optionale Profileingaben sperren keine allgemeine Nutzung.
 
 Jeder Anwendungsfall bleibt innerhalb bestehender zweckbezogener Rechte, geeigneter Verarbeitungs- und Aufbewahrungsbedingungen und genehmigter Kostenlimits. Eine Leseansicht, ein Gesprächskontext oder ein vorhandenes Abonnement erweitert diese Grenzen nicht. Externe Nachrichten und verbindliche Vorgänge brauchen ausdrückliche Freigabe; persönliche externe Kalender besitzen ausnahmslos keinen Schreibweg. Drittanbieterantworten, Dokumente und Repository-Inhalte sind Daten und keine Benutzerbefehle. Unbekannte Ergebnisse oder teilweise Ausführung werden niemals als Erfolg ausgegeben.
 
-Die installierbare Android- und iOS-Anwendung muss eine eigene Identität und ein eigenes Symbol besitzen und vom Startbildschirm starten. Smartphone- und Tablet-Bedienung sowie Nutzung auf Computern gehören zum Zielumfang. UC-01, UC-04 und UC-20 gelten auf diesen vorgesehenen Geräteklassen; eine ausschließlich erreichbare Website genügt nicht. Framework, Vertrieb und Betriebsmodell bleiben offen. Geräte-, Mikrofon-, Kalender- und Benachrichtigungsrechte respektieren Ablehnung und Widerruf. Keine unbegrenzte Hintergrundaktivität oder vollständige Offline-Funktionalität wird vorausgesetzt.
+Die installierbare Android- und iOS-Anwendung muss eine eigene Identität und ein eigenes Symbol besitzen und vom Startbildschirm starten. Smartphone- und Tablet-Bedienung sowie Nutzung auf Computern gehören zum Zielumfang. UC-01, UC-04 und UC-20 gelten auf diesen vorgesehenen Geräteklassen; eine ausschließlich erreichbare Website genügt nicht. V1 verwendet eine installierbare PWA mit eigener zentraler EU-Cloud; Framework, Anbieter und spätere native Verteilung bleiben offen. Geräte-, Mikrofon-, Kalender- und Benachrichtigungsrechte respektieren Ablehnung und Widerruf. Keine unbegrenzte Hintergrundaktivität wird vorausgesetzt. Heruntergeladene eigene Daten sind offline bearbeitbar; Konflikte und Löschungen werden beim erneuten Abgleich geprüft. Cloudfunktionen bleiben offline unerreichbar.
 
 Alle Beispiele sind fiktiv und beschreiben zukünftige Abnahmesituationen. Zugangsdaten und reale private Daten sind weder Beispiele noch Bestandteil dieses öffentlichen Dokuments. Die individuellen Schutzabschnitte konkretisieren diese gemeinsamen Regeln; ihr Fehlen in einem einzelnen Schritt hebt die Grenzen nicht auf.
 
@@ -149,7 +149,7 @@ flowchart LR
 
 **Fehler- und Schutzfälle:** Fehlt eine für eine konkrete externe Funktion zwingende Berechtigung, wird nur diese Funktion begründet eingeschränkt; die gesamte Einrichtung wird nicht erzwungen.
 
-**Schutz- und Freigabegrenzen:** Die persönliche Instanz muss zulässig nutzbar sein; ein bestimmtes Authentifizierungsverfahren wird nicht festgelegt. Überspringen ist keine Freigabe von Aufnahme, externen Diensten oder Ausgaben. Installierbare Android-/iOS-Anwendungen und Computernutzung bleiben vorgesehen.
+**Schutz- und Freigabegrenzen:** Die persönliche Instanz muss zulässig nutzbar sein; E-Mail/Passwort und die bestätigte E-Mail-OTP-Verifikation gelten vor jedem erstmaligen Anwendungszugriff; die technische Umsetzung bleibt offen. Überspringen ist keine Freigabe von Aufnahme, externen Diensten oder Ausgaben. Installierbare Android-/iOS-Anwendungen und Computernutzung bleiben vorgesehen.
 
 **Abnahmebeispiel:** Wenn der Nutzer „Überspringen“ wählt, ist die Hauptoberfläche ohne erfundene Pflichtfelder erreichbar.
 
@@ -1372,11 +1372,11 @@ flowchart LR
 | **Kennung** | UC-42 |
 | **Ziel** | Ein ausdrücklich ausgewähltes Repository als erlaubte Quelle für Projektverständnis oder Kompetenzbelege untersuchen. |
 | **Zugehöriger Geschäftsprozess** | GP-09, GP-11 in [F1](F1-geschaeftsprozesse.md) |
-| **Bestätigte Entscheidung** | Keine gesonderte FE-Entscheidung; allgemeine Vorgaben aus P1/P2/F1 gelten. |
+| **Bestätigte Entscheidung** | FE-43; Verbindungs- und Scopeverwaltung UC-56. |
 | **Primärakteur** | Nutzer/Lernender |
 | **Unterstützende Akteure** | Syllentra; offiziell unterstützter Repository-Dienst und gegebenenfalls zugelassener Analysedienst |
 | **Auslöser** | Der Nutzer möchte ein bestimmtes Repository für sein Projekt auswerten. |
-| **Vorbedingung** | Explizite Repository-Auswahl, gültige lesende Zugriffsrechte und zulässige Weiterverarbeitung. |
+| **Vorbedingung** | Repository gehört zum ausdrücklich gewählten Scope einzelner oder aller eigenen öffentlichen Repositories der freiwilligen offiziellen Kontoverbindung; gültige Leserechte und zulässige Weiterverarbeitung. |
 | **Erfolg/Nachbedingung** | Quellenbezogene Analyse im gewählten Umfang liegt vor; Repository und nicht ausgewählte Kontoinhalte bleiben unverändert beziehungsweise unzugänglich. |
 
 **Hauptszenario**
@@ -1387,13 +1387,13 @@ flowchart LR
 4. Syllentra liest ausschließlich zulässige relevante Projektinhalte und zeigt Herkunft, Stand und Analysegrenzen.
 5. Der Nutzer prüft Ergebnisse und mögliche eigene beziehungsweise fremde Beitragsnachweise.
 
-**Alternative Szenarien:** Ohne direkte Verbindung kann rechtmäßig bereitgestellte Dokumentation als Material analysiert werden. Die Auswahl weiterer Repositories ist ein neuer ausdrücklicher Berechtigungsfall.
+**Alternative Szenarien:** Ohne direkte Verbindung kann rechtmäßig bereitgestellte Dokumentation als Material analysiert werden. Eine Einzelauswahl benötigt vor Erweiterung eine neue Umfangsentscheidung. Bei bewusst gewähltem Scope „alle meine öffentlichen Repositories“ können neue eigene öffentliche Ziele unter der aktuellen erlaubten Synchronisationsregel berücksichtigt werden; private bleiben ausgeschlossen.
 
 **Fehler- und Schutzfälle:** Fehlender Zugriff wird nicht durch Kontoweitsuche umgangen. Unbelegbare Urheberschaft bleibt unklar; nicht vertrauenswürdige Repository-Inhalte sind keine ausführbaren Benutzeranweisungen.
 
 **Schutz- und Freigabegrenzen:** V1-Analyse bleibt ausschließlich lesend, ohne Commit, Push, Issue-Erstellung oder sonstige Schreibaktion. Ein Link allein gewährt keine Rechte; Geheimnisse und private Inhalte werden weder öffentlich ausgegeben noch ohne Erlaubnis an Analyseanbieter übermittelt.
 
-**Abnahmebeispiel:** Nur das ausgewählte Repository A wird ausgewertet. Repository B desselben Kontos wird nicht durchsucht; in A entsteht weder eine neue Datei noch ein anderer Schreibvorgang.
+**Abnahmebeispiel:** Bei Einzelauswahl A bleibt B unzugänglich; bei ausdrücklich bestätigtem Gesamtscope sind A und B nur dann lesbar, wenn sie eigene öffentliche Repositories sind. Private Ziele und jede Schreiboperation sind in beiden Fällen ausgeschlossen.
 
 ### UC-43 — Kompetenzen, Zertifikate und Nachweise pflegen
 
@@ -1717,7 +1717,7 @@ Eine nach vollständiger Lösungshilfe richtige Antwort ist eine unterstützte L
 
 ### F2.12.1 Maßgebliche Entscheidungen
 
-FE-01 bis FE-06 werden mit dem bestätigten Wortlaut aus F1 v0.2 übernommen. FE-07 bis FE-09 sind die zusätzlich für F2 bestätigten Vorgaben; sie ändern F1 in dieser Überarbeitung nicht.
+FE-01 bis FE-06 werden mit dem bestätigten Wortlaut aus F1 v0.3 übernommen. FE-07 bis FE-09 sind die zusätzlich für F2 bestätigten Vorgaben; sie ändern F1 in dieser Überarbeitung nicht.
 
 | Entscheidung | Bestätigte fachliche Vorgabe |
 |---|---|
@@ -1784,7 +1784,7 @@ Die übergreifenden Schutzregeln gelten auch dort, wo keine eigenständige FE-En
 | N1 / N2 | Messbare Qualität und übergreifende Rechte-, Kosten-, Aufbewahrungs-, Lösch-, Synchronisations- und Fehlerregeln |
 | [Spezifikationsindex](README.md) | Lesereihenfolge, Zuständigkeiten der Bausteine und Freigabestatus |
 
-Geplante Folgedokumente werden ohne Links auf fehlende Dateien genannt. Die technische Architektur wird separat erarbeitet; hier wird weder ein Framework, KI-Anbieter, Authentifizierungsverfahren, Datenbankprodukt noch eine Infrastruktur festgelegt.
+Geplante Folgedokumente werden ohne Links auf fehlende Dateien genannt. Die technische Architektur wird separat erarbeitet; hier werden kein Framework, KI-Anbieter oder Datenbankprodukt gewählt. PWA, zentrale EU-Cloud, E-Mail/Passwort und verpflichtende E-Mail-OTP-Verifikation sind fachlich entschieden; deren technische Umsetzung bleibt offen.
 
 ## F2.13 Bearbeitungsnachweis, Prüfstand und offene Detaillierung
 
@@ -1794,7 +1794,7 @@ Die ursprüngliche Fehlerformulierung in UC-02 wird präzisiert: Ein fehlender a
 
 Präzisierungen betreffen insbesondere die getrennte Herkunft und Bestätigung von Profilangaben, Freigabewege aller Imports, konsistente Entscheidungen in zentralen und fachlichen Ansichten, Entscheidung gegenüber tatsächlicher Ausführung, Kennzeichnung verwendeter Lernhilfen sowie gemeinsames Original gegenüber Einzelbeziehungen. FE-09 in UC-40 betrifft geteilte Dokumentressourcen und wird nicht als technische Projekt-Modul-Modellierung missverstanden. FE-08 in UC-36 gilt für zustimmungspflichtige Folgevorschläge, nicht für jeden bloßen Änderungshinweis. Die Aussage, eine weggefallene Zielgrundlage verhindere die alte Ausführung, wird von der historisch erhaltenen Entscheidung getrennt.
 
-F2 beschreibt geplantes beobachtbares Verhalten. Die Abnahmebeispiele sind Spezifikationen zukünftiger Prüfungen, keine Behauptung bereits ausgeführter Produkt- oder Integrationstests. P1, P2 und F1 bleiben unverändert. FE-07 bis FE-09 sind durch die F2-Mission bestätigt; ihre zukünftige Rückverfolgung in anderen Bausteinen darf nur in einer gesondert autorisierten Bearbeitung erfolgen.
+F2 beschreibt geplantes beobachtbares Verhalten. Die Abnahmebeispiele sind Spezifikationen zukünftiger Prüfungen, keine Behauptung bereits ausgeführter Produkt- oder Integrationstests. Die historischen F2-Ergänzungen änderten P1/P2/F1 zunächst nicht; die aktuelle autorisierte Harmonisierung gleicht die bestätigten Entscheidungen dokumentübergreifend ab.
 
 Noch zu detaillieren sind insbesondere:
 
@@ -1811,3 +1811,218 @@ Diese Punkte entscheiden FE-01 bis FE-09 nicht neu. Unklare Schnittstellen oder 
 
 **Ende von F2 — Anwendungsfälle.**\
 **Freigabestatus:** Zur Prüfung durch den Projektinhaber. Kennungen UC-01 bis UC-50 und die bestätigten Entscheidungen FE-01 bis FE-09 sind nachvollziehbar; die gesamte Dokumentfassung ist noch nicht freigegeben und beansprucht keine bereits implementierten Funktionen.
+
+
+## F2.14 Ergänzte Anwendungsfälle für Konten, Datenkontrolle und Integrationsgrenzen
+
+Die Entscheidungen FE-27 bis FE-89 ergänzen den Bestand; mit Ausnahme von **FE-56 (offen)** sind ihre fachlichen Vorgaben bestätigt. Die vollständige deutsche Entscheidungsmatrix und die zwölf Nachbarverträge stehen in [S1](S1-nachbarsysteme.md). Eine fachliche Entscheidung ist keine Aussage über implementierte Funktionen oder aktuell erteilte Anbieterrechte. Alle Bausteine bleiben **Zur Prüfung**. Historische Prüfstände, frühere FE-Teilmengen und alte Versionsbezüge bezeichnen ausschließlich ihre damalige Grundlage; maßgeblich ist der aktuelle Index mit [Änderungs- und Prüfnachweis](E3-pruefnachweis.md).
+
+Die neuen Kennungen ergänzen UC-01 bis UC-50 ohne Umnummerierung. Gemeinsame Vorbedingungen: verifiziertes eigenes Konto, aktuelle Sitzung, passende Geräte- und Funktionsrechte; Registrierung und Recovery sind ausdrücklich beschränkte Ausnahmen.
+
+### UC-51 — Registrieren und E-Mail bestätigen
+
+| Merkmal | Festlegung |
+|---|---|
+| Akteur / Auslöser | Berechtigter Nutzer beziehungsweise ausdrücklich zuständige Administration; bewusster Auftrag zum genannten Ziel |
+| Prozess / Entscheidungen | GP-01; FE-59, FE-60, FE-46 |
+| Dialog / Daten | DLG-51; DM-01, DM-53, DM-54 |
+| Vorbedingung | Gemeinsame Zugangsgrenzen; bei Registrierung noch kein Anwendungsdatenzugang, bei Administration verpflichtende MFA |
+| Erfolg | Nur der bestätigte zulässige Umfang wirkt; Ergebnis, Quellenstand und Ausführungsstatus sind sichtbar |
+
+**Hauptszenario:** Ein Interessent registriert sich mit E-Mail und Passwort. Syllentra sendet den angeforderten OTP an die private Primäradresse. Erst nach gültiger zweckgebundener Bestätigung entsteht ein verifizierter Anwendungszugang; freigegebene Funktionen benötigen keine manuelle Zulassung.
+
+**Alternativen, Fehler und Schutz:** Unbestätigtes Konto darf nur Verifikations-/Recoveryfunktionen aufrufen, keine Anwendungsdaten oder Exporte. Ungültige, abgelaufene oder erneut verwendete OTP geben keinen Zugang. Abbruch vor bestätigter Wirkung erhält den Ausgangsbestand; nach unklarem Ausgang wird zunächst die tatsächliche Wirkung geprüft.
+
+**Abnahmebeispiel:** Konto A wird verifiziert; es erhält sein leeres Dashboard und niemals Inhalte von Konto B.
+
+### UC-52 — Sitzung sicher entsperren und Konto wiederherstellen
+
+| Merkmal | Festlegung |
+|---|---|
+| Akteur / Auslöser | Berechtigter Nutzer beziehungsweise ausdrücklich zuständige Administration; bewusster Auftrag zum genannten Ziel |
+| Prozess / Entscheidungen | GP-01, GP-15; FE-36 bis FE-39, FE-61, FE-62 |
+| Dialog / Daten | DLG-52; DM-03, DM-54, DM-55 |
+| Vorbedingung | Gemeinsame Zugangsgrenzen; bei Registrierung noch kein Anwendungsdatenzugang, bei Administration verpflichtende MFA |
+| Erfolg | Nur der bestätigte zulässige Umfang wirkt; Ergebnis, Quellenstand und Ausführungsstatus sind sichtbar |
+
+**Hauptszenario:** Ein verifiziertes Konto meldet sich mit Passwort an. Ein neues Gerät benötigt zusätzliche berechtigte Verifikation; Freigabe über ein bestehendes Gerät oder sichere Wiederherstellung bei Verlust. Lokale Sperre ist konfigurierbar und manuell auslösbar; Wiederherstellung nutzt verifizierte E-Mail plus persönlichen Einmalcode.
+
+**Alternativen, Fehler und Schutz:** Schließen, lokale Sperre, Abmelden und Serversitzungsablauf sind verschieden. Lokales OS-Biometrie-/PIN-Entsperren verlängert keine abgelaufene Serversitzung. Kontorecovery ersetzt keine Dokumentenschlüssel. Abbruch vor bestätigter Wirkung erhält den Ausgangsbestand; nach unklarem Ausgang wird zunächst die tatsächliche Wirkung geprüft.
+
+**Abnahmebeispiel:** Ein abgelaufener Serverzugang bleibt trotz erfolgreicher lokaler Biometrie gesperrt; verlorene Geräte bleiben widerrufen.
+
+### UC-53 — Rollen delegieren und Administration absichern
+
+| Merkmal | Festlegung |
+|---|---|
+| Akteur / Auslöser | Berechtigter Nutzer beziehungsweise ausdrücklich zuständige Administration; bewusster Auftrag zum genannten Ziel |
+| Prozess / Entscheidungen | GP-14; FE-57, FE-63, FE-70 bis FE-72 |
+| Dialog / Daten | DLG-53; DM-55, DM-56, DM-57 |
+| Vorbedingung | Gemeinsame Zugangsgrenzen; bei Registrierung noch kein Anwendungsdatenzugang, bei Administration verpflichtende MFA |
+| Erfolg | Nur der bestätigte zulässige Umfang wirkt; Ergebnis, Quellenstand und Ausführungsstatus sind sichtbar |
+
+**Hauptszenario:** Genau ein Super Admin betritt die getrennte Administrationskonsole mit verpflichtender MFA. Nur er lädt sekundäre Administratoren ein und ändert, suspendiert oder widerruft deren Rollen mit Rechtevorschau. Rollenprofile und einzelne Rechte werden nachvollziehbar vergeben.
+
+**Alternativen, Fehler und Schutz:** Kein sekundärer Administrator darf sich selbst erweitern, andere Administratoren verwalten oder exklusive Super-Admin-Rechte übernehmen. Sensible Änderungen benötigen erneute Bestätigung. Private Lerninhalte sind standardmäßig unsichtbar. Abbruch vor bestätigter Wirkung erhält den Ausgangsbestand; nach unklarem Ausgang wird zunächst die tatsächliche Wirkung geprüft.
+
+**Abnahmebeispiel:** Ein sekundärer Administrator scheitert auch bei direktem Aufruf an der Selbstbeförderung; ein revisionsbezogener Auditnachweis enthält keine Secrets.
+
+### UC-54 — Befristete Supporthilfe freigeben
+
+| Merkmal | Festlegung |
+|---|---|
+| Akteur / Auslöser | Berechtigter Nutzer beziehungsweise ausdrücklich zuständige Administration; bewusster Auftrag zum genannten Ziel |
+| Prozess / Entscheidungen | GP-15; FE-63 |
+| Dialog / Daten | DLG-54; DM-58, DM-57 |
+| Vorbedingung | Gemeinsame Zugangsgrenzen; bei Registrierung noch kein Anwendungsdatenzugang, bei Administration verpflichtende MFA |
+| Erfolg | Nur der bestätigte zulässige Umfang wirkt; Ergebnis, Quellenstand und Ausführungsstatus sind sichtbar |
+
+**Hauptszenario:** Der Kontoinhaber wählt freiwillig Supportperson, konkreten Gegenstand, Zweck, Umfang und Ablaufzeit. Nach verständlicher Prüfung bestätigt er eine standardmäßig nur lesende Freigabe. Er kann sie vor Ablauf widerrufen.
+
+**Alternativen, Fehler und Schutz:** Globale Adminrolle und bloße Supportanfrage reichen nicht. Verändernde Hilfe benötigt eine gesonderte explizite Freigabe. Ablauf oder Widerruf blockieren weitere Zugriffe. Abbruch vor bestätigter Wirkung erhält den Ausgangsbestand; nach unklarem Ausgang wird zunächst die tatsächliche Wirkung geprüft.
+
+**Abnahmebeispiel:** Support sieht das gewählte Dokument, aber weder andere Unterhaltungen noch weitere Konten; nach Widerruf scheitert erneut versuchter Zugriff.
+
+### UC-55 — Quoten und Funktionsveröffentlichung verwalten
+
+| Merkmal | Festlegung |
+|---|---|
+| Akteur / Auslöser | Berechtigter Nutzer beziehungsweise ausdrücklich zuständige Administration; bewusster Auftrag zum genannten Ziel |
+| Prozess / Entscheidungen | GP-14; FE-58, FE-64 bis FE-69 |
+| Dialog / Daten | DLG-55, DLG-56; DM-59, DM-60, DM-61 |
+| Vorbedingung | Gemeinsame Zugangsgrenzen; bei Registrierung noch kein Anwendungsdatenzugang, bei Administration verpflichtende MFA |
+| Erfolg | Nur der bestätigte zulässige Umfang wirkt; Ergebnis, Quellenstand und Ausführungsstatus sind sichtbar |
+
+**Hauptszenario:** Berechtigte Administration pflegt globale Quoten mit ausdrücklichen Kontoausnahmen. Neue Konten erben die Grundwerte. Unterstützte Funktionen durchlaufen Entwurf, Vorschau, eigenen Nutzertest, ausgewählte Tester und sofortige oder geplante Veröffentlichung; Termin ist änder- und widerrufbar.
+
+**Alternativen, Fehler und Schutz:** Keine erfundenen Zahlen. Eine volle Quote blockiert neue betroffene Aufnahmen, nicht Konto oder vorhandene Daten. Neue programmierte Funktionen sind anfangs verborgen. Deaktivierung bewahrt Daten und erlaubt nur sichere Lesezugriffe; Server prüft Rechte vor jeder Wirkung. Abbruch vor bestätigter Wirkung erhält den Ausgangsbestand; nach unklarem Ausgang wird zunächst die tatsächliche Wirkung geprüft.
+
+**Abnahmebeispiel:** Ein nicht freigegebenes Feature bleibt per Direktaufruf gesperrt; eine abgesagte Veröffentlichung erzeugt keine Neuigkeitsmeldung.
+
+### UC-56 — Integrationsumfang, Synchronisation und Historie verwalten
+
+| Merkmal | Festlegung |
+|---|---|
+| Akteur / Auslöser | Berechtigter Nutzer beziehungsweise ausdrücklich zuständige Administration; bewusster Auftrag zum genannten Ziel |
+| Prozess / Entscheidungen | GP-13; FE-31, FE-43, FE-50, FE-84, FE-85, FE-89 |
+| Dialog / Daten | DLG-57; DM-44, DM-62, DM-63 |
+| Vorbedingung | Gemeinsame Zugangsgrenzen; bei Registrierung noch kein Anwendungsdatenzugang, bei Administration verpflichtende MFA |
+| Erfolg | Nur der bestätigte zulässige Umfang wirkt; Ergebnis, Quellenstand und Ausführungsstatus sind sichtbar |
+
+**Hauptszenario:** Der Nutzer verbindet einen tatsächlich verfügbaren geprüften Konnektor offiziell, wählt Zweck, Kategorie und minimalen Umfang und startet standardmäßig manuell. Für jede Verbindung kann er Automatik mit eigener Frequenz freiwillig aktivieren und widerrufen. Private Historie zeigt Berechtigungen, Quellen, Importe, Erfolge und Fehler.
+
+**Alternativen, Fehler und Schutz:** GitHub: ausgewählte oder alle eigenen öffentlichen Repositories, niemals private oder Schreibzugriff. Drive/OneDrive/Dropbox: ausgewählte Dateien/Ordner nur lesend. Ablauf/Widerruf stoppt Abrufe und Reconnect erfolgt freiwillig; importierte Kopien bleiben zulässig verfügbar. Abbruch vor bestätigter Wirkung erhält den Ausgangsbestand; nach unklarem Ausgang wird zunächst die tatsächliche Wirkung geprüft.
+
+**Abnahmebeispiel:** Wechsel von Einzelrepo zu allen öffentlichen braucht eine sichtbare Umfangsentscheidung; widerrufene Verbindung startet keinen Retry.
+
+### UC-57 — Quellversionen und abhängige Lerninhalte prüfen
+
+| Merkmal | Festlegung |
+|---|---|
+| Akteur / Auslöser | Berechtigter Nutzer beziehungsweise ausdrücklich zuständige Administration; bewusster Auftrag zum genannten Ziel |
+| Prozess / Entscheidungen | GP-03, GP-07; FE-12, FE-49, FE-86, FE-87 |
+| Dialog / Daten | DLG-58; DM-21, DM-22, DM-38, DM-39, DM-40 |
+| Vorbedingung | Gemeinsame Zugangsgrenzen; bei Registrierung noch kein Anwendungsdatenzugang, bei Administration verpflichtende MFA |
+| Erfolg | Nur der bestätigte zulässige Umfang wirkt; Ergebnis, Quellenstand und Ausführungsstatus sind sichtbar |
+
+**Hauptszenario:** Ein erlaubter neuer Quellenstand wird mit belegbarer Identität, Revision/Hash oder Änderungszeit gegenübergestellt. Der Nutzer prüft Unterschiede und akzeptiert eine neue Version oder lehnt ab. Erst nach Annahme werden betroffene Ableitungen und Erinnerungen als veraltet markiert; vorbereitete Aktualisierungen benötigen eigene Inhaltsbestätigung.
+
+**Alternativen, Fehler und Schutz:** Kein automatisches Überschreiben, keine erfundene Aktualität und keine pauschale Löschung. Historische Versionen bleiben im zulässigen Aufbewahrungsrahmen; echte Löschungen haben Vorrang. Abbruch vor bestätigter Wirkung erhält den Ausgangsbestand; nach unklarem Ausgang wird zunächst die tatsächliche Wirkung geprüft.
+
+**Abnahmebeispiel:** Neue Folie ändert eine Definition: Originalfassung bleibt nachvollziehbar; altes Lernblatt wird markiert und erst nach Prüfung ersetzt.
+
+### UC-58 — Sensible Dokumente und Schlüssel kontrollieren
+
+| Merkmal | Festlegung |
+|---|---|
+| Akteur / Auslöser | Berechtigter Nutzer beziehungsweise ausdrücklich zuständige Administration; bewusster Auftrag zum genannten Ziel |
+| Prozess / Entscheidungen | GP-03, GP-15; FE-75 bis FE-79 |
+| Dialog / Daten | DLG-59; DM-64, DM-65, DM-66 |
+| Vorbedingung | Gemeinsame Zugangsgrenzen; bei Registrierung noch kein Anwendungsdatenzugang, bei Administration verpflichtende MFA |
+| Erfolg | Nur der bestätigte zulässige Umfang wirkt; Ergebnis, Quellenstand und Ausführungsstatus sind sichtbar |
+
+**Hauptszenario:** Der Nutzer schützt ausgewählte Dokumente zusätzlich geräteseitig. Autorisierte Geräte erhalten sicher zugängliche Schlüsselbezüge; persönliche Schlüsselwiederherstellung ist getrennt von Kontorecovery. Verarbeitung erfolgt bevorzugt lokal. Eigene Cloudanalyse erfordert pro Vorgang die Freigabe notwendiger entschlüsselter Ausschnitte mit Klartextoffenlegung.
+
+**Alternativen, Fehler und Schutz:** Backend und Administration erhalten keine privaten Klartextschlüssel oder dauerhaften Klartextkopien. Der Server sieht den ausdrücklich übertragenen Ausschnitt während der Operation. Ableitungen, Indizes, Vorschauen, Push und Sicherungen erben den Schutz. Abbruch vor bestätigter Wirkung erhält den Ausgangsbestand; nach unklarem Ausgang wird zunächst die tatsächliche Wirkung geprüft.
+
+**Abnahmebeispiel:** Ohne Vorgangsfreigabe geht kein sensibler Ausschnitt an die Cloud; eine Freigabe für Dokument X gilt nicht für Y.
+
+### UC-59 — Archive und mehrere Materialien sicher importieren
+
+| Merkmal | Festlegung |
+|---|---|
+| Akteur / Auslöser | Berechtigter Nutzer beziehungsweise ausdrücklich zuständige Administration; bewusster Auftrag zum genannten Ziel |
+| Prozess / Entscheidungen | GP-03; FE-27 bis FE-29, FE-48, FE-51, FE-52 |
+| Dialog / Daten | DLG-60; DM-20, DM-21, DM-23, DM-71 |
+| Vorbedingung | Gemeinsame Zugangsgrenzen; bei Registrierung noch kein Anwendungsdatenzugang, bei Administration verpflichtende MFA |
+| Erfolg | Nur der bestätigte zulässige Umfang wirkt; Ergebnis, Quellenstand und Ausführungsstatus sind sichtbar |
+
+**Hauptszenario:** Der Nutzer liefert mehrere Dateien, Ordner oder ZIP/7z einschließlich Bildern, Stundenplan-PDF und langen Audio-/Videodateien. Vor der Übernahme werden Rechte, Quoten, tatsächliche Formatunterstützung und sichere Extraktionsgrenzen geprüft. Struktur und Herkunft bleiben sichtbar; Klassifikation und Kalenderimport werden zur Bestätigung angeboten.
+
+**Alternativen, Fehler und Schutz:** Pfadflucht, Bomben, unzulässige Verschachtelung, ausführbare und beschädigte Inhalte werden isoliert und nicht ausgeführt. Originalarchiv und Extrakte sind unabhängig löschbar. Dateiimport benötigt keine Mikrofonfreigabe. Abbruch vor bestätigter Wirkung erhält den Ausgangsbestand; nach unklarem Ausgang wird zunächst die tatsächliche Wirkung geprüft.
+
+**Abnahmebeispiel:** Ein Archiv mit ../pfad wird abgewiesen; eine erlaubte Vorlesungsaufnahme erzeugt geprüfte Lernnotizen statt unkontrollierter dauerhafter Rohkopien.
+
+### UC-60 — Daten sichern und Wiederherstellung prüfen
+
+| Merkmal | Festlegung |
+|---|---|
+| Akteur / Auslöser | Berechtigter Nutzer beziehungsweise ausdrücklich zuständige Administration; bewusster Auftrag zum genannten Ziel |
+| Prozess / Entscheidungen | GP-15; FE-40, FE-41, FE-75, FE-81 |
+| Dialog / Daten | DLG-61; DM-68, DM-69, DM-70 |
+| Vorbedingung | Gemeinsame Zugangsgrenzen; bei Registrierung noch kein Anwendungsdatenzugang, bei Administration verpflichtende MFA |
+| Erfolg | Nur der bestätigte zulässige Umfang wirkt; Ergebnis, Quellenstand und Ausführungsstatus sind sichtbar |
+
+**Hauptszenario:** Automatische verschlüsselte EU-Sicherungen und freiwillige manuelle Exporte stehen getrennt von operativer Synchronisation. Bei Wiederherstellung wählt der Nutzer eine eigene Sicherung, sieht vollständige oder selektive Differenzen und bestätigt die erlaubte Übernahme bevorzugt als neue Version.
+
+**Alternativen, Fehler und Schutz:** Neuere Daten und endgültige Löschmarkierungen werden berücksichtigt. Fremde Konten sind ausgeschlossen. Endliche Retention und tatsächliche Restfristen werden ausgewiesen; kein Wiederherstellen gelöschter Secrets oder Widerrufe. Abbruch vor bestätigter Wirkung erhält den Ausgangsbestand; nach unklarem Ausgang wird zunächst die tatsächliche Wirkung geprüft.
+
+**Abnahmebeispiel:** Eine Sicherung vor der endgültigen Löschung eines Dokuments kann dieses Dokument nicht wiederbeleben.
+
+### UC-61 — Papierkorb und KI-Löschaufträge kontrollieren
+
+| Merkmal | Festlegung |
+|---|---|
+| Akteur / Auslöser | Berechtigter Nutzer beziehungsweise ausdrücklich zuständige Administration; bewusster Auftrag zum genannten Ziel |
+| Prozess / Entscheidungen | GP-15; FE-80, FE-81 |
+| Dialog / Daten | DLG-62; DM-50, DM-67, DM-68 |
+| Vorbedingung | Gemeinsame Zugangsgrenzen; bei Registrierung noch kein Anwendungsdatenzugang, bei Administration verpflichtende MFA |
+| Erfolg | Nur der bestätigte zulässige Umfang wirkt; Ergebnis, Quellenstand und Ausführungsstatus sind sichtbar |
+
+**Hauptszenario:** Der Nutzer benennt einen Löschwunsch auch in natürlicher Sprache. Syllentra identifiziert konkrete Objekte und Beziehungen, zeigt Umfang und Folgen und verlangt die passende destruktive Bestätigung. Papierkorb erlaubt innerhalb festgelegter Frist Wiederherstellung oder sofortige endgültige Bereinigung.
+
+**Alternativen, Fehler und Schutz:** Mehrdeutigkeit führt zur Rückfrage. Die Löschung einer Ableitung löscht kein unabhängiges Original. Offlinegeräte, Indizes und Sicherungswiederherstellung beachten Löschmarkierungen; zulässige Restaufbewahrung wird erklärt. Abbruch vor bestätigter Wirkung erhält den Ausgangsbestand; nach unklarem Ausgang wird zunächst die tatsächliche Wirkung geprüft.
+
+**Abnahmebeispiel:** „Lösche die Zusammenfassung“ löscht nach eindeutiger Auswahl nur diese Ableitung und erzeugt keine Originalkaskade.
+
+### UC-62 — Konto freiwillig pausieren oder löschen
+
+| Merkmal | Festlegung |
+|---|---|
+| Akteur / Auslöser | Berechtigter Nutzer beziehungsweise ausdrücklich zuständige Administration; bewusster Auftrag zum genannten Ziel |
+| Prozess / Entscheidungen | GP-15; FE-82 |
+| Dialog / Daten | DLG-63; DM-01, DM-50, DM-55, DM-68 |
+| Vorbedingung | Gemeinsame Zugangsgrenzen; bei Registrierung noch kein Anwendungsdatenzugang, bei Administration verpflichtende MFA |
+| Erfolg | Nur der bestätigte zulässige Umfang wirkt; Ergebnis, Quellenstand und Ausführungsstatus sind sichtbar |
+
+**Hauptszenario:** Der verifizierte Kontoinhaber wählt reversible freiwillige Pause oder endgültige Löschung. Vor Löschung zeigt Syllentra den Umfang und bietet optional eigenen Export an. Nach Identitätsprüfung und Bestätigung werden Sitzungen beendet, Integrationen widerrufen und die tatsächlichen Bereinigungsstufen verfolgt.
+
+**Alternativen, Fehler und Schutz:** Pause erhält Daten und ist kein Löschauftrag. Löschung behauptet keinen Sofortabschluss vor tatsächlichen Purges; gesetzlich notwendige Reste und endliche Sicherungsfristen werden getrennt erläutert. Abbruch vor bestätigter Wirkung erhält den Ausgangsbestand; nach unklarem Ausgang wird zunächst die tatsächliche Wirkung geprüft.
+
+**Abnahmebeispiel:** Eine pausierte Person kann nach sicherer Reaktivierung fortsetzen; ein gelöschtes Konto erhält keinen Zugang über eine alte Sitzung.
+
+### UC-63 — Administrative Kontosperre überprüfen
+
+| Merkmal | Festlegung |
+|---|---|
+| Akteur / Auslöser | Berechtigter Nutzer beziehungsweise ausdrücklich zuständige Administration; bewusster Auftrag zum genannten Ziel |
+| Prozess / Entscheidungen | GP-14; FE-83, FE-71, FE-72 |
+| Dialog / Daten | DLG-64; DM-01, DM-56, DM-57 |
+| Vorbedingung | Gemeinsame Zugangsgrenzen; bei Registrierung noch kein Anwendungsdatenzugang, bei Administration verpflichtende MFA |
+| Erfolg | Nur der bestätigte zulässige Umfang wirkt; Ergebnis, Quellenstand und Ausführungsstatus sind sichtbar |
+
+**Hauptszenario:** Ein Super Admin oder hierfür ausdrücklich berechtigter sekundärer Administrator sperrt ein Konto mit Grund, dokumentiert die Entscheidung, veranlasst eine neutrale Mitteilung und ermöglicht Überprüfung. Daten bleiben erhalten. Eine Aufhebung prüft den aktuellen Rechtszustand.
+
+**Alternativen, Fehler und Schutz:** Kontosperre ist weder freiwillige Pause noch Löschung. Sperrbefugnis gibt keinen Inhaltseinblick und keine Administratorverwaltung. Die Behandlung des einzigen Super Admin wird nicht eigenmächtig durch eine zweite Eigentümerrolle gelöst. Abbruch vor bestätigter Wirkung erhält den Ausgangsbestand; nach unklarem Ausgang wird zunächst die tatsächliche Wirkung geprüft.
+
+**Abnahmebeispiel:** Ein nur für Branding berechtigter Administrator darf kein Konto sperren; eine zulässige Sperre löscht keine Lernhistorie.
