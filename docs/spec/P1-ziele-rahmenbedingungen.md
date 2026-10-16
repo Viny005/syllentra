@@ -1,11 +1,11 @@
 # P1 — Ziele und Rahmenbedingungen
 
-**Projekt:** Syllentra AI  
-**Dokument:** P1 — Ziele und Rahmenbedingungen  
-**Version:** 0.4  
-**Stand:** 12.10.2026  
-**Status:** Inhaltlich freigegeben  
-**Spezifikationsmethode:** Bausteine nach Johannes Siedersleben  
+**Projekt:** Syllentra AI\
+**Dokument:** P1 — Ziele und Rahmenbedingungen\
+**Version:** 0.7\
+**Stand:** 16.10.2026\
+**Status:** Zur Prüfung durch den Projektinhaber\
+**Spezifikationsmethode:** Bausteine nach Johannes Siedersleben\
 **Geltungsbereich:** Fachlicher Zielumfang der ersten Produktversion (V1)
 
 ---
@@ -52,7 +52,7 @@ Syllentra AI soll außerdem den zeitlichen Ablauf des Studiums berücksichtigen.
 
 Das System soll Informationen aus zulässigen Quellen wiederkehrend auswerten, relevante Veränderungen erkennen und dem Nutzer proaktiv mitteilen. Erkannte Wissenslücken oder organisatorische Probleme sollen zur automatischen Vorbereitung geeigneter Lernmaterialien und Handlungsvorschläge führen.
 
-Externe Aktionen, insbesondere Änderungen an persönlichen Kalendern, das Versenden von Nachrichten und das Vereinbaren von Terminen, dürfen nicht ohne die erforderliche ausdrückliche Zustimmung des Nutzers erfolgen.
+Persönliche externe Kalender dürfen ausschließlich zur Ermittlung der Verfügbarkeit gelesen werden; Syllentra darf dort auch mit Zustimmung keine Ereignisse erstellen, ändern oder löschen. Der eigene Studienkalender wird getrennt geführt. Externe Nachrichten und zulässige verbindliche Vorgänge bei anderen Nachbarsystemen erfordern eine ausdrückliche Zustimmung des Nutzers.
 
 Der Assistent soll auch als persönlicher Berater dienen. Empfehlungen zu Studienfragen, Studienplanung, Prüfungen, akademischen Schwierigkeiten oder beruflichen Entwicklungsmöglichkeiten sollen nachvollziehbar begründet und, soweit erforderlich, anhand geeigneter Informationsquellen überprüft werden.
 
@@ -62,9 +62,9 @@ Ein integriertes Kompetenzportfolio soll bereits vorhandene sowie während der N
 
 Die Anwendung soll eine moderne, professionelle, attraktive und lernförderliche Benutzeroberfläche besitzen. Visuelle Fortschrittsanzeigen und zurückhaltende motivierende Elemente sollen die regelmäßige Nutzung unterstützen, ohne den Lernprozess zu einem überwiegend spielerischen Erlebnis zu machen.
 
-Die erste Produktversion ist für einen einzelnen Nutzer vorgesehen, der gleichzeitig Eigentümer und Administrator des Systems ist.
+V1 erlaubt die offene Registrierung mehrerer Studierender. Jedes verifizierte Konto verwaltet ausschließlich seine eigenen persönlichen Daten. Genau ein Super Admin verantwortet die getrennte Administration; sekundäre Administratoren besitzen nur ausdrücklich zugewiesene Rechte (FE-59 bis FE-72).
 
-Eine spätere Erweiterung für weitere Studierende, Hochschulen und internationale Bildungskontexte soll grundsätzlich möglich bleiben.
+Studierende unterschiedlicher Hochschulen und Länder können bereits in V1 getrennte Konten nutzen. Lehrenden-, Hochschul- und gemeinsame Gruppenfunktionen bleiben mögliche spätere Erweiterungen.
 
 ### P1.1.3 Leitprinzip
 
@@ -115,7 +115,7 @@ Sie legen noch keine konkrete Implementierung, Technologie oder Systemarchitektu
 | G-17 | Bei erkannten Wissenslücken oder organisatorischen Problemen geeignete Lernmaßnahmen und Lösungsvorschläge selbstständig vorbereiten. |
 | G-18 | Akademische Beratung zur Modulwahl, Studienplanung, Studienproblemen, Prüfungsorganisation sowie akademischen und beruflichen Entwicklung anbieten. |
 | G-19 | Empfehlungen zur Kontaktaufnahme mit Lehrenden oder Beratungsstellen begründen und entsprechende Vorgänge nur nach Zustimmung des Nutzers ausführen. |
-| G-20 | Vor externen Änderungen oder sensiblen Handlungen eine nachvollziehbare Vorschau und die erforderliche Zustimmung einholen. |
+| G-20 | Vor zulässigen externen Änderungen sowie vor sensiblen Handlungen eine nachvollziehbare Vorschau und die erforderliche Zustimmung einholen; persönliche externe Kalender bleiben ausnahmslos nur lesbar. |
 
 ### P1.2.4 Kompetenzmanagement
 
@@ -134,10 +134,28 @@ Sie legen noch keine konkrete Implementierung, Technologie oder Systemarchitektu
 | G-26 | Eine moderne, professionelle, attraktive und lernförderliche Benutzeroberfläche bereitstellen. |
 | G-27 | Eine motivierende, aber zurückhaltende Fortschrittsdarstellung mit Kapitelabschluss, Lernzielen und Kompetenzentwicklung ermöglichen. |
 | G-28 | Eine konzentrierte Lernumgebung mit möglichst geringen visuellen Ablenkungen anbieten. |
-| G-29 | Eine angemessene Nutzung auf Smartphones, Tablets, Laptops und Desktop-Computern ermöglichen. |
+| G-29 | Eine installierbare PWA mit eigener Identität und eigenem Symbol auf kompatiblen Android-/iOS-Geräten sowie bedienbare Oberflächen auf Tablets und Computern bereitstellen; native Apps bleiben eine spätere Option. Nicht verfügbare Betriebssystemfunktionen erfordern gekennzeichnete Rückfallwege (FE-55). |
 | G-30 | Dem Systeminhaber die Verwaltung und Konfiguration vorgesehener Inhalte, Funktionen, Darstellungsoptionen, Daten und Berechtigungen ermöglichen. |
-| G-31 | Eine datenschutzorientierte, sichere und möglichst kostenfreie Nutzung anstreben, ohne sicherheitsrelevante Mindestanforderungen zugunsten niedriger Kosten aufzugeben. |
-| G-32 | Eine langfristige Erweiterung des Systems für weitere Nutzer, Hochschulen und Einsatzkontexte grundsätzlich ermöglichen. |
+| G-31 | Eine sichere datenschutzorientierte V1 ohne verpflichtende bezahlte Software-/API-Abhängigkeit und mit kommerziell geeigneten kostenfreien Lizenzen bereitstellen; reale Infrastrukturkosten und optionale autorisierte Zusatznutzung getrennt ausweisen (FE-53). |
+| G-32 | Die offene Mehrbenutzer-V1 langfristig für zusätzliche Hochschulkontexte und später gesondert freizugebende Rollen/Einsatzformen erweitern können (FE-59). |
+
+### P1.2.6 Persönliche Arbeitsbereiche und verbundene Nutzung
+
+| ID | Projektziel |
+|---|---|
+| G-33 | Einen geschützten, selbst verwaltbaren Bereich „Mein Profil“ mit persönlichen, akademischen und pädagogischen Angaben sowie unterscheidbarer Herkunft und Bestätigung bereitstellen. |
+| G-34 | Gespeicherte „Unterhaltungen“ über Sitzungen hinweg anlegen, wiederfinden, fortsetzen, benennen, ordnen, zuordnen, archivieren und kontrolliert löschen können; Gesprächsverlauf und langfristige pädagogische Erinnerung unterscheiden. |
+| G-35 | Aktuelle und frühere Semester, Module und Kurse mit Lernzielen, Kapiteln, Materialien, Übungen, Bewertungen, Terminen, Fortschritt und Kompetenzen als zusammenhängende Arbeitsbereiche verwalten. |
+| G-36 | Persönliche, akademische und berufliche Projekte unabhängig oder in Verbindung mit mehreren Modulen einschließlich Ressourcen, Unterhaltungen, Aufgaben, Fristen, Fortschritt, Kompetenzen und freigegebenen GitHub-Bezügen organisieren. |
+| G-37 | Einen internen Studienkalender manuell pflegen und bestätigte Hochschulimporte sowie KI-Planungsvorschläge übernehmen; persönliche externe Kalender ausschließlich lesend für Verfügbarkeiten berücksichtigen. |
+| G-38 | Einen durchsuchbaren Katalog „Integrationen & Plugins“ mit geprüften Verbindungen, Anbieterwahl, aufgabenbezogener Modellauswahl, Rechteverwaltung sowie Kosten- und Nutzungskontrolle bereitstellen. |
+| G-39 | Freigegebene Profil-, Gesprächs-, Studien-, Projekt-, Kalender- und Konfigurationsdaten zwischen autorisierten Geräten konsistent verfügbar machen; Gerätefreigaben, Aktualität und Konflikte nachvollziehbar halten. |
+| G-40 | Mehrere verifizierte Studierende mit strikter Kontoisolation, sicherer Registrierung und getrennten administrativen Rollen unterstützen (FE-59 bis FE-72). |
+| G-41 | Eine eigenständige installierbare PWA mit EU-Cloud, selektivem Offlinebestand und geräteübergreifender sicherer Wiederaufnahme bereitstellen (FE-33 bis FE-42, FE-55). |
+| G-42 | Manuelle Hochschulimporte, sichere Archive und bestätigte Quell-/Ableitungsrevisionen ermöglichen (FE-27 bis FE-29, FE-48 bis FE-52, FE-86, FE-87). |
+| G-43 | Sensible Dokumente einschließlich Ableitungen schützen, persönliche Schlüsselhoheit und explizite vorgangsbezogene Cloudanalyse ermöglichen (FE-75 bis FE-79). |
+| G-44 | Konfiguration, Quoten und kontrollierte Funktionsveröffentlichung ohne private Admininhaltsrechte ermöglichen (FE-57 bis FE-72). |
+| G-45 | Kontrollierte Sicherung, Wiederherstellung, Papierkorb, endgültige Löschung und Kontopausen anbieten (FE-40, FE-41, FE-80 bis FE-83). |
 
 ---
 
@@ -145,20 +163,16 @@ Sie legen noch keine konkrete Implementierung, Technologie oder Systemarchitektu
 
 ### P1.3.1 Benutzer der ersten Produktversion
 
-Die erste Version von Syllentra AI ist für einen einzigen persönlichen Nutzer vorgesehen.
+V1 unterstützt mehrere voneinander isolierte Studierende mit offener Selbstregistrierung. Erst nach E-Mail-/Passwortregistrierung und E-Mail-OTP-Verifikation ist Zugriff auf Anwendungsdaten möglich. Freigegebene Funktionen sind danach ohne manuelle Kontoannahme verfügbar; Quoten und serverseitig geprüfte Funktionsrechte gelten pro Konto.
 
-Diese Person verwendet das System für das eigene Studium, die Lernbegleitung, Studienorganisation, Kompetenzverwaltung und persönliche Entwicklung.
-
-Gleichzeitig übernimmt dieselbe Person die Rolle des Systeminhabers und Administrators.
-
-Eine eigenständige Mehrbenutzerverwaltung ist für diese Produktversion nicht erforderlich.
+Lernende verwalten jeweils ihren eigenen Studienkontext und mehrere autorisierte Geräte. Genau ein Super Admin verwaltet die separate Administrationskonsole und ausschließlich selbst die sekundären Administratoren. Administrationsrechte erlauben keinen standardmäßigen Zugriff auf private Lerninhalte. Zeitlich begrenzte, zweckgebundene Supportfreigaben sind freiwillig, widerrufbar und protokolliert; ihr Standard ist nur lesend.
 
 ### P1.3.2 Beteiligte und Rollen
 
 | Rolle | Beschreibung | Interessen und Aufgaben |
 |---|---|---|
 | Student / Nutzer | Hauptnutzer des Systems | Lernen, Prüfungen vorbereiten, Studienverlauf organisieren, Beratung erhalten und Kompetenzen verfolgen. |
-| Systeminhaber / Administrator | In V1 identisch mit dem Studenten | Daten, Einstellungen, Berechtigungen, Inhalte und vorgesehene Systemfunktionen verwalten. |
+| Super Admin / sekundäre Administratoren | Vom persönlichen Lernkonto getrennte Rechte; genau ein Super Admin | Unterstützte Konfigurationen und freigegebene Verwaltungsaufgaben steuern; kein pauschaler Einblick in private Inhalte. |
 | KI-Assistent | Automatisierte Assistenzfunktion des Systems, keine eigenständige menschliche Benutzerrolle | Informationen analysieren, unterrichten, Fortschritte auswerten, Empfehlungen erzeugen und erlaubte Aktionen vorbereiten. |
 | Lehrende und Hochschulberatungsstellen | Externe Ansprechpartner | Fachliche oder administrative Auskünfte und Entscheidungen bereitstellen. |
 | Hochschule | Verantwortliche Institution für offizielle Studieninformationen | Studienordnungen, Module, Prüfungen und verbindliche Regelungen veröffentlichen. |
@@ -168,8 +182,7 @@ Eine eigenständige Mehrbenutzerverwaltung ist für diese Produktversion nicht e
 
 In späteren Produktversionen können weitere Benutzergruppen vorgesehen werden, beispielsweise:
 
-- Studierende anderer Studiengänge und Hochschulen.
-- Studierende in anderen Ländern.
+Studierende anderer Studiengänge, Hochschulen und Länder gehören bereits zur offenen V1-Zielgruppe. Erst später mögliche zusätzliche Rollen sind:
 - Lehrende und Tutoren mit definierten Berechtigungen.
 - Hochschuladministratoren.
 - Benutzer freiwilliger Lern- oder Austauschgruppen.
@@ -358,13 +371,65 @@ Der Systeminhaber soll:
 
 Eine Konfigurationsmöglichkeit bedeutet nicht, dass beliebige neue Programmlogik ohne Softwareentwicklung erstellt werden kann.
 
+### J. Installierbare Anwendungen und Gerätezugriff
+
+Syllentra muss auf Android-Smartphones und iPhones als eigenständige Anwendung installierbar sein, eine eigene Anwendungsidentität und ein eigenes Symbol besitzen und vom Startbildschirm geöffnet werden können. Eine ausschließlich über eine Website erreichbare Oberfläche genügt diesem Ziel nicht. Smartphone- und Tablet-Oberflächen müssen an die Gerätebedienung angepasst sein; die Nutzung auf Computern bleibt erforderlich. Framework, Installationsverfahren und Vertriebswege werden nicht vorweggenommen.
+
+Text- und Sprachunterhaltungen, autorisierte Benachrichtigungen und lesender Zugriff auf verfügbare Kalenderfunktionen gehören zum Zielumfang. Mikrofon-, Kalender- und Benachrichtigungszugriffe setzen die jeweils erforderliche Zustimmung voraus. Ablehnung oder Widerruf müssen angezeigt werden und dürfen nicht umgangen werden; weiterhin mögliche Funktionen bleiben nutzbar. Private Inhalte sollen nicht unnötig auf dem Sperrbildschirm erscheinen.
+
+Der Nutzer kann Geräte autorisieren und wieder entziehen. Die freigegebenen Daten werden zwischen diesen Geräten synchronisiert. Nicht übernommene Änderungen, veraltete Stände und widersprüchliche Bearbeitungen müssen erkennbar sein und dürfen nicht stillschweigend Nutzerdaten überschreiben. Eine vollständige Offline-Nutzung oder unbegrenzte Hintergrundausführung wird damit nicht zugesagt.
+
+### K. Mein Profil
+
+Der Nutzer muss sein Profil einsehen, anlegen, bearbeiten und verwalten können. Dazu gehören relevante persönliche Angaben, Foto oder Avatar, Sprachen und Präferenzen, Hochschule beziehungsweise Universität, Studiengang und angestrebter oder erworbener Abschluss, aktuelles und frühere Semester, Module, Noten und ECTS, akademische Ziele, Kompetenzen, Zertifikate, Projekte, Erfahrungen und pädagogische Präferenzen.
+
+Optionale Angaben dürfen nicht ohne fachlichen Grund zur Voraussetzung der Lernbegleitung werden. Persönliche Angaben werden geschützt und als veränderbare Nutzerdaten geführt; sie dürfen weder fest im Programmcode hinterlegt noch im öffentlichen Repository veröffentlicht werden. Für die Herkunft ist zwischen manueller Eingabe, autorisiertem Import und KI-Schätzung zu unterscheiden. Davon getrennt wird der Bestätigungsstand mit gegebenenfalls zugehörigem Nachweis geführt: Eine manuelle Angabe ist nicht automatisch offiziell bestätigt, eine bestätigte Einschätzung ist kein amtlicher Leistungsnachweis.
+
+### L. Unterhaltungen
+
+Der Nutzer muss neue Unterhaltungen anlegen, alle gespeicherten Gespräche einschließlich archivierter Gespräche auffinden und frühere Diskussionen fortsetzen können. Umbenennen, Suchen, Sortieren, Organisieren und Zuordnen zu einem Kurs, Modul, Projekt oder Thema müssen möglich sein. Archivierung erhält den Verlauf; Löschung muss ihren Umfang und ihre Folgen anzeigen und angemessen bestätigt werden.
+
+Der verfügbare fachliche Kontext bleibt beim Wechsel zwischen Text und Sprache sowie beim Fortsetzen auf einem autorisierten Gerät erhalten. Ist ein Bestandteil nicht mehr verfügbar oder wegen einer Verarbeitungsgrenze nicht einbezogen, muss dies kenntlich gemacht werden; ein unbegrenztes Modellgedächtnis wird nicht vorausgesetzt.
+
+Der Nachrichtenverlauf dokumentiert die Unterhaltung. Die langfristige pädagogische Erinnerung enthält separat freigegebene, zweckgebundene Erkenntnisse über Kenntnisse, Schwierigkeiten, Kompetenzen und Präferenzen. Das Löschen oder Archivieren eines Gesprächs darf nicht unbemerkt als Löschen oder Beibehalten sämtlicher abgeleiteter Erinnerungen ausgelegt werden. Der Nutzer muss Verlauf, Ableitungen und gewünschte Löschfolgen getrennt kontrollieren können.
+
+### M. Semester, Module, Kurse und Projekte
+
+Der Nutzer muss Semester und Arbeitsbereiche manuell anlegen und bearbeiten sowie unterstützte Hochschuldaten nach Prüfung importieren können. Ein Modul umfasst Name und Beschreibung, Semesterzuordnung, Lernziele, Kapitel und Themen, Dokumente und Kursmaterialien, Übungen und Bewertungen, zugehörige Unterhaltungen, Prüfungstermine und Fristen, Lernfortschritt und entwickelte Kompetenzen. Kurse beziehungsweise Lehrveranstaltungen können innerhalb eines Moduls organisiert werden. Noten und ECTS bleiben von geschätzter Beherrschung getrennt.
+
+Ein persönliches, akademisches oder berufliches Projekt umfasst Beschreibung und Ziele, Ressourcen und Dateien, zugehörige Unterhaltungen, Aufgaben und Fristen, Bearbeitungsstand, erworbene Kompetenzen und optional Links zu ausdrücklich freigegebenen GitHub-Repositories. Es kann unabhängig von Modulen bestehen oder mehreren Modulen zugeordnet sein und Semestergrenzen überschreiten.
+
+Dokumente, Ressourcen und Unterhaltungen können mehreren relevanten Kontexten zugeordnet werden, ohne dadurch zwangsläufig dupliziert zu werden. Herkunft, Eigentümerschaft und Zuordnungen bleiben erkennbar. Das Entfernen einer Zuordnung oder eines Arbeitsbereichs darf gemeinsam genutzte Inhalte und Nachweise nicht unbeabsichtigt löschen; die Folgen sind vor folgenreichen Löschungen darzustellen. Die genauen Beziehungen werden in D1/D2 spezifiziert.
+
+### N. Kalender und bestätigte Planung
+
+Der interne Syllentra-Studienkalender verwaltet Kurse, Stundenpläne, Prüfungen, Abgaben, Wiederholungen und weitere Lernaktivitäten. Manuelle Eingaben und Änderungen werden durch die bewusste Speicheraktion des Nutzers übernommen; ein zweiter künstlicher Bestätigungsdialog ist dafür nicht erforderlich. Stundenplanimporte sowie vom Assistenten vorbereitete Einträge und Änderungen benötigen eine prüfbare Vorschau und Bestätigung vor der Speicherung. Ablehnen muss ohne Übernahme möglich sein.
+
+Externe Android-, iOS- und Online-Kalender dienen ausschließlich der Verfügbarkeitsprüfung. Syllentra darf dort keine Ereignisse anlegen, ändern oder löschen und soll keine Schreibrechte anfordern. Vorzugsweise werden freie und belegte Zeiträume statt privater Termininhalte verwendet. Die gemeinsame Anzeige externer Verfügbarkeiten und interner Studienaktivitäten verändert diese Trennung nicht. Herkunft, Überschneidungen, Zeitzonen und doppelte Kalenderbezüge sind zu berücksichtigen.
+
+### O. Integrationen & Plugins
+
+Ein erweiterbarer, durchsuchbarer Anwendungskatalog ermöglicht Auswahl, offizielle Verbindung, Konfiguration kompatibler Dienstadressen, Prüfung von Berechtigungen, Aktivierung, Deaktivierung und Widerruf unterstützter Integrationen. Dazu zählen insbesondere ChatGPT, Claude und weitere geeignete KI- und Werkzeuganbieter. Aufgabenbezogene Modellauswahl muss fachliche Eignung, Datenschutz, Verfügbarkeit, Kontingente und freigegebene Kosten berücksichtigen; der Nutzer kann Anbieter bevorzugen oder auswählen.
+
+Vorhandene Abonnements dürfen nur genutzt werden, wenn der Anbieter dies für die vorgesehene Betriebsform offiziell erlaubt. Ein ChatGPT- oder Claude-Abonnement bedeutet nicht automatisch API-Zugriff oder Zugriff auf frühere externe Gespräche. Eine eingegebene URL darf keinen unbekannten Konnektor installieren oder ausführen. Identität, unterstütztes Verbindungsverfahren, benötigte Rechte und Verarbeitungsvorgaben sind vor Aktivierung zu prüfen. Neue Konnektoren und bisher nicht unterstützte Fähigkeiten können gesonderte Entwicklung erfordern.
+
+### P. Konfigurierbare Verwaltung und dauerhafte Datenkontrolle
+
+Alle ausdrücklich vorgesehenen Konfigurationsparameter werden über das Administratorkonto verwaltet statt durch manuelle Quellcodeänderungen. Dies umfasst Anwendungsname und Identität, Seitentitel und Untertitel, Texte und Schaltflächen, Logo und Branding, Farben und Themen, Navigation und Menüs, Reihenfolge und Sichtbarkeit von Bereichen, Dashboard-Widgets, pädagogische Parameter, Modul-, Projekt- und Gesprächseinstellungen, KI-Modelle und Integrationen, Benachrichtigungen, Berechtigungen, Aufbewahrung sowie ausdrücklich unterstützte Funktionsoptionen. Die kontextbezogenen Bereiche sind in P2 unter CFG-01 bis CFG-17 abgegrenzt.
+
+Konfigurationen müssen persistent, validiert und vor unberechtigter Änderung geschützt sein. Für geeignete Änderungen werden Vorschau, nachvollziehbare Fassungen und Wiederherstellung einer gültigen früheren Konfiguration vorgesehen. Sicherheitsgrenzen dürfen dadurch nicht aufgehoben werden. Neue Softwarefunktionen entstehen nicht beliebig durch eine geänderte Variable; sie können Entwicklung erfordern. Betriebssystemseitig festgelegte Anwendungsmerkmale unterliegen zusätzlich den Plattformregeln und können eine aktualisierte Installation benötigen.
+
+Nützliche Kenntnisse, Kompetenzen und Lernhistorien sollen mit entsprechender Autorisierung langfristig erhalten bleiben. Nicht mehr benötigte temporäre Roh- und Zwischendaten werden kontrolliert gelöscht. Originaldokumente, gespeicherte Nachrichten und bewusst aufbewahrte Ressourcen sind nicht allein aufgrund ihres Uploads temporär. Quellen, Herkunft, Aktualität und relevante Unsicherheiten bleiben identifizierbar; eine Verdichtung ist kein Ersatz für ein verfügbares Original bei exakten Zitaten.
+
+Der Nutzer muss eigene Daten einsehen, korrigieren, exportieren und löschen können. Bei Löschungen sind Originale, Ableitungen, Beziehungen, Sicherungskopien und gegebenenfalls externe Verarbeitung zu berücksichtigen. Es dürfen nur externe Anbieter verwendet werden, deren Verarbeitung und Aufbewahrung mit den festgelegten Vorgaben vereinbar sind; eine nicht belegbare sofortige Löschung bei Dritten darf nicht zugesichert werden. Es darf keine zusätzliche Ausgabe ohne Autorisierung entstehen. Geheimnisse und private Daten gehören niemals in das öffentliche Repository.
+
 ### P1.4.2 Abgrenzung der ersten Produktversion
 
 Folgende Funktionen sind für spätere Erweiterungen vorgesehen oder derzeit nicht als eigenständiger Produktbestandteil beschlossen:
 
 | ID | Abgrenzung | Begründung |
 |---|---|---|
-| NG-01 | Allgemeine Registrierung und parallele Verwaltung mehrerer Studenten | V1 wird zunächst persönlich genutzt. |
+| NG-01 | **Historisch aufgehobenes Nichtziel:** Allgemeine Registrierung und parallele Verwaltung mehrerer Studenten | Durch FE-59/FE-60 am 16.10.2026 ausdrücklich in V1 aufgenommen; Kennung bleibt als Entscheidungsnachweis erhalten. |
 | NG-02 | Soziale Netzwerke, Lerngruppen und Austauschplattformen zwischen Studierenden | Zukünftige Erweiterungsmöglichkeit. |
 | NG-03 | Institutionelle Konten und Verwaltungsfunktionen für Hochschulen | Noch kein bestätigter Bedarf für V1. |
 | NG-04 | Verbindliche Anerkennung von Studienleistungen oder offizielle Studienentscheidungen durch die KI | Zuständigkeit der jeweiligen Hochschule. |
@@ -389,11 +454,11 @@ Rahmenbedingungen definieren Vorgaben, innerhalb derer die spätere Lösung entw
 
 | ID | Rahmenbedingung |
 |---|---|
-| CON-01 | Die erste Produktversion ist für einen persönlichen Nutzer vorgesehen. |
-| CON-02 | Der persönliche Nutzer verfügt über administrative Verwaltungsrechte für seine Instanz. |
-| CON-03 | Die Anwendung muss auf Android-Smartphones, iPhones, Tablets und Computern nutzbar sein. |
+| CON-01 | V1 unterstützt offene Selbstregistrierung mehrerer voneinander isolierter Konten; E-Mail/Passwort und E-Mail-OTP sind vor Zugriff auf Anwendungsdaten erforderlich (FE-59, FE-60). |
+| CON-02 | Persönliche Datenhoheit und Administration sind getrennt. Genau ein Super Admin verwaltet sekundäre Administratoren; diese dürfen weder sich selbst erweitern noch andere Administratoren verwalten (FE-63, FE-70 bis FE-72). |
+| CON-03 | V1 ist eine installierbare PWA mit Startbildschirmidentität auf unterstützten Geräten; konkrete Frameworks und native spätere Verteilung bleiben offen. PWA-/OS-Berechtigungen und Fähigkeiten werden geprüft, fehlende Funktionen transparent ersetzt (FE-55). |
 | CON-04 | Die Anwendung soll unterschiedliche Fachgebiete, Lerninhalte und individuelle Lernsituationen unterstützen. |
-| CON-05 | Die spätere Erweiterung für weitere Nutzer soll grundsätzlich möglich bleiben, ohne bereits in V1 eine Mehrbenutzerplattform zu verlangen. |
+| CON-05 | Mehrbenutzerfähigkeit mit strikter Kontoisolation ist V1-Umfang. Lehrenden-, Team- oder Hochschulverwaltungsrollen und gemeinsame private Arbeitsbereiche sind dadurch nicht eingeführt. |
 
 ### P1.5.2 Datenschutz und Benutzerkontrolle
 
@@ -403,10 +468,10 @@ Rahmenbedingungen definieren Vorgaben, innerhalb derer die spätere Lösung entw
 | CON-07 | Personenbezogene Daten dürfen nur im Rahmen festgelegter Zwecke und Berechtigungen verarbeitet werden. |
 | CON-08 | Änderungen und Löschungen persönlicher Daten müssen nachvollziehbar und kontrolliert ausführbar sein. |
 | CON-09 | Destruktive Aktionen müssen vor der Ausführung eindeutig beschrieben und bestätigt werden. |
-| CON-10 | Externe Kalenderänderungen, Nachrichten und Terminvereinbarungen erfordern eine ausdrückliche Freigabe durch den Nutzer. |
+| CON-10 | Persönliche externe Kalender dürfen ausschließlich gelesen und auch nach Zustimmung nicht verändert werden. Externe Nachrichten, zulässige Terminvereinbarungen und verbindliche Vorgänge in anderen Nachbarsystemen erfordern eine ausdrückliche Freigabe. |
 | CON-11 | Berechtigungen für externe Dienste müssen einsehbar und widerrufbar sein. |
 | CON-12 | Die Verarbeitung von Vorlesungsaufzeichnungen und geschützten Lernmaterialien setzt eine zulässige Nutzung voraus. |
-| CON-13 | Persönliche Daten, Zugangsdaten und vertrauliche Studienmaterialien dürfen nicht ungeschützt in einem öffentlichen Quellcode-Repository abgelegt werden. |
+| CON-13 | Persönliche Daten, Zugangsdaten und vertrauliche Studienmaterialien dürfen nicht in einem öffentlichen Quellcode-Repository abgelegt werden; Geheimnisse sind getrennt von sichtbaren Konfigurationen zu schützen. |
 
 ### P1.5.3 Qualität und Lernförderung
 
@@ -417,7 +482,7 @@ Rahmenbedingungen definieren Vorgaben, innerhalb derer die spätere Lösung entw
 | CON-16 | Die Anwendung darf keine nicht nachgewiesene Kompetenz als offiziell bestätigt ausgeben. |
 | CON-17 | Die Gestaltung muss professionell, übersichtlich, motivierend und für längere Lernsitzungen geeignet sein. |
 | CON-18 | Spielerische Elemente dürfen fachliche Lernziele nicht verdrängen oder Lernfortschritte irreführend darstellen. |
-| CON-19 | Wesentliche Anzeige- und Nutzungseinstellungen sollen ohne manuelle Quellcodeänderungen konfigurierbar sein. |
+| CON-19 | Alle ausdrücklich vorgesehenen administrativen Parameter müssen ohne manuelle Quellcodeänderungen persistent, validiert und geschützt verwaltbar sein; für geeignete Einstellungen sind Vorschau und Rücknahme vorzusehen. Neue Funktionen können Entwicklung erfordern. |
 | CON-20 | Semestergrenzen dürfen nicht automatisch zum Verlust gespeicherter Kenntnisse und Kompetenznachweise führen. |
 | CON-21 | Die Planung muss unterschiedliche, gegebenenfalls überlappende Studien- und Prüfungszeiträume berücksichtigen können. |
 | CON-22 | Die Benutzeroberfläche muss die unterschiedlichen Gerätegrößen sowie grundlegende Anforderungen an Barrierefreiheit und Bedienbarkeit berücksichtigen. |
@@ -426,13 +491,33 @@ Rahmenbedingungen definieren Vorgaben, innerhalb derer die spätere Lösung entw
 
 | ID | Rahmenbedingung |
 |---|---|
-| CON-23 | Für die erste Produktversion werden möglichst kostenfreie technische Lösungen bevorzugt. |
-| CON-24 | Kostenpflichtige Dienste dürfen nicht ohne bewusste Entscheidung und Freigabe des Systeminhabers aktiviert werden. |
+| CON-23 | V1 darf keine verpflichtende kostenpflichtige Software oder API voraussetzen. Software, Modellgewichte und Unterabhängigkeiten müssen kostenfrei nutzbar und für die beabsichtigte kommerzielle Nutzung lizenziert sein; ungeprüfte Lizenzketten sind nicht freigegeben. Hardware-, Hosting-, Speicher- und Rechenkosten bleiben gesondert sichtbar (FE-53). |
+| CON-24 | Optionale kostenpflichtige Zusatzdienste dürfen nur nach ausdrücklicher zweck-, umfangs- und limitbezogener Ausgabenfreigabe genutzt werden; sie sind keine Voraussetzung für den V1-Kern. Ein Verbraucherabonnement beweist weder API-Zugang noch kostenlose API-Nutzung (FE-30, FE-53). |
 | CON-25 | Technische Machbarkeitsprüfungen müssen die Kosten, Datenschutzfolgen, Zuverlässigkeit und Funktionsqualität geeigneter Lösungen berücksichtigen. |
 | CON-26 | Sicherheitsanforderungen dürfen nicht allein zugunsten kostenloser Lösungen aufgegeben werden. |
 | CON-27 | Externe Hochschulsysteme dürfen nur über zulässige und tatsächlich unterstützte Zugriffsmöglichkeiten angebunden werden. |
 
-### P1.5.5 Entwicklungsrahmen
+### P1.5.5 Persönliche Arbeitsbereiche und Integrationsgrenzen
+
+| ID | Rahmenbedingung |
+|---|---|
+| CON-28 | Profilangaben sind geschützte, veränderbare Nutzerdaten und dürfen nicht fest im Programmcode hinterlegt sein. Herkunft, Bestätigungsstand und Nachweise sind getrennt zu führen. |
+| CON-29 | Nachrichtenverlauf, Archivstatus und langfristige pädagogische Erinnerung sind zu unterscheiden; Aufbewahrung und Löschung müssen getrennt kontrollierbar sein. |
+| CON-30 | Semester, Module, Kurse, Projekte, Unterhaltungen und Ressourcen müssen konsistent und flexibel zuordenbar sein; unabhängige und modulübergreifende Projekte sowie semesterübergreifende Arbeit sind zu unterstützen. |
+| CON-31 | Nur autorisierte Geräte erhalten die freigegebenen synchronisierten Daten; Entzug, veraltete Stände und Bearbeitungskonflikte dürfen keine unbemerkte Offenlegung oder Überschreibung verursachen. |
+| CON-32 | Im internen Kalender benötigen Imports und KI-Vorschläge vor der Übernahme eine Bestätigung; die direkte manuelle Speicherung benötigt keine zweite Bestätigung. Externe Kalender bleiben ausschließlich lesbar. |
+| CON-33 | Integrationen dürfen nur über geprüfte, unterstützte Verbindungen aktiviert werden; eine URL allein darf keine Installation oder Ausführung unbekannter Konnektoren auslösen. Rechte sind auf den Zweck zu begrenzen und entziehbar zu halten. |
+| CON-34 | Vorhandene KI-Abonnements dürfen nur über offiziell erlaubte Verfahren genutzt werden; API-Berechtigungen, Modelle, Nutzungslimits und zusätzliche Kosten sind gesondert zu prüfen. |
+| CON-35 | Dauerhafte Erinnerung und Nutzerdaten bleiben einsehbar, korrigierbar, exportierbar und kontrolliert löschbar. Entbehrliche temporäre Daten werden entfernt; externe Anbieter müssen die Verarbeitungs- und Aufbewahrungsvorgaben erfüllen. |
+| CON-36 | Hauptdaten und Sicherungen liegen in der EU; eigene zentrale Cloud arbeitet unabhängig vom persönlichen PC; Anbieter und konkrete Infrastruktur bleiben offen (FE-42, FE-75). |
+| CON-37 | Vor Anwendungsdatenzugriff E-Mail-OTP; Admin-MFA obligatorisch; Gerät, Sitzung, lokale Sperre und Dokumentenschlüssel sind getrennte Grenzen (FE-36 bis FE-39, FE-60 bis FE-62, FE-70). |
+| CON-38 | Externe Konnektoren starten standardmäßig manuell; Automatik benötigt pro Verbindung widerrufbares Opt-in und Frequenz. Nach Entzug keine weiteren Abrufe oder Retries (FE-84, FE-85). |
+| CON-39 | FE-56 ist offen: automatische Postfachlektüre ist nicht V1-freigegeben. Hochschulmaterial wird V1 manuell bereitgestellt; offizielle optionale Konnektoren benötigen Nachweis und Opt-in (FE-27). |
+| CON-40 | Sensible Dokumente haben geräteseitigen Zusatzschutz; keine privaten Klartextschlüssel bei Backend/Admin. Eigene Cloudanalyse braucht pro Vorgang freigegebene minimale temporäre Klartextausschnitte; Ableitungen erben Schutz (FE-76 bis FE-79). |
+| CON-41 | Quoten, Fristen, Grenzwerte und Retryzahlen werden konfigurierbar spezifiziert, aber nicht ohne Entscheidung beziffert. Funktionsschalter und Rollen werden serverseitig geprüft; neue Funktionen benötigen Entwicklung (FE-58, FE-64 bis FE-69, FE-88). |
+| CON-42 | Endgültige Löschungen gelten auch für Offlineabgleich, Restore und Historien; Konto-Pause, administrative Sperre, Papierkorb und endgültige Löschung sind verschieden. Notwendige Restaufbewahrung bleibt transparent (FE-80 bis FE-83). |
+
+### P1.5.6 Entwicklungsrahmen
 
 Das Projekt wird schrittweise entwickelt und anhand überprüfbarer Zwischenstände validiert.
 
@@ -450,31 +535,33 @@ Die Entscheidung über Programmiersprachen, Frameworks, Datenbanken, KI-Modelle 
 
 Die Kriterien dienen dazu, das Erreichen der Projektziele überprüfbar zu machen.
 
-Detaillierte Testfälle, quantitative Schwellenwerte und Qualitätsmessungen werden in den entsprechenden nachfolgenden Spezifikationsbausteinen festgelegt.
+Jedes Kriterium wird anhand einer dokumentierten Ausgangssituation, der ausgeführten Benutzeraktion und des beobachteten Ergebnisses geprüft. Positive Prüfungen werden durch Ablehnungs-, Berechtigungs- und Fehlerfälle ergänzt, wo Schutzgrenzen betroffen sind. Qualitätsurteile werden nicht allein aus erfolgreich erzeugten KI-Ausgaben abgeleitet.
+
+Detaillierte Testfälle, repräsentative Lernmaterialien und fachliche Bewertungsmaßstäbe werden in F2/F3 und N1 konkretisiert; Aufbewahrungs- und Berechtigungsprüfungen in N2. Noch offene quantitative Schwellenwerte dürfen nicht als bereits erfüllt gelten. SC-09 enthält sowohl eine Machbarkeitsprüfung als auch eine Produktprüfung; die Studie allein ersetzt keine Funktionsabnahme.
 
 ### P1.6.1 Lernbegleitung
 
 | ID | Erfolgskriterium |
 |---|---|
-| SC-01 | Der Nutzer kann unterstützte Lernmaterialien bereitstellen, und das System kann daraus relevante Inhalte für eine Lerneinheit gewinnen. |
+| SC-01 | Nach Bereitstellung eines unterstützten Lernmaterials stellt das System dessen relevante Begriffe und Inhalte für eine Lerneinheit bereit; Herkunft und nicht verarbeitbare Teile sind erkennbar. |
 | SC-02 | Der Nutzer kann eine Zusammenfassung auswählen oder überspringen und direkt in eine interaktive Lerneinheit einsteigen. |
-| SC-03 | Das System kann durch Fragen den vorhandenen Wissensstand vor oder während einer Lerneinheit überprüfen. |
-| SC-04 | Das System kann einen Lerninhalt mit unterschiedlichen Lernstrategien erläutern und die Strategie aufgrund einer Rückmeldung oder eines Lernergebnisses ändern. |
-| SC-05 | Der Nutzer kann einen Lerninhalt anhand neuer Fragen, Aufgaben oder eigener Erklärungen überprüfen lassen. |
-| SC-06 | Frühere Lernaktivitäten und erkannte Schwierigkeiten können für die Gestaltung späterer Übungen berücksichtigt werden. |
+| SC-03 | Zu einem vorgegebenen Thema stellt das System Verständnisfragen, wertet die Antworten aus und zeigt den daraus eingeschätzten Kenntnisstand mit seiner vorläufigen Grundlage an. |
+| SC-04 | Für denselben Lerninhalt kann der Nutzer mindestens zwei vorgesehene Lernstrategien wählen; nach einer dokumentierten Rückmeldung oder Verständnisprüfung passt das System die weitere Erklärung erkennbar an. |
+| SC-05 | Zu einem behandelten Inhalt erhält der Nutzer neue Fragen oder Aufgaben beziehungsweise kann eine eigene Erklärung abgeben; die Auswertung zeigt fachlich prüfbares Feedback und erkannte Lücken an. |
+| SC-06 | Bei einer späteren Lerneinheit werden zuvor autorisiert gespeicherte Aktivitäten und Schwierigkeiten in die Übungsauswahl einbezogen; der zugrunde liegende frühere Lernbedarf ist nachvollziehbar. |
 | SC-07 | Der Nutzer kann über unterstützte Text- und Sprachformen mit dem Assistenten interagieren; beim Wechsel bleibt der Lernkontext erhalten. |
-| SC-08 | Ergänzende externe Informationen können mit nachvollziehbarer Herkunft in die Lernbegleitung einbezogen werden. |
-| SC-09 | Die vorgesehenen zusätzlichen Audio- und Videolernfunktionen werden anhand dokumentierter Machbarkeit und überprüfbarer Qualitätsanforderungen bewertet und schrittweise realisiert. |
+| SC-08 | Eine ergänzende externe Information wird in der Lerneinheit mit identifizierbarer Quelle und ihrem Prüfstand angezeigt; eine KI-Erklärung wird nicht als Originalquelle ausgegeben. |
+| SC-09 | Für die vorgesehenen Audio- und Videolernfunktionen liegen dokumentierte Machbarkeits- und Qualitätsbewertungen vor; realisierte Funktionen erzeugen aus einem vorgegebenen Lernthema abspielbare, fachlich geprüfte Inhalte. Noch nicht realisierte Funktionen bleiben als nicht abgenommen ausgewiesen. |
 
 ### P1.6.2 Prüfungen und Semesterorganisation
 
 | ID | Erfolgskriterium |
 |---|---|
-| SC-10 | Für ein Modul können Lernziele, relevante Themen und Prüfungstermine berücksichtigt werden. |
-| SC-11 | Das System kann einen Prüfungsvorbereitungsplan aus Kenntnisstand, verbleibender Zeit und verfügbaren Lernzeiten ableiten. |
-| SC-12 | Das System kann bei mehreren Prüfungen deren Termine und Vorbereitungsbedarf gemeinsam berücksichtigen. |
+| SC-10 | Für ein angelegtes Modul sind gespeicherte Lernziele, relevante Themen und Prüfungstermine abrufbar und werden bei der Erstellung einer Prüfungsvorbereitung verwendet. |
+| SC-11 | Aus einem dokumentierten Kenntnisstand, Prüfungstermin und verfügbaren Zeitfenstern entsteht ein prüfbarer Vorbereitungsvorschlag, der die verbleibende Zeit und bekannte Wissenslücken berücksichtigt. |
+| SC-12 | Bei zwei vorgegebenen Prüfungen berücksichtigt der Planungsvorschlag beide Termine und den jeweiligen Vorbereitungsbedarf; bekannte Zeitkonflikte werden angezeigt statt übergangen. |
 | SC-13 | Der Nutzer kann den Fortschritt eines Semesters, einzelner Module und bearbeiteter Kapitel einsehen. |
-| SC-14 | Das System kann Vorlesungszeiten, Prüfungsphasen und abweichende Prüfungstermine unterscheiden. |
+| SC-14 | Für ein Semester mit abweichendem Prüfungstermin zeigt das System Vorlesungszeit, Prüfungsphase und tatsächlichen Prüfungstermin getrennt an und plant nicht ausschließlich nach dem Vorlesungsende. |
 | SC-15 | Studienleistungen, frühere Semester und vorhandene Kompetenznachweise bleiben auch nach einem Semesterwechsel nachvollziehbar. |
 | SC-16 | Der Nutzer kann Noten und ECTS verwalten, ohne dass diese mit automatisch geschätzten Kenntnisständen verwechselt werden. |
 
@@ -482,12 +569,12 @@ Detaillierte Testfälle, quantitative Schwellenwerte und Qualitätsmessungen wer
 
 | ID | Erfolgskriterium |
 |---|---|
-| SC-17 | Das System kann relevante neue Informationen aus angebundenen zulässigen Quellen erkennen und den Nutzer darüber informieren. |
-| SC-18 | Eine neue oder geänderte Frist wird mit der verfügbaren Herkunftsinformation angezeigt. |
-| SC-19 | Eine vorgeschlagene Kalenderänderung wird erst nach ausdrücklicher Zustimmung durchgeführt. |
-| SC-20 | Bei einer Empfehlung zur Kontaktaufnahme mit Lehrenden oder Studienberatungsstellen wird eine nachvollziehbare Begründung angezeigt. |
-| SC-21 | Externe Nachrichten oder Terminvereinbarungen werden nicht ohne die erforderliche Freigabe ausgeführt. |
-| SC-22 | Das System kann eigenständig eine passende Lernmaßnahme vorbereiten, wenn ein überprüfbarer Lernbedarf festgestellt wird. |
+| SC-17 | Wird eine relevante Information in einer autorisierten angebundenen Quelle geändert, zeigt die nächste erfolgreiche vorgesehene Prüfung die Änderung und deren Herkunft als Hinweis an; fehlgeschlagene Abrufe werden als Einschränkung ausgewiesen. |
+| SC-18 | Eine neue oder geänderte Frist wird mit Quelle, Aktualisierungsstand und vorhandenen Unsicherheiten angezeigt; ein ungeklärter Quellenwiderspruch wird nicht als verbindlicher Termin ausgegeben. |
+| SC-19 | Ein KI-Terminvorschlag oder Stundenplanimport verändert den internen Studienkalender erst nach Vorschau und ausdrücklicher Bestätigung; Ablehnen lässt den Bestand unverändert. Bei direkter manueller Speicherung erfolgt keine zweite Bestätigungsabfrage. Externe Kalender bleiben in allen Fällen unverändert. |
+| SC-20 | Eine Empfehlung zur Kontaktaufnahme mit Lehrenden oder Beratungsstellen nennt den fachlichen oder organisatorischen Anlass und die erwartete Unterstützung; sie ersetzt keine zuständige Hochschulentscheidung. |
+| SC-21 | Bei einem vorbereiteten Nachrichtenversand, einer zulässigen Terminvereinbarung oder einem verbindlichen Hochschulvorgang werden Inhalt und Empfänger beziehungsweise Ziel angezeigt; ohne Freigabe erfolgt keine Ausführung. Eine Terminvereinbarung erteilt kein Schreibrecht für persönliche externe Kalender. |
+| SC-22 | Nach einer Verständnisprüfung mit dokumentierter Wissenslücke stellt das System ohne gesonderte Anforderung eine dazu passende Übung, Wiederholung oder alternative Erklärung als vorbereitete Lernmaßnahme bereit. |
 | SC-23 | Der Nutzer kann wichtige Hinweise nach dem Verschwinden einer kurzzeitigen Benachrichtigung weiterhin einsehen. |
 
 ### P1.6.4 Kompetenzen und Benutzererlebnis
@@ -495,12 +582,12 @@ Detaillierte Testfälle, quantitative Schwellenwerte und Qualitätsmessungen wer
 | ID | Erfolgskriterium |
 |---|---|
 | SC-24 | Der Nutzer kann bereits vorhandene akademische und außerhochschulische Kompetenzen erfassen und ändern. |
-| SC-25 | Das System kann bei geeigneten Lernaktivitäten neue Kompetenzen oder Kompetenzfortschritte identifizieren und mit Nachweisen oder begründeten Einschätzungen verknüpfen. |
+| SC-25 | Nach einer geeigneten bewerteten Lernaktivität zeigt das System erkannte neue Kompetenzen oder Fortschritte mit dem jeweiligen Nachweis beziehungsweise der begründeten vorläufigen Einschätzung an; Korrektur bleibt möglich. |
 | SC-26 | Vorläufige Kompetenzeinschätzungen sind von nachgewiesenen Kompetenzen unterscheidbar. |
 | SC-27 | Der Nutzer kann eine semesterbezogene Übersicht seiner Studienleistungen und Kompetenzentwicklung erhalten. |
 | SC-28 | Fortschrittsanzeigen unterscheiden zwischen der Bearbeitung eines Kapitels, dem geschätzten Wissensstand und dem Nachweis einer Kompetenz. |
 | SC-29 | Der Nutzer kann vorgesehene Darstellungs- und Benachrichtigungseinstellungen selbst verändern. |
-| SC-30 | Die zentralen Funktionen sind auf den vorgesehenen mobilen und stationären Geräteklassen bedienbar. |
+| SC-30 | Auf in N1 zu prüfenden unterstützten Android-/iOS-Konfigurationen lässt sich die PWA mit eigener Identität installieren und vom Startbildschirm öffnen. Profil, Unterhaltungen, Module, Projekte und Kalender sind auf Smartphone, Tablet und Computer bedienbar; Administration ist rollenbeschränkt. Fehlende OS-Fähigkeiten werden mit nutzbarem Rückfallweg ausgewiesen. |
 | SC-31 | Ein ablenkungsarmer Lernmodus kann aktiviert werden. |
 
 ### P1.6.5 Verwaltung, Sicherheit und Kosten
@@ -509,11 +596,55 @@ Detaillierte Testfälle, quantitative Schwellenwerte und Qualitätsmessungen wer
 |---|---|
 | SC-32 | Der Systeminhaber kann persönliche Informationen einsehen, korrigieren und verwalten. |
 | SC-33 | Eine Löschanforderung kann über die Benutzeroberfläche oder Unterhaltung eingeleitet werden; vor einer folgenreichen Löschung wird die erforderliche Bestätigung eingeholt. |
-| SC-34 | Eine kostenpflichtige Dienstnutzung wird nicht ohne entsprechende Freigabe aktiviert. |
-| SC-35 | Nicht autorisierte externe Aktionen werden durch geeignete Berechtigungs- und Bestätigungsmechanismen verhindert. |
-| SC-36 | Das System zeigt Unsicherheiten oder nicht verifizierte Aussagen angemessen an, wenn diese für akademische Entscheidungen relevant sind. |
+| SC-34 | Ein kostenpflichtiger Aufruf ohne passende Freigabe oder oberhalb des genehmigten Limits wird verhindert; eine freigegebene Nutzung zeigt Kosten beziehungsweise Verbrauch und verbleibendes Kontingent an. Ein Anbieterwechsel erweitert die Freigabe nicht automatisch. |
+| SC-35 | Bei einem getesteten externen Aufruf ohne erforderliche Berechtigung oder Bestätigung wird die Ausführung verhindert und der fehlende Zugriff beziehungsweise die ausstehende Freigabe angezeigt. |
+| SC-36 | Bei einer akademisch relevanten Aussage ohne überprüfbaren Nachweis zeigt das System deren unbestätigten Stand und die fehlende Grundlage an; widersprüchliche Quellen werden kenntlich gemacht, und eine notwendige Hochschulentscheidung wird an die zuständige Stelle verwiesen. |
 
-### P1.6.6 Langfristige Erfolgsbewertung
+### P1.6.6 Persönliche Arbeitsbereiche, Integrationen und Datenkontrolle
+
+| ID | Erfolgskriterium |
+|---|---|
+| SC-37 | Unter „Mein Profil“ lassen sich persönliche Angaben, Foto oder Avatar, Sprachen, Hochschule, Studiengang, Abschluss, Semester, Module, Noten, ECTS, Ziele, Kompetenzen, Zertifikate, Projekte, Erfahrungen und Lernpräferenzen erfassen, anzeigen und ändern; die Werte bleiben nach erneutem Öffnen erhalten. |
+| SC-38 | Für eine manuelle Angabe, einen importierten Nachweis und eine KI-Schätzung sind Herkunft und Bestätigungsstand getrennt erkennbar; eine Korrektur aktualisiert den Eintrag, ohne eine Schätzung automatisch zur offiziellen Leistung zu erklären. Ein nicht autorisierter Zugriff zeigt keine Profilwerte. |
+| SC-39 | Eine neue Unterhaltung lässt sich speichern, wiederfinden, umbenennen, nach Inhalt oder Titel suchen, sortieren, organisieren und einem Kurs, Modul, Projekt oder Thema zuordnen; nach erneutem Öffnen sind Verlauf und Zuordnungen erhalten. |
+| SC-40 | Eine frühere Unterhaltung lässt sich fortsetzen und zwischen Text und Sprache wechseln, ohne den verfügbaren fachlichen Kontext zu verlieren. Archivieren erhält den Verlauf; bestätigtes Löschen entfernt den gewählten Verlauf, während separat gespeicherte Erinnerung nur nach dem angezeigten Löschumfang behandelt wird. |
+| SC-41 | Ein aktuelles und ein früheres Semester sowie ein Modul mit Kurs, Lernzielen, Kapiteln, Themen, Dokumenten, Übungen, Bewertungen, Unterhaltungen, Prüfungstermin, Frist, Fortschritt und Kompetenzen lassen sich manuell anlegen und bearbeiten. Noten und ECTS bleiben von KI-Einschätzungen getrennt. |
+| SC-42 | Ein unterstützter Hochschulimport zeigt erkannte Daten, Herkunft, Konflikte und geplante Zuordnungen vor der Übernahme. Bestätigen speichert die ausgewählten Daten; Ablehnen speichert nichts. Ein erneuter Import erzeugt keine unbemerkten Dubletten oder Überschreibungen. |
+| SC-43 | Ein persönliches, akademisches oder berufliches Projekt lässt sich unabhängig anlegen und anschließend einem oder mehreren Modulen zuordnen; Beschreibung, Ziele, Ressourcen, Dateien, Unterhaltungen, Aufgaben, Fristen, Fortschritt und Kompetenzen bleiben abrufbar. GitHub-Analyse greift nur auf ausdrücklich ausgewählte Repositories zu. |
+| SC-44 | Ein Dokument und eine Unterhaltung lassen sich mehreren Arbeitsbereichen zuordnen. Das Entfernen einer Zuordnung löscht nicht den gemeinsam genutzten Inhalt; vor dem Löschen eines Arbeitsbereichs werden betroffene Inhalte und Verknüpfungen angezeigt. |
+| SC-45 | Eine auf Gerät A gespeicherte freigegebene Änderung erscheint nach abgeschlossener Synchronisation auf dem autorisierten Gerät B. Ein nicht autorisiertes Gerät erhält keinen Zugriff; nach Entzug sind weitere Abrufe gesperrt. Gleichzeitige widersprüchliche Änderungen werden angezeigt statt stillschweigend überschrieben. |
+| SC-46 | Bei autorisiertem externem Kalenderzugriff werden freie und belegte Zeiträume für die Planung berücksichtigt; sämtliche getesteten Erstellungs-, Änderungs- und Löschversuche bleiben ohne externe Wirkung. Nach verweigerter Berechtigung steht eine manuelle Verfügbarkeitseingabe bereit. Benachrichtigungen beachten Erlaubnis und Widerruf. |
+| SC-47 | Im Katalog „Integrationen & Plugins“ lässt sich eine unterstützte Integration suchen, auswählen, offiziell verbinden, mit zweckbegrenzten Rechten aktivieren, deaktivieren und widerrufen. Eine kompatible Dienstadresse wird geprüft; eine unbekannte URL startet weder Installation noch Konnektorausführung. |
+| SC-48 | Der Nutzer kann einen unterstützten KI-Anbieter auswählen und eine aufgabenbezogene Modellauswahl nachvollziehen. Ohne gesondert nachgewiesene Berechtigung wird aus einem ChatGPT- oder Claude-Abonnement kein API-Zugriff abgeleitet; erschöpfte Limits und ungeeignete Datenschutzbedingungen verhindern den betreffenden Aufruf. |
+| SC-49 | Der Administrator kann für CFG-01 bis CFG-17 die jeweils unterstützten Parameter ohne Quellcodeänderung bearbeiten. Gültige Werte bleiben nach Neustart erhalten; ungültige oder unberechtigte Änderungen werden abgewiesen. Geeignete Änderungen lassen sich vorab ansehen und auf eine gültige frühere Fassung zurücksetzen, ohne Schutzgrenzen aufzuheben. |
+| SC-50 | Freigegebene pädagogische Erinnerung bleibt über Sitzungs- und Semesterwechsel erhalten. Der Nutzer kann Profil, Verlauf, Arbeitsbereiche, Quellen und Erinnerungen einsehen, korrigieren und exportieren sowie eine Löschung mit ausgewiesenem Umfang bestätigen; entbehrliche temporäre Daten werden nach den festgelegten Regeln entfernt und verbleibende externe Aufbewahrung wird kenntlich gemacht. |
+| SC-51 | Zwei verifizierte Konten können getrennt arbeiten; Liste, Suche, Export, Hintergrundlauf und Wiederherstellung liefern niemals fremde Inhalte (FE-59, FE-63). |
+| SC-52 | Vor gültiger E-Mail-OTP bleiben Anwendungsdaten gesperrt; lokale Entsperrung erneuert keine abgelaufene Serversitzung (FE-60 bis FE-62). |
+| SC-53 | Ein sekundärer Administrator kann weder sich selbst erweitern noch andere Administratoren verwalten; privater Inhalt bleibt ohne enge aktive Supportfreigabe unsichtbar (FE-63, FE-71, FE-72). |
+| SC-54 | Bei voller Quote bleibt vorhandener eigener Inhalt verfügbar; neue betroffene Aufnahme wird erklärt gesperrt. Unveröffentlichtes Feature scheitert auch per Direktaufruf (FE-58, FE-64, FE-65). |
+| SC-55 | Ein abgesagter Release erzeugt keine Ankündigung; deaktivierte Funktion bewahrt Daten und sperrt neue Wirkungen (FE-66 bis FE-69). |
+| SC-56 | GitHub-Scope „alle meine öffentlichen Repositories“ erfasst keine privaten Repositories und erlaubt keine Schreiboperation. Fremdspeicher bleibt datei-/ordnerbegrenzt nur lesend (FE-43, FE-50). |
+| SC-57 | Nach Konnektorwiderruf scheitert auch der nächste Retry; eigene importierte Kopien bleiben zugänglich und letzter Erfolg wird bei Fehler nicht fortgeschrieben (FE-84, FE-85, FE-88). |
+| SC-58 | Pfadflucht/Bombe/ausführbarer Archiveintrag wird nicht ausgeführt oder unkontrolliert importiert; Originalarchiv und Extrakt bleiben unabhängig löschbar (FE-28, FE-29). |
+| SC-59 | Ohne konkrete Freigabe verlässt kein sensibler Klartext das Gerät; Backend/Admin besitzen keine privaten Klartextschlüssel und eine Ableitung behält den Quellschutz (FE-77 bis FE-79). |
+| SC-60 | Ein Restore oder alter Offlinebestand kann endgültig gelöschtes Material nicht zurückbringen; Ableitungslöschung löscht kein unabhängiges Original (FE-80, FE-81). |
+| SC-61 | Neue Quellenfassung und spätere Lerninhaltsaktualisierung benötigen jeweils ihre fachliche Prüfung; erfolgloser Abruf behauptet keine Aktualität, sichere Wiederholung keine doppelte Wirkung (FE-86 bis FE-89). |
+
+### P1.6.7 Zuordnung der ergänzten Ziele
+
+| Ziel | Rahmenbedingungen | Erfolgskriterien | Kontext in P2 |
+|---|---|---|---|
+| Bezug auf G-29 | CON-03, CON-22, CON-31 | SC-07, SC-30, SC-45, SC-46 | P2.1.3, P2.2.2, P2.2.10 |
+| Bezug auf G-30 | CON-19 | SC-29, SC-49 | P2.5 |
+| Bezug auf G-33 | CON-28, CON-35 | SC-37, SC-38, SC-50 | P2.1.2, P2.6.2 |
+| Bezug auf G-34 | CON-29, CON-31 | SC-39, SC-40, SC-45, SC-50 | P2.1.2, P2.6.4 |
+| Bezug auf G-35 | CON-30, CON-32 | SC-41, SC-42, SC-44 | P2.3, P2.6.2 |
+| Bezug auf G-36 | CON-30, CON-33 | SC-43, SC-44 | P2.2.8, P2.6.2 |
+| Bezug auf G-37 | CON-10, CON-32 | SC-19, SC-46 | P2.3, P2.7.2 |
+| Bezug auf G-38 | CON-24, CON-33, CON-34 | SC-34, SC-47, SC-48 | P2.4 |
+| Bezug auf G-39 | CON-31, CON-35 | SC-45, SC-50 | P2.2.2, P2.6.1 |
+
+### P1.6.8 Langfristige Erfolgsbewertung
 
 Zusätzlich zur technischen Erfüllung der einzelnen Kriterien soll der tatsächliche Nutzen für den Nutzer über einen längeren Zeitraum bewertet werden.
 
@@ -602,6 +733,26 @@ Studiennoten dürfen nicht als alleiniger Beweis für die Wirksamkeit des System
 | R-24 | Übermäßige Animationen oder spielerische Elemente lenken vom eigentlichen Lernen ab. | Professionelles Gestaltungskonzept, zurückhaltende Motivation und konfigurierbare visuelle Effekte. |
 | R-25 | Ungenaue Fortschrittsanzeigen vermitteln ein falsches Bild der akademischen Entwicklung. | Verständliche Definitionen, getrennte Fortschrittsindikatoren und überprüfbare Bewertungsgrundlagen. |
 
+### P1.8.6 Risiken persönlicher Arbeitsbereiche und Integrationen
+
+| ID | Risiko | Vorgesehener Umgang |
+|---|---|---|
+| R-26 | KI-Schätzungen oder manuelle Profilangaben werden als amtlich bestätigte Leistungen behandelt. | Herkunft, Bestätigungsstand und Nachweise getrennt anzeigen; Korrektur und fachliche Prüfung ermöglichen. |
+| R-27 | Verläufe gehen verloren oder bleiben nach einer Löschung unbemerkt als Erinnerung erhalten. | Verlauf, Archiv und Ableitungen unterscheiden; Löschumfang und Ergebnis transparent machen. |
+| R-28 | Starre Zuordnungen oder Löschungen von Arbeitsbereichen zerstören modulübergreifende Projekte und gemeinsam genutzte Ressourcen. | Flexible Beziehungen, überprüfbare Verknüpfungen und Vorschau folgenreicher Änderungen vorsehen. |
+| R-29 | Synchronisationskonflikte oder verlorene Geräte führen zu Datenverlust oder Offenlegung. | Gerätefreigaben und Entzug, sichtbare Aktualität und kontrollierte Konfliktbehandlung vorsehen. |
+| R-30 | Kalenderimporte erzeugen Dubletten oder externe private Termine werden versehentlich verändert. | Interne und externe Bestände trennen; externe Schreibaktionen ausschließen; Imports prüfen und bestätigen. |
+| R-31 | Eine unbekannte Plugin-Adresse löst unsichere Ausführung oder übermäßige Berechtigungen aus. | Nur geprüfte unterstützte Konnektoren aktivieren; Identität, Rechte und Verarbeitung prüfen; Widerruf ermöglichen. |
+| R-32 | KI-Abonnements werden mit API-Rechten verwechselt oder Modellwechsel verursachen zusätzliche Kosten. | Offizielle Nutzbarkeit nachweisen, Kontingente prüfen und Ausgaben nur im autorisierten Umfang erlauben. |
+| R-33 | Administrative Änderungen beeinträchtigen Datenschutz, Navigation oder Datenaufbewahrung. | Werte und Rechte validieren, geeignete Vorschau und Rücknahme anbieten; unveränderliche Schutzgrenzen durchsetzen. |
+| R-34 | Kontoübergreifender Zugriff oder zu breite Support-/Adminrechte. | Aktuelle objektbezogene Rechteprüfung, MFA, minimale befristete Supportfreigabe und negative Isolationstests. |
+| R-35 | PWA-/OS-Funktion fehlt oder funktioniert im Hintergrund nicht. | Kompatibilitätsmatrix und getestete Datei-/Manuelleingabefallbacks; kein pauschales natives Funktionsversprechen. |
+| R-36 | Modell-/Unterabhängigkeitslizenz oder kostenlose Nutzung nicht kommerziell zulässig. | Lizenzkette vor Freigabe prüfen, unklare Option sperren; Infrastrukturkosten getrennt ausweisen. |
+| R-37 | Schlüsselverlust, missverständliche Cloudklartextfreigabe oder ungeschützte Ableitung. | Getrennte persönliche Schlüsselwiederherstellung technisch prüfen; konkrete Klartexthinweise und konsequente Schutzvererbung. |
+| R-38 | Endgültige Löschung wird durch Backup oder Offlinegerät rückgängig gemacht. | Minimale Löschmarkierungen und Wiederherstellungsfilter, endliche Retention und Nachweise tatsächlicher Bereinigung. |
+| R-39 | Automatische externe Abrufe überschreiten Scope oder erzeugen doppelte Kosten/Wirkung. | Standard manuell, pro Verbindung Opt-in, begrenzte Retries mit Rechte-/Kosten-/Wirkungsprüfung. |
+| R-40 | Ungeprüfte Quellenaktualisierung verfälscht Lernwissen oder Releaseankündigung geht zu früh heraus. | Getrennte bestätigte Quellen-/Inhaltsrevisionen; serverseitige Releaseprüfung vor Ankündigung. |
+
 ---
 
 ## P1.9 Dokumentübergreifende Abgrenzung
@@ -616,13 +767,13 @@ Die weitere Detaillierung erfolgt insbesondere in folgenden Spezifikationsbauste
 | F1 | Unterstützte Studien-, Lern- und Organisationsprozesse |
 | F2 | Konkrete Anwendungsfälle und Interaktionsabläufe |
 | F3 | Wiederverwendbare fachliche Anwendungsfunktionen |
-| D1 | Fachliches Datenmodell einschließlich Semester-, Lern- und Kompetenzinformationen |
+| D1 | Fachliches Datenmodell einschließlich Profil, Unterhaltungen, Semester, Module, Kurse, Projekte, Ressourcen, Beziehungen, Lern- und Kompetenzinformationen |
 | D2 | Definition fachlicher Datentypen und Wertebereiche |
 | B1 | Dialoge, Benutzeroberflächen und Navigation |
 | B2 | Geplante und wiederkehrende Hintergrundverarbeitungen |
 | B3 | Berichte, Kompetenzbilanzen und exportierbare Ausgaben |
 | S1 | Schnittstellen zu Lernplattformen, Kalenderdiensten und weiteren Nachbarsystemen |
-| S2 | Übernahme vorhandener Studien- und Lerndaten |
+| [S2](S2-datenmigration.md) | Versionierte eigene Export-/Reimportpakete, sichere Wiederherstellung und Überführung alter App-/Betriebsdaten; laufende Fachimporte bleiben in F2/F3, Nachbarzugriffe in S1 |
 | S3 | Voraussetzungen und Ablauf der Inbetriebnahme |
 | N1 | Detaillierte nichtfunktionale Anforderungen |
 | N2 | Übergreifende Konzepte, insbesondere Datenschutz, Berechtigungen, Fehlerbehandlung und Nachvollziehbarkeit |
@@ -637,12 +788,24 @@ Die technische Architektur und ihre wesentlichen Entscheidungen werden später g
 
 Die folgenden bereits vorhandenen Dokumente bleiben erhalten:
 
-- [Projektvision](../PROJECT_VISION.md)
-- [Bisherige Anforderungen](../REQUIREMENTS.md)
-- [Architekturentscheidungen](../ARCHITECTURE_DECISIONS.md)
-- [Roadmap](../ROADMAP.md)
+- [P2 — Architekturüberblick](P2-architekturueberblick.md), fachlicher Kontext zu P1 Version 0.6
+- [Spezifikationsindex und Leseanleitung](README.md)
+- [Projektvision](../PROJECT_VISION.md), insbesondere „Expected capabilities“ und „Design principles“
+- [Bisherige Anforderungen](../REQUIREMENTS.md), insbesondere Abschnitte 1, 3 und 6
+- [Architekturentscheidungen](../ARCHITECTURE_DECISIONS.md), insbesondere „Current position“: kein festgelegter Technologie-Stack
+- [Roadmap](../ROADMAP.md), insbesondere Phasen 2 bis 5
 
 Diese Dokumente dienen als ergänzende beziehungsweise historische Projektunterlagen.
+
+**Methodische Referenz:** [Herold-Spezifikation von Carsten Lucke](https://github.com/carstenlucke/herold/tree/main/docs/spec), insbesondere [P1](https://github.com/carstenlucke/herold/blob/main/docs/spec/P1-ziele-rahmenbedingungen.md) und [P2](https://github.com/carstenlucke/herold/blob/main/docs/spec/P2-architekturueberblick.md). Übernommen wird die Trennung von Zielen, Rahmenbedingungen, prüfbaren Kriterien und Systemkontext; Herold-spezifische Technologie-, Betriebs- und Umfangsentscheidungen werden nicht auf Syllentra übertragen.
+
+### Nachvollziehbarkeit der Überarbeitung 0.5
+
+Alle bisherigen Ziele G-01 bis G-32, Rahmenbedingungen CON-01 bis CON-27, Kriterien SC-01 bis SC-36, Annahmen AS-01 bis AS-12, Risiken R-01 bis R-25 und Abgrenzungen NG-01 bis NG-08 bleiben unter ihren Kennungen erhalten. Ergänzungen sind als neue Kennungen ausgewiesen; neue Annahmen sind nicht erforderlich.
+
+G-29, CON-03 und SC-30 präzisieren die bisher nur allgemeine Gerätenutzung zur installierbaren mobilen Anwendung. CON-10 und SC-19 sowie die Missionsformulierung ersetzen die bisher mögliche Interpretation externer Kalenderänderungen durch das ausdrücklich festgelegte ausschließliche Lesen. Das ist eine begründete Einschränkung der bisherigen Kalenderformulierung, keine Streichung der internen Kalenderpflege. G-20 und SC-21 übernehmen dieselbe Grenze. Die übrigen präzisierten Erfolgskriterien beschreiben beobachtbare Ergebnisse anhand vorgegebener Materialien, Lernaktivitäten oder Quellenänderungen; die bisherigen Lern-, Prüfungs- und Beratungsziele bleiben erhalten. CON-13 schließt private Daten und Geheimnisse im öffentlichen Repository eindeutig aus. CON-19 und CON-24 sowie SC-09, SC-34 und SC-36 präzisieren Konfigurierbarkeit, Kostenfreigaben und überprüfbare Ergebnisse, ohne ihren bisherigen Zweck aufzugeben.
+
+Die Ergänzungen konkretisieren den bereits vorgesehenen persönlichen Studien-, Kompetenz- und Verwaltungsumfang. Nachrichtenverlauf und pädagogische Erinnerung, temporäre Kopien und dauerhafte Quellen sowie manuelle Speicherung und bestätigungspflichtige Vorschläge sind nun ausdrücklich getrennt. Die historische Anforderung zu langfristiger Speicherung nur mit Autorisierung bleibt bestehen. Der Dokumentstatus „Zur Prüfung“ kennzeichnet die noch ausstehende Freigabe dieser überarbeiteten Fassung; er widerruft keine frühere Freigabe von Version 0.4. Der unveränderte Spezifikationsindex kann einen älteren Bearbeitungsstand zeigen.
 
 Bei inhaltlichen Widersprüchen zwischen älteren Entwürfen und der gemeinsam freigegebenen Spezifikation müssen die Unterschiede überprüft und dokumentiert werden.
 
@@ -663,7 +826,10 @@ Die folgenden Punkte bleiben für die nachfolgenden Spezifikations- und Architek
 7. **Datenschutz und Sicherheit:** Authentifizierung, Speicherung, Berechtigungsdurchsetzung, Löschverfahren und Wiederherstellung.
 8. **Kosten und Infrastruktur:** Kostenobergrenzen, Betriebskonzept, Hosting und geeignete KI-Dienstleister beziehungsweise lokale Alternativen.
 9. **Implementierungsplanung:** Detaillierte Priorisierung der schrittweisen Umsetzung des vollständigen fachlichen Zielumfangs von V1.
-10. **Teststrategie:** Konkrete Testverfahren und messbare Akzeptanzkriterien für alle wesentlichen Anwendungsfälle.
+10. **Teststrategie:** Konkrete Testverfahren und messbare Qualitätsschwellen für alle wesentlichen Anwendungsfälle; die hier definierten beobachtbaren Ergebnisse sind Ausgangspunkt.
+11. **Mobile Nutzung:** Unterstützte Betriebssystemversionen, Installations- und Vertriebswege, konkrete Berechtigungsdialoge und Regeln für plattformgebundene Identitätsmerkmale.
+12. **Arbeitsbereiche und Synchronisation:** Datenfelder, Wertebereiche, Mehrfachzuordnungen, Konfliktbehandlung, Geräteausschluss und Behandlung bereits lokal vorhandener Daten.
+13. **Integrationen und Administration:** Zulässige Anbieterzugänge, geprüfte Katalogeinträge, unterstützte Parameter und Grenzen der Vorschau beziehungsweise Rücknahme.
 
 Die offenen Punkte stellen keine stillschweigende Ablehnung bereits vereinbarter Produktziele dar.
 
@@ -673,4 +839,14 @@ Erforderliche Änderungen des fachlichen Zielumfangs werden ausdrücklich mit de
 
 **Ende von P1 — Ziele und Rahmenbedingungen**
 
-**Freigabestatus:** Inhaltlich freigegeben. Die fachliche Detaillierung wird in den nachfolgenden Spezifikationsbausteinen fortgeführt.
+**Freigabestatus:** Zur Prüfung. Version 0.5 harmonisiert und erweitert die zuvor freigegebene Version 0.4; die Freigabe der Änderungen durch den Projektinhaber steht aus.
+
+### P1.10.1 Harmonisierung vom 16.10.2026
+
+Die Entscheidungen FE-27 bis FE-89 ergänzen den Bestand; mit Ausnahme von **FE-56 (offen)** sind ihre fachlichen Vorgaben bestätigt. Die vollständige deutsche Entscheidungsmatrix und die zwölf Nachbarverträge stehen in [S1](S1-nachbarsysteme.md). Eine fachliche Entscheidung ist keine Aussage über implementierte Funktionen oder aktuell erteilte Anbieterrechte. Alle Bausteine bleiben **Zur Prüfung**. Historische Prüfstände, frühere FE-Teilmengen und alte Versionsbezüge bezeichnen ausschließlich ihre damalige Grundlage; maßgeblich ist der aktuelle Index mit [Änderungs- und Prüfnachweis](E3-pruefnachweis.md).
+
+Neue Kennungen: G-40 bis G-45, CON-36 bis CON-42, SC-51 bis SC-61 und R-34 bis R-40. NG-01 bleibt als ausdrücklich durch FE-59 aufgehobenes Nichtziel dokumentiert; es wurde nicht still gelöscht. PWA-V1 präzisiert G-29/CON-03/SC-30 gemäß FE-55. Die bisherigen persönlichen Lern-, Profil-, Gesprächs-, Studien- und Projektanforderungen bleiben je Konto erhalten.
+
+### P1.10.2 S2-Vertiefung des bestehenden Portabilitätsziels
+
+G-45, CON-36/40/42, SC-60/61 und R-37/38 werden in [S2](S2-datenmigration.md) für eigene vollständige/selektive Exportpakete, kontrollierten Reimport, sichere Wiederherstellung und Versions-/Betriebswechsel konkretisiert. Export erzeugt keine Fremdveröffentlichung; das Wiedereinlesen eigener Inhalte braucht eine aktuelle Vorschau und konkrete Bestätigung. Ein altes Paket setzt weder Rollen/Sitzungen noch endgültige Löschungen oder jüngere Lernfortschritte zurück. Manuelle Sitzungen bleiben bis zu einer ausdrücklich bestätigten Verschiebung unverändert. Diese fachlichen Sollverträge sind keine implementierte Portabilitätsgarantie; Parameter und konkrete Formate bleiben O-S2-01 bis O-S2-12. Keine neue G-/CON-/SC-/R-Kennung ist für diese Vertiefung nötig.
