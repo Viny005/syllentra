@@ -1,7 +1,7 @@
 # S1 — Nachbarsysteme und fachliche Schnittstellenverträge
 
 **Projekt:** Syllentra AI\
-**Version:** 0.1\
+**Version:** 0.2\
 **Stand:** 16.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Ausgangsstand:** `ace1d80e80245379beed02296c3c4dd184c8dd70` auf `docs/spec/p1-p2-mobile-workspaces`, bestehende [PR #1](https://github.com/Viny005/syllentra/pull/1).
@@ -433,7 +433,7 @@ Genau ein Registereintrag je FE-ID. **88 bestätigte Entscheidungen und ein offe
 
 [P1](P1-ziele-rahmenbedingungen.md) beschreibt Ziele/Scope/Rollen, [P2](P2-architekturueberblick.md) dieselben zwölf Nachbarn und Richtung; [F1](F1-geschaeftsprozesse.md) die Prozesse; [F2](F2-anwendungsfaelle.md) Nutzerhandlungen und Nachbedingungen; [F3](F3-anwendungsfunktionen.md) fachliche Entscheidungen; [D1](D1-datenmodell.md) Entitäten und Beziehungen; [D2](D2-datentypen.md) Werte/Validierung; [B1](B1-dialogspezifikation.md) Dialoge; [B2](B2-batch.md) zeitversetzte Verarbeitung; [B3](B3-druckausgaben.md) Reports/Exporte. Neue UC-51 bis UC-63, AF-28 bis AF-35, DM-53 bis DM-71, DT-65 bis DT-85, DLG-51 bis DLG-64 und BAT-20 bis BAT-23 ergänzen unveränderte alte Identitäten. GP-01 bis GP-15 und CFG-01 bis CFG-17 werden in ihren bestehenden Aufgaben ergänzt, nicht neu vergeben.
 
-[N1](N1-nichtfunktional.md) und [N2](N2-querschnittskonzepte.md) sind begrenzte Folgeaufgaben-/Konzeptentwürfe, keine fertig gemessene Sicherheitsarchitektur. [E2](E2-glossar.md) trennt die Begriffe. [Prüf- und Änderungsnachweis](E3-pruefnachweis.md) dokumentiert tatsächliche Dateiliste/Versionen, Konflikte und Prüfergebnisse. S2 und S3 bleiben geplant: Migration/portable Backups und sichere initiale Super-Admin-Einrichtung/Deployment werden hier nicht vollständig ausgearbeitet. [Index](README.md) kennzeichnet den tatsächlichen Bearbeitungsstand.
+[N1](N1-nichtfunktional.md) und [N2](N2-querschnittskonzepte.md) sind begrenzte Folgeaufgaben-/Konzeptentwürfe, keine fertig gemessene Sicherheitsarchitektur. [E2](E2-glossar.md) trennt die Begriffe. [Prüf- und Änderungsnachweis](E3-pruefnachweis.md) dokumentiert tatsächliche Dateiliste/Versionen, Konflikte und Prüfergebnisse. [S2](S2-datenmigration.md) beschreibt Migration, portable Pakete und sicheren Differenzrestore; S3 bleibt geplant für sichere initiale Super-Admin-Einrichtung und Inbetriebnahme. S1 erteilt durch diese Übergabe keine zusätzlichen externen Rechte. [Index](README.md) kennzeichnet den tatsächlichen Bearbeitungsstand.
 
 ## S1.19 Zentrale offene technische Entscheidungen und Risiken
 

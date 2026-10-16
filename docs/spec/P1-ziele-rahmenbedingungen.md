@@ -2,7 +2,7 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** P1 — Ziele und Rahmenbedingungen\
-**Version:** 0.6\
+**Version:** 0.7\
 **Stand:** 16.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Spezifikationsmethode:** Bausteine nach Johannes Siedersleben\
@@ -773,7 +773,7 @@ Die weitere Detaillierung erfolgt insbesondere in folgenden Spezifikationsbauste
 | B2 | Geplante und wiederkehrende Hintergrundverarbeitungen |
 | B3 | Berichte, Kompetenzbilanzen und exportierbare Ausgaben |
 | S1 | Schnittstellen zu Lernplattformen, Kalenderdiensten und weiteren Nachbarsystemen |
-| S2 | Einmalige Migration vorhandener Studien- und Lerndaten; laufende fachliche Imports gehören nach F2/F3 und S1 |
+| [S2](S2-datenmigration.md) | Versionierte eigene Export-/Reimportpakete, sichere Wiederherstellung und Überführung alter App-/Betriebsdaten; laufende Fachimporte bleiben in F2/F3, Nachbarzugriffe in S1 |
 | S3 | Voraussetzungen und Ablauf der Inbetriebnahme |
 | N1 | Detaillierte nichtfunktionale Anforderungen |
 | N2 | Übergreifende Konzepte, insbesondere Datenschutz, Berechtigungen, Fehlerbehandlung und Nachvollziehbarkeit |
@@ -846,3 +846,7 @@ Erforderliche Änderungen des fachlichen Zielumfangs werden ausdrücklich mit de
 Die Entscheidungen FE-27 bis FE-89 ergänzen den Bestand; mit Ausnahme von **FE-56 (offen)** sind ihre fachlichen Vorgaben bestätigt. Die vollständige deutsche Entscheidungsmatrix und die zwölf Nachbarverträge stehen in [S1](S1-nachbarsysteme.md). Eine fachliche Entscheidung ist keine Aussage über implementierte Funktionen oder aktuell erteilte Anbieterrechte. Alle Bausteine bleiben **Zur Prüfung**. Historische Prüfstände, frühere FE-Teilmengen und alte Versionsbezüge bezeichnen ausschließlich ihre damalige Grundlage; maßgeblich ist der aktuelle Index mit [Änderungs- und Prüfnachweis](E3-pruefnachweis.md).
 
 Neue Kennungen: G-40 bis G-45, CON-36 bis CON-42, SC-51 bis SC-61 und R-34 bis R-40. NG-01 bleibt als ausdrücklich durch FE-59 aufgehobenes Nichtziel dokumentiert; es wurde nicht still gelöscht. PWA-V1 präzisiert G-29/CON-03/SC-30 gemäß FE-55. Die bisherigen persönlichen Lern-, Profil-, Gesprächs-, Studien- und Projektanforderungen bleiben je Konto erhalten.
+
+### P1.10.2 S2-Vertiefung des bestehenden Portabilitätsziels
+
+G-45, CON-36/40/42, SC-60/61 und R-37/38 werden in [S2](S2-datenmigration.md) für eigene vollständige/selektive Exportpakete, kontrollierten Reimport, sichere Wiederherstellung und Versions-/Betriebswechsel konkretisiert. Export erzeugt keine Fremdveröffentlichung; das Wiedereinlesen eigener Inhalte braucht eine aktuelle Vorschau und konkrete Bestätigung. Ein altes Paket setzt weder Rollen/Sitzungen noch endgültige Löschungen oder jüngere Lernfortschritte zurück. Manuelle Sitzungen bleiben bis zu einer ausdrücklich bestätigten Verschiebung unverändert. Diese fachlichen Sollverträge sind keine implementierte Portabilitätsgarantie; Parameter und konkrete Formate bleiben O-S2-01 bis O-S2-12. Keine neue G-/CON-/SC-/R-Kennung ist für diese Vertiefung nötig.

@@ -2,11 +2,11 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** B2 — Batch-Prozesse\
-**Version:** 0.2\
+**Version:** 0.3\
 **Stand:** 16.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Methode:** Bausteinspezifikation nach Johannes Siedersleben; periodische und zeitversetzte Fachabläufe\
-**Bezugsstand:** Harmonisierung FE-01 bis FE-89 vom 16.10.2026; Ausgangs-HEAD `ace1d80e80245379beed02296c3c4dd184c8dd70`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1. Aktuelle Versionen siehe [Index](README.md).\
+**Bezugsstand:** S2-Abgleich vom 16.10.2026 auf `723af7fa1692f8dbaf888b694fa63806d7d5fc5f`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1; aktuelle Versionen im [Index](README.md).\
 
 **Geltung und Freigabe:** FE-01 bis FE-24 gelten als fachliche Nutzerentscheidungen. FE-22 bis FE-24 werden in B2 erstmals konkretisiert. Die Dokumente P1 bis B1 sind nicht rückwirkend überarbeitet; ihre fehlenden Querbezüge werden als Folgearbeit ausgewiesen. Dieses Dokument spezifiziert Zielverhalten, keine bereits bereitgestellten Scheduler, Push-Dienste, APIs, Hintergrundrechte oder produktiven Jobs. Angaben zu Prüffrequenzen sind Produktvorgaben unter tatsächlichen Betriebsbedingungen, keine Zustellgarantien.
 
@@ -764,7 +764,7 @@ Ein **nicht direkt durch BAT ausgelöster** Use Case ist nicht „ungedeckt“: 
 | [D1](D1-datenmodell.md) | DM-03, DM-11, DM-20..DM-24, DM-32..DM-52 für Quellen, Fristen, Vorschläge, Zähler und Löschung | Separates Run-Protokoll/Reminderobjekt noch nicht als bereits vorhanden behaupten. |
 | [D2](D2-datentypen.md) | DT-02, DT-04, DT-05 Zeit; DT-15, DT-18, DT-23 Rechte; DT-22, DT-24, DT-25 Statistik; DT-45, DT-48, DT-49, DT-50 Zustände; DT-58 Sichtbarkeit | Kein eigenmächtig eingeführter zusätzlicher Datentyp oder neuer Enumerationswert. |
 | [B1](B1-dialogspezifikation.md) | DLG-33, DLG-37, DLG-38, DLG-39, DLG-40, DLG-47, DLG-48, DLG-49, Benachrichtigung; DLG-26, DLG-50 Audio nur opt-in | Fehlende B2-UI-/Scheduler-Funktionen werden später in B1 nachgetragen. |
-| B3 / S1 / N1 / N2 (geplant) | B3 gegebenenfalls Reports; S1 Schnittstellen und Quota; N1 Qualitätsziele; N2 Hintergrundbetrieb, Identität, Fehler/Retry | Diese Dateien sind im aktuellen Branch noch nicht ausgearbeitet; hier keine toten Markdownlinks setzen. |
+| [B3](B3-druckausgaben.md) / [S1](S1-nachbarsysteme.md) / [N1](N1-nichtfunktional.md) / [N2](N2-querschnittskonzepte.md) | Ausgabe, Nachbargrenzen, Qualitäts- und Schutzanforderungen | Ausgearbeitete Prüfentwürfe; S2 ergänzt unten die kontrollierten Migrationswege, technische Nachweise weiterhin offen. |
 
 ### B2.12.1 Vorbereitete administrative Optionen (CFG-09, CFG-11, CFG-12)
 - Pro unterstützter Quellenkategorie Prüfrhythmus und aktiv/deaktiviert sowie manuelle Prüfmöglichkeit (CFG-09).
@@ -924,3 +924,35 @@ Jeder externe Konnektor startet standardmäßig manuell. FE-22 ist ein Ziel für
 - **BAT-16:** Private Papierkorbfristen, sofortige endgültige Bereinigung auf bestätigten Wunsch und endliche Sicherungsretention beachten. Löschmarkierungen verhindern Wiederbelebung; eine Ableitungslöschung löscht nicht ihr Original. Keine Datenbereinigung allein wegen Feature-Deaktivierung oder Kontosperre.
 - **BAT-17:** Lange Audio-/Videodateien werden importiert; native Aufnahme ist nicht erforderlich. Lokale Transkription bevorzugen; Drittverarbeitung nur rechtmäßig und freigegeben. Strukturierte Definitionen, Methoden, Beispiele, Erklärungen und prüfungsrelevante Notizen vor Bereinigung des überwiegend temporären Transkripts prüfen. Bewusstes Original ist getrennt und kann kontrolliert gelöscht werden.
 - **BAT-19:** Hauptgerät standardmäßig, weitere Geräte freiwillig; Hinweisidentität gemeinsam, Zustellversuch pro autorisiertem Gerät/Kanal deduplizieren. In-App und erlaubter Push als Standard, Erinnerungsmail nur opt-in; OTP/Sicherheitspost hat einen getrennten Zweck. Releasehinweis erst nach tatsächlicher Verfügbarkeit aus BAT-21.
+
+## B2.17 Kontrollierte Verarbeitung der S2-Aufträge
+
+Bestehende BAT-14-Gerätesynchronisation, BAT-16-Lösch-/Retentionpflege und BAT-23-Sicherung/Restore bleiben zuständig. [S2](S2-datenmigration.md) ergänzt persönliche Paketaufträge und kontrollierte Betriebsüberführung; daraus entsteht kein pauschaler periodischer Import oder aktiver Fremdabruf.
+
+### BAT-24 — Portabilitätsaufträge kontrolliert verarbeiten
+
+| Merkmal | Fachliche Festlegung |
+|---|---|
+| Auslöser / Recht | Konkreter eigener Exportauftrag UC-49 oder bestätigte aktuelle Reimportauswahl UC-64; kein automatischer Erstimport |
+| Eingaben / Daten | DM-50, DM-68, DM-72 bis DM-74, DT-86 bis DT-90; AF-26/AF-28/AF-34/AF-36; konkrete Auswahl, Quell-/Zielrevision, Quota/Schlüssel und Rechte |
+| Ablauf / Wirkung | Exportbestand konsistent bestimmen oder bestätigte Importteilwirkungen prüfen, berechtigt durchführen und Fortschritt/Abdeckung getrennt nachweisen; geschützte Ansichten nur aus zulässigen Daten rekonstruieren |
+| Fachliche Wiedererkennung | Eigentümer, Paket-/Quellidentität, Revision, Ziel/Basis und konkrete Wirkungseinheit; ein neuer Jobname erlaubt keine Doppelanlage |
+| Fehler / Wiederaufnahme | Manipuliertes/unbekanntes Profil, Quote, fehlender Schlüssel, Widerruf, neue Zielrevision oder Löschmarkierung sperren betroffene Wirkung. Unklaren Ausgang zuerst abgleichen, sichere begrenzte Wiederaufnahme mit aktueller Rechte-/Kostenprüfung; dauerhaften Fehler verständlich melden. |
+| Abbruch / Retention | Vor Inhaltsbestätigung keine Fachänderung; nach Teilwirkung tatsächlichen Stand erhalten und berichten. Temporäre Artefakte über BAT-16 endlich bereinigen; kein Schattenarchiv. |
+| Rückverweise | MIG-01 bis MIG-14, MIG-17 bis MIG-28, MIG-32 bis MIG-36; DLG-65; OUT-08 |
+
+**Abnahme:** Abbruch nach einer bereits angewandten von zwei zulässigen Einheiten meldet genau diesen Teilstand. Wiederaufnahme legt die erste Einheit nicht doppelt an und überspringt ein inzwischen endgültig gelöschtes zweites Ziel.
+
+### BAT-25 — Versions- und Betriebsdatenmigration kontrollieren
+
+| Merkmal | Fachliche Festlegung |
+|---|---|
+| Auslöser / Recht | Gesondert genehmigter getesteter UPG-/MOV-Plan mit aktueller Betriebsberechtigung/MFA; weder Nutzerpaket noch normale Konfigurationsänderung |
+| Eingaben / Daten | DM-73/DM-74, DT-87/DT-89/DT-90, Quell-/Zielschema, sicherer Bestand, aktueller Lösch-/Entzugskontrollstand, EU-/Schutznachweis und Test-/Rückfallplan |
+| Ablauf | Vorprüfung, nichtproduktiver zulässiger Trockenlauf, sichere fachliche Wirkungseinheiten, Konsistenz-/Eigentums-/Schlüssel-/Quellenprüfung, erst dann geregelter Cutover nach S2.10 |
+| Fachliche Wiedererkennung | Planfassung, Quell-/Zielstand, tatsächlicher Kontokontext und Transformationseinheit; nach Neustart keine erneute destruktive Transformation |
+| Fehler / Wiederaufnahme | Fehlender aktueller Kontrollstand, ungeklärte Datenabweichung oder nicht belegte Wiederherstellbarkeit sperren die Freigabe. Zulässigen Zwischenstand halten; kompatiblen Rückfall oder geprüfte Vorwärtskorrektur unter heutigen Lösch-/Widerrufsgrenzen verwenden. |
+| Schutz / Scope | Keine privaten Vollinhalte im Adminnachweis; kein pauschales Inhaltsrecht. Neuer EU-Betrieb ist internes Ziel, kein schreibender NB-10-Konnektor. Keine produktive Ausführung dieses Jobs durch die Dokumenterstellung. |
+| Rückverweise | MIG-15 bis MIG-24, MIG-29/MIG-30; NFR-04/NFR-12; SEC-04/SEC-08/SEC-15; S3 weiterhin geplant |
+
+**Abnahme:** Gleich große Bestände nach Transformation reichen nicht zur Freigabe, wenn ein Eigentümerbezug falsch ist. Ein alter Offlineclient oder Rückfallbestand darf aktuelle Löschmarkierungen nicht überschreiben; fehlender Nachweis blockiert den Cutover.

@@ -2,7 +2,7 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** B1 — Dialogspezifikation\
-**Version:** 0.2\
+**Version:** 0.3\
 **Stand:** 16.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Methode:** Spezifikationsbaustein nach Johannes Siedersleben (GUI-Statik und GUI-Dynamik), nach der [methodischen Herold-B1-Referenz](https://github.com/carstenlucke/herold/blob/main/docs/spec/B1-dialogspezifikation.md), ohne Übernahme ihrer Authentifizierungs- oder Produktentscheidungen\
@@ -1605,7 +1605,7 @@ Jeder Dialog hat eine **fachliche Zielbeschreibung**, **Einstieg**, **GUI Statik
 | Aktion | Beobachtbare Wirkung / Navigation |
 |---|---|
 | Daten einsehen | nur eigene |
-| Exportieren | ohne Zugangsdaten |
+| Exportieren | UC-49/OUT-08, ohne Zugangsdaten, mit Umfang/Schutz/Manifest und Vollständigkeitsbericht nach S2; DLG-65 für Paketstatus/Verlauf |
 | Löschung vorbereiten | Folgen und Quellen ansehen |
 | Löschung bestätigen | konkret benannten aktuellen Umfang; neue Abhängigkeiten oder geänderter Zielstand erfordern erneute Prüfung |
 | Daten korrigieren | passenden geschützten Fachdialog öffnen; keine künstliche zweite Bestätigung für direkte manuelle Korrektur |
@@ -2104,3 +2104,28 @@ Alle neuen Dialoge sind mit Tastatur und auf schmalen Geräten bedienbar. Sie ze
 **Grenzen und Fehler:** Kontosperre ist weder freiwillige Pause noch Löschung. Sperrbefugnis gibt keinen Inhaltseinblick und keine Administratorverwaltung. Die Behandlung des einzigen Super Admin wird nicht eigenmächtig durch eine zweite Eigentümerrolle gelöst. Fehlende Fähigkeit wird mit tatsächlich verfügbarem manuellem oder dateibasiertem Ersatz erläutert.
 
 **Abnahmebeispiel:** Ein nur für Branding berechtigter Administrator darf kein Konto sperren; eine zulässige Sperre löscht keine Lernhistorie.
+
+## B1.11 Portabilitätsdialog für versionierte eigene Pakete
+
+### DLG-65 — Portabilitätspaket, Importvorschau und Migrationsverlauf
+
+**Einstieg:** DLG-49 „Daten exportieren“ oder „Eigenes Paket importieren“; DLG-61 für getrennten Sicherungsrestore. UC-49, UC-64; AF-26/AF-34/AF-36; DM-72 bis DM-74; DT-86 bis DT-90; [S2.13](S2-datenmigration.md#s213-ui-benachrichtigungs--und-administrationsfolgen).
+
+| Anzeige/Eingabe | Regel / beobachtbare Rückmeldung |
+|---|---|
+| Vollständig/selektiv, Bereich/Kurs/Projekt/Zeitraum/Datentyp | Nur eigene zulässige Auswahl; Abhängigkeiten erklärt, verbundene Kurse nicht pauschal mitexportiert |
+| Schutz und verfügbare Schlüssel | Sensibler Quellschutz gilt; explizite sichere Schutzwahl, Verlust-/Downloadwarnung; kein ungeschützter Ersatz bei fehlendem Schlüssel |
+| Paket-/Schemafassung und Bestandsbericht | Enthalten/ausgeschlossen/fehlend/unbekannt unterscheiden, tatsächlicher Stichtag, keine falsche Vollständigkeit |
+| Dateiauswahl für Reimport | Zunächst isolierte Prüfung; keine Fachänderung oder Ausführung durch Upload allein |
+| Versionierter Alt-/Neu-Vergleich | Neu/identisch/änderbar/Konflikt/gesperrt/fehlende Quelle anzeigen, Gründe als Text statt nur Farbe; private Noten nur in berechtigter explizit gewählter Detailansicht |
+| Konfliktwahl | Bestehendes behalten, erlaubte Inhaltsfassung, überspringen, gegebenenfalls getrennte Kopie/manuelle Zusammenführung; unzulässige Wahl gesperrt und begründet |
+| Manuelle Sitzung / jüngere Lernergebnisse | Verschiebung konkret hervorheben und ausdrücklich bestätigen; ältere Daten setzen jüngere Evidenz nicht zurück |
+| Fortschritt / Ergebnis / privater Verlauf | Wirksame Teile, offene Arbeit und Fehler sowie Abbruch-/Ablaufstatus unterscheiden; kein fremder Verlauf oder Secret |
+
+**Aktionen:** Exportauftrag nach bewusster Auswahl speichern; Importvorschau starten; Auswahl ändern; konkrete aktuelle Vorschau bestätigen; Entwurf verwerfen; laufenden Auftrag kontrolliert abbrechen; tatsächlichen Ergebnisbericht öffnen; ausschließlich zulässige sichere Wiederaufnahme anfordern. Ein Exportauftrag braucht keine künstliche zweite destruktive Bestätigung. Reimport bestätigt seine konkrete Inhaltswirkung; geänderte Grundlage verlangt Neubewertung. Alte importierte Historie verschickt keine Benachrichtigung erneut.
+
+**Leere-/Lade-/Fehlerzustände:** Leeres eigenes Konto/gewählter Bestand wahrheitsgemäß leer. Große Pakete mit realer Browser-/Quota-Grenze vorab erklären, zulässige kleinere Auswahl anbieten. Nicht unterstütztes Profil, fehlende Schlüssel, fremdes Konto, Widerruf oder unklare Wirkung führen zu verständlicher Sperre/Teilstand statt Erfolg. Sichere Teilübernahme nur auf explizite aktuelle Auswahl; kein Universaladapter.
+
+**Barrierefreiheit/Sprachen:** Gleicher fachlicher Ablauf mit UI Deutsch, Französisch oder Englisch, Tastaturbedienung, klarer Fokusfolge, benannten Feldern, Screenreader-erreichbaren Fehlern/Fortschritt und textlich beschriebenen Differenzen. Keine neue Übersetzungsintegration. KI-/Audio-/Übungssprache bleibt unabhängig.
+
+**Abnahme:** Importvorschau wird auf Gerät A erstellt, danach Termin auf B manuell geändert: veraltete Vorschau kann den Termin nicht still zurücksetzen. Nutzer B sieht weder Manifest noch Fortschritt von A; Ablauf einer Supportfreigabe sperrt auch den vorbereiteten Bericht.

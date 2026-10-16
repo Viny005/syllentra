@@ -1,7 +1,7 @@
 # N2 — Querschnittskonzepte
 
 **Projekt:** Syllentra AI\
-**Version:** 0.1\
+**Version:** 0.2\
 **Stand:** 16.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber
 
@@ -45,3 +45,13 @@ Dieser begrenzte Konzeptentwurf verbindet bereits beschlossene Schutzanforderung
 O-S1-06 bis O-S1-13 bleiben offen: Verifikations-/Sitzungsfristen und Ratenbegrenzung, Geräte-/Schlüsselverteilung und verlorene Geräte, kryptographische Verfahren, isolierte temporäre Cloudanalyse samt Bereinigungsnachweis, Aufbewahrungs-/Backupfristen, belastbare Löschmarkierung bei endlicher Retention, Limits, Recovery und einziger Super-Admin-Bootstrap. S2 spezifiziert portable Migration und Differenzrestore, S3 den sicheren Betriebsstart. Es werden keine Anbieter, Protokolle oder Zahlen als bereits beschlossen ausgegeben.
 
 **Künftige negative Prüfungen:** Unverifiziertes Konto gegen Appdaten; A gegen B; sekundärer Admin gegen Selbstbeförderung; verstecktes Feature per Direktaufruf; Support nach Ablauf; widerrufene Verbindung vor Retry; Serveranalyse ohne konkrete Freigabe; Secret im Log; sensibles Ergebnis im Suchindex; endgültig gelöschtes Objekt in altem Backup. Diese Szenarien sind Anforderungen, keine in dieser Dokumentationslieferung ausgeführten Produkttests.
+
+## N2.8 S2-Kontrollstand und sicherer Wiederherstellungsumfang
+
+[S2.7/S2.8](S2-datenmigration.md) vertieft SEC-03/04/08/09/10/11/12/14/15/16. Persönliche Datenportabilität ist kein Export von Passwort-Hashes, OTP, MFA-/Sitzungs-/OAuth-Geheimnissen, Gerätevertrauen, Supportrechten oder aktiven Admin-/Integrationszuständen. Betrieblich notwendige technische Sicherungsgegenstände gehören zu einem gesonderten geschützten BAK-/S3-Verfahren und werden vor Wiederfreigabe gegen heutige Rechte/Entzüge geprüft, nicht als Nutzerpaket ausgegeben.
+
+**Kontrollstand:** Vor Import/Restore/Cutover ist ein belastbarer aktueller Lösch-/Widerrufs-/Kontostatus außerhalb einer blind zurückgespielten alten Sicherungsfassung einzubeziehen. Fehlt dieser Nachweis, keine Aktivfreigabe. Endliche Löschmarker-/Backupretention muss mit Gültigkeitsgrenzen alter Pakete/Clients und Nachweisfällen technisch abgestimmt werden (O-S2-03/08); bloßes Löschen alter Marker ohne Wiederbelebungsschutz ist keine Lösung. Keine neue unbegrenzte Markeraufbewahrung wird beschlossen.
+
+**Schlüssel/Schutz:** Fehlende persönliche Dokumentenschlüssel können weder Betrieb noch Kontorecovery rekonstruieren. Geschütztes Paket und Quellschutz sind getrennte Ebenen; Übernahme ist keine Cloud-Klartextanalysefreigabe. FE-78 bleibt pro Vorgang gesondert. Integrations-/Support-/Geräte- und Adminrechte werden nicht aus Paketen aktiviert; historische private Logs enthalten keine Secrets. Eigene Altaccount-/Neukontoübernahme ist bis zum starken Verfahren O-S2-09 nicht automatisch erlaubt.
+
+**Planung:** Reimport erhält manuelle Herkunft/Terminbindung und jüngere Lernbelege. Restore oder Plan-Undo darf diese nicht still überschreiben. S2 führt keine neue automatische Lernheftordnung aus und ändert keine Kalenderbestätigungsgrenze. Die separate vollständige Post-S1-Harmonisierung der DEC-V1-Vorgaben bleibt offen.

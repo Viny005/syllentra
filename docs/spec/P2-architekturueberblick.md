@@ -2,7 +2,7 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** P2 — Architekturüberblick\
-**Version:** 0.7\
+**Version:** 0.8\
 **Stand:** 16.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Spezifikationsmethode:** Bausteine nach Johannes Siedersleben\
@@ -432,7 +432,7 @@ Webseiten, E-Mails, Dokumente, Repositories und Werkzeugantworten gelten als Dat
 | B2 | Wiederkehrende Prüfungen und Hintergrundaufgaben |
 | B3 | Berichte, Exporte und Kompetenzbilanzen |
 | S1 | Konkrete Nachbarsysteme, zulässige Schnittstellen und Datenaustausch |
-| S2 | Einmalige Migration vorhandener Studien-, Profil- und Lerndaten; laufende fachliche Imports werden in F2/F3 und S1 beschrieben |
+| [S2](S2-datenmigration.md) | Eigene Export-/Reimportpakete, sichere Migration und Wiederherstellung sowie kontrollierte Versions-/Betriebswechsel; keine neue externe Schreibintegration |
 | S3 | Inbetriebnahme und Konfigurationsvoraussetzungen |
 | N1 | Qualität, Leistung, Barrierefreiheit, Verfügbarkeit und Bedienbarkeit |
 | N2 | Übergreifende Konzepte für Konfiguration, Berechtigungen, Sicherheit, Datenschutz, Löschung und Nachvollziehbarkeit |
@@ -500,7 +500,7 @@ Diese offenen Punkte präzisieren die spätere Umsetzung. Sie streichen keine be
 ---
 
 **Ende von P2 — Architekturüberblick.**\
-**Freigabestatus:** Zur Prüfung. Version 0.6 ist gemeinsam mit P1 Version 0.6 zu validieren. Die spätere Aktualisierung des Spezifikationsindex erfolgt gesondert; diese Überarbeitung betrifft ausschließlich P1 und P2.
+**Freigabestatus:** Zur Prüfung durch den Projektinhaber. P2 Version 0.8 und P1 Version 0.7 sind zusammen mit den aktuellen S2-Verweisen zu prüfen. Der Index zeigt den tatsächlichen Dokumentbestand; frühere Änderungsgrenzen beziehen sich auf ihre ursprünglichen Lieferungen.
 
 ### P2.9.1 Abgeglichene Produktgrenzen und Informationsklassen
 
@@ -516,4 +516,8 @@ Die PWA, zentrale EU-Cloud, interne Datenhaltung, eigene KI-Verarbeitung, Admini
 
 **Betriebsgrenzen:** Eigene Cloud und Sicherungen in der EU; kostenlose kommerziell zulässige Software-/Modelllizenzkette ohne verpflichtende bezahlte API, reale Infrastrukturkosten gesondert. Externe Synchronisation manuell, Automatik nur pro Verbindung opt-in. Allgemeine FE-22-Checks und interne Erinnerungen berechtigen nicht zu Postfachlektüre oder neuen externen Scopes. Kontowiederherstellung erzeugt keine Dokumentenschlüssel. Sensibler Cloudklartext nur minimal pro konkreter Freigabe, sichtbar erklärt und ohne dauerhafte Klartextkopie.
 
-**Folgebausteine:** [S1](S1-nachbarsysteme.md) enthält NB-Verträge und Abnahmeszenarien; [N1](N1-nichtfunktional.md) Qualitätsbedingungen, [N2](N2-querschnittskonzepte.md) Konten-, Rechte-, Schlüssel-, Audit- und Löschgrenzen. S2 präzisiert später Datenmigration und sichere Wiederherstellung; S3 sichere Inbetriebnahme und Bootstrap des einzigen Super Admin. Anbieter, Protokolle, Fristen und Zahlen bleiben dokumentierte offene technische Fragen.
+**Folgebausteine:** [S1](S1-nachbarsysteme.md) enthält NB-Verträge und Abnahmeszenarien; [N1](N1-nichtfunktional.md) Qualitätsbedingungen, [N2](N2-querschnittskonzepte.md) Konten-, Rechte-, Schlüssel-, Audit- und Löschgrenzen. [S2](S2-datenmigration.md) beschreibt jetzt die fachlichen Migrations-/Restoreverträge, während konkrete technische Verfahren offen bleiben; S3 sichere Inbetriebnahme und Bootstrap des einzigen Super Admin. Anbieter, Protokolle, Fristen und Zahlen bleiben dokumentierte offene technische Fragen.
+
+### P2.9.2 Datenmigration innerhalb der Produktgrenze
+
+[S2](S2-datenmigration.md) unterscheidet persönlichen Export/Reimport, akademische Dateieinfuhr, Geräteabgleich, internen Backup/Restore, Schemawechsel und EU-Betriebswechsel. Paketbesitz ist kein Konto- oder Inhaltsrecht. Persönliche Pakete enthalten keine Passwörter/Hashes, OTP, MFA-/Sitzungs-/OAuth-Geheimnisse, Gerätevertrauen oder aktiven Admin-/Integrationszustände. Der neue Portabilitätslauf gehört zur internen Produktverantwortung; NB-06/NB-12 Kalender sowie NB-07 GitHub und NB-10 Fremdspeicher bleiben nur lesend. S2 erweitert weder FE-56 noch externe Schreibrechte. Die sieben fachlichen Wege sind keine technische Komponentenarchitektur.

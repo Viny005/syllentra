@@ -1,7 +1,7 @@
 # E2 — Glossar
 
 **Projekt:** Syllentra AI\
-**Version:** 0.1\
+**Version:** 0.2\
 **Stand:** 16.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber
 
@@ -41,3 +41,20 @@ Dieses Glossar erläutert die Verwendung in [P1](P1-ziele-rahmenbedingungen.md),
 | Veröffentlichungsfassung | Geprüfter Entwurfs-/Test-/Termin-/Releasezustand einer unterstützten Funktion oder Konfiguration; Ankündigung erst bei tatsächlicher Verfügbarkeit. |
 | Idempotenz / Deduplizierung | Wiederholung derselben fachlichen Wirkung erzeugt keine zusätzliche Wirkung; unbekanntes Ergebnis zuerst prüfen. Keine pauschale physische Genau-einmal-Garantie fremder Zusteller. |
 | FE-56 | Weiterhin offene Entscheidung zur optionalen Inboxlektüre; ausgehende OTP-/Sicherheitsmails erlauben keine automatische Hochschulpostlektüre. |
+
+## E2.2 Ergänzende Migrationsbegriffe
+
+| Begriff | Bedeutung |
+|---|---|
+| Portabilitätspaket | Versionierter eigener Inhaltsbestand mit Manifest, zulässigem Umfang und Schutz, ohne aktive Anmeldesecrets oder Privilegien; nicht gleich betrieblicher Sicherung. |
+| Exportmanifest | Fachliches Inhalts-/Versions-/Abhängigkeits-/Abdeckungsverzeichnis; Integritätsmerkmal ist kein Konto- oder Eigentumsnachweis. |
+| Syllentra-Reimport | Kontrollierte Übernahme eines kompatiblen eigenen Pakets nach aktueller Vorschau und konkreter Bestätigung; kein universeller Drittadapter. |
+| Migrationsvorschau / Delta | An Quell-/Zielstand gebundener Unterschiedsausweis mit Auswahl, Konflikten und Ausschlüssen; geänderte Grundlage erfordert neue Bewertung. |
+| Fachliche Teilwirkung | Kleinste sicher nachvollziehbare bestätigte Inhaltseinheit mit tatsächlichem Ergebnis; Wiederaufnahme erzeugt keine zusätzliche gleiche Wirkung. |
+| Aktueller Kontrollstand | Belastbare heutige Konto-, Lösch-, Entzugs- und Rechteinformationen, die auch beim Restore eines älteren Bestands gelten. |
+| Cutover | Kontrollierte Freigabe/Umschaltung auf einen nachgewiesen konsistenten und zulässigen Versions-/Betriebsstand. |
+| Vorwärtskorrektur | Geprüfter Weg zu einem sicheren neueren Stand, wenn eine alte Fassung nicht gefahrlos rückspielbar ist; keine Umgehung heutiger Lösch-/Rechtegrenzen. |
+| RPO / RTO | Noch festzulegende technische Wiederherstellungsziele für tolerierbaren Datenverlust beziehungsweise Wiederanlaufzeit; keine bereits zugesagten Zahlen. |
+| MIG / AT-S2 / DEC-V1 | S2-interne Migrationsregel / künftiger S2-Abnahmefall / temporärer Post-S1-Auditbezug; keine neuen offiziellen FE-Kennungen. |
+
+Verträge und offene Nachweise: [S2](S2-datenmigration.md). Eine Wiederherstellungsoption in der Spezifikation beweist keine heute implementierte Produktfähigkeit.

@@ -2,11 +2,11 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** B3 — Druckausgaben\
-**Version:** 0.2\
+**Version:** 0.3\
 **Stand:** 16.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Methode:** Baustein B3 nach Johannes Siedersleben — fachlich prüfbare Ausgaben, unabhängig von Layoutbibliothek und Drucktechnik\
-**Bezugsstand:** Harmonisierung FE-01 bis FE-89 vom 16.10.2026; Ausgangs-HEAD `ace1d80e80245379beed02296c3c4dd184c8dd70`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1. Aktuelle Versionen siehe [Index](README.md).
+**Bezugsstand:** S2-Abgleich vom 16.10.2026 auf `723af7fa1692f8dbaf888b694fa63806d7d5fc5f`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1; aktuelle Versionen im [Index](README.md).
 
 > **Freigabe und Herkunft:** FE-01 bis FE-24 wurden in der bisherigen fachlichen Erarbeitung bestätigt; FE-25 und FE-26 sind mit dem aktuellen Auftrag ausdrücklich bestätigt. Der hier definierte konkrete B3-Entwurf, seine Berichtsgliederungen und seine späteren technischen Abnahmegrenzen bleiben **Zur Prüfung**. Es gibt noch keine implementierte Berichts- oder Exportfunktion. Der historische B3-Entwurf änderte zunächst nur B3 und den Index; die Harmonisierung vom 16.10.2026 aktualisiert die betroffenen Bausteine.
 
@@ -234,7 +234,7 @@ Jedes Erzeugnis erfüllt die gemeinsamen Anforderungen von B3.4 bis B3.7. Die fo
 | **F2-Bezug** | UC-02, UC-03, UC-04, UC-05, UC-11, UC-13, UC-14, UC-19, UC-22, UC-43, UC-49, UC-50 |
 | **F1-Bezug** | GP-01, GP-03, GP-10, GP-11, GP-15 |
 | **F3-Datenbewertung** | AF-01, AF-05, AF-22, AF-26, AF-27 |
-| **D1-Quellen** | DM-01..DM-52 nur soweit tatsächlich vorhanden, personenbezogen oder als benötigte eigene Beziehungs-/Berechtigungsmetadaten ausgewählt, besonders DM-20..DM-27, DM-33, DM-34, DM-47, DM-50, DM-51 |
+| **D1-Quellen** | Exportierbare eigene Fachinhalte im aktuellen DM-01..DM-74-Modell, besonders DM-20..DM-27, DM-33/34 und ausgewählte zulässige Lauf-/Paketnachweise; keine Geheimnisse, aktiven Sicherheits-/Admin-/Integrationsprivilegien oder fremden Betriebsdaten |
 | **Erwartetes Format** | CSV und/oder JSON als strukturierter Datenauszug mit verständlicher Abdeckungsinformation; kein semantisch irreführendes Nur-CSV für verschachtelte Relationen. |
 
 **Ausgabegliederung und notwendige Inhalte**
@@ -559,7 +559,7 @@ Die Kurztexte dienen nur als Rückverfolgung: **FE-01..FE-24 bleiben in ihren je
 | B1 v0.2 | DLG-01..DLG-50 | Einstiege und geschützte Dialoge nutzen; Exportauswahl/Vorschau/Bereitstellung später in B1 detaillieren |
 | B2 v0.2 | BAT-01..BAT-19 | Kein eigenständiger periodischer Report; ggf. berechtigt gestartete asynchrone Erstellung bedürfte ausdrücklicher neuer Spezifikation |
 | S1 (geplant) | Nachbarsysteme und offiziell verfügbare Konverter/Dateizugänge | Keine Anbieter-/Word-/Cloud-Verfügbarkeit fingieren |
-| S2/S3 (geplant) | Migration und Inbetriebnahme | Portabilität und temporäre Exportablage gesondert definieren |
+| [S2](S2-datenmigration.md) / S3 (geplant) | Portabilität/Migration und spätere Inbetriebnahme | S2 definiert fachliche Paket-/Berichtsgrenzen und endliche temporäre Exportablage; technische Verfahren bleiben offen |
 | N1/N2 (geplant) | Qualität und Querschnitt (Daten-/Drucksicherheit, Formate, Dateilebensdauer) | Konkrete Qualitätsschwellen, technische Fehler- und Aufbewahrungsregeln dort ermitteln |
 | E2 (geplant) | Begriffserläuterungen | Bericht, Datenexport, Notenauszug, indikative Äquivalenz präzisieren |
 
@@ -610,7 +610,7 @@ Sämtliche Beispiele sind **künftige fachliche Akzeptanztests**. Kein automatis
 
 ## B3.13 Qualitätsnachweise, Grenzen und Prüfstatus
 
-**Quellenabgleich und Änderungsgrenze:** Der vor Bearbeitung geprüfte lokale und entfernte Branch-/PR-Stand entspricht dem gelieferten Ausgangs-SHA. P1 bis B2 bleiben bytegleich; die B3-Mission ergänzt ausschließlich dieses Dokument und seinen Indexeintrag. FE-25/FE-26 sind bestätigt; zusätzliche Auswahl-, Momentaufnahme-, Vorschau- und Bereitstellungsdetails dieses Entwurfs stehen zur Prüfung. Für Formate und Inhalte wird keine funktionierende Produktimplementierung behauptet.
+**Historischer Quellenabgleich und Änderungsgrenze der ursprünglichen B3-Einzellieferung:** Der damals vor Bearbeitung geprüfte lokale und entfernte Branch-/PR-Stand entspricht dem gelieferten Ausgangs-SHA. P1 bis B2 bleiben bytegleich; die B3-Mission ergänzt ausschließlich dieses Dokument und seinen Indexeintrag. FE-25/FE-26 sind bestätigt; zusätzliche Auswahl-, Momentaufnahme-, Vorschau- und Bereitstellungsdetails dieses Entwurfs stehen zur Prüfung. Für Formate und Inhalte wird keine funktionierende Produktimplementierung behauptet.
 
 **Präzisierungen gegenüber dem vollständigen Anhang:**
 
@@ -661,3 +661,13 @@ OUT-01 bis OUT-08 behalten ihre Bedeutung und werden weder automatisch veröffen
 - Öffentliche GitHub-Belege dürfen aus ausgewählten oder allen eigenen öffentlichen Repositories im bestätigten Scope stammen; kein privates Repository und keine unbelegte individuelle Urheberschaft.
 
 **Zusätzliche Abnahmefälle:** Konto A kann keinen Export von B anfordern; widerrufene Supportfreigabe verhindert auch eine bereits vorbereitete Ausgabe; Wiederholung eines Exportauftrags veröffentlicht nichts automatisch; sensibler Quelldokumenttext erscheint ohne ausdrückliche Export-/Entschlüsselungswahl nicht in einem offenen Bericht.
+
+## B3.15 Portabilitätsmanifest und Vollständigkeitsbericht innerhalb von OUT-08
+
+[S2.5](S2-datenmigration.md#s25-fachlicher-exportvertrag) konkretisiert OUT-08, ohne eine weitere OUT-Kennung oder einen neuen pädagogischen Bericht einzuführen. Eigener strukturierter Export wird als DM-72 mit DT-86-Manifest bereitgestellt; tatsächlich vorhandene rechtmäßig ausgewählte Originaldateien und strukturierte Darstellungen bleiben unterscheidbar. Gültige leere Auswahlbestände sind zulässig. Konkrete Paket-/Kodierungs-/Verschlüsselungsprofile bleiben offen; PDF allein ist kein Reimportformat.
+
+**Manifest/Abdeckungsnachweis:** Export-/Fachschema, tatsächliche Stichtags-/Konsistenzbasis, Auswahl, Positionen, Version/Herkunft, Schutz, Abhängigkeiten, enthaltene/ausgeschlossene/fehlende/unbekannte Bestandteile und Integritäts-/Prüfstatus. Geheimnisse, Passwort-Hashes, Sessions, MFA-, OAuth-, Gerätevertrauens- und aktiver Adminzustand sind ausgeschlossen. Ein Manifest ist kein Livezugangsrecht.
+
+**Migrationsbericht:** DLG-65 und BAT-24 liefern einen geschützten verständlichen Begleitbericht innerhalb desselben Portabilitätsvorgangs: bestätigte Auswahl-/Vorschaufassung, tatsächliche neue/geänderte/unveränderte/ausgelassene/gesperrte/fehlgeschlagene Teilwirkungen, offene Abhängigkeiten, Fehlergründe und Wiederaufnahmestand. Rein historische Integrationsdaten bleiben inaktiv. Bericht entsteht nur aus tatsächlich vorhandenen Nachweisen und veröffentlicht nichts automatisch. Fachliche Nutzerberichte dürfen eigene Einzelnoten nur nach bewusst gewähltem geschütztem Umfang enthalten; Adminstatistik erhält keinen privaten Inhalt.
+
+**Ablage/Abnahme:** Endliche temporäre Exportablage ist kein dauerhaftes Lernoriginal und keine Fernlöschkontrolle über heruntergeladene Dateien. Ein teilweise fehlgeschlagener Export wird als Teilpaket mit Fehlerbericht bezeichnet; ein reimportierter Bericht löst weder neue Zustellung noch Rolle/Freigabe aus. Nachweisumfang und Darstellung sind über UI DE/FR/EN verständlich zu prüfen; es wird kein Übersetzungsdienst gewählt.

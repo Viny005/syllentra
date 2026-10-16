@@ -2,10 +2,10 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** D2 — Datentypen\
-**Version:** 0.2\
+**Version:** 0.3\
 **Stand:** 16.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
-**Bezugsstand:** Harmonisierung FE-01 bis FE-89 vom 16.10.2026; Ausgangs-HEAD `ace1d80e80245379beed02296c3c4dd184c8dd70`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1. Aktuelle Versionen siehe [Index](README.md).\
+**Bezugsstand:** S2-Abgleich vom 16.10.2026 auf `723af7fa1692f8dbaf888b694fa63806d7d5fc5f`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1; aktuelle Versionen im [Index](README.md).\
 **Methode:** Spezifikationsbaustein nach Johannes Siedersleben, fachlich vergleichbar mit der [Herold-D2-Referenz](https://github.com/carstenlucke/herold/blob/main/docs/spec/D2-datentypen.md).
 
 > **Freigabegrenze:** FE-01 bis FE-17 sind bestätigte Entscheidungen. Die Ergänzung über eine abgeschirmte, nach Hochschule aufklappbare Notenansicht ist vom Nutzer ausdrücklich vorgegeben. FE-43 bestätigt den öffentlichen V1-Umfang (Auswahl oder alle eigenen öffentlichen Repositories) und freiwillige offizielle Kontoverbindung; dies ist keine Behauptung einer fertig implementierten oder technisch verfügbaren Integration. D1 und F2 werden durch D2 nicht stillschweigend umnummeriert oder umgeschrieben.
@@ -1434,6 +1434,8 @@ Die bestehenden Kennungen `CFG-01`; `CFG-02`; `CFG-03`; `CFG-04`; `CFG-05`; `CFG
 
 ### D2.11.1 Verweise und dokumentübergreifender Prüfstand
 
+**Historischer Quellenstand des ursprünglichen D2-Entwurfs:** Die folgenden Versionszahlen und Bestandsumfänge dokumentieren die damalige Grundlage; aktuelle Fassungen und S2-Ergänzungen stehen im Index und im abschließenden Nachtrag.
+
 - [P1 — Ziele und Rahmenbedingungen](P1-ziele-rahmenbedingungen.md), v0.5: freiwilliger Einstieg, Schutz persönlicher Daten, Kosten und Kalendergrenzen.
 - [P2 — Architekturüberblick](P2-architekturueberblick.md), v0.6, insbesondere P2.5 und P2.6.2: CFG-01 bis CFG-17 und DK-01 bis DK-12.
 - [F1 — Geschäftsprozesse](F1-geschaeftsprozesse.md), v0.2: GP-01 bis GP-15 und ursprüngliche FE-01 bis FE-06.
@@ -1457,7 +1459,7 @@ Die bestehenden Kennungen `CFG-01`; `CFG-02`; `CFG-03`; `CFG-04`; `CFG-05`; `CFG
 | Ein globaler Messstand und Euro-Einheit zu eng | Messstand je Kennzahl, Geldwerte mit Währung und zeitbezogener Grundlage; keine erfundenen feinen Perioden aus gröberen Summen. |
 | GitHub-Ausschnitt könnte als festgelegte Produktgrenze gelesen werden | Historischer V1-Vorschlag durch FE-43 ersetzt; bestätigter öffentlicher Scope bei weiterhin ausstehender technischer Rechteprüfung; keine zugesagten privaten Repositories, weitere Plattformen oder aktuellen API-Rechte. Quellenabruf blockiert, spätere offizielle Prüfung erforderlich. |
 
-**Freigabestatus:** Zur Prüfung — D2 v0.2. Git-Commit und Push ersetzen keine gemeinsame fachliche Abnahme.
+**Freigabestatus:** Zur Prüfung durch den Projektinhaber — D2 v0.3. Git-Commit und Push ersetzen keine gemeinsame fachliche Abnahme.
 
 
 ## D2.12 Ergänzende Datentypen für Konten und sichere Lebenszyklen
@@ -1679,3 +1681,57 @@ Die folgenden Wertbereiche sind fachliche Typen, keine ausgewählten Kryptoverfa
 ### Übernahme der ergänzten Integritätsregeln
 
 INV-26 bis INV-31 aus [D1](D1-datenmodell.md) gelten unverändert auch für die neuen Datentypen. DT-57 wird im folgenden Änderungsvermerk auf FE-43 präzisiert: Scope `ausgewaehlte_oeffentliche_repositories` oder `alle_eigenen_oeffentlichen_repositories`, freiwilliger offizieller Kontobezug, V1 ausschließlich lesend; private Quellen und automatische Scoperweiterung sind ausgeschlossen.
+
+## D2.13 Fachliche Typen für portable Pakete und Migrationszustände
+
+[S2](S2-datenmigration.md) definiert Semantik; die folgenden fünf Typen füllen die Manifest-/Delta-/Lauflücke, ohne binäre Formate, Kryptoverfahren oder Parserbibliotheken zu wählen. Kontobeziehungen, Schutz DT-77, Schlüsselverfügbarkeit DT-78, Freigabe DT-79, Identität DT-01 und Quellrevision DT-76 gelten zusätzlich. Aktive Secrets und Sicherheitsprivilegien sind keine Pakettypen.
+
+### DT-86 — ExportmanifestDT
+
+**Art / Verwendung:** Fachliche Struktur für DM-72 und AF-36.
+
+**Felder:** Paketkennung, Export-/Fachschemafassung, unterstütztes Formatprofil, Eigentumshinweis ohne Liveberechtigung, Erstellzeit, Stichtags-/Konsistenzbasis, gewählte Bereiche, 0..n Inhaltspositionen mit relativem Pfad/Typ/Größe/Integritätsmerkmal/Quellrevision/Schutz/Abhängigkeit, Ausschlüsse/Fehlstellen und Prüfergebnis.
+
+**Validität/Vergleich:** Nur unterstützte Schemafassungen; Pfade innerhalb der erlaubten Paketgrenze. Keine ausführbaren Inhalte oder Geheimnisse als Schemafelder. Fehlender obligatorischer Integritäts-/Versionsnachweis sperrt den betroffenen Inhalt; Integrität beweist nicht Berechtigung. Leere Bestandsliste kann gültig sein, „vollständig“ nur relativ zum erklärten zulässigen Umfang und ohne unbenannte Fehlstellen.
+
+**Prüfbeispiel:** Ein Paket mit `../`-Pfad oder Sessiontokenposition wird nicht als gültiger persönlicher Import freigegeben.
+
+### DT-87 — MigrationszustandDT
+
+**Art / Verwendung:** Fachlicher Zustandsbereich DM-73.
+
+**Werte:** `entwurf`, `pruefung`, `vorschau_bereit`, `bestaetigung_ausstehend`, `ausfuehrung`, `erfolgreich`, `teilweise_erfolgreich`, `abgebrochen`, `pausiert`, `fehlgeschlagen`, `nicht_pruefbar`, `wirkung_unbekannt`.
+
+**Regeln:** Erlaubter Übergang benötigt aktuelle Rechte und geprüfte Vergleichsgrundlage. Erfolgreich nur nach belegtem Abschluss der bestätigten zulässigen Auswahl; Teilwirkung nicht als vollständigen Erfolg darstellen. Bei unbekannter Wirkung vor Wiederholung abgleichen. Ein Abbruch nach Teilwirkung ist kein vollständiges Zurückrollen. Ablauf/Widerruf sperrt neue Wirkungen unabhängig vom angezeigten Status.
+
+**Prüfbeispiel:** Nach Zeitüberschreitung bleibt `wirkung_unbekannt`, bis der tatsächliche Zielstand geklärt ist; kein blinder Neustart.
+
+### DT-88 — MigrationsdeltaDT
+
+**Art / Verwendung:** Versionierte Struktur für DM-73/DM-74 und DLG-65.
+
+**Felder/Werte:** Auswahl-/Vorschaufassung, Quell-/Zielgrundlage, Prüfzeit, 0..n Objektunterschiede mit Klasse `neu`, `identisch`, `aenderbar`, `konflikt`, `ausgeschlossen`, `unsicher`, `fehlende_abhaengigkeit`; pro Unterschied erlaubte Strategie `behalten`, `quellinhalt_annehmen`, `ueberspringen`, `getrennte_kopie`, `manuell_zusammenfuehren`, notwendige Bestätigung, Grund und Schutz.
+
+**Regeln:** Kopie nur für rechtmäßig kopierbaren Inhalt und niemals zur Umgehung endgültiger Löschung oder Rechte. Quellen-/Zielrevision und manuelle Sitzungs-/Evidenzbindung erhalten. Geänderte Vergleichsgrundlage macht die alte Entscheidung nicht zur Freigabe neuer Inhalte. Teilunterschiede unterliegen ihren jeweiligen Daten-/Notenschutzrechten.
+
+**Prüfbeispiel:** Altes Lernprofil trifft jüngere belegte Leistung: jüngere Evidenz bleibt; Konflikt und Herkunft werden ausgewiesen.
+
+### DT-89 — MigrationswirkungDT
+
+**Art / Verwendung:** Fachliche Struktur für DM-74.
+
+**Felder:** Wirkungseinheit, tatsächlicher Eigentümer, Quellidentität/-revision, Ziel-/Basisrevision, konkrete bestätigte Auswahl, Duplikatvergleich, Status `offen`/`angewandt`/`ausgelassen`/`gesperrt`/`fehlgeschlagen`/`wirkung_unbekannt`, Nachweiszeit, Fehler-/Reststatus.
+
+**Regeln:** Gleiche fachliche Wirkung nach Wiederaufnahme nicht verdoppeln; Auftragskennung allein beweist keine Identität beliebiger anderer Inhalte. Unklarer Ausgang zuerst prüfen. Neuer Korrekturauftrag erhält eigenen Bezug und löscht keine zwischenzeitliche Evidenz. Fehlende Nachweise nicht als Erfolg interpretieren.
+
+**Prüfbeispiel:** Erneuter Klick nach bereits angewandtem Teilimport gibt denselben tatsächlichen Ergebnisnachweis zurück statt einer zweiten Anlage.
+
+### DT-90 — MigrationswegDT
+
+**Art / Verwendung:** Enumeration für DM-73, BAT-24/BAT-25 und S2-Vertragswahl.
+
+**Werte:** `EXP` persönlicher Export; `IMP` eigener Syllentra-Reimport; `ACA` unterstützter akademischer Import; `DEV` eigener Geräteabgleich; `BAK` interne Sicherung/Restore; `UPG` interner Versions-/Schemawechsel; `MOV` EU-Betriebs-/Speicherwechsel.
+
+**Regeln:** Weg bestimmt nicht allein Recht oder aktuelle Freigabe. BAK unterscheidet persönlichen Restore und gesondert genehmigten Betriebsfall. UPG/MOV sind keine normalen Nutzerimporte. Unbekannter Weg gesperrt statt als allgemeiner Konnektor ausgeführt.
+
+**Prüfbeispiel:** Ein Nutzerpaket mit behauptetem Weg MOV erhält dadurch keinen Zugriff auf eine betriebliche Mehrkontensicherung.

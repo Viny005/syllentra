@@ -2,11 +2,11 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** F1 — Geschäftsprozesse\
-**Version:** 0.3\
+**Version:** 0.4\
 **Stand:** 16.10.2026\
-**Status:** Zur Prüfung\
+**Status:** Zur Prüfung durch den Projektinhaber\
 **Spezifikationsmethode:** Bausteine nach Johannes Siedersleben\
-**Geltungsbereich:** Fachlicher Zielumfang der ersten Produktversion (V1), auf Grundlage von P1 Version 0.6 und P2 Version 0.7
+**Geltungsbereich:** Fachlicher Zielumfang der ersten Produktversion (V1), auf Grundlage von P1 Version 0.7 und P2 Version 0.8
 
 ---
 
@@ -636,3 +636,11 @@ Die Entscheidungen FE-27 bis FE-89 ergänzen den Bestand; mit Ausnahme von **FE-
 | GP-15 | Freiwilliger enger Support, sensible Geräteschlüssel, pro Vorgang erlaubte Cloudanalyse, verschlüsselte EU-Sicherung, Differenzrestore, Papierkorb, KI-Löschbestätigung und Konto-Pause/Löschung; administrative Sperre ist gesondert. |
 
 **Akteure und Ende:** Studierende sind jeweils eigene Dateninhaber. Administratoren führen ausschließlich zugewiesene Verwaltungsarbeit aus; Support endet bei Ablauf/Widerruf. Externe Dienste besitzen keine autonome Entscheidungsbefugnis. Produktiv verfügbares Ergebnis, fachliche Bestätigung, tatsächliche Ausführung und Prüfstatus bleiben unterscheidbar.
+
+## F1.12 Portabilität als begrenzte Vertiefung von GP-15
+
+GP-15 und [S2](S2-datenmigration.md) verbinden Datenkontrolle mit Wiederverwendbarkeit: Der verifizierte Kontoinhaber bestimmt einen vollständigen/selektiven Exportumfang, prüft Schutz und tatsächliche Abdeckung und erhält ein versioniertes Paket. Ein späterer eigener Reimport (UC-64) prüft Format, Herkunft, Eigentum, Rechte und Löschgrenzen, zeigt eine aktuelle Differenzvorschau und übernimmt nur konkret bestätigte Teilwirkungen. Ergebnis und verbleibende Fehler bleiben privat nachvollziehbar; Unterbrechung führt nicht zur doppelten Wirkung. Ein leeres eigenes Konto kann einen wahrheitsgemäß leeren Export erhalten.
+
+UC-60 bleibt für eigene Sicherung/Restore zuständig; UC-49 für Export. Die operative Ausführung von Schema-/Betriebswechseln ist ein ausdrücklich autorisierter Betriebsprozess nach S2.10 und später S3, keine von GP-14 automatisch erlaubte einfache Konfigurationsänderung und keine Inhaltsfreigabe an Administratoren. GP-01 bis GP-15 behalten ihre Identität.
+
+**Abnahmebeispiel:** Ein Nutzer exportiert Kurs A. Bei späterem Reimport bleibt eine inzwischen manuell verschobene Sitzung erhalten, bis genau eine aktuelle abweichende Fassung ausdrücklich bestätigt wird; jüngere Lernleistungen und endgültige Löschungen werden niemals durch den alten Paketstand zurückgesetzt.

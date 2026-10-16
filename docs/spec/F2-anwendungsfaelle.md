@@ -2,11 +2,11 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** F2 — Anwendungsfälle\
-**Version:** 0.2\
+**Version:** 0.3\
 **Stand:** 16.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Spezifikationsmethode:** Bausteine nach Johannes Siedersleben\
-**Bezugsstand:** Harmonisierung FE-01 bis FE-89 vom 16.10.2026; Ausgangs-HEAD `ace1d80e80245379beed02296c3c4dd184c8dd70`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1. Aktuelle Versionen siehe [Index](README.md).\
+**Bezugsstand:** S2-Abgleich vom 16.10.2026 auf `723af7fa1692f8dbaf888b694fa63806d7d5fc5f`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1; aktuelle Versionen im [Index](README.md).\
 **Geltungsbereich:** Fachlicher Zielumfang der ersten Produktversion (V1). Dieses Dokument beschreibt noch keine implementierten Funktionen.
 
 ---
@@ -1599,7 +1599,7 @@ flowchart LR
 4. Syllentra erstellt den ausgewählten Export ohne Zugangsdaten und mit nachvollziehbaren Original- und Ableitungsbezügen.
 5. Der Nutzer erhält das Ergebnis mit Hinweisen auf nicht verfügbare Daten und kann weitere Korrekturen oder UC-50 veranlassen.
 
-**Alternative Szenarien:** Reine Einsicht verändert keine Inhalte. Der Nutzer kann nur einen Teil exportieren; Formatdetails werden in D2/B3/N2 festgelegt und nicht als bereits implementiert behauptet.
+**Alternative Szenarien:** Reine Einsicht verändert keine Inhalte. Vollständiger oder selektiver Export folgt [S2.5](S2-datenmigration.md#s25-fachlicher-exportvertrag) mit Manifest DM-72/DT-86, Stichtagsbasis und Abdeckungsbericht OUT-08. Ein leerer zulässiger Auswahlbestand wird als leer ausgewiesen. Eigener Reimport ist UC-64, keine automatische Wirkung eines Downloads. Konkrete Formate/Kryptoverfahren bleiben technisch zu spezifizieren.
 
 **Fehler- und Schutzfälle:** Ein unvollständiger oder fehlgeschlagener Export wird nicht als vollständige Datenkopie ausgegeben. Ein entferntes Original wird nicht aus einer Zusammenfassung als authentischer Wortlaut rekonstruiert.
 
@@ -1973,7 +1973,7 @@ Die neuen Kennungen ergänzen UC-01 bis UC-50 ohne Umnummerierung. Gemeinsame Vo
 | Vorbedingung | Gemeinsame Zugangsgrenzen; bei Registrierung noch kein Anwendungsdatenzugang, bei Administration verpflichtende MFA |
 | Erfolg | Nur der bestätigte zulässige Umfang wirkt; Ergebnis, Quellenstand und Ausführungsstatus sind sichtbar |
 
-**Hauptszenario:** Automatische verschlüsselte EU-Sicherungen und freiwillige manuelle Exporte stehen getrennt von operativer Synchronisation. Bei Wiederherstellung wählt der Nutzer eine eigene Sicherung, sieht vollständige oder selektive Differenzen und bestätigt die erlaubte Übernahme bevorzugt als neue Version.
+**Hauptszenario:** Automatische verschlüsselte EU-Sicherungen und freiwillige manuelle Exporte stehen getrennt von operativer Synchronisation. Bei Wiederherstellung wählt der Nutzer eine eigene tatsächlich verfügbare und berechtigt zugängliche Sicherung, sieht vollständige oder selektive Differenzen und bestätigt die erlaubte Übernahme bevorzugt als neue Version. Die bloße Existenz eines Betriebsbackups beweist keine sofort verfügbare Selbstwiederherstellung. [S2.7](S2-datenmigration.md#s27-löschung-papierkorb-backups-und-nichtwiederbelebung) verlangt aktuellen Lösch-/Entzugskontrollstand vor Freigabe. Persönlicher Paket-Reimport läuft über UC-64, betrieblicher Disaster Restore über einen gesondert genehmigten Betriebsweg.
 
 **Alternativen, Fehler und Schutz:** Neuere Daten und endgültige Löschmarkierungen werden berücksichtigt. Fremde Konten sind ausgeschlossen. Endliche Retention und tatsächliche Restfristen werden ausgewiesen; kein Wiederherstellen gelöschter Secrets oder Widerrufe. Abbruch vor bestätigter Wirkung erhält den Ausgangsbestand; nach unklarem Ausgang wird zunächst die tatsächliche Wirkung geprüft.
 
@@ -2026,3 +2026,33 @@ Die neuen Kennungen ergänzen UC-01 bis UC-50 ohne Umnummerierung. Gemeinsame Vo
 **Alternativen, Fehler und Schutz:** Kontosperre ist weder freiwillige Pause noch Löschung. Sperrbefugnis gibt keinen Inhaltseinblick und keine Administratorverwaltung. Die Behandlung des einzigen Super Admin wird nicht eigenmächtig durch eine zweite Eigentümerrolle gelöst. Abbruch vor bestätigter Wirkung erhält den Ausgangsbestand; nach unklarem Ausgang wird zunächst die tatsächliche Wirkung geprüft.
 
 **Abnahmebeispiel:** Ein nur für Branding berechtigter Administrator darf kein Konto sperren; eine zulässige Sperre löscht keine Lernhistorie.
+
+## F2.15 Kontrollierter eigener Paket-Reimport
+
+### UC-64 — Eigenen Syllentra-Export kontrolliert reimportieren
+
+| Merkmal | Festlegung |
+|---|---|
+| Ziel / Prozess | Eigene kompatible Inhalte nach Differenzprüfung wiederverwenden; GP-15, S2 IMP |
+| Akteur / Auslöser | Verifizierter Kontoinhaber wählt bewusst einen eigenen Export; keine automatische Wirkung durch Dateiauswahl |
+| Entscheidungen / Vertrag | MIG-05 bis MIG-14, MIG-17 bis MIG-28; [S2.6](S2-datenmigration.md#s26-fachlicher-import-restore-vertrag) |
+| Vorbedingungen | Aktuelle Sitzung/Geräte-/Objekt-/Funktionsrechte, starker eigener Kontobezug, unterstütztes Formatprofil, Quota und ggf. berechtigter Schlüssel; Paketbesitz allein genügt nicht |
+| Daten / Verarbeitung / Dialog | DM-50, DM-68, DM-72 bis DM-74; AF-28, AF-34, AF-36; DLG-65, BAT-24 |
+| Erfolg | Ausschließlich konkret bestätigte zulässige Inhalte wirken; neue, unveränderte, ausgelassene, gesperrte und fehlgeschlagene Teilresultate sind ausgewiesen |
+
+**Hauptszenario:**
+
+1. Nutzer wählt Paket, Zielbereich und unterstützten Umfang; Syllentra isoliert Eingabe ohne Ausführung eingebetteter Anweisungen.
+2. Format/Manifest/Integrität, Abhängigkeiten, Quellenrevisionen, Eigentum, aktueller Schutz, Lösch-/Entzugskontrollstand und Schlüssel prüfen.
+3. Versionierte Vorschau zeigt neue/identische/konfliktbehaftete/ausgeschlossene/unsichere Inhalte, Quellenlücken und Quoten. Manuelle Terminverschiebungen und ältere Lernprofile werden ausdrücklich hervorgehoben.
+4. Nutzer wählt zulässige Teilwirkungen und Konfliktentscheidungen; er bestätigt exakt diese aktuelle Vorschaufassung oder verwirft sie.
+5. Direkt vor Wirkung werden Rechte, Löschstatus, Schutz und Zielrevision erneut geprüft. Geänderte Ziele verlangen neue Bewertung und gegebenenfalls aktuelle Bestätigung.
+6. Zulässige fachliche Wirkungseinheiten ausführen, tatsächlichen Fortschritt und privaten Ergebnisbericht bereitstellen. Wiederholung oder Wiederaufnahme gleicht bereits wirksame Schritte ab.
+
+**Alternativen:** Selektive Übernahme, bestehende Fassung behalten, zulässige neue Inhaltsversion, begründetes Überspringen oder explizite inhaltliche Zusammenführung. Getrennte Kopie nur bei kopierfähigem Inhalt und ohne Umgehung endgültiger Löschung. Abbruch vor Bestätigung bewirkt keine Fachänderung; Abbruch danach weist tatsächliche Teilergebnisse aus. UC-60 ist keine Voraussetzung jedes Reimports.
+
+**Fehler und Grenzen:** Keine Übernahme aus fremden Konten. Ein eigener Altaccount-/Neukontoimport bleibt bis zum starken Eigentums-/Recoveryverfahren O-S2-09 gesperrt. Keine Aktivierung importierter Rollen, Sitzungen, Gerätezulassung, Support- oder Integrationsrechte. Kein automatischer Nachricht-/Übungsstart. Endgültige Löschungen, manuelle Sitzungsbindung und jüngere Evidenz werden nicht durch einen alten Paketstand aufgehoben. Datenübernahme erteilt keine Cloud-Klartextanalysefreigabe.
+
+**Positive Abnahme:** Derselbe bestätigte eigene Paketbestand wird erneut eingelesen: keine doppelte Anlage; Ergebnis enthält Wiedererkennung und begründete Auslassungen.
+
+**Negative Abnahme:** Zwischen Vorschau und Bestätigung wird ein Ziel endgültig gelöscht oder manuell umterminiert. Die veraltete Vorschau kann weder das Ziel wiederbeleben noch die Sitzung ungefragt verschieben; erforderliche neue Inhaltsentscheidung bleibt offen.

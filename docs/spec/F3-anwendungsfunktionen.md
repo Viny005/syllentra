@@ -2,11 +2,11 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** F3 — Anwendungsfunktionen\
-**Version:** 0.2\
+**Version:** 0.3\
 **Stand:** 16.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Spezifikationsmethode:** Bausteine nach Johannes Siedersleben\
-**Bezugsstand:** Harmonisierung FE-01 bis FE-89 vom 16.10.2026; Ausgangs-HEAD `ace1d80e80245379beed02296c3c4dd184c8dd70`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1. Aktuelle Versionen siehe [Index](README.md).\
+**Bezugsstand:** S2-Abgleich vom 16.10.2026 auf `723af7fa1692f8dbaf888b694fa63806d7d5fc5f`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1; aktuelle Versionen im [Index](README.md).\
 **Fachlich bestätigt:** FE-01 bis FE-11; FE-10 und FE-11 werden mit diesem Entwurf erstmals in F3 beschrieben.
 
 ## F3.1 Zweck, Abgrenzung und Begriffe
@@ -983,7 +983,7 @@ Diese überarbeitete Fassung enthält 27 algorithmisch begründete Anwendungsfun
 
 Zur späteren Detaillierung in D1/D2, N1/N2, S1, B1 und Architektur bleiben insbesondere offen: konkrete erlaubte Anbieteranbindungen und ihr jeweiliger Gratis-/Abo-Status; überprüfbare Qualitätskriterien und Mindestleistung; Gebühren- und Quotalimits einschließlich unbekannter Provider-Verbrauchszustände; genaue Speicher-, Export- und Aufbewahrungsformate; Löschfristen und Backupprozesse; fachliche Kardinalitäten; Synchronisationskonfliktregeln und Authentisierungsdetails. Diese offenen Punkte berechtigen **nicht**, FE-01 bis FE-11 still umzudeuten oder Ereignisse in persönlichen externen Kalendern anzulegen, zu ändern oder zu löschen.
 
-**Freigabestatus:** Zur Prüfung durch den Projektinhaber. Die Aufnahme dieser Dokumentfassung in die Spezifikationsbranche ist keine fachliche Freigabe und kein Nachweis implementierter Funktionen. P1, P2, F1 und F2 werden durch diese Überarbeitung nicht geändert.
+**Freigabestatus:** Zur Prüfung durch den Projektinhaber. Die Aufnahme dieser Dokumentfassung in die Spezifikationsbranche ist keine fachliche Freigabe und kein Nachweis implementierter Funktionen. Die ursprüngliche F3-Einzellieferung änderte P1/P2/F1/F2 nicht; die aktuelle autorisierte S2-Harmonisierung betrifft die in E3 ausgewiesenen Bausteine.
 
 
 ## F3.11 Ergänzte fachliche Prüf- und Auswahlfunktionen
@@ -1087,3 +1087,28 @@ Diese Funktionen beschreiben fachliche Entscheidungen, keine Kryptographie, Midd
 **Regel und Ergebnis:** Manuell als Standard; Automatik nur pro Verbindung opt-in. Vor jedem begrenzten Retry Rechte, Kosten und tatsächliche frühere Wirkung prüfen; private minimale Historie führen. Das Ergebnis ist zulässig, gesperrt oder prüfbedürftig mit nachvollziehbarem Grund; die Funktion selbst erzeugt keine externe Nebenwirkung.
 
 **Abnahmebeispiel:** Widerruf beendet geplante Läufe; unbekannter Erfolg wird nicht blind erneut ausgeführt.
+
+## F3.12 Fachliche Paket- und Differenzprüfung für S2
+
+### AF-36 — Portabilitätspaket und Importdifferenzen prüfen
+
+**Zweck / Aufrufer:** UC-49, UC-60, UC-64 und BAT-24/25; [S2.5/S2.6](S2-datenmigration.md). AF-26 grenzt Umfang/Folgen ab, AF-34 filtert Lösch-/Entzugsgrenzen; diese Funktion ergänzt Schema-/Manifestabbildung und das konkrete fachliche Delta.
+
+**Eingaben:** Eigentumskontext, unterstütztes Paket-/Fachschema, Manifest DT-86, ausgewählte Inhaltsbereiche, belegte Quellrevisionen, aktueller Ziel- und Kontrollstand, Schlüsselverfügbarkeit, Schutz und Quota.
+
+**Ausgabe:** Versionierter exportierbarer Bestandsbericht oder Importdelta DT-88 mit Zuordnung neu/identisch/änderbar/konfliktbehaftet/ausgeschlossen/unsicher/fehlende Abhängigkeit; notwendige Bestätigung und begründete Auslassungen. Keine Nebenwirkung durch die Prüfung selbst.
+
+**Fachliche Regeln:**
+
+1. Nur dokumentiertes kompatibles Formatprofil auswerten; unbekannte Felder/Enumerationen als unverarbeitbar ausweisen, niemals als Code, Autorisierung oder Löschauftrag interpretieren.
+2. Integritätsmerkmale und Mengen prüfen, ohne daraus automatisch Eigentum oder Inhaltsrecht abzuleiten. Gleicher Dateiname/Hash ist kein Kontonachweis.
+3. Jede Referenz im eigenen Kontext auflösen oder als fehlend kennzeichnen; historische Zitate bleiben an ihrer Originalrevision.
+4. Exportable Inhalte von ausgeschlossenen Geheimnissen, Sicherheits-/Rollenobjekten und Fremddaten trennen; importierte Historie bleibt inaktiv.
+5. AF-28/AF-34 anwenden, Schutzvererbung und aktuelle Quota prüfen. Endgültige Löschung lässt sich auch nicht als neue Kopie umgehen.
+6. Quell-/Zielrevisionen gegenüberstellen; jüngere Evidenz und manuelle/gesperrte Sitzungen erhalten. Keine KI-Schätzung wird zur amtlichen Note.
+7. Ergebnisfassung mit tatsächlicher Auswahl und Vergleichsgrundlage binden. Ändert sich die Grundlage, Ergebnis vor Wirkung neu prüfen und relevante Entscheidung erneut einholen.
+8. Nur tatsächlich erfolgreiche Wirkungen als angewandt kennzeichnen; fachliche Wiedererkennung von erneutem Jobstart unterscheiden.
+
+**Prüfbeispiele:** Ein unbekanntes Feld `super_admin=true` ist nicht übernehmbar. Ein Paket ohne Quellseite erhält eine Quellenlücke statt erfundener Seiten-/Zeitpräzision. Gleiche Paketdatei nach endgültiger Originallöschung bleibt für dieses Ziel gesperrt. Ein Export ohne passende Schlüssel wird nicht als entschlüsselt vollständig ausgewiesen.
+
+**Abgrenzung:** Konkretes Serialisierungsschema, Parser, Signatur/Kryptographie, Speichermechanismus und technische Transaktionsstrategie bleiben N2/Architektur; AF-36 bestimmt fachliche Zulässigkeit und erwartetes Ergebnis.

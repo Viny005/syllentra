@@ -2,11 +2,11 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** D1 — Datenmodell\
-**Version:** 0.2\
+**Version:** 0.3\
 **Stand:** 16.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Spezifikationsmethode:** Bausteine nach Johannes Siedersleben\
-**Bezugsstand:** Harmonisierung FE-01 bis FE-89 vom 16.10.2026; Ausgangs-HEAD `ace1d80e80245379beed02296c3c4dd184c8dd70`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1. Aktuelle Versionen siehe [Index](README.md).
+**Bezugsstand:** S2-Abgleich vom 16.10.2026 auf `723af7fa1692f8dbaf888b694fa63806d7d5fc5f`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1; aktuelle Versionen im [Index](README.md).
 
 > **Freigabe:** FE-01 bis FE-14 sind bestätigte fachliche Entscheidungen; die dokumentübergreifende Abnahme dieses D1-Entwurfs steht noch aus. Dieses Dokument beschreibt **kein implementiertes Datenbankschema**, keinen fertigen Dienst und keine beschaffte Anbieterberechtigung.
 
@@ -828,7 +828,7 @@ Abgegrenzte Einsicht, Korrektur, Export- oder Löschhandlung samt bestätigtem W
 | **Wesentliche Attribute** | Kennung; Eigentümer; Handlungstyp; betroffene Objekte/Bezüge; Umfang; bestätigte Fassung [optional]; Ausführungsstand; externe Restpunkte [optional] |
 | **Wesentliche Bezüge** | DM-01, DM-20, DM-25, DM-33, DM-34, DM-49, DM-51 |
 | **Integrität und Grenzen** | Löschen von Original, Verknüpfung, Unterhaltung, Erinnerung und Änderungshistorie sind verschiedene Wirkungen. Wirkung in Backups/externen Systemen erst nach Nachweis als abgeschlossen deklarieren. |
-| **Eigentum und Kardinalität** | Genau ein DM-01; 1..n ausgewählte Objekte oder Bezüge und 0..n externe Restpunkte. |
+| **Eigentum und Kardinalität** | Genau ein DM-01; 1..n ausdrücklich gewählte Auswahlbereiche, daraus 0..n tatsächlich vorhandene Objekte/Bezüge und 0..n externe Restpunkte. Ein leerer zulässiger Export ist möglich. |
 | **Löschfolgen und Herkunftsgrenze** | Einsicht und bewusste direkte Korrektur verlangen keine künstliche zweite Bestätigung; sensible Löschungen brauchen bestätigten Umfang. Abschluss nur für tatsächlich ausgeführte Teile. |
 
 
@@ -1179,7 +1179,7 @@ Jeder Bereich wird über DM-48 und seine DM-49-Fassungen verwaltet. Feldwerte im
 | `B1 — Dialogspezifikation` | Sichtbare Bedienung von Versionen, Beziehungsverwaltung, zentralem Posteingang „Zu prüfen“, Erinnerungshistorie, Kostenübersicht und Löschfolgen. Datei noch geplant. |
 | `B2 — Batch` | Geplante Quellenprüfungen, zulässige Archivvorschlagsläufe, Kontingentaktualisierung und regelbasierte Bereinigung entbehrlicher Zwischenstände. Datei noch geplant. |
 | `S1 — Nachbarsysteme` | Anbieter-, Kalender-, Hochschul-, GitHub- und Gerätezugangsverfahren samt offizieller Rechteprüfung. Datei noch geplant. |
-| `S2 — Datenmigration` | Übernahme vorhandener Nutzerdaten, Versions- und Duplikaterkennung bei konkreten Formaten. Datei noch geplant. |
+| [S2 — Datenmigration](S2-datenmigration.md) | Versionierter persönlicher Export/Reimport, Vorschau, Duplikat-/Revisionsabgleich, sichere Betriebsüberführung und Wiederherstellung; konkrete Formate/Verfahren weiterhin nachweispflichtig. |
 | `N1 — Nichtfunktional` | Messbare Qualitäts- und Verfügbarkeitsziele, Synchronisationsleistungsfähigkeit, Sicherheit und Datenschutzanforderungen. Datei noch geplant. |
 | `N2 — Querschnittskonzepte` | Durchsetzung von Zugriffsschutz, Verschlüsselung, Datenminimierung, Löschfristen, Konflikterkennung, Protokollierungsgrenzen. Datei noch geplant. |
 | Architektur / Implementierung | Datenbankprodukt, relationale Tabellenschemata, Dokument-/Objektspeicher, Indexe, API-Design, konkrete Authentifizierungsmechanismen, Versionierungsverfahren, Server und Deployment. |
@@ -1474,3 +1474,37 @@ Die nachfolgenden Entitäten sind ein fachlicher Modellnachtrag. Alte DM-Kennung
 | INV-29 | Backend/Administration besitzen keine privaten Klartext-Dokumentenschlüssel; temporärer sensibler Cloudklartext benötigt eine konkrete Freigabe; Ableitungen erben Schutz. |
 | INV-30 | Externe Synchronisation ist manuell, sofern kein aktuelles verbindungsspezifisches Opt-in besteht; Widerruf sperrt auch Retries. |
 | INV-31 | Endgültige Löschung wird durch Backup, Offlinekopie, Versionshistorie und Konfigurationsrollback nicht rückgängig gemacht. |
+
+## D1.15 Fachliche Portabilitäts- und Laufnachweise für S2
+
+Die bestehende Datenkontrolle DM-50 und Sicherung/Restore DM-69/DM-70 bleiben erhalten. Eigener Reimport ist kein generischer Dateiimport und ein Paket ist kein bewusst dauerhaftes Lernoriginal DM-20. Die neuen Entitäten schließen die nachgewiesene Manifest-/Lauf-/Teilwirkungslücke aus [S2](S2-datenmigration.md); sie sind kein Datenbankschema.
+
+### DM-72 — Portabilitätspaket
+
+**Attribute:** Kennung, eindeutiger Eigentümer, Paketzweck, Export-/Fachschemafassung, Stichtags-/Konsistenzbasis, Auswahl, Manifest DT-86, tatsächliche Abdeckung, Schutz, Artefaktverweis, Erstell-/Ablauf-/Bereinigungsstand.
+
+**Beziehungen:** Genau ein DM-01; 0..n DM-50-Kontrollvorgänge; 0..n erlaubte Quellen-/Objektverweise einschließlich DM-20/DM-21; 0..n zugehörige persönliche DM-73-Läufe. Eine explizite Auswahl kann null vorhandene Inhalte ergeben. Ein Paket kann extern beim Nutzer vorliegen, ohne dauerhafte serverseitige Inhaltskopie.
+
+**Integrität/Lebenszyklus:** Nur eigene exportierbare Inhalte, tatsächliche Lücken sichtbar. Manifest ist kein Liveberechtigungsnachweis. Keine Passwort-Hashes, OTP, Tokens, MFA-Secrets, privaten Klartextschlüssel oder aktiven Privilegien. Temporäre Artefakte endlich aufbewahren und real bereinigen. Nach Ablauf kann ein minimaler zulässiger Nachweis ohne Paketinhalt verbleiben; ein Download ist kein Fernlöschversprechen. Sensibler Quellschutz bleibt erhalten.
+
+**Abnahme:** Leeres eigenes Konto erzeugt ein wahrheitsgemäß leeres Manifest. Das Manifest eines fremden Kontos erlaubt weder Paketanzeige noch Reimport.
+
+### DM-73 — Migrationslauf
+
+**Attribute:** Kennung, Weg DT-90, Zweck, Auftraggeber-/Rechtenachweis ohne Secrets, Quell-/Zielschemata und -revisionen, Auswahl, Vorschaufassung und Delta DT-88, Bestätigung/Planfreigabe, Zustand DT-87, Fortschritt, Fehlerklasse, zulässiger Retryrahmen, Ergebnis-/Ablaufzeit.
+
+**Beziehungen/Kardinalität:** Persönlicher EXP-/IMP-/ACA-/DEV-Lauf besitzt genau einen DM-01-Kontext; paketbezogen 0..1 DM-72 und 0..1 DM-50. Sicherungsbezogen 0..1 DM-69/DM-70. Jeder Lauf hat 0..n DM-74-Teilwirkungen. Ein interner UPG-/MOV-/Disaster-BAK-Betriebslauf ist gesondert administrativ autorisiert, kein fremdes persönliches Konto als Eigentumstrick; seine Metadaten sind kontenfrei/minimiert, seine fachlichen Teilwirkungen behalten jeweils ihren tatsächlichen Konto- und Objektbezug. Nutzer sehen ausschließlich ihre eigenen erlaubten Teilnachweise.
+
+**Integrität/Lebenszyklus:** Vorschau bindet aktuelle Auswahl und Vergleichsgrundlage; Nutzerbestätigung oder genehmigter Betriebsplan vor Wirkung. Kontrolle und Wiederaufnahme dürfen keine Konto-, Schlüssel- oder Rollenrechte aus dem Paket ableiten. Zustandsfortschritt und Erfolg folgen tatsächlicher Wirkung; keine unbekannte Wirkung als Fehler oder Erfolg erfinden. Historie endlich, geschützt und ohne private Vollinhalte.
+
+**Abnahme:** Konto B erhält keine Metadaten zu As Lauf. Unterbrochener Lauf kehrt nur nach neuer Rechte-/Lösch-/Kostenprüfung zu sicher fortsetzbaren offenen Teilwirkungen zurück.
+
+### DM-74 — MigrationsTeilwirkung
+
+**Attribute:** Kennung, Laufbezug, betroffener tatsächlicher Eigentümer, Quell-/Zielobjekt, Basis-/Quell-/Zielrevision, Inhalts-/Abhängigkeitsbezug, vorgeschlagene Aktion, Konfliktwahl, Schutz, Entscheidungsfassung, Duplikatvergleich, Zustand DT-89, nachgewiesene Wirkung, Fehler-/Reststatus.
+
+**Beziehungen:** Genau ein DM-73; eigene tatsächliche Quell-/Zielobjekte 0..n je Seite, unbekannte/fehlende Bezüge ausdrücklich markiert. Bezüge zu Vorschlägen DM-39 bis DM-42 optional, sofern ein echter bestätigungspflichtiger Vorschlag vorliegt; keine künstliche Verdoppelung jedes Exportauftrags. Keine fremde Objektfreigabe durch gemeinsamen Betriebslauf.
+
+**Integrität/Lebenszyklus:** Fachliche Einheit ist entweder nachweisbar angewandt, offen, ausgelassen, gesperrt, fehlgeschlagen oder unklar. Bestätigte Einheit bleibt an Zielrevision gebunden; idempotente Fortsetzung berücksichtigt bereits erfolgte Wirkung. Ein späterer Korrekturvorgang ist eine neue autorisierte Wirkung, kein pauschales Undo jüngerer Fortschritte. Endgültig gelöschte Inhalte sind weder als Kopie noch im Verlauf rekonstruierbar.
+
+**Abnahme:** Timeout nach bereits angewandter Einheit führt zum Wirkungsabgleich; dieselbe Einheit erzeugt nach Wiederaufnahme kein zweites Dokument und keine erneute Nachricht.
