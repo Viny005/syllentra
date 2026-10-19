@@ -40,7 +40,7 @@ Hinweis: Diese Leseanleitung ist im README.md des Spezifikationsverzeichnisses i
 | [N1](N1-nichtfunktional.md) | 0.3 | Begrenzter Folgeentwurf: Qualitätsanforderungen und offene Mess-/Nachweisaufgaben. Zur Prüfung. |
 | [N2](N2-querschnittskonzepte.md) | 0.3 | Begrenzter Konzeptentwurf: Konten, Rechte, Schutz, Schlüssel, Audit, Löschung. Zur Prüfung. |
 | [E2](E2-glossar.md) | 0.3 | Glossar mit fachlichen Begriffsgrenzen. Zur Prüfung. |
-| [E3](E3-pruefnachweis.md) | 0.3 | Änderungsmatrix, Kennungsbestand und tatsächliche Dokumentationsprüfungen. Zur Prüfung. |
+| [E3](E3-pruefnachweis.md) | 0.4 | Änderungsmatrix, Kennungsbestand und tatsächliche Dokumentationsprüfungen. Zur Prüfung. |
 
 E1 ist als Leseanleitung in diesem README enthalten und bleibt mit dem Index zur Prüfung. [S2 — Datenmigration](S2-datenmigration.md) ist zur Prüfung ausgearbeitet. **S3 — Inbetriebnahme** bleibt geplant, ohne Link auf eine fehlende Datei; S3 übernimmt sicheren Betriebsstart und den Bootstrap des einzigen Super Admin. Die vollständige Harmonisierung von DEC-V1-01 bis DEC-V1-25 bleibt ein gesonderter Vorgang; S2 berücksichtigt ihre Daten-/Schutzgrenzen, ohne neue Lernalgorithmen oder UI-Funktionen vollständig einzuführen. Die technische Architektur wird separat erarbeitet.
 

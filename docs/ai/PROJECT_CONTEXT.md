@@ -1,12 +1,12 @@
 # Syllentra AI — überprüfter Projektkontext
 
-**Version:** 0.1 · **Stand:** 19.10.2026 · **Status:** Zur Prüfung durch den Projektinhaber
+**Version:** 0.2 · **Stand:** 19.10.2026 · **Status:** Zur Prüfung durch den Projektinhaber
 
 ## Git-Snapshot und Geltung
 
 Repository: `Viny005/syllentra` — <https://github.com/Viny005/syllentra>.
-Fachlicher Ausgangsbranch: `docs/spec/p1-p2-mobile-workspaces`, PR [#1](https://github.com/Viny005/syllentra/pull/1).
-Am 19.10.2026 lokal und per Remote-Ref überprüfter Ausgangscommit: `0676f791c858765a005a32e2af8c8442eff9712e` (`docs(spec): integrate adaptive learning and study management decisions`). Arbeitsbaum vor PACE sauber. PACE-Arbeitsbranch: `chore/pace-workflow`, auf diesem Stand angelegt; PR-Ziel ist ausschließlich der Spezifikationsbranch. Dieser Snapshot bezeichnet die Ausgangsbasis, nicht einen dauerhaft aktuellen HEAD; bei jeder Aufgabe neu prüfen. PR-Metadatenzugriff war zuvor mit HTTP 403 beschränkt; ein Git-Ref belegt keinen offenen PR-Status.
+Aktueller Arbeitsbranch: `docs/spec/p1-p2-mobile-workspaces`, zugeordnet zu [PR #1](https://github.com/Viny005/syllentra/pull/1).
+Am 19.10.2026 lokal und per Remote-Ref überprüfter Ausgangscommit der redaktionellen Bereinigung: `39261a5816a99f7c10c79344e5a1adc03b685d49`. Er enthält die PACE-Einführung aus Commit `abcfe13d1dd73fc4c5228821664f36b28ce6e7ba` über den Merge von [PR #2](https://github.com/Viny005/syllentra/pull/2); diese Einführung ist abgeschlossen. Der Arbeitsbaum war vor der Bereinigung sauber. Dieser Snapshot bezeichnet die überprüfte Ausgangsbasis, keinen dauerhaft aktuellen HEAD; bei jeder Aufgabe neu prüfen. Ein Git-Ref bestätigt den Inhalt, nicht allein den aktuellen PR-Status.
 
 ## Ziel und Aufbau
 
@@ -45,7 +45,7 @@ Die Zusammenfassung ersetzt keine Primärquelle: S1.18.1 enthält **89 FE, davon
 
 **Architektur:** ADR-Konvention vorhanden, keine finale Framework-, Datenbank-, Hostinganbieter- oder KI-Modellwahl. S3 ist geplant und nicht ausgearbeitet. Zentrale EU-Cloud ist fachlicher Rahmen, kein ausgewählter Anbieter.
 
-**Entwicklung und Tests:** Am überprüften Ausgangsstand ausschließlich Dokumentation und `.gitignore`, kein Anwendungscode, keine App-Testpipeline, keine implementierten oder getesteten Produktfunktionen. E3 dokumentiert frühere Dokumentprüfungen; sie ersetzen keine neuen Prüfungen. Die PACE-Mission prüft Dokumentation und unveränderte Spezifikation, keine Authentisierung, Konnektoren oder Laufzeitfunktionen.
+**Entwicklung und Tests:** Am überprüften Ausgangsstand ausschließlich Dokumentation und `.gitignore`, kein Anwendungscode, keine App-Testpipeline, keine implementierten oder getesteten Produktfunktionen. E3 dokumentiert frühere Dokumentprüfungen; sie ersetzen keine neuen Prüfungen. Die aktuelle Protokollbereinigung prüft Dokumentation und Bestandserhalt, keine Authentisierung, Konnektoren oder Laufzeitfunktionen.
 
 ## Sicherheits- und Kostengrenzen
 
@@ -53,8 +53,8 @@ Keine Geheimnisse, privaten Lernmaterialien oder personenbezogenen Echtdaten ins
 
 **Untersuchungslimit für Infrastruktur: maximal 10 EUR brutto pro Monat. Keine Ausgabe genehmigt.** Dies ist ausschließlich eine Grenze für Untersuchung/Vergleich aus dem PACE-Auftrag vom 19.10.2026, keine Buchungs-, Kontoeröffnungs- oder Betriebsfreigabe. Keine kostenpflichtigen Dienste oder Infrastruktur aktivieren.
 
-## Nächster freigegebener Umfang
+## Auftragsumfang und nächste Schritte
 
-Aktuell ausschließlich PACE einführen: Agentenanweisungen, Workflow, Projektkontext, Vorlagen, Kontextprotokoll und optional knapper README-Link; separater Branch, Commit/Push und separate Draft-PR gegen den Spezifikationsbranch soweit Zugang vorhanden. Keine Änderung an 89 FE, 66 UC oder bestehenden Spezifikationen, kein Anwendungscode, keine Sicherheitsimplementierung, Technologieentscheidung, Merge oder Deployment. Nach Abschluss ist kein weiterer Produkt-/Architektur-/Implementierungsauftrag allein durch diesen Kontext freigegeben; nächste konkrete Aufgabe vom Projektinhaber abwarten. PR #1 bleibt ohne Merge.
+Zuletzt freigegeben ist die redaktionelle Bereinigung von E3 und PACE-Kontextdateien einschließlich notwendiger Indexanpassung, Commit und normalem Push auf den bestehenden Spezifikationsbranch zur Aktualisierung von PR #1. Fachliche Entscheidungen, 89 FE, 66 UC und Sicherheitsanforderungen bleiben unverändert. Kein Anwendungscode, keine Technologieentscheidung, Ausgabe, Änderung an `main`, Rebase, Force-Push, Merge oder Deployment. Nach Abschluss erteilt dieser Kontext keinen weiteren Produkt-/Architektur-/Implementierungsauftrag. PR #1 bleibt ohne Merge; die Spezifikation bleibt zur Prüfung.
 
 Arbeitsregeln: [AGENTS.md](../../AGENTS.md), [Workflow](WORKFLOW.md). Übergaben und Kontextänderungen verwenden die dort verlinkten Vorlagen und das [Protokoll](CONTEXT_CHANGELOG.md).

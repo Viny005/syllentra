@@ -1,11 +1,11 @@
 # E3 — Änderungs- und Prüfnachweis
 
 **Projekt:** Syllentra AI\
-**Version:** 0.3\
+**Version:** 0.4\
 **Stand:** 19.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber
 
-> **Historischer Nachweis:** E3.1 bis E3.6 dokumentieren die abgeschlossene S1-Lieferung bis `723af7fa1692f8dbaf888b694fa63806d7d5fc5f`. Die dortige damalige Dateiliste und „S2 geplant“ sind keine Aussagen zum aktuellen Bestand. E3.7 bis E3.10 dokumentieren den anschließend abgeschlossenen S2-Auftrag bis `53ef171be4783748b5c7e3a84bb0cc363d5b4194`. Der aktuelle Auftrag zu vier Fachentscheidungen ist ab E3.11 protokolliert.
+> **Historischer Nachweis:** E3.1 bis E3.6 dokumentieren die abgeschlossene S1-Lieferung bis `723af7fa1692f8dbaf888b694fa63806d7d5fc5f`. Die dortige damalige Dateiliste und „S2 geplant“ sind keine Aussagen zum aktuellen Bestand. E3.7 bis E3.10 dokumentieren den anschließend abgeschlossenen S2-Auftrag bis `53ef171be4783748b5c7e3a84bb0cc363d5b4194`. E3.11 bis E3.16 dokumentieren die vier Fachentscheidungen bis `0676f791c858765a005a32e2af8c8442eff9712e`. Die redaktionelle Bereinigung und ihre aktuellen Prüfungen stehen in E3.17. Historische Versionsmatrizen und Prüfzahlen beziehen sich jeweils auf die bezeichnete Lieferung, nicht auf den heutigen Gesamtbestand.
 
 ## E3.1 Auftrag und Grenzen
 
@@ -66,7 +66,7 @@ Die vollständige 89-zeilige Einzelmatrix mit deutschem Inhalt, Nachbarn, Bauste
 
 ## E3.5 Durchgeführte Dokumentationsprüfungen
 
-**Prüfdatum: 16.10.2026.** Folgende Prüfungen wurden auf den tatsächlich gespeicherten Dokumenten ausgeführt. Prüfskripte, Renderbilder und temporäre Pakete liegen außerhalb des Repositories unter `/tmp`; keine Projektabhängigkeiten oder Anwendungstests wurden geändert.
+**Prüfdatum: 16.10.2026.** Folgende Prüfungen wurden auf den tatsächlich gespeicherten Dokumenten ausgeführt. Die Prüfwerkzeuge änderten keine Projektabhängigkeiten oder Anwendungstests.
 
 | Ausgeführte Prüfung | Beobachteter Befund |
 |---|---|
@@ -85,15 +85,13 @@ Die vollständige 89-zeilige Einzelmatrix mit deutschem Inhalt, Nachbarn, Bauste
 
 **Ausführungsgrenze:** Die S1-Abnahmeszenarien und die negativen N1-/N2-Beispiele wurden auf Vollständigkeit und Konsistenz ihrer Spezifikation geprüft. Sie sind keine ausgeführten Produkt-, Sicherheits-, Last-, Geräte- oder Konnektortests. Im Repository existiert kein hierfür konfigurierter Dokumentations-Test-/Lint-Runner; Parser-, Link-, Tabellen-, Kennungs- und Diagrammprüfungen erfolgten mit temporären Werkzeugen. Keine produktiven Daten, Konten oder Dienstzugänge wurden benutzt.
 
-**Werkzeugbefunde:** Die erste temporäre npm-Installation scheiterte am nicht beschreibbaren Standardcache; ein eigener Cache unter `/tmp` behob den Fehler, ohne Projektdateien zu ändern. GitHub-PR-Metadaten über `gh pr view` waren auch nach Wiederholung mit erweitertem Ausführungszugang durch HTTP 403 blockiert. Git-Lesezugriff und Branch-/PR-Git-Refs funktionierten; ein offener PR-Status oder neue API-Rechte werden daraus nicht behauptet. Die PR-Inhalte werden durch normalen Push des bereits zugeordneten Branches aktualisiert; kein neuer PR, Merge oder Force-Push.
-
 ## E3.6 Verbleibende fachliche und technische Grenzen
 
 FE-56 bleibt offen. O-S1-02..O-S1-14 führen EU-Anbieter/Budget, offizielle Providerrechte, Mail-/Pushanbieter, Modelllizenzen und Hardware, PWA-Kompatibilität, Quoten/Fristen, Retryparameter, Schlüsselverteilung/-Recovery, temporäre Cloudklartextbereinigung, endliche sichere Löschmarkierungen/Backupretention, Migration und den sicheren ersten Super-Admin-Bootstrap auf. N1/N2 sind bewusst begrenzte Folgeentwürfe; S2/S3 bleiben geplant. Konkrete technische APIs, Lastmessungen, Securitytests und Produktabnahme stehen aus.
 
 ## E3.7 S2-Auftrag, Entscheidungsquellen und Ausgangsstand
 
-Der Auftraggeber hat die Ausführung des beigefügten S2-Arbeitsauftrags ausdrücklich bestätigt. Alle drei ZIP-Anlagen wurden vollständig gelesen. Lokaler sauberer Branch, nach `git fetch` erneut gelesener entfernter Branch und PR-Git-Ref standen vor Bearbeitung auf `723af7fa1692f8dbaf888b694fa63806d7d5fc5f`; main auf `beb66e1cd399f4a0fab55d3fd476a77d7804c5a7`. Branch bleibt `docs/spec/p1-p2-mobile-workspaces`, bestehende PR #1. Keine fremden lokalen Änderungen.
+Grundlage sind der bestätigte S2-Arbeitsauftrag und die folgenden drei Quellen. Ausgangsstand der Lieferung: `723af7fa1692f8dbaf888b694fa63806d7d5fc5f`; Ergebnis: `53ef171be4783748b5c7e3a84bb0cc363d5b4194`, Spezifikationsbranch und [PR #1](https://github.com/Viny005/syllentra/pull/1).
 
 | Vollständig gelesene Anlage | SHA-256 / Verwendung |
 |---|---|
@@ -103,7 +101,7 @@ Der Auftraggeber hat die Ausführung des beigefügten S2-Arbeitsauftrags ausdrü
 
 Der S2-Entwurf liefert alle 36 MIG-Regeln, 40 AT-S2-Fälle und zwölf O-S2-Punkte. Das ergänzende Entscheidungsregister liefert 25 temporäre DEC-V1-Auditbezüge. Seine frühere offene Exportfrage in Abschnitt G wird durch den ausführbaren S2-Auftrag mit MIG-01/MIG-05 konkretisiert. Die vollständige separate Post-S1-Harmonisierung ist am Ausgangs-HEAD nicht erfolgt; S2 berücksichtigt alle 25 Punkte auf Daten-/Schutzebene, führt aber keine große UI-/Lernalgorithmus-Neuspezifikation durch. Es werden keine neuen FE-Kennungen vergeben.
 
-**Methodischer Nachweis:** Herold wurde erneut lesend aktualisiert. Im geprüften Stand `fce50b47ae646a70bf4d796026dcd1a99d3ae3c2` wurden `docs/spec/SIEDERSLEBEN.md`, Abschnitt „Schnittstellen zu Alt- und Nachbarsystemen“, und `docs/spec/README.md`, Abschnitt S2, gelesen: keine eigene S2-Datei, weil Herold als Greenfield keine Altdaten migriert. Diese projektspezifische Nichtanwendbarkeit wird nicht auf Syllentra übertragen; eine nicht vorhandene Herold-S2-Vorlage wird nicht behauptet.
+**Methodischer Nachweis:** Im geprüften Herold-Stand `fce50b47ae646a70bf4d796026dcd1a99d3ae3c2` wurden `docs/spec/SIEDERSLEBEN.md`, Abschnitt „Schnittstellen zu Alt- und Nachbarsystemen“, und `docs/spec/README.md`, Abschnitt S2, gelesen: keine eigene S2-Datei, weil Herold als Greenfield keine Altdaten migriert. Diese projektspezifische Nichtanwendbarkeit wird nicht auf Syllentra übertragen; eine nicht vorhandene Herold-S2-Vorlage wird nicht behauptet.
 
 ## E3.8 S2-Datei- und Änderungsmatrix
 
@@ -135,7 +133,7 @@ Der S2-Entwurf liefert alle 36 MIG-Regeln, 40 AT-S2-Fälle und zwölf O-S2-Punkt
 
 ## E3.9 Tatsächliche S2-Dokumentationsprüfung
 
-Prüfdatum 16.10.2026. Die folgenden lokalen Prüfungen wurden auf den tatsächlich gespeicherten Markdown-Dateien ausgeführt. Temporäre Prüfskripte und bereits aus der S1-Prüfung vorhandene Parser-/Renderwerkzeuge wurden außerhalb des Repositories wiederverwendet; keine neue Installation, Runtime-Abhängigkeit, GitHub Action oder Produktdatenübertragung.
+Prüfdatum 16.10.2026. Die folgenden Prüfungen wurden auf den gespeicherten Markdown-Dateien ausgeführt; keine Produktdatenübertragung oder Änderung von Projektabhängigkeiten.
 
 | Ausgeführte Prüfung | Tatsächlicher Befund |
 |---|---|
@@ -153,11 +151,9 @@ Prüfdatum 16.10.2026. Die folgenden lokalen Prüfungen wurden auf den tatsächl
 
 **Nicht ausgeführt:** Keine echten Import-/Export-/Restore-, Cloud-, Kryptographie-, Schlüsselverlust-, Kontoisolation-, Browser-/PWA-, Last-, Accessibility- oder Konnektortests; es gibt dafür noch keine implementierte Funktion oder konfigurierte Produkt-Testpipeline in diesem Repository. Die 40 AT-S2-Fälle sind vollständig spezifizierte künftige Abnahmeszenarien, keine 40 erfolgreich ausgeführten Anwendungstests.
 
-**GitHub-Zugriffsgrenze:** Erneutes `gh pr view 1` lieferte HTTP 403 auf GraphQL. Das entspricht dem bereits aus S1 bekannten API-Zugriffsverbot auch bei erweitertem Ausführungszugang; kein zusätzlicher Token wurde angefordert. Branch-/PR-Git-Refs sind lesbar. Der offene PR-Status aus dem Anhang wird nicht als unabhängig API-verifiziert behauptet; die Inhaltsaktualisierung erfolgt über normalen Push auf den bestehenden PR-Branch, dessen Commit anschließend per Git-Ref geprüft wird.
-
 ## E3.10 S2-Git-Sicherung und offene Grenzen
 
-Ausgangs-HEAD ist `723af7fa1692f8dbaf888b694fa63806d7d5fc5f`; vorherige S1-Commits `4171167b31bf053ee95b19f0be090c23fa3881c5`, `329d2d6f3a0e731b04e4a3887d0d8c97acb888bf` und `723af7fa1692f8dbaf888b694fa63806d7d5fc5f` bleiben unverändert in der Historie. Die S2-Inhaltslieferung ist als `f2e91ca0e273a521b4ad624eaef081420d293e06` — `docs(spec): add S2 migration contracts and align portability` — gespeichert. Dieser fortgeschriebene Prüfnachweis wird als eigener nachfolgender Dokumentationscommit gesichert. Finale Nachweisfassung und normaler Push sind der Git-Historie beziehungsweise dem Abschlussbericht zu entnehmen; keine selbstreferenzielle Behauptung eines noch nicht erstellten Commit-SHA.
+Historische Lieferbezüge: S1 abgeschlossen mit `723af7fa1692f8dbaf888b694fa63806d7d5fc5f`; S2-Inhalt in `f2e91ca0e273a521b4ad624eaef081420d293e06`, zugehöriger Prüfnachweis in `53ef171be4783748b5c7e3a84bb0cc363d5b4194`. Vorangehende Einzeländerungen bleiben über die Git-Historie nachvollziehbar.
 
 **Weiterhin offen:** O-S2-01 bis O-S2-12 — exakte Export-/Manifest-/Formatprofile, Kryptoverfahren und persönliche Recovery, endliche Marker-/Backup-/Export-/Logfristen, Quoten und reale PWA-Grenzen, sichere Drittadapter, Disaster Restore, Konsistenz/Cutover, starker Altaccountnachweis, rechtliche Exportfähigkeit und EU-Betriebskosten/RPO/RTO. FE-56 bleibt offen und keine V1-Inboxfunktion. Alle 25 DEC-V1-Entscheidungen sind berücksichtigt, ihre vollständige separate Repo-Harmonisierung ist nicht Teil dieser Lieferung. Keine Produkt-, Cloud-, Restore-, Kryptographie-, Security-, Last- oder Browserabnahmetests durchgeführt; keine aktive Produktmigration.
 
@@ -167,9 +163,7 @@ Ausgangs-HEAD ist `723af7fa1692f8dbaf888b694fa63806d7d5fc5f`; vorherige S1-Commi
 
 Auftrag vom 19.10.2026: L-08 adaptive Lernwiederholung/-planung, L-04 Erinnerungen, L-09 Studienvorgaben und L-02 ablenkungsarmer Lernmodus. Vollständig gelesene Quelle: „Codex-Auftrag — Syllentra AI: Vier bestätigte Fachentscheidungen in die Spezifikation integrieren“, übermittelter Text `Eingefügter Text.txt`, SHA-256 `c68268b759bd0a74d3bda8d09833cd3cd12866d87659899fcd9398b5f5d324a0`.
 
-Die erneuerte Cloudumgebung startete auf Hilfsbranch `work` am alten main-Stand. Der bereits vorhandene lokale Spezifikationsbranch war noch `bea67036048042f4a86da2c10f80b8267a81769c`. Nach sauberem Status, Fetch und Vorfahrenprüfung wurde ausschließlich dieser Branch regulär per Fast-forward auf den entfernten Stand aktualisiert. Keine fremden lokalen Änderungen, kein Reset und kein neuer Branch. Tatsächlicher Bearbeitungs-Ausgang ist `53ef171be4783748b5c7e3a84bb0cc363d5b4194` auf `docs/spec/p1-p2-mobile-workspaces`; entfernter Branch und PR-Git-Ref stimmten überein. main steht unverändert auf `beb66e1cd399f4a0fab55d3fd476a77d7804c5a7`.
-
-Keine zwischenzeitliche Produkt-/Dokumentlieferung gegenüber der letzten S2-Lieferung festgestellt. Die bestehende Fachstruktur, Querverweise und Schutzanforderungen wurden vor Ergänzung abgeglichen. Vier bestätigte Entscheidungen sind keine Freigabe der Gesamtspezifikation, keine neuen FE und kein Auftrag zur Implementierung oder Auswahl von Framework, Datenbank, Hosting oder Modell.
+Ausgangsstand dieser Lieferung: `53ef171be4783748b5c7e3a84bb0cc363d5b4194`; Ergebnis: `0676f791c858765a005a32e2af8c8442eff9712e`. Vier bestätigte Entscheidungen bedeuten weder Gesamtabnahme noch neue FE oder eine Freigabe für Implementierung beziehungsweise Framework-, Datenbank-, Hosting- oder Modellwahl.
 
 ## E3.12 Tatsächliche Änderungen und begrenzte Datenmodellergänzung
 
@@ -248,7 +242,7 @@ Keine zwischenzeitliche Produkt-/Dokumentlieferung gegenüber der letzten S2-Lie
 
 ## E3.15 Tatsächliche Dokumentationsprüfungen vom 19.10.2026
 
-Die folgenden Prüfungen wurden auf den tatsächlich gespeicherten Dateien ausgeführt. Freie Markdown-/Mermaid-Prüfpakete wurden in der erneuerten Umgebung ausschließlich unter `/tmp` installiert und mit vorhandenem Chromium verwendet; keine Projekt-/Anwendungslaufzeitabhängigkeiten, Dienste oder API-Schlüssel hinzugefügt. Prüfskripte und Renderbilder bleiben außerhalb des Repositories.
+Die folgenden Prüfungen wurden auf den gespeicherten Dateien ausgeführt. Es wurden keine Projekt-/Anwendungslaufzeitabhängigkeiten, Dienste oder API-Schlüssel hinzugefügt.
 
 | Ausgeführte Prüfung | Tatsächlicher Befund |
 |---|---|
@@ -256,7 +250,7 @@ Die folgenden Prüfungen wurden auf den tatsächlich gespeicherten Dateien ausge
 | Aktuelles UC-Verzeichnis / Definitionen | Exakt 66 eindeutige Verzeichniszeilen UC-01 bis UC-66, dazu 66 eindeutige Definitionstitel; UC-65/UC-66 mit exakten Auftragstiteln. UC-01 bis UC-64 vollständig erhalten, kein Fokus-UC ergänzt. |
 | Kennungs-/Titelbestand | GP 15→15, UC 64→66, AF 36→37, DM 74→78, DT 90→95, DLG 65→67, BAT 25→26, OUT 8→8. Alte Definitionstitel unverändert, neue Kennungen ohne Lücke/Doppeldefinition; verwendete bekannte Kennungsreferenzen gegen Register geprüft. |
 | Schutz- und Bestandsregister | G/CON/SC/AS/R/NG, NB/CFG/DK/INV erhalten. Bestehende INV-Texte in D1/D2 und SEC-01 bis SEC-16 unverändert. Alle zwölf NB-Namen in P2/S1 identisch. S2-MIG-/AT-S2-/O-S2-Zeilen exakt unverändert. |
-| Fachliche Anschlussprüfung | UC-65/UC-66 in F1/F2/F3/D1/D2/B1/B2/B3/S1/N1/N2/E2/E3 und Index verbunden. BAT-09/UC-35 behalten den Kalenderbestätigungspfad; BAT-26 hat eigenen aktivierungs-/revisions-/Undo-geprüften Reihenfolgepfad. Fehlende konkrete Benennung der Kalenderzustimmungsgrenze in einem automatischen Textcheck wurde explizit präzisiert; keine offene Prüffehlerklasse verbleibt. |
+| Fachliche Anschlussprüfung | UC-65/UC-66 in F1/F2/F3/D1/D2/B1/B2/B3/S1/N1/N2/E2/E3 und Index verbunden. BAT-09/UC-35 behalten den Kalenderbestätigungspfad; BAT-26 hat eigenen aktivierungs-/revisions-/Undo-geprüften Reihenfolgepfad. Die Kalenderzustimmungsgrenze ist ausdrücklich benannt. |
 | Positive/negative Soll-Abnahmen | Acht AT-L08, acht AT-L04, sechs AT-L09 und sechs AT-L02 eindeutig und vollständig dokumentiert; tatsächlich nur Spezifikationsinhalt/Referenzen geprüft, keine 28 ausgeführten Anwendungsfälle behauptet. |
 | Meilenstein-/KI-Abhängigkeiten | Neuer Teilplan verwendet nur bestätigte M2b/M5/M8; UC-09/M5, UC-39/M2b und UC-65/M5/M8 konsistent. Audio-/KI-Kern-/Datenabhängigkeiten ohne erfundene weitere Nummern, LLM von Sprach-/OCR-Modellen und KI-freien Funktionen getrennt. |
 | Versionen / Status / Struktur | 17 Dokumentköpfe samt Entwicklungsunterlage auf aktuellen Prüfstatus und Version abgeglichen, Index aktualisiert. P1.1–P1.10 und P2.1–P2.9 unverändert. Frühere E3-Nachweise als Historie eingeordnet; keine Gesamtspezifikation freigegeben. |
@@ -267,10 +261,26 @@ Die folgenden Prüfungen wurden auf den tatsächlich gespeicherten Dateien ausge
 
 **Nicht ausgeführt:** Keine realen Anwendungs-, Kalender-, Zustell-, LLM-/OCR-, Wirksamkeits-, Last-, Security- oder Accessibilitytests. Es gibt keine in diesem Dokumentationsauftrag implementierten Funktionen, produktiven Konten oder echten Nutzerdaten als Testgrundlage. Die neuen Abnahmeszenarien und UI-Vorgaben sind künftige Produktnachweise.
 
-**Zugriffsgrenze:** Erneuter PR-Metadatenabruf `gh pr view 1` liefert HTTP 403/Forbidden. Git-Fetch und entfernte Branch-/PR-Git-Refs funktionieren. Der offene PR-Status wird ohne API-Nachweis nicht neu behauptet; Inhalte werden durch normalen Push auf den bereits zugeordneten Branch aktualisiert, der neue PR-Git-Head anschließend geprüft.
-
 ## E3.16 Verbleibende offene Punkte und Git-Sicherung
 
 Offen bleiben konkrete Wiederholungsformel, Intervall-/Prioritätsgewichtungen und pädagogische Wirksamkeitsevaluation, unterstützte Extraktionsprofile/Geltungsregeln komplexer Hochschulunterlagen, konkrete Zustell-/Retentions-/Deduplizierungsverfahren sowie tatsächliche Browser-/OS-/Accessibilitynachweise. Zusätzliche Ruhezeitausnahmen werden nicht neu beschlossen. Vollständiger Meilensteinplan und übrige Post-S1-Entscheidungen bleiben getrennt abzugleichen. FE-56 bleibt offen. Keine Anwendungscodeänderung, neue API-Schlüssel, externe Produktintegration, verpflichtende bezahlte API oder technische Stackwahl.
 
-Commit/Push nur auf `docs/spec/p1-p2-mobile-workspaces` für PR #1; keine Zusammenführung, kein Force-Push. Abschließender Commit-SHA und entfernte Branch-/PR-Git-Refs werden nach Git-Sicherung im Abschlussbericht nachgewiesen. `Zur Prüfung durch den Projektinhaber` bleibt der Status der Gesamtspezifikation.
+Der Status der Gesamtspezifikation bleibt **Zur Prüfung durch den Projektinhaber**. Git-Veröffentlichung ist keine fachliche Freigabe oder Produktabnahme.
+
+## E3.17 Redaktionelle Bereinigung und Erhaltungsprüfung
+
+**Stand: 19.10.2026.** Grundlage ist der Auftrag „Arbeitsprotokolle vor dem Merge bereinigen“. Überprüfter Ausgangsstand: `39261a5816a99f7c10c79344e5a1adc03b685d49`; dieser enthält die PACE-Einführung über [PR #2](https://github.com/Viny005/syllentra/pull/2). PACE-Regeln und Vorlagen bleiben unverändert.
+
+Erhalten sind die fachlichen Änderungs-/Versionsmatrizen, Quellen einschließlich Prüfsummen und methodischer Referenz, Kennungszuordnungen, historischen Dokumentationsprüfungen, alle 28 Soll-Abnahmen in E3.13 sowie offenen Risiken. Gekürzt sind wiederholte Git-Zwischenstände und Veröffentlichungshinweise; entfernt sind entbehrliche Cache-/Installationsgeschichten und temporäre Arbeitsumgebungsdetails. Die Git-Historie bleibt vollständig erhalten.
+
+Historische GitHub-API-Einschränkungen betrafen den Metadatenzugriff, nicht die fachlichen Prüfergebnisse. Der aktuelle Branch-/PR-Inhaltsstand ist über Git-Refs prüfbar; daraus allein folgt kein API-bestätigter PR-Status. Die inzwischen erfolgte PACE-Integration ist durch den Merge-Commit oben belegt.
+
+**Tatsächlich ausgeführte Prüfungen:**
+
+- Markdown-Parsing aller 29 Markdown-Dateien mit `markdown-it`; 372 lokale Links einschließlich Abschnittsanker und 453 Tabellen ohne Fehler geprüft.
+- Vergleich gegen den Ausgangscommit: ausschließlich E3, Spezifikationsindex und die beiden PACE-Kontextdateien geändert; alle übrigen 26 versionierten Dateien bytegleich. Damit bleiben fachliche Anforderungen, Sicherheitsvorgaben, PACE-Anweisungen und Vorlagen unverändert.
+- Alle 28 AT-L-Abnahmezeilen wortgleich; 160 historische Tabellenzeilen unverändert, eine fachliche Anschlussprüfungszeile redaktionell gekürzt, ohne fachliche Grenze zu entfernen. Änderungs-/Kennungsmatrizen und Abnahmetabelle vollständig verglichen. Quellenprüfsummen und offene Risiken aus E3.6/E3.10/E3.16 erhalten.
+- 89 eindeutige FE und 66 eindeutige UC geprüft, FE-56 weiterhin offen. Referenzierte Kennungen gegen die vorhandenen Nummernkreise geprüft; erhaltene Repository-Commitreferenzen als Git-Commits aufgelöst. Dokumentstatus bleibt zur Prüfung, E3-Version 0.4 im Index konsistent.
+- Neue öffentliche Inhalte und Diff auf Geheimnis-/Tokenmuster, private Daten und unzulässige Änderungen geprüft; keine Befunde. `git diff --check` erfolgreich.
+
+Diese Prüfungen belegen Dokumentationskonsistenz und Bestandserhalt. Keine Produkt-, Sicherheits-, Geräte- oder Integrationstests ausgeführt; unveränderte Mermaid-Diagramme wurden in dieser Bereinigung nicht erneut gerendert. Die erforderlichen Produktnachweise aus E3.6, E3.10 und E3.16 bleiben offen.

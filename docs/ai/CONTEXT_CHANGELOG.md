@@ -14,21 +14,17 @@ Wesentliche Kontextänderungen begründet versionieren. Kein automatischer Eintr
 
 ## 19.10.2026 — Einführung PACE
 
-- **Quelle:** Vollständig gelesener Nutzerauftrag „Codex-Auftrag — PACE-Workflow dauerhaft in Syllentra AI integrieren“, Abschnitte 1–9, in dieser Sitzung als „Eingefügter Text.txt“ bereitgestellt. Der Auftrag selbst ist kein bereits vorhandenes Spezifikationsdokument; diese Eintragung dokumentiert seine Herkunft und Reichweite.
-- **Bisher:** Keine `AGENTS.md`, kein `docs/ai/`; Dokumentationsstand am überprüften lokalen/entfernten Ausgangscommit `0676f791c858765a005a32e2af8c8442eff9712e`. Spezifikations- und ADR-Konventionen vorhanden, kein Anwendungscode.
-- **Neu:** Kompakte Agentenanweisungen, wiederverwendbarer Workflow mit fünf getrennten Berechtigungsmodi, zwei Vorlagen, überprüfter Projektkontext und dieses Protokoll. Universelle Methode getrennt von Produktvorgaben. Kontextpflege erfolgt bei relevanten Änderungen anhand der Primärquelle.
-- **Grund:** Konsistente, überprüfbare Arbeit zukünftiger KI-Entwicklungsagenten ohne zusätzlichen kostenpflichtigen Dienst. Neues Untersuchungslimit aus Abschnitt 5: höchstens 10 EUR brutto/Monat für Infrastrukturvergleiche, ausdrücklich keine Ausgabe freigegeben; keine Änderung bestehender FE-/UC-Entscheidungen.
-- **Referenz:** PACE-Branch `chore/pace-workflow` auf Ausgangscommit oben, geplantes PR-Ziel `docs/spec/p1-p2-mobile-workspaces`; tatsächlicher Endcommit und Veröffentlichungsstatus gehören in den Abschlussbericht. [Projektkontext](PROJECT_CONTEXT.md), [Agentenanweisungen](../../AGENTS.md), [Spezifikationsindex](../spec/README.md), [E3](../spec/E3-pruefnachweis.md). Keine zukünftige PR-Nummer behauptet.
-- **Freigabestatus:** Einführung und Dokumentation von PACE durch den Nutzerauftrag autorisiert; neue Dokumentation **Zur Prüfung durch den Projektinhaber**. Keine fachliche Gesamtabnahme, FE-56 weiterhin offen, keine Implementierungs-, Ausgaben-, Merge- oder Deploymentfreigabe. Änderungen an dieser Arbeitskonvention bleiben mit Begründung und Versionierung möglich.
+- **Quelle:** Nutzerauftrag „Codex-Auftrag — PACE-Workflow dauerhaft in Syllentra AI integrieren“, Abschnitte 1–9.
+- **Bisher → neu:** Keine Agentenanweisungen oder KI-Kontextstruktur → kompakte `AGENTS.md`, übertragbarer Workflow mit fünf Berechtigungsmodi, Auftrags-/Übergabevorlagen, überprüfter Projektkontext und dieses Protokoll. Kontextpflege folgt relevanten Änderungen und den fachlichen Primärquellen; kein Sitzungsarchiv pro Commit.
+- **Grund:** Konsistente, überprüfbare Agentenarbeit ohne zusätzlichen kostenpflichtigen Dienst. Untersuchungslimit höchstens 10 EUR brutto/Monat für Infrastrukturvergleiche, keine Ausgabe genehmigt.
+- **Referenz:** Einführung `abcfe13d1dd73fc4c5228821664f36b28ce6e7ba`, integriert durch [PR #2](https://github.com/Viny005/syllentra/pull/2) in `39261a5816a99f7c10c79344e5a1adc03b685d49`; Ausgangsstand `0676f791c858765a005a32e2af8c8442eff9712e`.
+- **Prüfnachweis der Einführung:** 29 Markdown-Dateien, 374 lokale Links und 453 Tabellen ohne Fehler; alle 18 Spezifikationsdateien bytegleich zum Ausgangsstand. 89 FE, 66 UC und FE-56 offen erhalten; Modusgrenzen und übertragbare Vorlagen geprüft, keine Secret-Mustertreffer, `git diff --check` erfolgreich. Tatsächlich sieben geänderte Dateien: sechs neue PACE-Dateien und README-Link; die frühere Mengenangabe acht/sieben war ein Zählfehler. Keine Implementierung oder Produkttests.
+- **Freigabestatus:** Einführung durch Nutzerauftrag autorisiert und Integration per Merge-Commit belegt; keine Gesamtabnahme der Spezifikation. PACE-Dokumentation bleibt zur Prüfung, FE-56 offen. Keine Ausgaben-, Produktimplementierungs-, Merge-von-PR-#1- oder Deploymentfreigabe.
 
-### Tatsächliche Dokumentationsprüfungen dieser Mission
+## 19.10.2026 — Arbeitsprotokolle redaktionell bereinigt
 
-Am 19.10.2026 im Arbeitsbranch ausgeführt:
-
-- Markdown-Parserprüfung über alle 29 Markdown-Dateien: 374 relative Links einschließlich vorhandener Sprungziele und 453 Tabellen ohne Fehler. Prüfer: Node.js mit `markdown-it`, temporäres Skript außerhalb des Repositorys; keine neue Projektabhängigkeit.
-- Bytevergleich aller 18 Dateien unter `docs/spec/` gegen den oben genannten Ausgangscommit: unverändert. Zusätzlich 89 eindeutige FE-Registereinträge, 66 eindeutige UC-Definitionen und unveränderten offenen FE-56-Eintrag geprüft. Damit auch Versions-/Dokumentstatus unverändert.
-- Dateiumfang auf acht erlaubte Dateien begrenzt: sieben neue PACE-Dateien einschließlich `AGENTS.md`, bestehendes Projekt-README ausschließlich mit zusätzlichem Einstiegslink. Kein Anwendungscode oder Sicherheitsimplementierung geändert.
-- Agentenanweisungen und Workflow auf die fünf Modusnamen geprüft und inhaltlich auf übereinstimmende Berechtigungsgrenzen durchgesehen. Workflow/Vorlagen enthalten keine projektspezifischen FE-/UC-Kennungen.
-- Neue Inhalte auf typische private Schlüssel, GitHub-/API-Tokenmuster und AWS-Zugriffsschlüssel geprüft; keine Treffer. Inhalte zusätzlich durchgesehen: keine Geheimnisse oder privaten Echtdaten hinzugefügt. Dies ist keine allgemeine Sicherheitszertifizierung.
-- `git diff --check` erfolgreich. Keine Produkt-, Laufzeit-, Authentisierungs- oder Konnektortests durchgeführt; es gibt keine Implementierungsänderung. Bestehende Mermaid-Diagramme sind bytegleich, keine neuen Diagramme eingeführt.
-- GitHub-PR-Metadatenabfrage mit `gh pr list` auch außerhalb der Sandbox: HTTP 403. Die Erstellung einer Draft-PR bleibt von dieser API-Berechtigung abhängig; endgültigen Veröffentlichungsstand im Abschlussbericht prüfen.
+- **Quelle:** Nutzerauftrag „Syllentra AI: Arbeitsprotokolle vor dem Merge bereinigen“.
+- **Bisher → neu:** Sitzungsdetails und überholte geplante PACE-Integration → dauerhafter Änderungs-/Prüfnachweis mit bestätigtem Integrationsstand, kompaktem Kontextprotokoll und aktualisiertem Projektkontext.
+- **Grund:** Langfristig wartbare öffentliche Dokumentation bei vollständigem Erhalt fachlicher Nachweise, historischer Prüfergebnisse, aller 28 Abnahmeszenarien und offenen Risiken. Keine fachliche oder sicherheitsbezogene Entscheidung geändert; PACE-Methode und Vorlagen bleiben vollständig erhalten.
+- **Referenz:** Ausgangscommit `39261a5816a99f7c10c79344e5a1adc03b685d49`, bestehende [PR #1](https://github.com/Viny005/syllentra/pull/1), [E3.17](../spec/E3-pruefnachweis.md#e317-redaktionelle-bereinigung-und-erhaltungsprüfung), [Projektkontext](PROJECT_CONTEXT.md).
+- **Freigabestatus:** Redaktionelle Bearbeitung, Commit und Push autorisiert. Spezifikation weiter **Zur Prüfung durch den Projektinhaber**; keine Zusammenführung von PR #1 oder Änderung an `main`.
