@@ -1,8 +1,8 @@
 # S1 — Nachbarsysteme und fachliche Schnittstellenverträge
 
 **Projekt:** Syllentra AI\
-**Version:** 0.2\
-**Stand:** 16.10.2026\
+**Version:** 0.3\
+**Stand:** 19.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Ausgangsstand:** `ace1d80e80245379beed02296c3c4dd184c8dd70` auf `docs/spec/p1-p2-mobile-workspaces`, bestehende [PR #1](https://github.com/Viny005/syllentra/pull/1).
 
@@ -455,3 +455,11 @@ Genau ein Registereintrag je FE-ID. **88 bestätigte Entscheidungen und ein offe
 | O-S1-14 | Reale Verfügbarkeit, Implementierungs- und Produktabnahmetests sämtlicher Verbindungen | Spätere Implementierung; diese Lieferung enthält nur Dokumentationsprüfungen. |
 
 **Freigabestatus:** Zur Prüfung durch den Projektinhaber. FE-56 bleibt offen; alle übrigen fachlichen Entscheidungen des Anhangs werden als Anforderungen erhalten. Kein Merge, Deployment, Kontoverbinden oder Produktdatenverarbeiten.
+
+## S1.20 Anschluss der vier Fachentscheidungen ohne neue Nachbarrechte
+
+L-04/UC-65 verändert keine NB-Kennung: In-App-Regeln/Hinweise/Verlauf sind interne M5-Funktionen. NB-09 liefert bedingte OS-Push-/externe Zustellnachweise im M8-Ausbau; Hauptgerät/freiwillige weitere Ziele bleiben nach FE-44 geschützt. NB-05 bleibt für ausgehende Systempost und ausdrücklich aktivierte wichtige Erinnerungsmail zuständig, ohne Inboxrecht. Nicht entwickelter Digest/Push ist keine aktuell verfügbare Funktion; [Entwicklungszuordnungen](ENTWICKLUNGSPLAN.md).
+
+**Zusätzlicher Vertragsbezug NB-09/NB-05:** DM-77-Regelfassung, aktuelle Ereignisrevision, tatsächliches Geräte-/Kanalrecht, Benachrichtigungszone und konfigurierbare Ruhezeit initial 22:00–08:00 vor jedem Zustellversuch prüfen. Unbestätigte Terminänderung verändert keine Erinnerungsfristen. Keine private Note/Lerninformation im ungeschützten Vorschautext; unbekannte Auslieferung/Lesenachweise in DM-78 nicht erfinden. Hinweis bleibt intern unabhängig vom Pushrecht. Kein automatischer E-Mail-Ersatz, kein Retry nach Widerruf/Hinweislöschung, keine doppelte fachliche Absicht durch wiederholte Jobs. Dringlichkeit oder Fokusmodus erlaubt keinen Bruch der bestehenden Schutz-/Ruhezeitregeln.
+
+L-09/UC-66 kann ohne NB-03/NB-04-Konnektor auf manuell bereitgestellten Unterlagen arbeiten; Quelle, persönliche Geltung und Nutzerprüfung bleiben getrennt. L-08-Reihenfolgeautomatik und L-02-Darstellungsmodus sind interne Vorgänge und erteilen weder Dritt-KI-, Mikrofon- noch Kalenderrechte. FE-56 bleibt ausdrücklich offen. [F2](F2-anwendungsfaelle.md), [D1](D1-datenmodell.md) und [B2](B2-batch.md) konkretisieren Wirkung/Nachweise; alle bestehenden S1-Verträge und die 89-FE-Matrix bleiben erhalten.

@@ -1,11 +1,11 @@
 # E3 — Änderungs- und Prüfnachweis
 
 **Projekt:** Syllentra AI\
-**Version:** 0.2\
-**Stand:** 16.10.2026\
+**Version:** 0.3\
+**Stand:** 19.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber
 
-> **Historischer Nachweis:** E3.1 bis E3.6 dokumentieren die abgeschlossene S1-Lieferung bis `723af7fa1692f8dbaf888b694fa63806d7d5fc5f`. Die dortige damalige Dateiliste und „S2 geplant“ sind keine Aussagen zum aktuellen Bestand. Der aktuelle S2-Auftrag ist ab E3.7 protokolliert.
+> **Historischer Nachweis:** E3.1 bis E3.6 dokumentieren die abgeschlossene S1-Lieferung bis `723af7fa1692f8dbaf888b694fa63806d7d5fc5f`. Die dortige damalige Dateiliste und „S2 geplant“ sind keine Aussagen zum aktuellen Bestand. E3.7 bis E3.10 dokumentieren den anschließend abgeschlossenen S2-Auftrag bis `53ef171be4783748b5c7e3a84bb0cc363d5b4194`. Der aktuelle Auftrag zu vier Fachentscheidungen ist ab E3.11 protokolliert.
 
 ## E3.1 Auftrag und Grenzen
 
@@ -162,3 +162,115 @@ Ausgangs-HEAD ist `723af7fa1692f8dbaf888b694fa63806d7d5fc5f`; vorherige S1-Commi
 **Weiterhin offen:** O-S2-01 bis O-S2-12 — exakte Export-/Manifest-/Formatprofile, Kryptoverfahren und persönliche Recovery, endliche Marker-/Backup-/Export-/Logfristen, Quoten und reale PWA-Grenzen, sichere Drittadapter, Disaster Restore, Konsistenz/Cutover, starker Altaccountnachweis, rechtliche Exportfähigkeit und EU-Betriebskosten/RPO/RTO. FE-56 bleibt offen und keine V1-Inboxfunktion. Alle 25 DEC-V1-Entscheidungen sind berücksichtigt, ihre vollständige separate Repo-Harmonisierung ist nicht Teil dieser Lieferung. Keine Produkt-, Cloud-, Restore-, Kryptographie-, Security-, Last- oder Browserabnahmetests durchgeführt; keine aktive Produktmigration.
 
 **Freigabestatus:** Zur Prüfung durch den Projektinhaber.
+
+## E3.11 Vier bestätigte Fachentscheidungen — Quelle und Ausgangsstand
+
+Auftrag vom 19.10.2026: L-08 adaptive Lernwiederholung/-planung, L-04 Erinnerungen, L-09 Studienvorgaben und L-02 ablenkungsarmer Lernmodus. Vollständig gelesene Quelle: „Codex-Auftrag — Syllentra AI: Vier bestätigte Fachentscheidungen in die Spezifikation integrieren“, übermittelter Text `Eingefügter Text.txt`, SHA-256 `c68268b759bd0a74d3bda8d09833cd3cd12866d87659899fcd9398b5f5d324a0`.
+
+Die erneuerte Cloudumgebung startete auf Hilfsbranch `work` am alten main-Stand. Der bereits vorhandene lokale Spezifikationsbranch war noch `bea67036048042f4a86da2c10f80b8267a81769c`. Nach sauberem Status, Fetch und Vorfahrenprüfung wurde ausschließlich dieser Branch regulär per Fast-forward auf den entfernten Stand aktualisiert. Keine fremden lokalen Änderungen, kein Reset und kein neuer Branch. Tatsächlicher Bearbeitungs-Ausgang ist `53ef171be4783748b5c7e3a84bb0cc363d5b4194` auf `docs/spec/p1-p2-mobile-workspaces`; entfernter Branch und PR-Git-Ref stimmten überein. main steht unverändert auf `beb66e1cd399f4a0fab55d3fd476a77d7804c5a7`.
+
+Keine zwischenzeitliche Produkt-/Dokumentlieferung gegenüber der letzten S2-Lieferung festgestellt. Die bestehende Fachstruktur, Querverweise und Schutzanforderungen wurden vor Ergänzung abgeglichen. Vier bestätigte Entscheidungen sind keine Freigabe der Gesamtspezifikation, keine neuen FE und kein Auftrag zur Implementierung oder Auswahl von Framework, Datenbank, Hosting oder Modell.
+
+## E3.12 Tatsächliche Änderungen und begrenzte Datenmodellergänzung
+
+| Entscheidung | Fachliche Änderung / Zuständigkeit |
+|---|---|
+| L-08 | Zeitliche Wiederholungsregeln plus Evidenzanpassung; alternative Erklärungen/Übungen bei belegten Schwierigkeiten. UC-23 bis UC-30/UC-32/UC-35/UC-37 präzisiert, AF-09/AF-12/AF-13 und BAT-09/BAT-11 verbunden. Eigene DM-75-Reihenfolge/DM-76-Änderung und BAT-26 für ausdrücklich aktivierte pädagogische Wirkung, keine Kalenderzustimmung. Konflikt-/Aktivierungs-/Undo-Prüfung, Erhalt jüngerer Fortschritte, Formel offen. |
+| L-04 | Neuer vollständiger UC-65 mit zentralen persönlichen Regeln DM-77, eindeutiger Vererbung, J−5/J−1, Stundenregel nur bei Uhrzeit, konfigurierbarer Ruhezeit 22:00–08:00, In-App/Verlauf, Kanal-/Geräte-/Digest-/Mailkontrolle. DM-78 trennt externe Nachweise vom bestehenden Hinweis DM-52; BAT-06/07/08/19 erhalten, kein zweiter Zustellbatch. M5/M8 getrennt. |
+| L-09 | Neuer vollständiger UC-66 und AF-37; Quellenautorität und persönliche Geltung getrennt nach Hochschule/Studiengang/Ordnung/Kohorte/Inkrafttreten/Übergang. Extraktion bestätigen, Soll/Ist und fehlende Nachweise quellenbezogen anzeigen. DM-04/DM-24 und bestehende Studien-/Quellen-/Leistungsobjekte erweitert; keine unnötige neue Studienvorgabenentität, keine amtliche Anerkennung. Manueller Weg ohne Konnektor. |
+| L-02 | Bestehende UC-23/UC-29, DLG-27/31 und AF-12 präzisiert; freiwillige jederzeit beendbare Minimalansicht, optionale Zeitbegrenzung, zurückgestellte nicht dringende Hinweise, Erhalt von Entwürfen/Antworten/Fortschritt, Tastatur/Screenreader und reduzierte Bewegung. Vier Fortschrittsaussagen getrennt; Motivation abschaltbar, kein Ranglisten-/Serien-/Zeitdruckzwang. Kein neuer UC. |
+
+**Abgrenzung neuer Daten:** DM-75/DM-76 sind erforderlich, weil DM-35 ein bestätigter Kalendertermin und DM-39 bis DM-42 ein konkreter Vorschlagsentscheidungs-/Wirkungspfad sind. Keiner dieser Typen darf still zu einer frei automatisch umgeordneten persönlichen Reihenfolge werden. DM-77 ergänzt bislang nicht eigenständig modellierte persönliche Regelvererbung; DM-78 ergänzt fehlende getrennte externe Zustellnachweise. DM-52 bleibt der logische Hinweis mit jetzt expliziter interner Ereignisursache statt einer erfundenen Hochschulquelle; Verlauf und Zustellversuche sind keine doppelten Inhaltskopien. L-09 passt dagegen sauber in bestehende Inhaltsableitung/Studienzugehörigkeit, daher keine neue Entität dafür.
+
+**Aktuelles UC-Verzeichnis:** F2.2 enthielt bislang nur die ursprünglichen 50 Zeilen, obwohl bereits UC-51 bis UC-64 definiert waren. Es wurde ohne Umnummerierung auf sämtliche UC-01 bis UC-66 ergänzt; jede Definition steht weiterhin einmal. Neue Definitionstitel sind exakt „UC-65 — Erinnerungen und Benachrichtigungen verwalten“ und „UC-66 — Studienstruktur mit geltenden Studienvorgaben abgleichen“.
+
+**Neue Kennungen:** UC-65/UC-66, AF-37, DM-75 bis DM-78, DT-91 bis DT-95, DLG-66/DLG-67 und BAT-26. Alle alten Titel/Kennungen und 89-FE-Matrix erhalten, FE-56 offen. Folgende AT-L-Kennungen sind nur lokale künftige Abnahmeanforderungen dieses E3-Nachweises, keine neuen FE oder bereits ausgeführten Produktprüfungen.
+
+## E3.13 Positive und negative Abnahmeanforderungen
+
+| Fall | Gegeben / Aktion | Erwartete Grenze / Ergebnis |
+|---|---|---|
+| AT-L08-01 | Ausdrücklich aktive Automatik, wiederholt belegte Schwierigkeiten, aktuelle Plan-/Evidenzbasis | Begründete Reihenfolgeanpassung mit Alternativerklärung/geeigneter Übung und Änderungsverlauf, keine Kalenderwirkung. |
+| AT-L08-02 | Automatik nie aktiviert; neue Übungsantwort liegt vor | Keine autonome Umordnung; zulässige Empfehlung bleibt möglich, keine fingierte Einwilligung. |
+| AT-L08-03 | Manuell fixierter und bereits bestätigter Kalendereintrag kollidiert mit neuer Lernpriorität | Keine Verschiebung/Löschung ohne erforderliche Zustimmung; UC-35/BAT-09-Vorschlagsweg bleibt offen. |
+| AT-L08-04 | Nach automatischer Planänderung neue richtige Antwort, anschließend Undo | Nur die gewählte pädagogische Reihenfolgeänderung rücknehmen; jüngere gültige Antwort/Evidenz/Fortschritt erhalten. |
+| AT-L08-05 | Plan nach Automatik manuell geändert; altes Undo angefordert | Konflikt sichtbar, keine pauschale Rücksetzung; neue aktuelle Korrektur nötig. |
+| AT-L08-06 | Persönliche Automatik zwischen Berechnung und Anwendung deaktiviert | Keine weitere autonome Wirkung, auch nicht durch Wiederanlauf. |
+| AT-L08-07 | Verpasste Wiederholung oder keine ausreichende Lernstandsevidenz | Kein erfundener Fehler, kein gesichertes Können/Nullwissen; Unsicherheit, tatsächliche Zeit-/Beleggrundlage sichtbar. |
+| AT-L08-08 | Sichere begrenzte Undo-Grundlage kann vor automatischer Änderung nicht bereitgestellt werden | Keine automatische Anwendung ohne die zugesagte Rücknehmbarkeit; nachvollziehbare Einschränkung statt Datenverlust. |
+| AT-L04-01 | Ereignisregel überschreibt Kategorie/global, anderes Ereignis unverändert | Effektive Vererbung sichtbar; eigene Punkteliste ersetzt geerbte Liste, explizites Aus reaktiviert keinen Standard. |
+| AT-L04-02 | Ruhezeit 22:00–08:00 in gewählter Zone, über Mitternacht fälliger externer Hinweis | Ruhe-/Relevanzprüfung; Dringlichkeit umgeht Datenschutz/Quietregel nicht automatisch; interner Verlauf bleibt verfügbar. |
+| AT-L04-03 | Nur Ereignisdatum bekannt, Nutzer wählt Stundenpunkt | Stundenregel bis Uhrzeit-/Zonenklärung nicht wirksam; J−5/J−1 können datumbezogen bleiben, keine erfundene Sendeuhrzeit. |
+| AT-L04-04 | OS-Push verweigert und keine Erinnerungsmail aktiviert | Zulässiger In-App-Hinweis verfügbar; kein Push-/Mailrecht erfunden. |
+| AT-L04-05 | Zwei Jobs beziehungsweise Retry nach unbekanntem Providerergebnis | Eine logische fachliche Absicht pro Ziel/Kanal, tatsächliche Wirkung zuerst prüfen; Annahme ist weder Auslieferung noch Lesen. |
+| AT-L04-06 | Prüfungstermin nur als neuer unbestätigter Vorschlag vorhanden | Gültige bestehende Frist-/Regelbasis unverändert, keine neue Erinnerung zur ungeprüften Zeit. |
+| AT-L04-07 | Eigenen Hinweisverlauf löschen, alter Zustelljob läuft später | Keine Wiederanlage/-zustellung gelöschter Meldung und keine Quell-/Termin-/Lernstandslöschung; keine privaten Schatteninhalte. |
+| AT-L04-08 | M5-Grundumfang versus M8-Ausbau prüfen | M5 intern/Regeln/In-App/Verlauf; M8 Push/Hauptgerät/Digest/optionale Mail/Nachweise. Nicht entwickelte Funktion nicht als aktiv ausgeben; keine vertrauliche Note in ungeschützter Vorschau. |
+| AT-L09-01 | Nutzer stellt rechtmäßig Modulhandbuch/Ordnung manuell bereit, kein Hochschulkonnektor | Unterstützte Extraktion/Geltungsprüfung und bestätigter Soll-Ist-Abgleich nutzbar; kein Pflichtlogin. |
+| AT-L09-02 | Ältere Übergangsfassung passt zur Einschreibungskohorte, neuere Fassung betrifft andere Kohorte | Belegte persönliche Geltung entscheidet; neueres Datum verdrängt die alte geltende Fassung nicht. |
+| AT-L09-03 | Hochgeladene Datei widerspricht belegter offizieller Quelle | Upload kein Autoritätsvorrang; Widerspruch/Quellenstellen sichtbar und zur Prüfung, keine stille Überschreibung. |
+| AT-L09-04 | Kohorte/Übergang oder Extraktionssemantik fehlt | Geltung/Teilabdeckung ungeklärt, kein scheinbar gesicherter Gesamtvergleich oder institutionelle Anerkennung. |
+| AT-L09-05 | Prüfungsversuchsnachweis fehlt oder Wahlpflicht-/ECTS-Anrechnung nicht eindeutig | Nicht belegt/nicht prüfbar, keine erfundene Fehlprüfung oder doppelte Anrechnung; Quellen-/Regelbezug erhalten. |
+| AT-L09-06 | Regel-/Kontextfassung ändert sich nach Prüfung; vorhandene persönliche Leistungen | Neue Quellen-/Geltungsprüfung erforderlich; Abgleich ändert weder Leistungen noch Kalender ohne genau autorisierten Vorgang. |
+| AT-L02-01 | Freiwillig Modus einschalten und jederzeit verlassen, Entwurf/Antwort bereits begonnen | Minimalansicht verlassen ohne Daten-/Fortschrittsverlust und ohne neue Konto-/Anbieterrechte. |
+| AT-L02-02 | Normaler Hinweis während Fokus, zugleich notwendiger Sicherheits-/Prioritätshinweis | Nicht dringende Unterbrechung zurückgestellt, erforderlicher Hinweis geschützt erreichbar; keine private Vorschau. |
+| AT-L02-03 | Alle Seiten gelesen, keine passende Verständnisprüfung oder Kompetenzbelege | Bearbeitet getrennt von überprüftem Verständnis, geschätztem Wissen und nachgewiesener Kompetenz; kein automatisches Beherrschen. |
+| AT-L02-04 | Nur Tastatur/Screenreader beziehungsweise reduzierte Bewegung gewünscht | Bedienpfade, Modusende und Fehlerrückmeldung erreichbar; keine animations-/farbenabhängige Pflichtinformation. |
+| AT-L02-05 | Motivation deaktiviert, keine tägliche Serienaktivität | Motivierende Elemente abschaltbar, keine Pflicht-Rangliste, Serie oder künstlicher Zeitdruck. |
+| AT-L02-06 | Optionale Zeitbegrenzung läuft ab, Antwort noch nicht abgeschlossen | Entwurf/Antwort/Fortschritt erhalten, kein erzwungener Lernerfolg oder Antwortzwang. |
+
+**Status dieser 28 Fälle:** fachlich nachprüfbare Soll-Abnahmen. Diese Dokumentationslieferung führt keine Anwendungs-, Zustell-, OCR-, LLM-, Pädagogik-, Accessibility- oder Kalenderfunktion aus.
+
+## E3.14 Datei- und Versionsmatrix
+
+| Datei | Version vorher → aktuell | Geänderter Inhalt |
+|---|---|---|
+| P1-ziele-rahmenbedingungen.md | 0.7 → 0.8 | G-15, CON-15, SC-31 und begrenzte Ziel-/Schutzpräzisierung der vier Entscheidungen. |
+| P2-architekturueberblick.md | 0.8 → 0.9 | Persönliche pädagogische Reihenfolge, Kalendergrenze, Hinweis-/Zustellgrenze und geltungsgeprüfter Quellenkontext. |
+| F1-geschaeftsprozesse.md | 0.4 → 0.5 | GP-02/GP-04/GP-06 um neue Varianten ergänzt, keine neue Prozesskennung. |
+| F2-anwendungsfaelle.md | 0.3 → 0.4 | Vollständiges 66er-Verzeichnis, UC-65/UC-66 und gezielte Präzisierungen bestehender Lern-/Kalender-/Studienfälle. |
+| F3-anwendungsfunktionen.md | 0.3 → 0.4 | AF-02/AF-09/AF-12/AF-13 präzisiert; AF-37 Geltungs-/Abdeckungsprüfung. |
+| D1-datenmodell.md | 0.3 → 0.4 | DM-04/DM-24/DM-32/DM-35/DM-52 ergänzt, DM-75 bis DM-78 neu. |
+| D2-datentypen.md | 0.3 → 0.4 | DT-44 ergänzt, DT-91 bis DT-95 neu; offene Wiederholungsformel, keine technische Schema-/Modellwahl. |
+| B1-dialogspezifikation.md | 0.3 → 0.4 | DLG-27/31/32 ergänzt; DLG-66 Erinnerungszentrale und DLG-67 Studienvorgabenabgleich. |
+| B2-batch.md | 0.3 → 0.4 | BAT-06/07/08/09/11/19 präzisiert, BAT-26 und eigener nichtkalendarischer Wirkungspfad im Bestandsdiagramm. |
+| B3-druckausgaben.md | 0.3 → 0.4 | Bestehende Ausgaben trennen Plan-/Fortschritts-/Quellen-/Hinweisarten und schützen Noten; kein neuer OUT. |
+| S1-nachbarsysteme.md | 0.2 → 0.3 | Begrenzte NB-05/NB-09-/UC-65-/UC-66-Vertragsanschlüsse; zwölf Nachbarn und FE-Matrix unverändert. |
+| S2-datenmigration.md | 0.1 → 0.2 | Zwei bisher auf separate Lernheft-Harmonisierung verweisende Aussagen an L-08 angepasst; Migration führt keine Automatik aus. MIG-/AT-S2-/O-S2-Register unverändert. |
+| N1-nichtfunktional.md | 0.2 → 0.3 | Beleg-/Undo-/Kohorten-/Ruhezeit-/PWA-/Accessibility-Nachweise der vier Entscheidungen. |
+| N2-querschnittskonzepte.md | 0.2 → 0.3 | Keine erweiterten Konto-/Kanal-/Kalenderrechte; begrenztes Undo, endliche private Historie und Nichtwiederzustellung. |
+| E2-glossar.md | 0.2 → 0.3 | Lernreihenfolge, Hybridwiederholung, Plan-Undo, Hinweise/Zustellung, Studiengeltung und Lernmodus. |
+| E3-pruefnachweis.md | 0.2 → 0.3 | Frühere S1/S2-Nachweise als Historie erhalten; Quelle, Änderungen, 28 Sollfälle und tatsächliche Checks fortgeschrieben. |
+| README.md | ohne eigene Version | Aktuelle Versionen/Umfänge, UC-65/UC-66 und begrenzten Entwicklungsplan verlinkt. |
+| ENTWICKLUNGSPLAN.md | neu 0.1 | Bestätigter Teilstand M2b/M5/M8, frühe Audio-/spätere KI-Notizvorbereitung und getrennte LLM-/Modell-/KI-freie Abhängigkeiten. Kein erfundener freigegebener Gesamtplan. |
+
+**Planungsgrenze:** Vollständiger Meilensteinplan ist im Repository nicht belegt. Nur bestätigte Änderungen UC-09 → M5, grundlegender UC-39 → M2b, interne UC-65-Funktionen → M5 und externe Erweiterungen → M8 sind aufgenommen. Adaptive Funktionen setzen Daten-/Planungs-/Evidenzgrundlagen voraus; weitere Nummern/Termine werden nicht erfunden.
+
+## E3.15 Tatsächliche Dokumentationsprüfungen vom 19.10.2026
+
+Die folgenden Prüfungen wurden auf den tatsächlich gespeicherten Dateien ausgeführt. Freie Markdown-/Mermaid-Prüfpakete wurden in der erneuerten Umgebung ausschließlich unter `/tmp` installiert und mit vorhandenem Chromium verwendet; keine Projekt-/Anwendungslaufzeitabhängigkeiten, Dienste oder API-Schlüssel hinzugefügt. Prüfskripte und Renderbilder bleiben außerhalb des Repositories.
+
+| Ausgeführte Prüfung | Tatsächlicher Befund |
+|---|---|
+| Offizielles FE-Register | Exakt 89 eindeutige Zeilen in S1.18.1, bytegleiche FE-Zeilen gegenüber Ausgang; FE-56 unverändert offen. Keine neuen FE-Kennungen. |
+| Aktuelles UC-Verzeichnis / Definitionen | Exakt 66 eindeutige Verzeichniszeilen UC-01 bis UC-66, dazu 66 eindeutige Definitionstitel; UC-65/UC-66 mit exakten Auftragstiteln. UC-01 bis UC-64 vollständig erhalten, kein Fokus-UC ergänzt. |
+| Kennungs-/Titelbestand | GP 15→15, UC 64→66, AF 36→37, DM 74→78, DT 90→95, DLG 65→67, BAT 25→26, OUT 8→8. Alte Definitionstitel unverändert, neue Kennungen ohne Lücke/Doppeldefinition; verwendete bekannte Kennungsreferenzen gegen Register geprüft. |
+| Schutz- und Bestandsregister | G/CON/SC/AS/R/NG, NB/CFG/DK/INV erhalten. Bestehende INV-Texte in D1/D2 und SEC-01 bis SEC-16 unverändert. Alle zwölf NB-Namen in P2/S1 identisch. S2-MIG-/AT-S2-/O-S2-Zeilen exakt unverändert. |
+| Fachliche Anschlussprüfung | UC-65/UC-66 in F1/F2/F3/D1/D2/B1/B2/B3/S1/N1/N2/E2/E3 und Index verbunden. BAT-09/UC-35 behalten den Kalenderbestätigungspfad; BAT-26 hat eigenen aktivierungs-/revisions-/Undo-geprüften Reihenfolgepfad. Fehlende konkrete Benennung der Kalenderzustimmungsgrenze in einem automatischen Textcheck wurde explizit präzisiert; keine offene Prüffehlerklasse verbleibt. |
+| Positive/negative Soll-Abnahmen | Acht AT-L08, acht AT-L04, sechs AT-L09 und sechs AT-L02 eindeutig und vollständig dokumentiert; tatsächlich nur Spezifikationsinhalt/Referenzen geprüft, keine 28 ausgeführten Anwendungsfälle behauptet. |
+| Meilenstein-/KI-Abhängigkeiten | Neuer Teilplan verwendet nur bestätigte M2b/M5/M8; UC-09/M5, UC-39/M2b und UC-65/M5/M8 konsistent. Audio-/KI-Kern-/Datenabhängigkeiten ohne erfundene weitere Nummern, LLM von Sprach-/OCR-Modellen und KI-freien Funktionen getrennt. |
+| Versionen / Status / Struktur | 17 Dokumentköpfe samt Entwicklungsunterlage auf aktuellen Prüfstatus und Version abgeglichen, Index aktualisiert. P1.1–P1.10 und P2.1–P2.9 unverändert. Frühere E3-Nachweise als Historie eingeordnet; keine Gesamtspezifikation freigegeben. |
+| Markdown / lokale Links | Alle 18 Markdown-Dateien geparst; 327 lokale Links einschließlich tatsächlich vorhandener Abschnittsanker ohne fehlendes Ziel. Keine fehlende S3-Datei verlinkt. |
+| Tabellen / Zeichen | 450 Markdown-Tabellen auf konsistente Spaltenzahl geprüft; Unicode ohne Ersatzzeichen, deutsche KI-Terminologie. Keine ungeprüften neuen Codeblöcke. |
+| Mermaid / Sichtprüfung | Alle elf Diagramme mit Mermaid 11.15.0 geparst und lokal als SVG gerendert. Geändertes B2-Diagramm zusätzlich visuell geprüft: Aktivierungszweig, keine automatische Wirkung bei inaktiver Automatik und getrennte Kalenderbestätigung erkennbar. |
+| Git / Änderungsscope | `git diff --check` erfolgreich; vor Commit auch gestagter Diff geprüft. Ausschließlich 18 Markdown-Dateien in docs/spec einschließlich neuem Teilplan betroffen; keine App-/Architektur-/Manifest-/Lockfile-/Workflowänderung. |
+
+**Nicht ausgeführt:** Keine realen Anwendungs-, Kalender-, Zustell-, LLM-/OCR-, Wirksamkeits-, Last-, Security- oder Accessibilitytests. Es gibt keine in diesem Dokumentationsauftrag implementierten Funktionen, produktiven Konten oder echten Nutzerdaten als Testgrundlage. Die neuen Abnahmeszenarien und UI-Vorgaben sind künftige Produktnachweise.
+
+**Zugriffsgrenze:** Erneuter PR-Metadatenabruf `gh pr view 1` liefert HTTP 403/Forbidden. Git-Fetch und entfernte Branch-/PR-Git-Refs funktionieren. Der offene PR-Status wird ohne API-Nachweis nicht neu behauptet; Inhalte werden durch normalen Push auf den bereits zugeordneten Branch aktualisiert, der neue PR-Git-Head anschließend geprüft.
+
+## E3.16 Verbleibende offene Punkte und Git-Sicherung
+
+Offen bleiben konkrete Wiederholungsformel, Intervall-/Prioritätsgewichtungen und pädagogische Wirksamkeitsevaluation, unterstützte Extraktionsprofile/Geltungsregeln komplexer Hochschulunterlagen, konkrete Zustell-/Retentions-/Deduplizierungsverfahren sowie tatsächliche Browser-/OS-/Accessibilitynachweise. Zusätzliche Ruhezeitausnahmen werden nicht neu beschlossen. Vollständiger Meilensteinplan und übrige Post-S1-Entscheidungen bleiben getrennt abzugleichen. FE-56 bleibt offen. Keine Anwendungscodeänderung, neue API-Schlüssel, externe Produktintegration, verpflichtende bezahlte API oder technische Stackwahl.
+
+Commit/Push nur auf `docs/spec/p1-p2-mobile-workspaces` für PR #1; keine Zusammenführung, kein Force-Push. Abschließender Commit-SHA und entfernte Branch-/PR-Git-Refs werden nach Git-Sicherung im Abschlussbericht nachgewiesen. `Zur Prüfung durch den Projektinhaber` bleibt der Status der Gesamtspezifikation.

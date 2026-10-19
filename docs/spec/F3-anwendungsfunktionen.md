@@ -2,11 +2,11 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** F3 — Anwendungsfunktionen\
-**Version:** 0.3\
-**Stand:** 16.10.2026\
+**Version:** 0.4\
+**Stand:** 19.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Spezifikationsmethode:** Bausteine nach Johannes Siedersleben\
-**Bezugsstand:** S2-Abgleich vom 16.10.2026 auf `723af7fa1692f8dbaf888b694fa63806d7d5fc5f`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1; aktuelle Versionen im [Index](README.md).\
+**Bezugsstand:** Vier bestätigte Entscheidungen vom 19.10.2026; Ausgangs-HEAD `53ef171be4783748b5c7e3a84bb0cc363d5b4194`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1; aktuelle Fassungen im [Index](README.md).\
 **Fachlich bestätigt:** FE-01 bis FE-11; FE-10 und FE-11 werden mit diesem Entwurf erstmals in F3 beschrieben.
 
 ## F3.1 Zweck, Abgrenzung und Begriffe
@@ -109,6 +109,8 @@ Die 27 Funktionen `AF-01` bis `AF-27` sind zunächst **fachliche Entwurfskennung
 **Zusätzlicher Grenzfall:** Eine vom Nutzer bestätigte KI-Schätzung bleibt eine Schätzung mit tatsächlicher Prüfgrundlage. Fehlt ein amtlicher Nachweis, ist die Aussage nicht amtlich belegt; zulässige manuelle Angaben werden trotzdem nicht pauschal blockiert.
 
 **Verwendung:** UC-03, UC-09, UC-15, UC-29, UC-31, UC-36, UC-37, UC-43, UC-44; FE-02, FE-05; GP-01, GP-02, GP-03, GP-04, GP-05, GP-06, GP-07, GP-08, GP-11.
+
+**Präzisierung L-09:** Herkunft/Verlässlichkeit und persönliche Geltung sind verschiedene Prüfachsen. Hochschul-/Studiengangs-/Ordnungsbezug, Einschreibung/Kohorte, Inkrafttreten und Übergangsregeln ausdrücklich prüfen. Weder „hochgeladen“ noch „neuer“ beweist Vorrang. Fehlende oder widersprüchliche Geltungsmerkmale bleiben offen; die Nutzerbestätigung ersetzt keine amtliche Autorität. AF-37 führt den fachlichen Soll-Ist-Abgleich aus.
 
 ### AF-03 — Aufbereitetes Lernmaterial qualifizieren
 
@@ -282,6 +284,8 @@ Die 27 Funktionen `AF-01` bis `AF-27` sind zunächst **fachliche Entwurfskennung
 
 **Verwendung:** UC-23, UC-24, UC-27, UC-28, UC-30; FE-03, FE-07, FE-11; GP-04, GP-05, GP-06.
 
+**Präzisierung L-08:** Regelbasierte zeitliche Wiederholung und adaptive Auswahl werden kombiniert. Lernziele/Konzepte/Themen/Kapitel, tatsächliche Antworten mit Hilfen, Schwierigkeiten, Prüfungsnähe, freie Lernzeit, abgeschlossene/verpasste Wiederholungen und Qualität/Aktualität der Evidenz sind nachvollziehbare Eingaben. Wiederholte Schwierigkeiten führen zu alternativen Erklärungen und geeigneten Übungen. Fehlende Evidenz bleibt unsicher; Versäumnis allein ist kein Wissensdefizit. Konkrete Wiederholungsformel, Gewichtungen und Wirksamkeitsnachweis bleiben zur Evaluation offen. Eine reine Reihenfolgeänderung unter aktivierter Automatik ist von einem Kalenderplan nach AF-13 getrennt; sie nutzt DM-75/DM-76 und DT-91/DT-92.
+
 ### AF-10 — Lernantwort begründet einschätzen
 
 **Zweck:** Antworten anhand einer vorhandenen Aufgaben- und Bewertungsgrundlage nachvollziehbar beurteilen, einschließlich Unsicherheit und Hilfegrad.\
@@ -356,6 +360,8 @@ Die 27 Funktionen `AF-01` bis `AF-27` sind zunächst **fachliche Entwurfskennung
 
 **Verwendung:** UC-09, UC-24, UC-28, UC-29, UC-31, UC-43; FE-07, FE-11; GP-02, GP-04, GP-05, GP-11.
 
+**Präzisierung L-02/L-08:** Bearbeitet, Verständnis überprüft, Wissensstand geschätzt und Kompetenz nachgewiesen getrennt führen; aus Lesen oder erledigter Wiederholung folgt keine sichere Beherrschung. Eigenständigkeit/Hilfen und zeitliche Evidenzbasis bleiben sichtbar. Undo der pädagogischen Reihenfolge verändert keine jüngeren gültigen Lernfortschritte. Ein ablenkungsarmer oder bewegungsreduzierter Modus darf weder Kategorien zusammenlegen noch zur Sicherung des Fortschritts zuerst beendet werden.
+
 ### AF-13 — Studienplanung und Konflikte ableiten
 
 **Zweck:** Studien-, Prüfungs- und Projektarbeit als überprüfbaren Vorschlag unter Beachtung verfügbarer Zeitfenster planen.\
@@ -380,6 +386,8 @@ Die 27 Funktionen `AF-01` bis `AF-27` sind zunächst **fachliche Entwurfskennung
 **Zusätzlicher Grenzfall:** Bei gescheitertem Kalenderabruf gilt das Zeitfenster nicht automatisch als frei. Der Plan nennt den fehlenden Stand und kann zulässige manuelle Verfügbarkeit berücksichtigen; externe Ereignisse bleiben unverändert.
 
 **Verwendung:** UC-30, UC-32, UC-33, UC-34, UC-35, UC-37, UC-41; FE-05, FE-08; GP-02, GP-05, GP-06, GP-07, GP-09.
+
+**Präzisierung L-08:** Automatisch begründete pädagogische Priorität in DM-75 verändert ausschließlich die Reihenfolge. Manuelle Fixierungen und bereits bestätigte DM-35-Termine begrenzen jeden Kalenderplan; dessen Verschiebung/Löschung verlangt weiterhin die erforderliche aktuelle Zustimmung. Ein Konflikt erzeugt einen prüfbaren Vorschlag, keine Termineingabe durch Nebenwirkung. AF-06/UC-35/BAT-09 bleiben maßgeblich. L-04/UC-65 verwenden nur aktuell wirksame Ereignis-/Regelfassungen für Erinnerungspunkte.
 
 ### AF-14 — Quellenänderung fachlich vergleichen
 
@@ -1112,3 +1120,22 @@ Diese Funktionen beschreiben fachliche Entscheidungen, keine Kryptographie, Midd
 **Prüfbeispiele:** Ein unbekanntes Feld `super_admin=true` ist nicht übernehmbar. Ein Paket ohne Quellseite erhält eine Quellenlücke statt erfundener Seiten-/Zeitpräzision. Gleiche Paketdatei nach endgültiger Originallöschung bleibt für dieses Ziel gesperrt. Ein Export ohne passende Schlüssel wird nicht als entschlüsselt vollständig ausgewiesen.
 
 **Abgrenzung:** Konkretes Serialisierungsschema, Parser, Signatur/Kryptographie, Speichermechanismus und technische Transaktionsstrategie bleiben N2/Architektur; AF-36 bestimmt fachliche Zulässigkeit und erwartetes Ergebnis.
+
+## F3.13 Geltungs- und Anforderungsabgleich
+
+### AF-37 — Studienvorgaben auf Geltung und Abdeckung prüfen
+
+**Aufrufer / Eingabe:** UC-66, gegebenenfalls UC-03/UC-44/UC-57; persönlicher DM-04-Kontext, versionierte DM-21/DM-23-Quellen und bestätigte strukturierte DM-24-Ableitungen, persönliche Module/Leistungen/Prüfungsversuche. Datentyp DT-95.
+
+**Verarbeitung:**
+
+1. Zulässige Quellen nach AF-01/AF-02 prüfen; offiziellen Charakter, Versionsdatum und persönliche Geltung getrennt bestimmen.
+2. Hochschule, Studiengang, Prüfungsordnung, Einschreibung/Kohorte, Inkrafttreten und Übergangsregeln abgleichen; unzureichende Geltung als ungeklärt statt gültig ausgeben.
+3. Nur bestätigte nachvollziehbare Extraktionsfassung verwenden. Pflicht-/Wahlpflichtgruppe, ECTS-Grenze, Voraussetzungen und Prüfungsform/-versuchsbezug mit Quellenstelle führen; unbekannte Semantik nicht durch KI-Gewissheit ersetzen.
+4. Istbelege passend zuordnen, Originalskala/Nachweisgrad erhalten. Doppelte ECTS-Anrechnung oder Zuordnung zu Wahlpflichtalternativen braucht belegte Regel; keine erfundene Fehlprüfung.
+5. Ergebnis je Anforderung als belegt erfüllt, Abweichung belegt, Nachweis fehlt oder nicht prüfbar samt Beleg/Geltungsfassung ausweisen. Nur über den bestätigten abgedeckten Umfang eine Aussage machen.
+6. Bei Quellen-/Kontextwechsel neuen Vergleich vorbereiten; keine automatische Übernahme in Leistungen, Kalender oder institutionelle Anerkennung.
+
+**Ausgabe / Grenzen:** Eigene geschützte Inhaltsableitung mit Soll/Ist/Differenz, fehlenden Nachweisen und Unsicherheiten. Die Funktion führt keine Hochschulanmeldung oder Datenkorrektur aus und benötigt keinen Konnektor oder verpflichtenden LLM-Aufruf. Bekannte strukturierte Regeln sind KI-frei vergleichbar; KI-Extraktion bleibt ein gesondert zulässiger, prüfpflichtiger Weg.
+
+**Abnahme:** Neueres Handbuch mit anderer Kohorte wird nicht automatisch gültig. Bei passender Übergangsregel kann die ältere belegte Ordnung maßgeblich sein. Fehlendes ECTS-Feld bleibt unbekannt, nicht null; Abgleich bestätigt keine amtliche Anerkennung.

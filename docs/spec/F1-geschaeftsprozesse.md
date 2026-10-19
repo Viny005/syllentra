@@ -2,11 +2,11 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** F1 — Geschäftsprozesse\
-**Version:** 0.4\
-**Stand:** 16.10.2026\
+**Version:** 0.5\
+**Stand:** 19.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Spezifikationsmethode:** Bausteine nach Johannes Siedersleben\
-**Geltungsbereich:** Fachlicher Zielumfang der ersten Produktversion (V1), auf Grundlage von P1 Version 0.7 und P2 Version 0.8
+**Geltungsbereich:** Fachlicher Zielumfang der ersten Produktversion (V1), auf Grundlage von P1 Version 0.8 und P2 Version 0.9
 
 ---
 
@@ -153,6 +153,8 @@ Die akademische Struktur soll den tatsächlichen Studienverlauf abbilden, einsch
 
 **Varianten und Grenzen:** Ohne direkten Hochschulzugang bleibt die manuelle Pflege möglich. Noten und ECTS führen Herkunft und Nachweise getrennt von KI-Wissenseinschätzungen. Die Entfernung einer Zuordnung löscht keine gemeinsam genutzten Inhalte. Ein Semesterwechsel archiviert nichts automatisch; GP-12 entscheidet über tatsächlich abgeschlossene Arbeit.
 
+**Ergänzung L-09:** Der Nutzer stellt zulässige Modulhandbücher, Prüfungsordnungen und Verlaufspläne bereit. Syllentra prüft deren Geltung für Hochschule, Studiengang, Ordnung, Kohorte und Übergangsregeln; unbekannte Geltung bleibt offen. Extraktion und Zuordnung werden als prüfbare Vorschläge behandelt. UC-66 vergleicht anschließend die bestätigte Grundlage mit vorhandener Studienstruktur und Nachweisen, ohne amtliche Anerkennung oder pauschale Korrektur eigener Daten.
+
 ### F1.5.3 GP-03 — Lernmaterialien und Quellen aufbereiten
 
 **Auslöser:** Ein Lernanlass, neu erhaltenes Material oder eine zu überprüfende fachliche Quelle.\
@@ -193,6 +195,8 @@ Der Lernende arbeitet selbst: Er formuliert Fragen, versucht Lösungen und erkl�
 
 **Varianten und Grenzen:** FE-03 schließt eine mechanische Frage nach jeder Erklärung aus. Text und verfügbare Sprachformen können unter Erhalt des verfügbaren Kontexts gewechselt werden; ohne Mikrofonfreigabe bleibt Text nutzbar. Nicht verfügbare Kontextteile werden benannt. Geeignete zusätzliche Audio- und Videoinhalte können unterstützen, ersetzen aber keine fachliche Überprüfung. Aufgabenwahl erfolgt nur innerhalb freigegebener Dienste und Kosten; aktive Mitarbeit, Kapitelbearbeitung und offiziell nachgewiesene Kompetenz bleiben getrennt.
 
+**Ergänzung L-08/L-02:** Wiederholte Schwierigkeiten, vorhandene Antworten und aktuelle Evidenz können zu alternativen Erklärungen und Übungen führen. Nur ausdrücklich aktivierte persönliche Lernheftautomatik ordnet die pädagogische Reihenfolge um, mit Grund, Revisionsverlauf und sicherer Rücknahme. Verpasste Wiederholung ist kein falscher Lösungsversuch. Der Nutzer kann einen ablenkungsarmen Modus freiwillig einschalten und jederzeit verlassen; Lernartefakte bleiben erhalten und Fortschrittsarten getrennt. UC-23 bis UC-29 und AF-09/AF-12 konkretisieren diesen Ablauf.
+
 ### F1.5.5 GP-05 — Prüfungen vorbereiten und Leistungsstand überprüfen
 
 **Auslöser:** Anstehende Prüfung, festgestellte Wissenslücke oder Wunsch nach einer überprüfbaren Einschätzung des Vorbereitungsstands.\
@@ -232,6 +236,8 @@ Die Koordination verbindet akademische Verpflichtungen mit tatsächlicher persö
 | 6 | Syllentra | Bestätigte Vorschläge beziehungsweise bewusste manuelle Eingaben ausschließlich im internen Studienkalender übernehmen und auf autorisierten Geräten verfügbar machen |
 
 **Varianten und Grenzen:** Die direkte manuelle Speicherung benötigt keine zweite künstliche Bestätigung. Imports und KI-Vorschläge benötigen dagegen Bestätigung vor Speicherung; ein geänderter Vorschlag muss in seiner tatsächlich übernommenen Fassung bestätigt sein. Externe persönliche Kalender sind ausnahmslos nur lesbar, auch nach Zustimmung. Fehlender Kalenderzugriff erlaubt manuelle Verfügbarkeitsangaben. Wiederholte Imports dürfen keine unbemerkten Dubletten oder Überschreibungen erzeugen; Synchronisationskonflikte bleiben sichtbar.
+
+**Ergänzung L-08/L-04:** Pädagogische Priorisierung ist von Terminplanung getrennt. Manuelle Fixierungen und bestätigte Kalendertermine bleiben ohne erforderliche Zustimmung unverändert; ein Vorschlag aus UC-35/UC-37 ist keine aktive Verschiebung. Über UC-65 pflegt der Nutzer Ereignispunkte, globale/Kategorieregeln, Ruhezeiten und Kanalwahl. Die konfigurierbare Ausgangsruhezeit ist 22:00–08:00; interne Hinweise bleiben zugänglich, fehlendes Pushrecht erteilt kein E-Mail-Recht. M5/M8 sind im begrenzten Entwicklungsplan getrennt.
 
 ### F1.5.7 GP-07 — Relevante Änderungen erkennen und behandeln
 

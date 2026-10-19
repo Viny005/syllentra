@@ -2,8 +2,8 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** B1 — Dialogspezifikation\
-**Version:** 0.3\
-**Stand:** 16.10.2026\
+**Version:** 0.4\
+**Stand:** 19.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Methode:** Spezifikationsbaustein nach Johannes Siedersleben (GUI-Statik und GUI-Dynamik), nach der [methodischen Herold-B1-Referenz](https://github.com/carstenlucke/herold/blob/main/docs/spec/B1-dialogspezifikation.md), ohne Übernahme ihrer Authentifizierungs- oder Produktentscheidungen\
 **Verifizierter Quellstand:** `docs/spec/p1-p2-mobile-workspaces` in `Viny005/syllentra`, PR #1; P1 v0.6, P2 v0.7, F1 v0.3, F2 v0.2, F3 v0.2, D1 v0.2, D2 v0.2; unveränderter Ausgangsstand `459787027ab941456d61d61da040649fb87709c3`.\
@@ -960,6 +960,8 @@ Jeder Dialog hat eine **fachliche Zielbeschreibung**, **Einstieg**, **GUI Statik
 
 **Abnahmebeispiel:** Nutzer verlangt praktisches Beispiel und hört die Erklärung statt sie zu lesen.
 
+**Ergänzung L-02/L-08:** „Ablenkungsarm lernen“ freiwillig einschalten, jederzeit sichtbar beenden; Minimalnavigation, optionale Zeitbegrenzung, reduzierte Bewegung und abschaltbare Motivation. Nicht dringende Hinweise zurückstellen, notwendige geschützte Prioritäts-/Sicherheitshinweise weiter erreichbar. Entwürfe/Antworten/Lernfortschritte bei Moduswechsel erhalten, Zeitablauf erzeugt keine Antwortpflicht. Lernheftautomatik separat ausdrücklich aktivieren/deaktivieren, nie durch Fokuswahl oder Lerneinheitsstart. Kein Mikrofon-/Anbietereingriff allein durch diesen Darstellungsmodus.
+
 #### DLG-28 — Adaptive Übung und Antwortbewertung
 
 **Ziel und Einstieg:** DLG-27 oder Prüfungsvorbereitung.
@@ -1078,6 +1080,8 @@ Jeder Dialog hat eine **fachliche Zielbeschreibung**, **Einstieg**, **GUI Statik
 
 **Abnahmebeispiel:** 100 % gelesene Seiten zeigen nicht automatisch 100 % Kompetenz.
 
+**Ergänzung L-02/L-08:** Vier beschriftete, nicht nur farblich getrennte Aussagen: bearbeitet, Verständnis überprüft, Wissensstand geschätzt, Kompetenz nachgewiesen, jeweils mit Beleg/Unsicherheit/Zeit. Gelesenes ist nicht beherrscht. Ablenkungsarmer Modus ist jederzeit ohne Fortschrittsverlust verlassbar; Tastatur/Screenreader und Bewegungsreduktion beachten. Keine Ranglistenpflicht, Serienzwänge oder künstlicher Zeitdruck, Motivationsanzeige deaktivierbar.
+
 #### DLG-32 — Prüfungsvorbereitungsplan
 
 **Ziel und Einstieg:** Prüfungsdetail, Dashboard.
@@ -1106,6 +1110,8 @@ Jeder Dialog hat eine **fachliche Zielbeschreibung**, **Einstieg**, **GUI Statik
 **Schutz- und Freigaberegeln:** Nur bestätigte interne Termine; persönliche externe Kalender niemals verändern.
 
 **Abnahmebeispiel:** Planänderung bleibt in „Zu prüfen“, bis sie als aktuelle Fassung bestätigt wird.
+
+**Ergänzung L-08:** Pädagogische Reihenfolge DM-75 und gebuchte Kalendertermine DM-35 deutlich getrennt anzeigen. Automatik nur ausdrücklich persönlich aktivieren, einzelne Gründe/Belegbasis und Änderungsverlauf DM-76 öffnen, deaktivieren und „Diese Reihenfolgeänderung zurücknehmen“ konfliktgeprüft auslösen. Bei konkurrierender manueller Änderung neue aktuelle Vorschau statt pauschalem Rücksetzen; jüngere Lernfortschritte und bestätigte Termine bleiben erhalten. Terminwirkung weiterhin nur über DLG-37/UC-35. Fehlende Evidenz/abgelaufene Beleggrundlage verständlich als unsicher darstellen.
 
 ### B1.5.8 Kalender und Vorschläge
 
@@ -2129,3 +2135,40 @@ Alle neuen Dialoge sind mit Tastatur und auf schmalen Geräten bedienbar. Sie ze
 **Barrierefreiheit/Sprachen:** Gleicher fachlicher Ablauf mit UI Deutsch, Französisch oder Englisch, Tastaturbedienung, klarer Fokusfolge, benannten Feldern, Screenreader-erreichbaren Fehlern/Fortschritt und textlich beschriebenen Differenzen. Keine neue Übersetzungsintegration. KI-/Audio-/Übungssprache bleibt unabhängig.
 
 **Abnahme:** Importvorschau wird auf Gerät A erstellt, danach Termin auf B manuell geändert: veraltete Vorschau kann den Termin nicht still zurücksetzen. Nutzer B sieht weder Manifest noch Fortschritt von A; Ablauf einer Supportfreigabe sperrt auch den vorbereiteten Bericht.
+
+## B1.12 Zentrale Erinnerungsverwaltung und Studienvorgabenabgleich
+
+### DLG-66 — Erinnerungen und Benachrichtigungen
+
+**Einstieg / Rechte:** Eigene Einstellungen, Ereignisdetails oder Hinweisverlauf; UC-65. Nur eigenes Konto; Gerätezulassung und tatsächliches Kanalrecht getrennt. DM-77/DM-78, DT-93/DT-94, BAT-06/07/08/19.
+
+| Feld/Aktion | Beobachtbare Wirkung und Grenze |
+|---|---|
+| Global / Kategorie / Ereignis | Effektive Werte und Herkunft anzeigen; ausdrücklich gesetzte Ereigniswerte vor Kategorie/global/Standard, Aus nicht als fehlend behandeln |
+| Erinnerungspunkte | J−5/J−1 zeigen; eigene Punkte speichern, Stundenpunkte ohne belegte Ereignisuhrzeit erklären und nicht aktivieren |
+| Ruhezeit und Zone | Initial 22:00–08:00, konfigurierbar; Wirkung über Mitternacht und erforderliche Zeit-/DST-Klärung sichtbar |
+| Kanäle und Geräte | In-App unabhängig; OS-Push nur mit tatsächlichem Recht, Haupt-/weitere Geräte bewusst, Erinnerungsmail ausdrücklich opt-in; fehlende Fähigkeit erklären |
+| Dringlichkeit / Tagesdigest | Nur unterstützte Optionen; keine implizite Ruhezeit-/Datenschutzausnahme, keinen neuen Digest allein durch Historienänderung |
+| Geschützter Verlauf | Logischer Hinweis, unbekannte/belegte Zustellung und Lesen getrennt; aktuelle Auslassungen/Fehler ohne Secrets |
+| Verlauf gezielt löschen | Folgen bestätigen soweit destruktiv; keine Quell-/Termin-/Lernstandslöschung, keine Wiederzustellung durch alte Jobs |
+
+**Zustände:** M5 zeigt interne Regeln/In-App/Verlauf; M8 erweitert um externe Kanäle, Hauptgerät, Digest und externe Nachweise. Nicht entwickelte Optionen nicht als aktiv ausgeben. Ungültige Stundenregeln oder konkurrierende Fassungen markieren; direkte gültige manuelle Regelspeicherung ohne künstliche zweite Bestätigung. Tastatur, Screenreader, Fokus und textliche Fehler auch mobil; FE-73-Sprachen bleiben unterstützt.
+
+**Abnahme:** Push abgelehnt, In-App-Hinweis erreichbar; zwei Jobs liefern keinen zweiten gleichen Hinweis. Einzelnote erscheint nicht in Push/Sperrbildschirm oder ungeschütztem Vorschautext. Gelöschte Meldung wird nicht erneut verschickt.
+
+### DLG-67 — Studienvorgaben und Soll-Ist-Abgleich
+
+**Einstieg / Rechte:** Eigener Studienkontext oder Studienberatung; UC-66 mit UC-03/UC-57/UC-59. DM-04/DM-21/DM-23/DM-24, DT-95 und AF-37; keine Pflicht zum Hochschullogin.
+
+| Feld/Aktion | Beobachtbare Wirkung und Grenze |
+|---|---|
+| Quellen manuell bereitstellen | Unterstützte Dateien sicher aufnehmen, Originalversion und Quelle sichtbar; Upload ist kein Autoritätsvorrang |
+| Hochschule / Studiengang / Ordnung / Kohorte | Belegte Zuordnung zeigen, fehlende Geltungsmerkmale anfordern oder als ungeklärt belassen |
+| Inkrafttreten / Übergang / Quellenwiderspruch | Herkunft und konkrete Stellen neben Extraktions-/Bestätigungsstand zeigen; neuere Fassung nicht pauschal priorisieren |
+| Extraktion prüfen/korrigieren/bestätigen | Genau diese Regel-/Geltungsfassung übernehmen, keine institutionelle Anerkennung behaupten |
+| Soll-Ist-Abgleich | Pflicht/Wahlpflicht, ECTS, Voraussetzungen, Prüfungsformen/-versuche und belegte/offene Leistungen mit Quellstellen; Unsicherheit und Teilabdeckung sichtbar |
+| Fehlenden Nachweis klären / Daten ändern | Gesondert berechtigten UC-03/UC-09/UC-44 öffnen; Vergleich selbst schreibt keine Leistungen/Termine |
+
+**Schutz/Zustände:** Unlesbare/fehlende/widersprüchliche Quelle liefert Fehler-/Teilstand, keinen scheinbar vollständigen Anerkennungsstatus. Geschützte Noten nur im ausdrücklich geöffneten autorisierten Detailpfad, nie Dashboard/Push. Tastatur-/Screenreader-/DE-FR-EN-Bedienung, textliche Konfliktbeschreibung statt Farbe allein. Quelle/-kohorte zwischen Vorschau und Übernahme geändert: aktuelle Neubewertung.
+
+**Abnahme:** Ältere belegte Übergangsordnung bleibt für die zugehörige Kohorte maßgeblich, obwohl neues Handbuch vorliegt. Unbekannter Prüfungsversuch wird nicht als nicht bestanden ausgegeben; ohne Konnektor ist manueller Abgleich nutzbar.

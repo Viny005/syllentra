@@ -2,10 +2,10 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** D2 — Datentypen\
-**Version:** 0.3\
-**Stand:** 16.10.2026\
+**Version:** 0.4\
+**Stand:** 19.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
-**Bezugsstand:** S2-Abgleich vom 16.10.2026 auf `723af7fa1692f8dbaf888b694fa63806d7d5fc5f`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1; aktuelle Versionen im [Index](README.md).\
+**Bezugsstand:** Vier bestätigte Entscheidungen vom 19.10.2026; Ausgangs-HEAD `53ef171be4783748b5c7e3a84bb0cc363d5b4194`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1; aktuelle Fassungen im [Index](README.md).\
 **Methode:** Spezifikationsbaustein nach Johannes Siedersleben, fachlich vergleichbar mit der [Herold-D2-Referenz](https://github.com/carstenlucke/herold/blob/main/docs/spec/D2-datentypen.md).
 
 > **Freigabegrenze:** FE-01 bis FE-17 sind bestätigte Entscheidungen. Die Ergänzung über eine abgeschirmte, nach Hochschule aufklappbare Notenansicht ist vom Nutzer ausdrücklich vorgegeben. FE-43 bestätigt den öffentlichen V1-Umfang (Auswahl oder alle eigenen öffentlichen Repositories) und freiwillige offizielle Kontoverbindung; dies ist keine Behauptung einer fertig implementierten oder technisch verfügbaren Integration. D1 und F2 werden durch D2 nicht stillschweigend umnummeriert oder umgeschrieben.
@@ -762,6 +762,8 @@ Die nachfolgenden Typen sind als fachliche Kontrakte zu lesen: `Werte/Felder` is
 
 **Prüfbeispiel:** Kapitel 100 % gelesen, Wissensstand unbekannt.
 
+**Präzisierung L-02/L-08:** `verstaendnis_geprueft` wird mit tatsächlichen Aufgaben-/Versuchs-/Hilfebelegen und Zeit geführt; `bearbeitet`, `wissensstand_geschaetzt` und `kompetenz_nachgewiesen` bleiben unabhängige Aussagen mit eigener Belegqualität. Kein automatischer Übergang durch Lesen, Timerablauf oder abgearbeitete Wiederholung. Plan-Undo ändert diese Evidenzfelder nicht.
+
 ### DT-45 — ErinnerungsstatusDT
 
 **Art:** Enumeration\
@@ -1459,7 +1461,7 @@ Die bestehenden Kennungen `CFG-01`; `CFG-02`; `CFG-03`; `CFG-04`; `CFG-05`; `CFG
 | Ein globaler Messstand und Euro-Einheit zu eng | Messstand je Kennzahl, Geldwerte mit Währung und zeitbezogener Grundlage; keine erfundenen feinen Perioden aus gröberen Summen. |
 | GitHub-Ausschnitt könnte als festgelegte Produktgrenze gelesen werden | Historischer V1-Vorschlag durch FE-43 ersetzt; bestätigter öffentlicher Scope bei weiterhin ausstehender technischer Rechteprüfung; keine zugesagten privaten Repositories, weitere Plattformen oder aktuellen API-Rechte. Quellenabruf blockiert, spätere offizielle Prüfung erforderlich. |
 
-**Freigabestatus:** Zur Prüfung durch den Projektinhaber — D2 v0.3. Git-Commit und Push ersetzen keine gemeinsame fachliche Abnahme.
+**Freigabestatus:** Zur Prüfung durch den Projektinhaber — D2 v0.4. Git-Commit und Push ersetzen keine gemeinsame fachliche Abnahme.
 
 
 ## D2.12 Ergänzende Datentypen für Konten und sichere Lebenszyklen
@@ -1735,3 +1737,55 @@ INV-26 bis INV-31 aus [D1](D1-datenmodell.md) gelten unverändert auch für die 
 **Regeln:** Weg bestimmt nicht allein Recht oder aktuelle Freigabe. BAK unterscheidet persönlichen Restore und gesondert genehmigten Betriebsfall. UPG/MOV sind keine normalen Nutzerimporte. Unbekannter Weg gesperrt statt als allgemeiner Konnektor ausgeführt.
 
 **Prüfbeispiel:** Ein Nutzerpaket mit behauptetem Weg MOV erhält dadurch keinen Zugriff auf eine betriebliche Mehrkontensicherung.
+
+## D2.14 Typen für Lernreihenfolge, Hinweise und geltende Studienvorgaben
+
+### DT-91 — LernreihenfolgeDT
+
+**Art / Bezug:** Struktur für DM-75, AF-09/AF-13 und BAT-26.
+
+**Felder:** Persönlicher Kontext und Revision, 0..n geordnete eigene Lernziel-/Themenbezüge, Wiederholungsgrundlage und beobachtete Wiederholungen `geplant`/`abgeschlossen`/`verpasst`/`unbekannt`, letzte geeignete Belegzeit, Evidenzqualität, Schwierigkeits-/Zeit-/Prüfungsnähegrundlage, ausdrücklicher Automatikzustand samt Revision.
+
+**Regeln:** Vollständiges Lernziel-/Konzept-/Themen-/Kapitelmodell berücksichtigen; abgeschlossene Wiederholung benötigt tatsächlichen Nachweis, verpasst beweist keine Wissenslücke. Reihenfolge enthält keine implizite Terminbuchung. Fehlende Evidenz/Zeiten bleiben unbekannt; konkrete Wiederholungsformel und Intervallgewichte nicht festgelegt. Manuelle Fixierungen und bestätigte Termine nur Randbedingung, nicht durch Reihenfolgenwert veränderbar.
+
+**Prüfbeispiel:** Unbekannter Wissensstand führt zu vorläufig begründeter Auswahl, nicht „0 % Wissen“ oder erzwungener Kalenderübernahme.
+
+### DT-92 — PädagogischePlanänderungDT
+
+**Art / Bezug:** Struktur für DM-76.
+
+**Felder:** Änderung, Planbasis-/Zielrevision, `manuell`/`automatisch`/`ruecknahme`, Automatik-/Belegrevision, verständlicher Grund, Zeit, tatsächlich angewandter oder gesperrter/unklarer Umfang, optionaler Bezug auf die zurückgenommene Änderung.
+
+**Regeln:** Automatische Wirkung setzt aktuelles ausdrückliches Opt-in und passende Basis voraus. Rücknahme ist eine neue konfliktgeprüfte Planänderung; keine Rücksetzung jüngerer Lernnachweise, manueller Termine, Rechte oder Löschungen. Alte Änderung bleibt historisch ihrem tatsächlichen Ergebnis zugeordnet, bis kontrollierte Historienlöschung greift. Keine privaten Inhaltsvollkopien allein für Undo halten.
+
+**Prüfbeispiel:** Parallel manuell geänderter Plan verhindert blindes Undo; aktuelle Auswahl/Korrektur nötig, neue Antworten bleiben erhalten.
+
+### DT-93 — ErinnerungsregelDT
+
+**Art / Bezug:** Struktur für DM-77, UC-65, BAT-06/07/08/19.
+
+**Felder:** Geltungsbereich, ausdrücklich gesetzte/geerbte Merkmale, Aktivierung, relative Erinnerungspunkte mit Einheit `kalendertage_vorher` oder `stunden_vorher`, Kanalwahl, Benachrichtigungszone, Ruhezeitbeginn/-ende, Dringlichkeits-/Digestwahl, Zielgerätebezüge und Revision.
+
+**Regeln:** Explizite Ereigniswerte vor Kategorie vor persönlichem Globalwert vor Standard; geerbte Punkte werden bei ausdrücklicher eigener Punkteliste ersetzt, nicht ungefragt vereinigt. Aus ist keine Abwesenheit. Relative Werte nichtnegative fachlich valide Werte; J−5/J−1 als Tagesstandards, Stundenpunkte brauchen bekannte Ereignisuhrzeit und Zone. Lokale Ruhezeit initial 22:00–08:00 über Mitternacht, konfigurierbar; DST/mehrdeutige Zeit klären statt willkürlich senden. Kein neuer globaler Versandzeitstandard. Dringlichkeit umgeht Ruhe-/Schutzgrenzen nicht automatisch. Nicht unterstützte Kanaloption bleibt inaktiv statt als Recht zu gelten.
+
+**Prüfbeispiel:** Nur Ereignisdatum vorhanden: J−1 ist datumbezogen nutzbar, „2 Stunden vorher“ wird bis zur Uhrzeitklärung nicht wirksam. Unbestätigte neue Terminzeit ändert keinen gültigen Erinnerungspunkt.
+
+### DT-94 — BenachrichtigungszustellungDT
+
+**Art / Bezug:** Struktur für DM-78 und BAT-19, M8.
+
+**Felder:** Logische Hinweis-/Erinnerungsabsicht, wirksame Ereignis-/Regelgrundlage, Ziel-/Kanalbezug, 0..n Versuche, Annahme-/Auslieferungs-/Lesenachweis je gesondertem Zeitpunkt oder `unbekannt`, Fehler-/Widerrufsstand.
+
+**Regeln:** Wiederholungsversuch und reine Inhaltsrevision erzeugen keine neue fachliche Absicht. Unterschiedliche berechtigte Zielgeräte unterscheiden Zustellungen, nicht den zugrunde liegenden Hinweis. Providerannahme beweist weder Auslieferung noch Lesen; fehlender Nachweis bleibt unbekannt. Keine privaten Inhalte, OTP oder Tokens im Nachweis. In-App-Gelesenstatus ist getrennt von externer Zustellung und gehört zu DM-52.
+
+**Prüfbeispiel:** Ein Retry nach unbekanntem Providerergebnis gleicht zunächst den tatsächlichen Stand ab; nach Widerruf oder Historienlöschung kein blindes Neuversenden.
+
+### DT-95 — StudienvorgabenAbgleichDT
+
+**Art / Bezug:** Struktur für DM-24 mit DM-04/DM-06/DM-11/DM-12 und AF-37/UC-66.
+
+**Felder:** Quellen-/Dokumentrevision und konkrete Belegstelle, belegte Quellautorität, Geltungskontext Hochschule/Studiengang/Ordnung/Einschreibung/Kohorte/Inkrafttreten/Übergang, Extraktions-/Bestätigungsfassung, 0..n unterstützte Regelpositionen (Pflicht-/Wahlpflicht, ECTS, Voraussetzung, Prüfungsform/-versuchsbezug), passende Istnachweise und quellengebundener Vergleich.
+
+**Werte/Validität:** Geltung `belegt_anwendbar`, `belegt_nicht_anwendbar` oder `ungeklaert`; Ergebnis pro Regel `belegt_erfuellt`, `abweichung_belegt`, `nachweis_fehlt` oder `nicht_pruefbar`. Unbekannt ist kein Gegenbeweis; fehlende Nachweise sind keine erfundene Fehlprüfung. Bestätigte Extraktion und persönlicher Geltungsnachweis sind getrennt, Nutzerbestätigung keine amtliche Anerkennung. Unvollständiger Regelumfang bleibt Teilvergleich. Kein Dateiname, Upload oder neueres Datum ersetzt Geltungs-/Autoritätsprüfung.
+
+**Prüfbeispiel:** Neue Ordnung ohne bekannte Kohortenzuordnung bleibt ungeklärt; ältere belegbar gültige Übergangsfassung wird nicht still verdrängt. Einheiten/ECTS/Versuche nur nach dokumentierter Semantik abgleichen, keine doppelte Anrechnung erfinden.

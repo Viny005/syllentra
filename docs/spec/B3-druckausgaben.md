@@ -2,11 +2,11 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** B3 — Druckausgaben\
-**Version:** 0.3\
-**Stand:** 16.10.2026\
+**Version:** 0.4\
+**Stand:** 19.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Methode:** Baustein B3 nach Johannes Siedersleben — fachlich prüfbare Ausgaben, unabhängig von Layoutbibliothek und Drucktechnik\
-**Bezugsstand:** S2-Abgleich vom 16.10.2026 auf `723af7fa1692f8dbaf888b694fa63806d7d5fc5f`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1; aktuelle Versionen im [Index](README.md).
+**Bezugsstand:** Vier bestätigte Entscheidungen vom 19.10.2026; Ausgangs-HEAD `53ef171be4783748b5c7e3a84bb0cc363d5b4194`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1; aktuelle Fassungen im [Index](README.md).
 
 > **Freigabe und Herkunft:** FE-01 bis FE-24 wurden in der bisherigen fachlichen Erarbeitung bestätigt; FE-25 und FE-26 sind mit dem aktuellen Auftrag ausdrücklich bestätigt. Der hier definierte konkrete B3-Entwurf, seine Berichtsgliederungen und seine späteren technischen Abnahmegrenzen bleiben **Zur Prüfung**. Es gibt noch keine implementierte Berichts- oder Exportfunktion. Der historische B3-Entwurf änderte zunächst nur B3 und den Index; die Harmonisierung vom 16.10.2026 aktualisiert die betroffenen Bausteine.
 
@@ -671,3 +671,11 @@ OUT-01 bis OUT-08 behalten ihre Bedeutung und werden weder automatisch veröffen
 **Migrationsbericht:** DLG-65 und BAT-24 liefern einen geschützten verständlichen Begleitbericht innerhalb desselben Portabilitätsvorgangs: bestätigte Auswahl-/Vorschaufassung, tatsächliche neue/geänderte/unveränderte/ausgelassene/gesperrte/fehlgeschlagene Teilwirkungen, offene Abhängigkeiten, Fehlergründe und Wiederaufnahmestand. Rein historische Integrationsdaten bleiben inaktiv. Bericht entsteht nur aus tatsächlich vorhandenen Nachweisen und veröffentlicht nichts automatisch. Fachliche Nutzerberichte dürfen eigene Einzelnoten nur nach bewusst gewähltem geschütztem Umfang enthalten; Adminstatistik erhält keinen privaten Inhalt.
 
 **Ablage/Abnahme:** Endliche temporäre Exportablage ist kein dauerhaftes Lernoriginal und keine Fernlöschkontrolle über heruntergeladene Dateien. Ein teilweise fehlgeschlagener Export wird als Teilpaket mit Fehlerbericht bezeichnet; ein reimportierter Bericht löst weder neue Zustellung noch Rolle/Freigabe aus. Nachweisumfang und Darstellung sind über UI DE/FR/EN verständlich zu prüfen; es wird kein Übersetzungsdienst gewählt.
+
+## B3.16 Ausgabengrenzen für die vier Fachentscheidungen
+
+OUT-01 bis OUT-08 behalten ihre Identitäten. L-08-Plan-/Fortschrittsausgaben unterscheiden pädagogische Reihenfolge DM-75, deren Gründe/Revisionen und bestätigte DM-35-Termine; ein Bericht ist keine Kalenderzustimmung oder Undo-Ausführung. Bearbeitet, Verständnis überprüft, geschätztes Wissen und nachgewiesene Kompetenz bleiben getrennt, auch ohne ausreichende Evidenz.
+
+Ein L-09-Abgleich nach UC-66 bleibt eine quellen-/fassungs-/kohortengebundene eigene Ableitung DM-24/DT-95. Bestehende Studien-/Planungs-/Datenexporte dürfen nur tatsächlich vorhandene erlaubte Vergleiche mit Teilabdeckung und Unsicherheiten ausgeben, niemals amtliche Anerkennung oder erfundene Versuche. Persönliche Noten nur im ausdrücklich gewählten geschützten Umfang.
+
+UC-65-Hinweisverlauf und Zustellnachweise werden nur bei eigener zulässiger Auswahl über OUT-08 exportiert; keine private Lern-/Notenvorschau in externen Nachrichten und kein erneuter Versand durch Bericht/Reimport. Lernmodus L-02 verändert Darstellung, nicht den Nachweisgrad oder gespeicherte Ergebnisse. [F2](F2-anwendungsfaelle.md) und [N2](N2-querschnittskonzepte.md) bleiben die Wirkungs-/Schutzgrenzen.

@@ -2,8 +2,8 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** P1 — Ziele und Rahmenbedingungen\
-**Version:** 0.7\
-**Stand:** 16.10.2026\
+**Version:** 0.8\
+**Stand:** 19.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Spezifikationsmethode:** Bausteine nach Johannes Siedersleben\
 **Geltungsbereich:** Fachlicher Zielumfang der ersten Produktversion (V1)
@@ -110,7 +110,7 @@ Sie legen noch keine konkrete Implementierung, Technologie oder Systemarchitektu
 | ID | Projektziel |
 |---|---|
 | G-14 | Studienrelevante Informationen wie Module, Stundenpläne, Prüfungen, Abgaben, Fristen, Noten und ECTS zentral nutzbar machen. |
-| G-15 | Studienpläne und Modulhandbücher mit verfügbaren, zuverlässigen Hochschulinformationen abgleichen können. |
+| G-15 | Persönliche Studienstruktur mit tatsächlich anwendbaren Modulhandbüchern, Prüfungsordnungen und Studienverlaufsplänen quellenbezogen abgleichen; Hochschule, Studiengang, Prüfungsordnung, Kohorte und Übergangsregeln beachten, keine institutionelle Anerkennung behaupten (L-09, UC-66). |
 | G-16 | Relevante Informationen und Änderungen aus zulässigen Quellen wiederkehrend überprüfen und den Nutzer proaktiv informieren. |
 | G-17 | Bei erkannten Wissenslücken oder organisatorischen Problemen geeignete Lernmaßnahmen und Lösungsvorschläge selbstständig vorbereiten. |
 | G-18 | Akademische Beratung zur Modulwahl, Studienplanung, Studienproblemen, Prüfungsorganisation sowie akademischen und beruflichen Entwicklung anbieten. |
@@ -478,7 +478,7 @@ Rahmenbedingungen definieren Vorgaben, innerhalb derer die spätere Lösung entw
 | ID | Rahmenbedingung |
 |---|---|
 | CON-14 | Sicherheits- und Datenschutzanforderungen müssen bereits bei der ersten Version berücksichtigt werden. |
-| CON-15 | Der Assistent muss offizielle, vom Nutzer bereitgestellte und extern recherchierte Informationen angemessen unterscheiden können. |
+| CON-15 | Offizielle, manuell bereitgestellte und recherchierte Quellen samt Version, Verlässlichkeit und persönlicher Geltung unterscheiden. Weder neueres Veröffentlichungsdatum noch manueller Upload beweist Vorrang oder Anwendbarkeit; Widersprüche/fehlende Geltungsmerkmale bleiben sichtbar (L-09). |
 | CON-16 | Die Anwendung darf keine nicht nachgewiesene Kompetenz als offiziell bestätigt ausgeben. |
 | CON-17 | Die Gestaltung muss professionell, übersichtlich, motivierend und für längere Lernsitzungen geeignet sein. |
 | CON-18 | Spielerische Elemente dürfen fachliche Lernziele nicht verdrängen oder Lernfortschritte irreführend darstellen. |
@@ -588,7 +588,7 @@ Detaillierte Testfälle, repräsentative Lernmaterialien und fachliche Bewertung
 | SC-28 | Fortschrittsanzeigen unterscheiden zwischen der Bearbeitung eines Kapitels, dem geschätzten Wissensstand und dem Nachweis einer Kompetenz. |
 | SC-29 | Der Nutzer kann vorgesehene Darstellungs- und Benachrichtigungseinstellungen selbst verändern. |
 | SC-30 | Auf in N1 zu prüfenden unterstützten Android-/iOS-Konfigurationen lässt sich die PWA mit eigener Identität installieren und vom Startbildschirm öffnen. Profil, Unterhaltungen, Module, Projekte und Kalender sind auf Smartphone, Tablet und Computer bedienbar; Administration ist rollenbeschränkt. Fehlende OS-Fähigkeiten werden mit nutzbarem Rückfallweg ausgewiesen. |
-| SC-31 | Ein ablenkungsarmer Lernmodus kann aktiviert werden. |
+| SC-31 | Der freiwillige ablenkungsarme Lernmodus lässt sich in UC-23/UC-29 jederzeit beenden; Entwürfe, Antworten und Fortschritte bleiben erhalten. Tastatur/Screenreader und reduzierte Bewegung sind nutzbar. Nicht dringende Hinweise werden zurückgestellt, notwendige Sicherheits-/Prioritätshinweise geschützt behandelt. Bearbeitet, Verständnis überprüft, Wissen geschätzt und Kompetenz nachgewiesen sind getrennt; bloßes Lesen erzeugt keinen Beherrschungsnachweis. Motivation ist abschaltbar, ohne Ranglistenpflicht, Serienzwang oder künstlichen Zeitdruck (L-02). |
 
 ### P1.6.5 Verwaltung, Sicherheit und Kosten
 
@@ -850,3 +850,11 @@ Neue Kennungen: G-40 bis G-45, CON-36 bis CON-42, SC-51 bis SC-61 und R-34 bis R
 ### P1.10.2 S2-Vertiefung des bestehenden Portabilitätsziels
 
 G-45, CON-36/40/42, SC-60/61 und R-37/38 werden in [S2](S2-datenmigration.md) für eigene vollständige/selektive Exportpakete, kontrollierten Reimport, sichere Wiederherstellung und Versions-/Betriebswechsel konkretisiert. Export erzeugt keine Fremdveröffentlichung; das Wiedereinlesen eigener Inhalte braucht eine aktuelle Vorschau und konkrete Bestätigung. Ein altes Paket setzt weder Rollen/Sitzungen noch endgültige Löschungen oder jüngere Lernfortschritte zurück. Manuelle Sitzungen bleiben bis zu einer ausdrücklich bestätigten Verschiebung unverändert. Diese fachlichen Sollverträge sind keine implementierte Portabilitätsgarantie; Parameter und konkrete Formate bleiben O-S2-01 bis O-S2-12. Keine neue G-/CON-/SC-/R-Kennung ist für diese Vertiefung nötig.
+
+### P1.10.3 Bestätigte Präzisierungen vom 19.10.2026
+
+L-08 verbindet regelbasierte Wiederholungszeiten mit evidenzabhängiger Anpassung. Nur nach ausdrücklicher Aktivierung darf die pädagogische Reihenfolge im internen Lernheft automatisch geändert werden, begründet, nachvollziehbar, deaktivierbar und rücknehmbar bei Erhalt jüngerer gültiger Lernfortschritte. Manuell fixierte Termine und bestätigte Kalendereinträge bleiben zustimmungspflichtig; FE-08, UC-35 und BAT-09 gelten unverändert für Kalenderwirkungen. Konkrete Wiederholungsformel bleibt zur Evaluation offen.
+
+L-04 ergänzt UC-65 mit persönlichen Erinnerungsregeln und der konfigurierbaren Ruhezeit 22:00–08:00 in der gewählten Benachrichtigungszeitzone. Individuelle Vorgaben gehen Standards vor; J−5/J−1 bleiben datumbezogene Standardpunkte, Stundenregeln brauchen eine tatsächlich bekannte Ereignisuhrzeit. Vertraulichkeit, zulässige Kanäle und Löschkontrolle bleiben verbindlich.
+
+L-09 konkretisiert G-15/CON-15 mit UC-66; L-02 konkretisiert G-26 bis G-28 und SC-31 innerhalb bestehender Lernfälle. Die vier L-Kennungen bezeichnen die bestätigten Auftragspunkte, keine neuen FE-Kennungen. Die 89 bestehenden FE bleiben erhalten, FE-56 offen. [F2](F2-anwendungsfaelle.md), [Prüfnachweis](E3-pruefnachweis.md) und [Entwicklungszuordnungen](ENTWICKLUNGSPLAN.md) dokumentieren Abnahme und begrenzte Meilensteinfolgen; alle Fassungen bleiben zur Prüfung.

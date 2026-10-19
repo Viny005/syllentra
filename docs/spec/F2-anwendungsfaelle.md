@@ -2,11 +2,11 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** F2 — Anwendungsfälle\
-**Version:** 0.3\
-**Stand:** 16.10.2026\
+**Version:** 0.4\
+**Stand:** 19.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Spezifikationsmethode:** Bausteine nach Johannes Siedersleben\
-**Bezugsstand:** S2-Abgleich vom 16.10.2026 auf `723af7fa1692f8dbaf888b694fa63806d7d5fc5f`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1; aktuelle Versionen im [Index](README.md).\
+**Bezugsstand:** Vier bestätigte Entscheidungen vom 19.10.2026; Ausgangs-HEAD `53ef171be4783748b5c7e3a84bb0cc363d5b4194`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1; aktuelle Fassungen im [Index](README.md).\
 **Geltungsbereich:** Fachlicher Zielumfang der ersten Produktversion (V1). Dieses Dokument beschreibt noch keine implementierten Funktionen.
 
 ---
@@ -44,7 +44,7 @@ Alle Beispiele sind fiktiv und beschreiben zukünftige Abnahmesituationen. Zugan
 
 ### F2.1.3 Bezeichner und Testverständnis
 
-`UC-01` bis `UC-50` identifizieren die einzelnen Anwendungsfälle eindeutig. `GP-01` bis `GP-15` stammen aus F1. Die bestätigten fachlichen Entscheidungen `FE-01` bis `FE-06` werden unverändert übernommen; `FE-07` bis `FE-09` wurden für F2 gesondert vom Projektinhaber entschieden. Ein aufgeführtes **Abnahmebeispiel** ist ein überprüfbarer Beispielablauf, aber keine Behauptung einer bereits erfolgreich durchgeführten automatisierten Prüfung. Konkrete Datenfelder, Grenzwerte und Fehlercodes bleiben Folgedokumenten vorbehalten.
+Das aktuelle Verzeichnis enthält `UC-01` bis `UC-66` eindeutig; die ursprünglichen UC-01 bis UC-64 behalten ihre Identität. `GP-01` bis `GP-15` stammen aus F1. Die bestätigten fachlichen Entscheidungen `FE-01` bis `FE-06` werden unverändert übernommen; `FE-07` bis `FE-09` wurden für F2 gesondert vom Projektinhaber entschieden. Ein aufgeführtes **Abnahmebeispiel** ist ein überprüfbarer Beispielablauf, aber keine Behauptung einer bereits erfolgreich durchgeführten automatisierten Prüfung. Konkrete Datenfelder, Grenzwerte und Fehlercodes bleiben Folgedokumenten vorbehalten.
 
 ## F2.2 Anwendungsfallverzeichnis
 
@@ -52,13 +52,13 @@ Alle Beispiele sind fiktiv und beschreiben zukünftige Abnahmesituationen. Zugan
 |---|---|---|---|
 | UC-01 | Geführten Einstieg nutzen oder überspringen | GP-01 | FE-01 |
 | UC-02 | Mein Profil bearbeiten | GP-01 | FE-01 |
-| UC-03 | Studieninformationen und Nachweise aktualisieren | GP-01, GP-02 | FE-08 |
+| UC-03 | Studieninformationen und Nachweise aktualisieren | GP-01, GP-02 | FE-08; L-09 |
 | UC-04 | Persönlichen Arbeitsstand auf einem berechtigten Gerät fortsetzen | GP-10, GP-15 | — |
 | UC-05 | Gerätezugriff beenden oder entziehen | GP-15 | — |
-| UC-06 | Semester anlegen, wechseln und verwalten | GP-02 | — |
-| UC-07 | Modul oder Kurs anlegen und zuordnen | GP-02 | FE-08 |
-| UC-08 | Themen, Kapitel und Lernziele organisieren | GP-02, GP-04 | FE-08 |
-| UC-09 | Noten, ECTS und Prüfungsleistungen erfassen | GP-02, GP-11 | FE-08 |
+| UC-06 | Semester anlegen, wechseln und verwalten | GP-02 | L-09 |
+| UC-07 | Modul oder Kurs anlegen und zuordnen | GP-02 | FE-08; L-09 |
+| UC-08 | Themen, Kapitel und Lernziele organisieren | GP-02, GP-04 | FE-08; L-09 |
+| UC-09 | Noten, ECTS und Prüfungsleistungen erfassen | GP-02, GP-11 | FE-08; L-09 |
 | UC-10 | Semesterabschluss und Archivierung bestätigen | GP-12 | FE-06, FE-08 |
 | UC-11 | Lernmaterial als dauerhaftes Original aufnehmen | GP-03 | FE-09 |
 | UC-12 | KI-Vorschlag zur Dokumentzuordnung entscheiden | GP-03 | FE-02, FE-08, FE-09 |
@@ -72,34 +72,50 @@ Alle Beispiele sind fiktiv und beschreiben zukünftige Abnahmesituationen. Zugan
 | UC-20 | Zwischen Text und Sprache im Gespräch wechseln | GP-04, GP-10 | — |
 | UC-21 | Gespräch organisieren, zuordnen und archivieren | GP-10 | FE-04 |
 | UC-22 | Unterhaltung mit abgestimmten Löschfolgen entfernen | GP-10, GP-15 | — |
-| UC-23 | Interaktive Lerneinheit mit frei gewähltem Einstieg beginnen | GP-04 | FE-01 |
-| UC-24 | Adaptives Verständnis überprüfen | GP-04 | FE-03, FE-07 |
-| UC-25 | Fehler mit schrittweisen Hinweisen bearbeiten | GP-04, GP-05 | FE-07, FE-03 |
-| UC-26 | Vollständige Lösung und Lösungsweg anfordern | GP-04, GP-05 | FE-07 |
-| UC-27 | Lernstrategie an Rückmeldung und Fortschritt anpassen | GP-04 | FE-03 |
-| UC-28 | Prüfungsnahe Übung oder Simulation durchführen | GP-05 | FE-07 |
-| UC-29 | Lernfortschritt und Wissensstand unterscheiden | GP-04, GP-05, GP-11 | FE-07 |
-| UC-30 | Prüfungsvorbereitung für mehrere Prüfungen planen | GP-05, GP-06 | FE-08 |
+| UC-23 | Interaktive Lerneinheit mit frei gewähltem Einstieg beginnen | GP-04 | FE-01; L-08, L-02 |
+| UC-24 | Adaptives Verständnis überprüfen | GP-04 | FE-03, FE-07; L-08 |
+| UC-25 | Fehler mit schrittweisen Hinweisen bearbeiten | GP-04, GP-05 | FE-07, FE-03; L-08 |
+| UC-26 | Vollständige Lösung und Lösungsweg anfordern | GP-04, GP-05 | FE-07; L-08 |
+| UC-27 | Lernstrategie an Rückmeldung und Fortschritt anpassen | GP-04 | FE-03; L-08 |
+| UC-28 | Prüfungsnahe Übung oder Simulation durchführen | GP-05 | FE-07; L-08 |
+| UC-29 | Lernfortschritt und Wissensstand unterscheiden | GP-04, GP-05, GP-11 | FE-07; L-08, L-02 |
+| UC-30 | Prüfungsvorbereitung für mehrere Prüfungen planen | GP-05, GP-06 | FE-08; L-08 |
 | UC-31 | Lernergebnis in Kompetenzportfolio überführen | GP-11, GP-05 | FE-07 |
-| UC-32 | Internen Studienkalendereintrag manuell pflegen | GP-06 | — |
+| UC-32 | Internen Studienkalendereintrag manuell pflegen | GP-06 | L-08 |
 | UC-33 | Stundenplan importieren und bestätigen | GP-02, GP-06 | FE-08 |
 | UC-34 | Persönliche Kalender ausschließlich lesend berücksichtigen | GP-06 | — |
-| UC-35 | KI-Lernplanung in internen Kalender übernehmen | GP-06 | FE-08 |
+| UC-35 | KI-Lernplanung in internen Kalender übernehmen | GP-06 | FE-08; L-08 |
 | UC-36 | Änderung an autorisierter Studienquelle erkennen und anzeigen | GP-07 | FE-08 |
-| UC-37 | Prüfungsverschiebung prüfen und neu planen | GP-07, GP-06 | FE-05, FE-08 |
+| UC-37 | Prüfungsverschiebung prüfen und neu planen | GP-07, GP-06 | FE-05, FE-08; L-08 |
 | UC-38 | Zentralen Eingang „Zu prüfen“ und kontextuelle Vorschläge verwalten | GP-03, GP-06, GP-07, GP-12 | FE-08 |
 | UC-39 | Projekt unabhängig oder modulbezogen anlegen | GP-09 | — |
 | UC-40 | Projekt mit mehreren Modulen verknüpfen | GP-09, GP-02 | FE-09 |
 | UC-41 | Projektaufgaben und Ergebnisse verfolgen | GP-09, GP-06 | FE-08 |
 | UC-42 | Ausgewähltes Repository lesend analysieren | GP-09, GP-11 | — |
 | UC-43 | Kompetenzen, Zertifikate und Nachweise pflegen | GP-11 | FE-07, FE-09 |
-| UC-44 | Studienentscheidung mit Quellen vorbereiten | GP-08 | FE-08 |
+| UC-44 | Studienentscheidung mit Quellen vorbereiten | GP-08 | FE-08; L-09 |
 | UC-45 | Unterstützte Integration aus Katalog verbinden | GP-13 | — |
 | UC-46 | KI-Dienst aufgabenbezogen auswählen und Kosten freigeben | GP-13, GP-04 | FE-08 |
 | UC-47 | Integrationsberechtigung deaktivieren oder widerrufen | GP-13, GP-15 | — |
 | UC-48 | Administrationskonfiguration ändern und zurücksetzen | GP-14 | FE-08, FE-09 |
 | UC-49 | Persönliche Daten kontrolliert einsehen und exportieren | GP-15 | FE-09 |
 | UC-50 | Originale, persönliche Daten und Beziehungen kontrolliert löschen | GP-15 | FE-09, FE-08 |
+| UC-51 | Registrieren und E-Mail bestätigen | GP-01 | Bestandsentscheidungen der Einzelbeschreibung |
+| UC-52 | Sitzung sicher entsperren und Konto wiederherstellen | GP-01, GP-15 | Bestandsentscheidungen der Einzelbeschreibung |
+| UC-53 | Rollen delegieren und Administration absichern | GP-14 | Bestandsentscheidungen der Einzelbeschreibung |
+| UC-54 | Befristete Supporthilfe freigeben | GP-15 | Bestandsentscheidungen der Einzelbeschreibung |
+| UC-55 | Quoten und Funktionsveröffentlichung verwalten | GP-14 | Bestandsentscheidungen der Einzelbeschreibung |
+| UC-56 | Integrationsumfang, Synchronisation und Historie verwalten | GP-13 | Bestandsentscheidungen der Einzelbeschreibung |
+| UC-57 | Quellversionen und abhängige Lerninhalte prüfen | GP-03, GP-07 | Bestandsentscheidungen der Einzelbeschreibung; L-09 |
+| UC-58 | Sensible Dokumente und Schlüssel kontrollieren | GP-03, GP-15 | Bestandsentscheidungen der Einzelbeschreibung |
+| UC-59 | Archive und mehrere Materialien sicher importieren | GP-03 | Bestandsentscheidungen der Einzelbeschreibung; L-09 |
+| UC-60 | Daten sichern und Wiederherstellung prüfen | GP-15 | Bestandsentscheidungen der Einzelbeschreibung |
+| UC-61 | Papierkorb und KI-Löschaufträge kontrollieren | GP-15 | Bestandsentscheidungen der Einzelbeschreibung |
+| UC-62 | Konto freiwillig pausieren oder löschen | GP-15 | Bestandsentscheidungen der Einzelbeschreibung |
+| UC-63 | Administrative Kontosperre überprüfen | GP-14 | Bestandsentscheidungen der Einzelbeschreibung |
+| UC-64 | Eigenen Syllentra-Export kontrolliert reimportieren | GP-15 | Bestandsentscheidungen der Einzelbeschreibung |
+| UC-65 | Erinnerungen und Benachrichtigungen verwalten | GP-05, GP-06, GP-07, GP-15 | L-04; FE-23, FE-24, FE-44, FE-45 |
+| UC-66 | Studienstruktur mit geltenden Studienvorgaben abgleichen | GP-01, GP-02, GP-05, GP-08 | L-09; FE-08, FE-15, FE-27 |
 
 ### F2.2.1 Überblick der Nutzerinteraktionen
 
@@ -213,6 +229,8 @@ flowchart LR
 
 **Abnahmebeispiel:** Wenn eine Note manuell hinterlegt wird, erscheint sie nicht als KI-geprüfte Fachkompetenz.
 
+**Verbindung zu L-09/UC-66:** Studienvorgaben können aus manuell bereitgestellten zulässigen Unterlagen stammen. Bestätigte Extraktion und belegte persönliche Geltung sind getrennt von amtlicher Anerkennung. Hochschule, Studiengang, Ordnung, Einschreibung/Kohorte, Inkrafttreten und Übergänge entscheiden über Anwendbarkeit; eine neuere oder hochgeladene Fassung erhält nicht automatisch Vorrang. UC-66 liefert den quellengebundenen Soll-Ist-Abgleich; dieser Vorgang überschreibt keine Leistungen oder Termine pauschal.
+
 ### UC-04 — Persönlichen Arbeitsstand auf einem berechtigten Gerät fortsetzen
 
 | Merkmal | Festlegung |
@@ -305,6 +323,8 @@ flowchart LR
 
 **Abnahmebeispiel:** Wenn ein neues Semester angelegt wird, bleiben vorherige Noten, Gespräche und offene Projektaufgaben bestehen.
 
+**Verbindung zu L-09/UC-66:** Studienvorgaben können aus manuell bereitgestellten zulässigen Unterlagen stammen. Bestätigte Extraktion und belegte persönliche Geltung sind getrennt von amtlicher Anerkennung. Hochschule, Studiengang, Ordnung, Einschreibung/Kohorte, Inkrafttreten und Übergänge entscheiden über Anwendbarkeit; eine neuere oder hochgeladene Fassung erhält nicht automatisch Vorrang. UC-66 liefert den quellengebundenen Soll-Ist-Abgleich; dieser Vorgang überschreibt keine Leistungen oder Termine pauschal.
+
 ### UC-07 — Modul oder Kurs anlegen und zuordnen
 
 | Merkmal | Festlegung |
@@ -334,6 +354,8 @@ flowchart LR
 **Schutz- und Freigabegrenzen:** Manuelle Anlage benötigt keine zusätzliche Freigabe. Bestätigungspflichtige KI- oder Importvorschläge sind nach FE-08 zentral und kontextuell verfügbar; externe Schreibrechte oder Kosten entstehen nicht durch Modulpflege.
 
 **Abnahmebeispiel:** Nach Anlage eines Kurses kann ein Gespräch in dessen Kontext geöffnet werden.
+
+**Verbindung zu L-09/UC-66:** Studienvorgaben können aus manuell bereitgestellten zulässigen Unterlagen stammen. Bestätigte Extraktion und belegte persönliche Geltung sind getrennt von amtlicher Anerkennung. Hochschule, Studiengang, Ordnung, Einschreibung/Kohorte, Inkrafttreten und Übergänge entscheiden über Anwendbarkeit; eine neuere oder hochgeladene Fassung erhält nicht automatisch Vorrang. UC-66 liefert den quellengebundenen Soll-Ist-Abgleich; dieser Vorgang überschreibt keine Leistungen oder Termine pauschal.
 
 ### UC-08 — Themen, Kapitel und Lernziele organisieren
 
@@ -365,6 +387,8 @@ flowchart LR
 
 **Abnahmebeispiel:** Wenn ein Lernziel umbenannt wird, bleiben vorhandene Übungen und Bezüge nachvollziehbar.
 
+**Verbindung zu L-09/UC-66:** Studienvorgaben können aus manuell bereitgestellten zulässigen Unterlagen stammen. Bestätigte Extraktion und belegte persönliche Geltung sind getrennt von amtlicher Anerkennung. Hochschule, Studiengang, Ordnung, Einschreibung/Kohorte, Inkrafttreten und Übergänge entscheiden über Anwendbarkeit; eine neuere oder hochgeladene Fassung erhält nicht automatisch Vorrang. UC-66 liefert den quellengebundenen Soll-Ist-Abgleich; dieser Vorgang überschreibt keine Leistungen oder Termine pauschal.
+
 ### UC-09 — Noten, ECTS und Prüfungsleistungen erfassen
 
 | Merkmal | Festlegung |
@@ -394,6 +418,8 @@ flowchart LR
 **Schutz- und Freigabegrenzen:** Ein Nutzer kann Belege nicht durch eine Texteingabe amtlich verifizieren. Bestätigungspflichtige Imports benötigen Quellenprüfung und FE-08-Entscheidung; Noten, ECTS, Leistungsversuche und KI-Einschätzungen bleiben getrennt.
 
 **Abnahmebeispiel:** Wenn ein offizielles Ergebnis hinterlegt ist, erscheint es getrennt von Lernfortschritt und Wissensschätzung.
+
+**Verbindung zu L-09/UC-66:** Studienvorgaben können aus manuell bereitgestellten zulässigen Unterlagen stammen. Bestätigte Extraktion und belegte persönliche Geltung sind getrennt von amtlicher Anerkennung. Hochschule, Studiengang, Ordnung, Einschreibung/Kohorte, Inkrafttreten und Übergänge entscheiden über Anwendbarkeit; eine neuere oder hochgeladene Fassung erhält nicht automatisch Vorrang. UC-66 liefert den quellengebundenen Soll-Ist-Abgleich; dieser Vorgang überschreibt keine Leistungen oder Termine pauschal.
 
 ### UC-10 — Semesterabschluss und Archivierung bestätigen
 
@@ -821,6 +847,10 @@ flowchart LR
 
 **Abnahmebeispiel:** Der Nutzer wählt „direkt Seite 3 bearbeiten“, ohne Hochschule oder Avatar angegeben zu haben. Die Einheit startet dort ohne vorgeschaltete Zusammenfassung, soweit die benötigte Lernfunktion verfügbar ist.
 
+**Präzisierung L-08:** Zeitliche Wiederholungsregeln werden mit Zielen/Themen/Kapiteln, tatsächlichen Antworten/Hilfen, Schwierigkeiten, Prüfungsnähe, verfügbarer Zeit, abgeschlossenen/verpassten Wiederholungen und Evidenzqualität/-aktualität verbunden. Ohne tragfähige Evidenz bleibt die Einschätzung unsicher; Versäumnis ist keine nachgewiesene Wissenslücke. Automatische pädagogische Umordnung braucht ausdrücklich aktivierte persönliche Automatik, Begründung, Verlauf und konfliktgeprüftes Undo ohne Verlust jüngerer Fortschritte. Sie erzeugt keine Kalenderwirkung. Die konkrete Formel bleibt offen.
+
+**Präzisierung L-02:** Freiwilliger ablenkungsarmer Modus, jederzeitiges Beenden und optionale Zeitbegrenzung verändern keine gespeicherten Antworten/Entwürfe/Fortschritte. Nicht dringende Unterbrechungen werden zurückgestellt; dringende Hinweise respektieren Rechte, Priorität und Vertraulichkeit. Anzeige unterscheidet bearbeitet, Verständnis überprüft, Wissensstand geschätzt und Kompetenz nachgewiesen. Tastatur/Screenreader, reduzierte Bewegung und abschaltbare Motivation sind vorgesehen; keine Ranglistenpflicht, Serienzwänge oder künstlicher Zeitdruck.
+
 ### UC-24 — Adaptives Verständnis überprüfen
 
 | Merkmal | Festlegung |
@@ -850,6 +880,8 @@ flowchart LR
 **Schutz- und Freigabegrenzen:** Kein starrer Prüfpunkt nach jeder Erklärung. Verarbeitung und Speicherung erfolgen nur innerhalb der erlaubten Lernbegleitung; Zusatzkosten bleiben autorisierungspflichtig.
 
 **Abnahmebeispiel:** Nach einer zutreffenden Erklärung und einer späteren Begriffsverwechslung passt die nächste Frage ihre Schwierigkeit und ihren Schwerpunkt an. Es erscheint nicht automatisch nach jedem Absatz eine Frage.
+
+**Präzisierung L-08:** Zeitliche Wiederholungsregeln werden mit Zielen/Themen/Kapiteln, tatsächlichen Antworten/Hilfen, Schwierigkeiten, Prüfungsnähe, verfügbarer Zeit, abgeschlossenen/verpassten Wiederholungen und Evidenzqualität/-aktualität verbunden. Ohne tragfähige Evidenz bleibt die Einschätzung unsicher; Versäumnis ist keine nachgewiesene Wissenslücke. Automatische pädagogische Umordnung braucht ausdrücklich aktivierte persönliche Automatik, Begründung, Verlauf und konfliktgeprüftes Undo ohne Verlust jüngerer Fortschritte. Sie erzeugt keine Kalenderwirkung. Die konkrete Formel bleibt offen.
 
 ### UC-25 — Fehler mit schrittweisen Hinweisen bearbeiten
 
@@ -881,6 +913,8 @@ flowchart LR
 
 **Abnahmebeispiel:** Bei einer falschen Vorzeichenumformung folgt zunächst ein Hinweis auf den betreffenden Schritt. Nach einem neuen Versuch wird das Ergebnis mit genutztem Hinweis dokumentiert, nicht als vollständig selbstständige Simulationsleistung.
 
+**Präzisierung L-08:** Zeitliche Wiederholungsregeln werden mit Zielen/Themen/Kapiteln, tatsächlichen Antworten/Hilfen, Schwierigkeiten, Prüfungsnähe, verfügbarer Zeit, abgeschlossenen/verpassten Wiederholungen und Evidenzqualität/-aktualität verbunden. Ohne tragfähige Evidenz bleibt die Einschätzung unsicher; Versäumnis ist keine nachgewiesene Wissenslücke. Automatische pädagogische Umordnung braucht ausdrücklich aktivierte persönliche Automatik, Begründung, Verlauf und konfliktgeprüftes Undo ohne Verlust jüngerer Fortschritte. Sie erzeugt keine Kalenderwirkung. Die konkrete Formel bleibt offen.
+
 ### UC-26 — Vollständige Lösung und Lösungsweg anfordern
 
 | Merkmal | Festlegung |
@@ -910,6 +944,8 @@ flowchart LR
 **Schutz- und Freigabegrenzen:** Hinweise und Lösungen sind von einer selbstständigen richtigen Antwort zu trennen. Eine Erklärung darf keine externe Aufgabenabgabe oder zusätzlichen kostenpflichtigen Aufruf ohne passende Freigabe auslösen.
 
 **Abnahmebeispiel:** Auf „Zeige den vollständigen Lösungsweg“ folgt dieser ohne erzwungene Hinweisrunde. In einer Simulation erscheint die Aufgabe anschließend als mit vollständiger Lösungshilfe bearbeitet.
+
+**Präzisierung L-08:** Zeitliche Wiederholungsregeln werden mit Zielen/Themen/Kapiteln, tatsächlichen Antworten/Hilfen, Schwierigkeiten, Prüfungsnähe, verfügbarer Zeit, abgeschlossenen/verpassten Wiederholungen und Evidenzqualität/-aktualität verbunden. Ohne tragfähige Evidenz bleibt die Einschätzung unsicher; Versäumnis ist keine nachgewiesene Wissenslücke. Automatische pädagogische Umordnung braucht ausdrücklich aktivierte persönliche Automatik, Begründung, Verlauf und konfliktgeprüftes Undo ohne Verlust jüngerer Fortschritte. Sie erzeugt keine Kalenderwirkung. Die konkrete Formel bleibt offen.
 
 ### UC-27 — Lernstrategie an Rückmeldung und Fortschritt anpassen
 
@@ -941,6 +977,8 @@ flowchart LR
 
 **Abnahmebeispiel:** Nach „Das abstrakte Beispiel hilft mir nicht“ folgt eine konkrete Anwendung desselben Konzepts. Die vorherige Frage bleibt im Gespräch erhalten und das Verständnis wird anhand einer neuen Antwort überprüft.
 
+**Präzisierung L-08:** Zeitliche Wiederholungsregeln werden mit Zielen/Themen/Kapiteln, tatsächlichen Antworten/Hilfen, Schwierigkeiten, Prüfungsnähe, verfügbarer Zeit, abgeschlossenen/verpassten Wiederholungen und Evidenzqualität/-aktualität verbunden. Ohne tragfähige Evidenz bleibt die Einschätzung unsicher; Versäumnis ist keine nachgewiesene Wissenslücke. Automatische pädagogische Umordnung braucht ausdrücklich aktivierte persönliche Automatik, Begründung, Verlauf und konfliktgeprüftes Undo ohne Verlust jüngerer Fortschritte. Sie erzeugt keine Kalenderwirkung. Die konkrete Formel bleibt offen.
+
 ### UC-28 — Prüfungsnahe Übung oder Simulation durchführen
 
 | Merkmal | Festlegung |
@@ -970,6 +1008,8 @@ flowchart LR
 **Schutz- und Freigabegrenzen:** Simulation ist keine Hochschulprüfung, ihre Auswertung keine offizielle Note oder ECTS-Vergabe. Nur erlaubte Aufgaben und freigegebene Verarbeitung werden genutzt.
 
 **Abnahmebeispiel:** Von zwei gelösten Aufgaben wurde bei einer die vollständige Lösung angefordert. Die Auswertung unterscheidet ausdrücklich diese unterstützte Bearbeitung von der anderen selbstständigen Antwort.
+
+**Präzisierung L-08:** Zeitliche Wiederholungsregeln werden mit Zielen/Themen/Kapiteln, tatsächlichen Antworten/Hilfen, Schwierigkeiten, Prüfungsnähe, verfügbarer Zeit, abgeschlossenen/verpassten Wiederholungen und Evidenzqualität/-aktualität verbunden. Ohne tragfähige Evidenz bleibt die Einschätzung unsicher; Versäumnis ist keine nachgewiesene Wissenslücke. Automatische pädagogische Umordnung braucht ausdrücklich aktivierte persönliche Automatik, Begründung, Verlauf und konfliktgeprüftes Undo ohne Verlust jüngerer Fortschritte. Sie erzeugt keine Kalenderwirkung. Die konkrete Formel bleibt offen.
 
 ### UC-29 — Lernfortschritt und Wissensstand unterscheiden
 
@@ -1001,6 +1041,10 @@ flowchart LR
 
 **Abnahmebeispiel:** Ein vollständig bearbeitetes Kapitel ohne beantwortete Verständnisaufgaben zeigt Bearbeitung, aber keinen erfundenen Kompetenznachweis oder amtlichen Leistungspunkt.
 
+**Präzisierung L-08:** Zeitliche Wiederholungsregeln werden mit Zielen/Themen/Kapiteln, tatsächlichen Antworten/Hilfen, Schwierigkeiten, Prüfungsnähe, verfügbarer Zeit, abgeschlossenen/verpassten Wiederholungen und Evidenzqualität/-aktualität verbunden. Ohne tragfähige Evidenz bleibt die Einschätzung unsicher; Versäumnis ist keine nachgewiesene Wissenslücke. Automatische pädagogische Umordnung braucht ausdrücklich aktivierte persönliche Automatik, Begründung, Verlauf und konfliktgeprüftes Undo ohne Verlust jüngerer Fortschritte. Sie erzeugt keine Kalenderwirkung. Die konkrete Formel bleibt offen.
+
+**Präzisierung L-02:** Freiwilliger ablenkungsarmer Modus, jederzeitiges Beenden und optionale Zeitbegrenzung verändern keine gespeicherten Antworten/Entwürfe/Fortschritte. Nicht dringende Unterbrechungen werden zurückgestellt; dringende Hinweise respektieren Rechte, Priorität und Vertraulichkeit. Anzeige unterscheidet bearbeitet, Verständnis überprüft, Wissensstand geschätzt und Kompetenz nachgewiesen. Tastatur/Screenreader, reduzierte Bewegung und abschaltbare Motivation sind vorgesehen; keine Ranglistenpflicht, Serienzwänge oder künstlicher Zeitdruck.
+
 ### UC-30 — Prüfungsvorbereitung für mehrere Prüfungen planen
 
 | Merkmal | Festlegung |
@@ -1030,6 +1074,8 @@ flowchart LR
 **Schutz- und Freigabegrenzen:** Externe Kalender bleiben ausschließlich lesbar. Quellenrechte, Datenschutz und Kostenrahmen beschränken Vorbereitung und Anbieterwahl; Bestätigung gilt für die konkrete Fassung.
 
 **Abnahmebeispiel:** Zwei Prüfungen in derselben Woche erzeugen einen gemeinsamen Vorschlag mit beiden Terminen. Vor Bestätigung bleibt der interne Kalender unverändert, auch wenn der Vorschlag aus zwei Kursen erreichbar ist.
+
+**Präzisierung L-08:** Zeitliche Wiederholungsregeln werden mit Zielen/Themen/Kapiteln, tatsächlichen Antworten/Hilfen, Schwierigkeiten, Prüfungsnähe, verfügbarer Zeit, abgeschlossenen/verpassten Wiederholungen und Evidenzqualität/-aktualität verbunden. Ohne tragfähige Evidenz bleibt die Einschätzung unsicher; Versäumnis ist keine nachgewiesene Wissenslücke. Automatische pädagogische Umordnung braucht ausdrücklich aktivierte persönliche Automatik, Begründung, Verlauf und konfliktgeprüftes Undo ohne Verlust jüngerer Fortschritte. Sie erzeugt keine Kalenderwirkung. Die konkrete Formel bleibt offen.
 
 ### UC-31 — Lernergebnis in Kompetenzportfolio überführen
 
@@ -1092,6 +1138,8 @@ flowchart LR
 **Schutz- und Freigabegrenzen:** Schreibzuständigkeit besteht ausschließlich im internen Kalender. Direkte Nutzerpflege erzeugt keinen bestätigungspflichtigen Vorschlag und keine zusätzliche externe Berechtigung.
 
 **Abnahmebeispiel:** Der Nutzer speichert eine selbst eingetragene Wiederholung für Dienstag. Sie erscheint intern ohne zweite Freigabeabfrage; ein gleichzeitig sichtbarer privater Kalendertermin bleibt unverändert.
+
+**Präzisierung L-08:** Automatik im Lernheft ist keine Kalenderzustimmung. Manuell fixierte und bereits bestätigte Einträge dürfen ohne erforderliche Zustimmung weder verschoben noch gelöscht werden. Ein neuer Kalenderplan benötigt weiterhin die konkrete aktuelle Entscheidung nach FE-08/UC-35; unbestätigte Änderungen ändern auch keine Erinnerungsfristen. Konflikt-/Undo-Regeln stehen im abschließenden Abschnitt „Vier bestätigte Fachentscheidungen“.
 
 ### UC-33 — Stundenplan importieren und bestätigen
 
@@ -1183,6 +1231,8 @@ flowchart LR
 
 **Abnahmebeispiel:** Derselbe Vorschlag wird im Kurs angenommen. In „Zu prüfen“ ist dieselbe Entscheidung erkennbar; erneutes Öffnen erzeugt keine zweite Annahme oder doppelte Lerntermine.
 
+**Präzisierung L-08:** Automatik im Lernheft ist keine Kalenderzustimmung. Manuell fixierte und bereits bestätigte Einträge dürfen ohne erforderliche Zustimmung weder verschoben noch gelöscht werden. Ein neuer Kalenderplan benötigt weiterhin die konkrete aktuelle Entscheidung nach FE-08/UC-35; unbestätigte Änderungen ändern auch keine Erinnerungsfristen. Konflikt-/Undo-Regeln stehen im abschließenden Abschnitt „Vier bestätigte Fachentscheidungen“.
+
 ### UC-36 — Änderung an autorisierter Studienquelle erkennen und anzeigen
 
 | Merkmal | Festlegung |
@@ -1242,6 +1292,8 @@ flowchart LR
 **Schutz- und Freigabegrenzen:** Externe private Kalender bleiben selbst nach Bestätigung unverändert. Quellenhinweis und interner gespeicherter Prüfungsplan sind unterscheidbar; geänderte Planung darf nicht vor Bestätigung als übernommen erscheinen.
 
 **Abnahmebeispiel:** Eine Quelle verschiebt eine Klausur vom 20. auf den 27. November. Bei Ablehnung bleiben die bisherigen internen Termine erhalten; bei Bestätigung wird ausschließlich die geprüfte interne Fassung geändert.
+
+**Präzisierung L-08:** Automatik im Lernheft ist keine Kalenderzustimmung. Manuell fixierte und bereits bestätigte Einträge dürfen ohne erforderliche Zustimmung weder verschoben noch gelöscht werden. Ein neuer Kalenderplan benötigt weiterhin die konkrete aktuelle Entscheidung nach FE-08/UC-35; unbestätigte Änderungen ändern auch keine Erinnerungsfristen. Konflikt-/Undo-Regeln stehen im abschließenden Abschnitt „Vier bestätigte Fachentscheidungen“.
 
 ### UC-38 — Zentralen Eingang „Zu prüfen“ und kontextuelle Vorschläge verwalten
 
@@ -1454,6 +1506,8 @@ flowchart LR
 **Schutz- und Freigabegrenzen:** Beratung allein autorisiert keinen externen Versand, keine Anmeldung und keine Gebühr. Terminvereinbarung verleiht keine persönlichen Kalenderschreibrechte; Kosten bleiben gesondert zweckgebunden freizugeben.
 
 **Abnahmebeispiel:** Bei unklarer Anerkennung eines Moduls verweist die begründete Empfehlung auf die zuständige Stelle. Ein vorbereiteter Entwurf bleibt ohne explizite Versandfreigabe ungesendet und wird nicht als Anerkennungsbescheid dargestellt.
+
+**Verbindung zu L-09/UC-66:** Studienvorgaben können aus manuell bereitgestellten zulässigen Unterlagen stammen. Bestätigte Extraktion und belegte persönliche Geltung sind getrennt von amtlicher Anerkennung. Hochschule, Studiengang, Ordnung, Einschreibung/Kohorte, Inkrafttreten und Übergänge entscheiden über Anwendbarkeit; eine neuere oder hochgeladene Fassung erhält nicht automatisch Vorrang. UC-66 liefert den quellengebundenen Soll-Ist-Abgleich; dieser Vorgang überschreibt keine Leistungen oder Termine pauschal.
 
 ## F2.10 Integrationen, Administration und Datenkontrolle
 
@@ -1931,6 +1985,8 @@ Die neuen Kennungen ergänzen UC-01 bis UC-50 ohne Umnummerierung. Gemeinsame Vo
 
 **Abnahmebeispiel:** Neue Folie ändert eine Definition: Originalfassung bleibt nachvollziehbar; altes Lernblatt wird markiert und erst nach Prüfung ersetzt.
 
+**Verbindung zu L-09/UC-66:** Studienvorgaben können aus manuell bereitgestellten zulässigen Unterlagen stammen. Bestätigte Extraktion und belegte persönliche Geltung sind getrennt von amtlicher Anerkennung. Hochschule, Studiengang, Ordnung, Einschreibung/Kohorte, Inkrafttreten und Übergänge entscheiden über Anwendbarkeit; eine neuere oder hochgeladene Fassung erhält nicht automatisch Vorrang. UC-66 liefert den quellengebundenen Soll-Ist-Abgleich; dieser Vorgang überschreibt keine Leistungen oder Termine pauschal.
+
 ### UC-58 — Sensible Dokumente und Schlüssel kontrollieren
 
 | Merkmal | Festlegung |
@@ -1962,6 +2018,8 @@ Die neuen Kennungen ergänzen UC-01 bis UC-50 ohne Umnummerierung. Gemeinsame Vo
 **Alternativen, Fehler und Schutz:** Pfadflucht, Bomben, unzulässige Verschachtelung, ausführbare und beschädigte Inhalte werden isoliert und nicht ausgeführt. Originalarchiv und Extrakte sind unabhängig löschbar. Dateiimport benötigt keine Mikrofonfreigabe. Abbruch vor bestätigter Wirkung erhält den Ausgangsbestand; nach unklarem Ausgang wird zunächst die tatsächliche Wirkung geprüft.
 
 **Abnahmebeispiel:** Ein Archiv mit ../pfad wird abgewiesen; eine erlaubte Vorlesungsaufnahme erzeugt geprüfte Lernnotizen statt unkontrollierter dauerhafter Rohkopien.
+
+**Verbindung zu L-09/UC-66:** Studienvorgaben können aus manuell bereitgestellten zulässigen Unterlagen stammen. Bestätigte Extraktion und belegte persönliche Geltung sind getrennt von amtlicher Anerkennung. Hochschule, Studiengang, Ordnung, Einschreibung/Kohorte, Inkrafttreten und Übergänge entscheiden über Anwendbarkeit; eine neuere oder hochgeladene Fassung erhält nicht automatisch Vorrang. UC-66 liefert den quellengebundenen Soll-Ist-Abgleich; dieser Vorgang überschreibt keine Leistungen oder Termine pauschal.
 
 ### UC-60 — Daten sichern und Wiederherstellung prüfen
 
@@ -2056,3 +2114,68 @@ Die neuen Kennungen ergänzen UC-01 bis UC-50 ohne Umnummerierung. Gemeinsame Vo
 **Positive Abnahme:** Derselbe bestätigte eigene Paketbestand wird erneut eingelesen: keine doppelte Anlage; Ergebnis enthält Wiedererkennung und begründete Auslassungen.
 
 **Negative Abnahme:** Zwischen Vorschau und Bestätigung wird ein Ziel endgültig gelöscht oder manuell umterminiert. Die veraltete Vorschau kann weder das Ziel wiederbeleben noch die Sitzung ungefragt verschieben; erforderliche neue Inhaltsentscheidung bleibt offen.
+
+## F2.16 Vier bestätigte Fachentscheidungen
+
+### UC-65 — Erinnerungen und Benachrichtigungen verwalten
+
+| Merkmal | Festlegung |
+|---|---|
+| Ziel / Prozess | Persönliche Erinnerungspunkte, Kanalwahl und geschützte Historie zentral kontrollieren; GP-05/GP-06/GP-07/GP-15 |
+| Akteur / Auslöser | Verifizierter Kontoinhaber öffnet eigene Erinnerungseinstellungen, Ereignisdetails oder Verlauf |
+| Entscheidungsbezug | L-04; FE-23/FE-24/FE-44/FE-45; erforderliche Kalenderentscheidungen nach FE-05/FE-08 bleiben getrennt |
+| Vorbedingungen | Aktuelles eigenes Konto und passende Objekt-/Geräterechte; externe Kanäle nur bei tatsächlicher Fähigkeit und aktiver Einwilligung |
+| Daten / Funktionen / Dialog | DM-03/DM-35/DM-52/DM-77/DM-78; AF-01/AF-13/AF-25; DT-93/DT-94; DLG-66 |
+| Erfolg | Gültige eigene Regeln persistent; gespeicherte Fälligkeiten unverändert durch unbestätigte Planvorschläge; wahrheitsgemäßer Verlauf/Zustellstand |
+
+**Hauptszenario:**
+
+1. Nutzer sieht globale Einstellungen, Kategorien und konkrete Ereignisregeln samt Vererbung, Kanälen, Berechtigungen, Benachrichtigungszone und Ruhezeit. Konfigurierbare Ausgangsruhezeit: 22:00–08:00. Standardpunkte bleiben J−5/J−1.
+2. Nutzer legt persönliche Ereignispunkte, Kategorien, Ruhezeiten und Dringlichkeitsregeln fest. Konkrete Ereignisregel hat für ihr ausdrücklich gesetztes Merkmal Vorrang vor Kategorie, Kategorie vor persönlicher globaler Vorgabe und diese vor Standard. Explizites Ausschalten ist keine fehlende Angabe. Stundenregeln benötigen bekannte Ereignisuhrzeit und Zone; datumbezogene Punkte erfinden keine Uhrzeit.
+3. Nutzer speichert die gültige direkte Einstellung ohne künstliche zweite Bestätigung. Ungültige Felder werden erklärt und nicht aktiv; eine zwischenzeitliche Geräte-/Regeländerung erfordert Konfliktprüfung.
+4. BAT-06/BAT-07 bilden gültige deduplizierte Fälligkeiten und In-App-Hinweise. Unbestätigte Terminänderung bleibt ohne Wirkung auf bestehende Erinnerungspunkte; bereits erledigte/stornierte/überholte Kandidaten werden nicht neu zugestellt.
+5. Der Nutzer kann unterstützte externe Kanäle, Hauptgerät und freiwillige weitere Geräte wählen, Tagesdigest und Ruhezeiten kontrollieren. OS-Push braucht echtes OS-Recht; wichtige Erinnerungsmail braucht gesonderte Aktivierung. System-OTP/Sicherheitspost ist ein anderer Zweck.
+6. Der eigene geschützte Verlauf unterscheidet logischen Hinweis, Zustellabsicht, Providerannahme, belegte Auslieferung und belegtes Lesen. Auswahl kann kontrolliert gelöscht werden; Quellereignis, Planung und pädagogische Erinnerung werden dadurch nicht mitgelöscht.
+
+**Alternativen/Fehler:** Ohne Pushrecht bleiben eigene In-App-Hinweise verfügbar. Zurückstellen in Ruhe-/Fokuszeit erhält den fachlichen Hinweis, garantiert keinen späteren Versand veralteter Meldungen. Kein Kanalersatz durch ungefragt aktivierte E-Mail, kein mehrfacher Versand durch Retry oder zwei Geräte. Unbekannter Zustellerfolg bleibt unbekannt. Dringlichkeit hebt Datenschutz/Ruhezeit nicht selbsttätig auf; zusätzliche Ruhezeitausnahmen werden nicht neu beschlossen. Verlaufslöschung lässt alte Jobs keine gelöschten Meldungen erneut anlegen.
+
+**Meilensteine:** M5: interne Erinnerungen, persönliche Regeln, In-App und Verlauf. M8: OS-Push, Hauptgerät, Digest, optionale E-Mail und externe Zustellnachweise. Noch nicht verfügbare Teilfunktionen werden nicht als aktiv ausgegeben; siehe [Entwicklungszuordnungen](ENTWICKLUNGSPLAN.md).
+
+**Positive Abnahme:** Ereignisbezogenes J−2 ersetzt den geerbten J−5/J−1-Umfang für dieses Ereignis; andere Ereignisse bleiben unverändert. Bei Pushverweigerung ist der berechtigte In-App-Hinweis weiterhin erreichbar.
+
+**Negative Abnahme:** Datum ohne Uhrzeit erlaubt keine Stunden-Erinnerung. Unbestätigte Prüfungsverschiebung, mehrfach gestarteter Job und gelöschter Hinweis erzeugen weder neue Fälligkeit noch erneute Zustellung; Einzelnoten bleiben aus Sperrbildschirmvorschau fern.
+
+### UC-66 — Studienstruktur mit geltenden Studienvorgaben abgleichen
+
+| Merkmal | Festlegung |
+|---|---|
+| Ziel / Prozess | Persönliche Studienstruktur gegen belegbar geltende Anforderungen prüfen; GP-01/GP-02/GP-05/GP-08 |
+| Akteur / Auslöser | Nutzer stellt zulässige Hochschulunterlagen bereit oder fordert eigenen Soll-Ist-Abgleich an |
+| Entscheidungsbezug | L-09; G-15/CON-15; FE-08/FE-15/FE-27; UC-03/UC-06 bis UC-09/UC-44/UC-57/UC-59 |
+| Vorbedingungen | Berechtigter persönlicher Studienkontext; manuelle Dokumente genügen, Hochschulkonnektor ist keine Pflicht; tatsächliche Formatunterstützung |
+| Daten / Verarbeitung / Dialog | DM-04/DM-06/DM-11/DM-12/DM-21/DM-23/DM-24; AF-02/AF-08/AF-24/AF-37; DT-95; DLG-67 |
+| Erfolg | Quellengebundener bestätigter Soll-Ist-Abgleich mit nachvollziehbaren Abweichungen, fehlenden Nachweisen und ungeklärten Anforderungen; kein amtlicher Anerkennungsbescheid |
+
+**Hauptszenario:**
+
+1. Hochschule, Studiengang, Abschluss, Prüfungsordnung, Einschreibungs-/Kohortenzuordnung bestimmen; fehlende Zuordnung ausdrücklich offen lassen. Rechtmäßig manuell bereitgestellte Modulhandbücher, Prüfungsordnungen und Verlaufspläne sind nutzbar.
+2. Originalversion und Quellenautorität prüfen. Inkrafttreten, Geltungsbereich, Kohorte und Übergangsregelungen bewerten. Veröffentlichungsdatum allein beweist keine persönliche Geltung; Upload allein keine höhere Verlässlichkeit als belegte offizielle Quelle.
+3. Soweit unterstützt Pflicht-/Wahlpflichtmodule, ECTS-Anforderungen, Modulvoraussetzungen, Prüfungsformen/-versuchsregeln und belegte/offene Leistungen extrahieren. Unsichere Extraktion und widersprechende oder unvollständige Geltung als prüfbare Vorschläge mit konkreter Quellstelle darstellen.
+4. Nutzer prüft und bestätigt die konkrete Extraktions-/Geltungsfassung oder korrigiert/lehnt ab. Eine Nutzerbestätigung bestätigt den persönlichen Übernahmeumfang, nicht institutionelle Echtheit oder Anerkennung. Ungeklärte Geltung bleibt ungeklärt und erlaubt nur einen so bezeichneten Teilvergleich.
+5. Persönliche Module, belegte ECTS, Prüfungen und dokumentierte Versuche gegen den bestätigten anwendbaren Regelumfang abgleichen. Fehlende Nachweise sind „nicht belegt“, unbekannte Werte weder null noch nicht bestanden. Wahlpflichtzuordnung und doppelte Anrechnung nicht erfinden; konkurrierende Anforderungen separat ausweisen.
+6. Abweichungen, offene Anforderungen und fehlende Nachweise mit Quell-/Versions-/Geltungsbezug anzeigen. Notenwerte nur im autorisierten ausdrücklich gewählten Detail, nie als Dashboard-/Pushinhalt. Nutzer kann UC-44 zur Klärung verwenden.
+7. Änderungen eigener Studien-/Leistungsdaten nur in genau autorisiertem Umfang nach UC-03/UC-09 bzw. den einschlägigen Vorschlagsregeln übernehmen; der Vergleich selbst ändert nichts. Neuer Quellenstand führt über UC-57 erneut zur Prüfung, nicht zur stillen neuen Ordnung für alle Studierenden.
+
+**Alternativen/Fehler:** Nur manuelle Dokumente, kein Login beim Hochschulportal. Unlesbare Extraktion, fehlende Kohorte, unklare Übergänge oder widersprechende offizielle Fassungen führen zu sichtbarer Unsicherheit/Teilabdeckung und Klärung, niemals zur scheinbar vollständigen Anerkennung. Eine alte für die Kohorte gültige Ordnung bleibt relevant, obwohl eine neuere existiert. Ohne bestätigte geeignete Grundlage kein als gesichert ausgewiesener Gesamtvergleich.
+
+**Positive Abnahme:** Einschreibung 2024 mit dokumentierter Übergangsregel nutzt die dafür geltende Fassung; Pflichtmodule und belegte ECTS werden samt Regelstellen gegenübergestellt. Vorgang funktioniert ohne Hochschulkonnektor.
+
+**Negative Abnahme:** Neueres hochgeladenes Modulhandbuch einer anderen Kohorte ersetzt weder passende offizielle Vorgabe noch persönliche Leistungen. Fehlender Prüfungsversuchsnachweis erzeugt keine erfundene Fehlprüfung oder automatische Anerkennung.
+
+### Gemeinsame Grenzen für L-08 und L-02
+
+**Pädagogische Automatik:** Nur nach ausdrücklicher Aktivierung einer persönlichen Lernheftautomatik. Vor jeder Umordnung aktuelle Lernziel-/Themenbasis, Evidenzrevision, verfügbare Zeit und Änderungsrecht prüfen. Vor Anwendung muss die sichere begrenzte Rücknahmegrundlage bereitstehen; andernfalls keine automatische Wirkung. Änderung speichert Grund, Vorher-/Nachherreihenfolge, Zeit und Beleggrundlage in DM-76; kein stilles Zielüberschreiben bei konkurrierender manueller Änderung. Nach Deaktivierung keine weiteren automatischen Reihenfolgeänderungen. Kalenderwirkungen sind ausgeschlossen und laufen getrennt über DM-39 bis DM-42/UC-35/BAT-09.
+
+**Undo:** Rücknahme betrifft nur die konkret gewählte eigene pädagogische Planänderung. Auf aktueller Planrevision prüfen; bei Konflikt keine pauschale Rücksetzung. Zwischenzeitliche Antworten, Korrekturen, Kompetenzevidenz, Löschungen und manuelle Termine bleiben erhalten; berechtigte Korrekturfassung wird als neue Änderung nachvollziehbar. Historie ist geschützt und kontrolliert löschbar; notwendige minimale Nachweise enthalten keine gelöschten Inhalte.
+
+**Lernmodus:** Persönliche Darstellungseinstellung an bestehender Lerneinheit, keine neue Rolle oder eigener UC. Minimalnavigation, freiwillige Zeitbegrenzung ohne Zwang zum Beantworten, jederzeitige Rückkehr ohne Arbeitsverlust. Nicht dringende Unterbrechungen zurückstellen, geschützte dringende Hinweise nach vorhandenen Prioritätsregeln behandeln. Reduzierte Bewegung, Tastatur/Screenreader und deaktivierbare Motivation bleiben unabhängig nutzbar. Die vier Fortschrittsaussagen ersetzen einander nicht und bilden keine automatische Stufenleiter. Die Themen-/Kapitelstruktur aus UC-08 liefert den Bezugsrahmen, aber ihre bloße Anlage oder Lektüre keinen Beherrschungsnachweis.

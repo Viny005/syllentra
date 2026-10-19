@@ -2,11 +2,11 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** D1 — Datenmodell\
-**Version:** 0.3\
-**Stand:** 16.10.2026\
+**Version:** 0.4\
+**Stand:** 19.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Spezifikationsmethode:** Bausteine nach Johannes Siedersleben\
-**Bezugsstand:** S2-Abgleich vom 16.10.2026 auf `723af7fa1692f8dbaf888b694fa63806d7d5fc5f`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1; aktuelle Versionen im [Index](README.md).
+**Bezugsstand:** Vier bestätigte Entscheidungen vom 19.10.2026; Ausgangs-HEAD `53ef171be4783748b5c7e3a84bb0cc363d5b4194`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1; aktuelle Fassungen im [Index](README.md).
 
 > **Freigabe:** FE-01 bis FE-14 sind bestätigte fachliche Entscheidungen; die dokumentübergreifende Abnahme dieses D1-Entwurfs steht noch aus. Dieses Dokument beschreibt **kein implementiertes Datenbankschema**, keinen fertigen Dienst und keine beschaffte Anbieterberechtigung.
 
@@ -200,6 +200,7 @@ Zeitbezogene Verbindung zwischen persönlichem Profil und Hochschule beziehungsw
 | **Eigentum und Kardinalität** | Genau ein DM-02 und darüber ein DM-01; 0..n Semester. |
 | **Löschfolgen und Herkunftsgrenze** | Bezug entfernen, ohne historische Semester oder Leistungen still zu löschen; Herkunft verfügbarer Nachweise erhalten. |
 
+**Präzisierung L-09:** Optionale belegte Prüfungsordnungsfassung, Einschreibungs-/Kohortenzuordnung und Übergangsbezüge ergänzen die Studienzugehörigkeit. Unbekannte Zuordnung bleibt unbekannt. Zeitliche Geltung der Zugehörigkeit allein beweist nicht Geltung einer Studienregel. Zu den eigenen DM-24-Vorgaben-/Abgleichableitungen bestehen 0..n nachvollziehbare Bezüge; keine Institution oder Kohorte wird geraten.
 
 #### DM-05 — Semester
 
@@ -464,6 +465,7 @@ Aus einem dokumentierten Ausgangsmaterial gewonnene, bewusst erhaltene Zusammenf
 | **Eigentum und Kardinalität** | Genau ein DM-01; 1..n Ausgangsbezüge zu konkreten DM-21 und/oder DM-23, 0..n Verwendungen. |
 | **Löschfolgen und Herkunftsgrenze** | Eigenständig gespeicherte Ableitungen im Löschumfang aufführen; keine automatische Behauptung, Quelllöschung habe alle Zusammenfassungen entfernt. |
 
+**Präzisierung L-09:** Unterstützte fachliche Extraktion umfasst strukturierte Studienvorgaben und quellengebundene Soll-Ist-Abgleiche DT-95. Vorhandene Quellen-/Dokumentversionsbezüge bleiben Pflicht; dazu 0..1 persönlicher DM-04-Geltungskontext und 0..n relevante DM-06/DM-11/DM-12-Belege. Extraktionsfassung, Nutzerprüfung, persönliche Geltung, Quellautorität und Abgleichsstand sind getrennt. Eine bestätigte persönliche Ableitung ist kein amtlicher Anerkennungsakt. Fehlende oder widersprüchliche Regelanteile markieren Teilabdeckung; neue Quelle führt zur Neubewertung statt Überschreibung. Dafür wird keine neue Entität für ein zweites Modul-/Regelwerk eingeführt.
 
 ### D1.4.5 Kommunikation
 
@@ -572,6 +574,7 @@ Herkunftsbezogene fachliche Einschätzung, getrennt von Bearbeitungsfortschritt 
 | **Eigentum und Kardinalität** | Genau ein DM-01; genau ein primäres Lernziel oder Thema und 0..n zeitbezogene Evidenzbezüge. |
 | **Löschfolgen und Herkunftsgrenze** | Wegfall von Evidenz begrenzt Einschätzung; Löschung ist keine automatische Löschung amtlicher Leistungen. |
 
+**Präzisierung L-08/L-02:** Bearbeitet, Verständnis überprüft, Wissensstand geschätzt und Kompetenz nachgewiesen haben jeweils eigene Beleg-/Zeitgrundlage, keine automatische gemeinsame Stufenleiter. Verpasste Wiederholung ist weder falsche Antwort noch sichere Wissenslücke. DM-75-Reihenfolge und DM-76-Undo schreiben jüngere gültige Lernstände nicht zurück.
 
 ### D1.4.7 Erinnerung
 
@@ -615,6 +618,7 @@ Vom Nutzer manuell gespeicherter oder nach Bestätigung übernommener Eintrag de
 | **Eigentum und Kardinalität** | Genau ein DM-01; 0..n fachliche Bezüge zu Kurs, Prüfung, Aufgabe oder Lerneinheit; bei Vorschlagsübernahme genau die wirksame DM-42-Herkunft. |
 | **Löschfolgen und Herkunftsgrenze** | Interner Termin löschbar; niemals Löschung oder Änderung externer Ereignisse. Lesefreigabe ist nur Verfügbarkeitsgrundlage, kein Eigentums- oder Schreibrecht. |
 
+**Präzisierung L-08/L-04:** Manuelle Fixierung und bereits bestätigter Terminstatus begrenzen pädagogische Umordnung; DM-75 ist kein Kalenderobjekt. Verschieben/Löschen braucht die jeweils erforderliche aktuelle Zustimmung. Ereignisbezogene DM-77-Regeln beziehen sich nur auf tatsächlich wirksame Terminrevisionen; eine unbestätigte DM-40-Fassung verändert keine Erinnerungspunkte.
 
 #### DM-36 — ExterneKalenderLesefreigabe
 
@@ -664,9 +668,10 @@ Benutzerbezogener Hinweis über relevante neue oder widersprechende Informatione
 | **Wesentliche Attribute** | Kennung; Nutzer; Quellen-/Beobachtungsbezug; Beschreibung; Gewissheitsgrad; Erstellungszeit; Gelesenstatus; optionaler Vorschlagsbezug |
 | **Wesentliche Bezüge** | DM-01, DM-23, DM-38, DM-39 |
 | **Integrität und Grenzen** | Hinweis ist nicht identisch mit einem freizugebenden Vorschlag und ändert keine Termine. Ohne Geräteberechtigung keine private Sperrbildschirminformation offenlegen. |
-| **Eigentum und Kardinalität** | Genau ein DM-01; mindestens ein Quellen- oder Beobachtungsbezug, 0..n zugehörige Vorschläge. |
+| **Eigentum und Kardinalität** | Genau ein DM-01; mindestens ein nachvollziehbarer Quellen-, Beobachtungs- oder eigener interner Ereignis-/Änderungsbezug, 0..n zugehörige Vorschläge. |
 | **Löschfolgen und Herkunftsgrenze** | Lesen oder Löschen des Hinweises ist keine Annahme eines Vorschlags und ändert keine Quelle oder Termine. |
 
+**Präzisierung L-04:** Der bestehende benutzerbezogene logische Hinweis dient auch einer neu fälligen eigenen Ereigniserinnerung und dem eigenen Hinweisverlauf. Seine nachvollziehbare Ursache ist eine Quelle/Beobachtung **oder** ein eigenes wirksames Ereignis DM-35/DM-11/DM-18 bzw. eine erlaubte pädagogische Änderung DM-76; für eine manuell erfasste Ereigniserinnerung wird keine externe Quelle erfunden. Hinweise behalten ihre logische Identität; externe Zustellversuche sind ausschließlich DM-78 und verdoppeln keinen Hinweisinhalt. Kategorien, erzeugende Regelrevision, Ruhe-/Fokuszurückstellung und Gelesen-/Löschstatus sind soweit erforderlich nachvollziehbar. Verlaufslöschung ist keine Quellen-/Termin-/Lernstandslöschung; private Inhalte nicht in Wiederholungsnachweisen erhalten.
 
 ### D1.4.9 Vorschläge
 
@@ -1508,3 +1513,47 @@ Die bestehende Datenkontrolle DM-50 und Sicherung/Restore DM-69/DM-70 bleiben er
 **Integrität/Lebenszyklus:** Fachliche Einheit ist entweder nachweisbar angewandt, offen, ausgelassen, gesperrt, fehlgeschlagen oder unklar. Bestätigte Einheit bleibt an Zielrevision gebunden; idempotente Fortsetzung berücksichtigt bereits erfolgte Wirkung. Ein späterer Korrekturvorgang ist eine neue autorisierte Wirkung, kein pauschales Undo jüngerer Fortschritte. Endgültig gelöschte Inhalte sind weder als Kopie noch im Verlauf rekonstruierbar.
 
 **Abnahme:** Timeout nach bereits angewandter Einheit führt zum Wirkungsabgleich; dieselbe Einheit erzeugt nach Wiederaufnahme kein zweites Dokument und keine erneute Nachricht.
+
+## D1.16 Persönliche Lernreihenfolge und Benachrichtigungsnachweise
+
+Die folgenden Ergänzungen schließen die L-08-/L-04-Lücken. Sie trennen nichtterminierte Pädagogik von DM-35 und logische Hinweise DM-52 von äußerer Zustellung. UC-65 verwendet DM-77/DM-78 und den bestehenden Hinweis DM-52. L-09/UC-66 nutzt die erweiterten DM-04/DM-24 und vorhandenen Studien-/Quellentypen; keine zusätzliche Studienvorgabenentität.
+
+### DM-75 — PädagogischeLernreihenfolge
+
+**Attribute:** Kennung, Eigentümer, Kontext, aktuelle Revision, geordnete Lernziel-/Themenbezüge, Wiederholungsgrundlagen DT-91, persönlich ausdrücklich aktivierter/deaktivierter Automatikzustand und dessen Revision, verfügbare Zeit-/Prioritätsgrundlage.
+
+**Beziehungen/Kardinalität:** Genau ein DM-01; 0..n eigene DM-09/DM-10-Ziele, DM-28-Lerneinheiten und DM-32-Evidenzbezüge; 0..n DM-76-Änderungen. Kontext allgemeines Lernen, Kurs oder mehrere eigene Prüfungsvorbereitungen. Optionale DM-35-Verweise sind nur zeitliche Randbedingungen, niemals schreibbare Terminfelder.
+
+**Integrität/Lebenszyklus:** Hybrid aus zeitlichen Wiederholungsregeln und aktueller Evidenz, Formel offen. Ohne ausdrücklich aktivierte Automatik keine selbsttätige Umordnung; manuelle Reihenfolgepflege bleibt möglich. Eine Empfehlung/Fälligkeit ist weder Kalenderbuchung noch Lernerfolg. Deaktivierung beendet künftige automatische Änderungen; Entfernen der Reihenfolge löscht keine unabhängigen Lernnachweise, Termine oder Originale.
+
+**Abnahme:** Lernziel B wird begründet vor A priorisiert, während bestätigter Termin A unverändert bleibt. Bei fehlender Evidenz keine behauptete Beherrschung oder Diagnose.
+
+### DM-76 — PädagogischePlanänderung
+
+**Attribute:** Kennung, Reihenfolgebezug, Vorher-/Nachherrevision und geänderte Reihenfolge, Änderungsart, Grund, Zeit, auslösende Evidenz-/Automatikrevision, Akteur, konfliktgeprüfter Wirkungsnachweis DT-92, optionaler Rücknahmebezug.
+
+**Beziehungen:** Genau eine eigene DM-75; 0..n zulässige DM-32/DM-30/DM-34-Belege. Eine Rücknahme referenziert genau eine frühere angewandte eigene Änderung, ist ihrerseits eine neue nachvollziehbare Änderung; kein Zyklus oder pauschales Zurücksetzen aller Daten.
+
+**Integrität/Lebenszyklus:** Jede angewandte automatische Umordnung begründet und im geschützten Verlauf sichtbar; sichere begrenzte Rücknahmegrundlage muss vor Anwendung verfügbar sein, sonst keine automatische Wirkung. Vor Wirkung aktuelle Rechte, Plan-, Evidenz- und Aktivierungsrevision prüfen. Undo bei konkurrierender manueller Änderung neu bewerten statt überschreiben. Jüngere gültige Antworten, Korrekturen, Löschungen und Fortschritte erhalten. Historie kontrolliert löschbar mit endlicher Retention; keine verdeckte Vollkopie gelöschter Lerninhalte. Ohne noch verfügbare sichere Rücknahmegrundlage keine fingierte Wiederherstellung.
+
+**Abnahme:** Rücknahme einer Reihenfolgeänderung nach neuer richtiger Antwort ändert nur die Reihenfolge; die neue Antwort und ihr Lernnachweis bleiben bestehen.
+
+### DM-77 — PersönlicheErinnerungsregel
+
+**Attribute:** Kennung, Eigentümer, expliziter Geltungsbereich global/Kategorie/Ereignis, Erinnerungspunkte, Aktivierung, Kanalpräferenzen, Ruhezeit, Benachrichtigungszeitzone, Dringlichkeits-/Digestwahl, Regelrevision DT-93.
+
+**Beziehungen:** Genau ein DM-01, pro Ereignisregel genau ein eigenes Ereignis DM-35/DM-11/DM-18; Kategorie-/globale Regel ohne fingierten Ereignisbezug. Haupt-/weitere Geräte referenzieren autorisierte DM-03, E-Mail-Ziel nur zulässige DM-53; diese Rechte werden nicht dupliziert. 0..n erzeugte DM-52-Hinweise mit tatsächlich wirksamer Regel-/Ereignisfassung.
+
+**Integrität/Lebenszyklus:** Nur ausdrücklich gesetzte Merkmale überschreiben geerbte Werte; Aus ist ein Wert, kein Zurückfallen auf Standard. Ereignis vor Kategorie vor persönlicher globaler Regel vor Standard. Ausgang J−5/J−1 und Ruhezeit 22:00–08:00 konfigurierbar; Stundenpunkte nur bei belegter Uhrzeit/Zone. Kanalpräferenz ist kein OS-/Dienstrecht. Löschen/Ändern weist Folgen für noch offene Kandidaten aus, löscht keine Ereignisse oder Lernstände und wiederholt keine alten Zustellungen.
+
+**Abnahme:** Ereignis A mit ausgeschalteten Erinnerungen erbt keine trotzdem aktiven globalen Erinnerungen; Ereignis B behält seine bisher gültige Regel.
+
+### DM-78 — Benachrichtigungszustellung
+
+**Attribute:** Kennung, eigener Hinweis-/Digestbezug, relevante Erinnerungsabsicht, erlaubter Zielkanal/-bezug, tatsächliche Versuche, Providerannahme/Auslieferung/Lesen jeweils mit Nachweis oder unbekannt, Fehler-/Widerrufsstand DT-94.
+
+**Beziehungen/Kardinalität:** Genau ein logischer eigener DM-52-Hinweis, bei Digest nachvollziehbare eigene Hinweisbezüge; je fachlicher Absicht, berechtigtem Zielgerät/-kanal genau ein logischer Zustellnachweis mit 0..n Versuchen. Mehrere Zielgeräte erzeugen keine neue fachliche Hinweisidentität. In-App-Verlauf/Gelesenstatus verbleibt bei DM-52, keine zweite Inhaltskopie in DM-78.
+
+**Integrität/Lebenszyklus:** M8-Ausbau, keine aktive Integration durch das Modell. Berechtigung/Präferenz, Ruhezeit, aktuelle Relevanz und Widerruf vor jedem Versuch; unbekannte Wirkung zuerst prüfen, keine blinde Doppelzustellung. Keine Note, unnötigen Lerninhalte, Geheimnisse oder Rohadressen im technischen Nachweis. Kontrollierte Historienlöschung und endliche minimale Wiederholungs-/Löschinformation verhindern Neuversand gelöschter Hinweise, ohne ein privates Schattenarchiv zu schaffen. Eine physische Genau-einmal-Zustellung eines fremden Dienstes wird nicht garantiert.
+
+**Abnahme:** Providerannahme ohne Auslieferungsbeleg zeigt „Auslieferung unbekannt“. Nach Widerruf keine weiteren Versuche; der zulässige In-App-Hinweis bleibt unabhängig verfügbar.

@@ -2,8 +2,8 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** P2 — Architekturüberblick\
-**Version:** 0.8\
-**Stand:** 16.10.2026\
+**Version:** 0.9\
+**Stand:** 19.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Spezifikationsmethode:** Bausteine nach Johannes Siedersleben\
 **Geltungsbereich:** Fachlicher Zielumfang der ersten Produktversion (V1)
@@ -500,7 +500,7 @@ Diese offenen Punkte präzisieren die spätere Umsetzung. Sie streichen keine be
 ---
 
 **Ende von P2 — Architekturüberblick.**\
-**Freigabestatus:** Zur Prüfung durch den Projektinhaber. P2 Version 0.8 und P1 Version 0.7 sind zusammen mit den aktuellen S2-Verweisen zu prüfen. Der Index zeigt den tatsächlichen Dokumentbestand; frühere Änderungsgrenzen beziehen sich auf ihre ursprünglichen Lieferungen.
+**Freigabestatus:** Zur Prüfung durch den Projektinhaber. P2 Version 0.9 und P1 Version 0.8 sind zusammen mit den aktuellen S2-Verweisen zu prüfen. Der Index zeigt den tatsächlichen Dokumentbestand; frühere Änderungsgrenzen beziehen sich auf ihre ursprünglichen Lieferungen.
 
 ### P2.9.1 Abgeglichene Produktgrenzen und Informationsklassen
 
@@ -521,3 +521,11 @@ Die PWA, zentrale EU-Cloud, interne Datenhaltung, eigene KI-Verarbeitung, Admini
 ### P2.9.2 Datenmigration innerhalb der Produktgrenze
 
 [S2](S2-datenmigration.md) unterscheidet persönlichen Export/Reimport, akademische Dateieinfuhr, Geräteabgleich, internen Backup/Restore, Schemawechsel und EU-Betriebswechsel. Paketbesitz ist kein Konto- oder Inhaltsrecht. Persönliche Pakete enthalten keine Passwörter/Hashes, OTP, MFA-/Sitzungs-/OAuth-Geheimnisse, Gerätevertrauen oder aktiven Admin-/Integrationszustände. Der neue Portabilitätslauf gehört zur internen Produktverantwortung; NB-06/NB-12 Kalender sowie NB-07 GitHub und NB-10 Fremdspeicher bleiben nur lesend. S2 erweitert weder FE-56 noch externe Schreibrechte. Die sieben fachlichen Wege sind keine technische Komponentenarchitektur.
+
+### P2.9.3 Fachgrenzen der vier bestätigten Entscheidungen
+
+Pädagogische Reihenfolge und Wiederholungspriorität sind persönliche interne Lerninformationen (DM-75/DM-76); sie sind keine Termine DM-35 und keine Befugnis für Kalenderänderungen. L-08 erlaubt bei aktivierter persönlicher Automatik nur diese Reihenfolgeänderung. Für Kalenderübernahme, Verschiebung oder Löschung gelten konkrete Rechte und erforderliche Zustimmung weiter; externe Kalender bleiben ausnahmslos nur lesend.
+
+UC-65 bündelt Ereignis-/Kategorie-/globale Regeln DM-77, Ruhezeiten, Kanäle, Hauptgerät, Digest und geschützte Historie. Interne Hinweise DM-52 bleiben unabhängig von externem Zustellerfolg; Zustellnachweise DM-78 sind weder der Hinweisinhalt noch pädagogische Langzeiterinnerung. M5 umfasst interne Regeln/Hinweise/Verlauf, M8 die erweiterten externen Wege nach [Entwicklungszuordnungen](ENTWICKLUNGSPLAN.md); P2 behauptet keine bereits verfügbare Anbindung.
+
+UC-66 verarbeitet manuelle Hochschulunterlagen ohne Konnektorpflicht. DM-04 beschreibt die persönliche Geltungsgrundlage, DM-21/DM-23 die versionierte Quelle und DM-24 geprüfte Extraktion/Abgleich. Persönliche Bestätigung ist keine institutionelle Anerkennung. L-02 ändert den freiwilligen Darstellungsmodus, keine Konten-/Daten-/Adminrechte. Die [F2-Verträge](F2-anwendungsfaelle.md) konkretisieren alle vier Punkte; Anbieter, Architektur und Wiederholungsformel bleiben offen.

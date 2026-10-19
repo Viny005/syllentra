@@ -21,26 +21,26 @@ Hinweis: Diese Leseanleitung ist im README.md des Spezifikationsverzeichnisses i
 
 ## Index der Spezifikationsblöcke
 
-**Stand: 16.10.2026. Alle ausgearbeiteten Dokumente: Zur Prüfung durch den Projektinhaber.** S1.18.1 enthält sämtliche 89 FE-Einträge; FE-56 bleibt offen. Keine Dokumenterstellung oder Git-Aktion bedeutet fachliche Abnahme oder implementierte Funktion.
+**Stand: 19.10.2026. Alle ausgearbeiteten Dokumente: Zur Prüfung durch den Projektinhaber.** S1.18.1 enthält sämtliche 89 FE-Einträge; FE-56 bleibt offen. Keine Dokumenterstellung oder Git-Aktion bedeutet fachliche Abnahme oder implementierte Funktion.
 
 | Baustein | Version | Inhalt / Stand |
 |---|---|---|
-| [P1](P1-ziele-rahmenbedingungen.md) | 0.7 | Ziele, Rahmen, Mehrbenutzer-V1 und überprüfbare Erfolgskriterien. Zur Prüfung. |
-| [P2](P2-architekturueberblick.md) | 0.8 | Kontext, interne/externe Grenzen, zwölf Nachbarn und Informationsklassen. Zur Prüfung. |
-| [F1](F1-geschaeftsprozesse.md) | 0.4 | GP-01 bis GP-15 mit ergänzten Konten-, Import-, Integrations- und Datenkontrollabläufen. Zur Prüfung. |
-| [F2](F2-anwendungsfaelle.md) | 0.3 | UC-01 bis UC-64 mit Vorbedingungen, Szenarien, Schutz und Abnahme. Zur Prüfung. |
-| [F3](F3-anwendungsfunktionen.md) | 0.3 | AF-01 bis AF-36 als fachliche Prüf- und Auswahlfunktionen. Zur Prüfung. |
-| [D1](D1-datenmodell.md) | 0.3 | DM-01 bis DM-74 und INV-01 bis INV-31; Eigentum, Beziehungen und Lebenszyklen. Zur Prüfung. |
-| [D2](D2-datentypen.md) | 0.3 | DT-01 bis DT-90, Werte, Strukturfelder und Validierung. Zur Prüfung. |
-| [B1](B1-dialogspezifikation.md) | 0.3 | DLG-01 bis DLG-65; persönliche und getrennte administrative Bedienung. Zur Prüfung. |
-| [B2](B2-batch.md) | 0.3 | BAT-01 bis BAT-25; autorisierte Hintergrundverarbeitung, Wiederanlauf und Löschfolgen. Zur Prüfung. |
-| [B3](B3-druckausgaben.md) | 0.3 | OUT-01 bis OUT-08; kontoisolierte Berichte und geschützte Exporte. Zur Prüfung. |
-| [S1](S1-nachbarsysteme.md) | 0.2 | NB-01 bis NB-12, vollständige FE-01..FE-89-Matrix und Schnittstellen-Abnahmeszenarien. Zur Prüfung. |
-| [S2](S2-datenmigration.md) | 0.1 | MIG-01 bis MIG-36, AT-S2-01 bis AT-S2-40; eigene Pakete, sichere Migration und Wiederherstellung. Zur Prüfung. |
-| [N1](N1-nichtfunktional.md) | 0.2 | Begrenzter Folgeentwurf: Qualitätsanforderungen und offene Mess-/Nachweisaufgaben. Zur Prüfung. |
-| [N2](N2-querschnittskonzepte.md) | 0.2 | Begrenzter Konzeptentwurf: Konten, Rechte, Schutz, Schlüssel, Audit, Löschung. Zur Prüfung. |
-| [E2](E2-glossar.md) | 0.2 | Glossar mit fachlichen Begriffsgrenzen. Zur Prüfung. |
-| [E3](E3-pruefnachweis.md) | 0.2 | Änderungsmatrix, Kennungsbestand und tatsächliche Dokumentationsprüfungen. Zur Prüfung. |
+| [P1](P1-ziele-rahmenbedingungen.md) | 0.8 | Ziele, Rahmen, Mehrbenutzer-V1 und überprüfbare Erfolgskriterien. Zur Prüfung. |
+| [P2](P2-architekturueberblick.md) | 0.9 | Kontext, interne/externe Grenzen, zwölf Nachbarn und Informationsklassen. Zur Prüfung. |
+| [F1](F1-geschaeftsprozesse.md) | 0.5 | GP-01 bis GP-15 mit ergänzten Konten-, Import-, Integrations- und Datenkontrollabläufen. Zur Prüfung. |
+| [F2](F2-anwendungsfaelle.md) | 0.4 | UC-01 bis UC-66 mit Vorbedingungen, Szenarien, Schutz und Abnahme. Zur Prüfung. |
+| [F3](F3-anwendungsfunktionen.md) | 0.4 | AF-01 bis AF-37 als fachliche Prüf- und Auswahlfunktionen. Zur Prüfung. |
+| [D1](D1-datenmodell.md) | 0.4 | DM-01 bis DM-78 und INV-01 bis INV-31; Eigentum, Beziehungen und Lebenszyklen. Zur Prüfung. |
+| [D2](D2-datentypen.md) | 0.4 | DT-01 bis DT-95, Werte, Strukturfelder und Validierung. Zur Prüfung. |
+| [B1](B1-dialogspezifikation.md) | 0.4 | DLG-01 bis DLG-67; persönliche und getrennte administrative Bedienung. Zur Prüfung. |
+| [B2](B2-batch.md) | 0.4 | BAT-01 bis BAT-26; autorisierte Hintergrundverarbeitung, Wiederanlauf und Löschfolgen. Zur Prüfung. |
+| [B3](B3-druckausgaben.md) | 0.4 | OUT-01 bis OUT-08; kontoisolierte Berichte und geschützte Exporte. Zur Prüfung. |
+| [S1](S1-nachbarsysteme.md) | 0.3 | NB-01 bis NB-12, vollständige FE-01..FE-89-Matrix und Schnittstellen-Abnahmeszenarien. Zur Prüfung. |
+| [S2](S2-datenmigration.md) | 0.2 | MIG-01 bis MIG-36, AT-S2-01 bis AT-S2-40; eigene Pakete, sichere Migration und Wiederherstellung. Zur Prüfung. |
+| [N1](N1-nichtfunktional.md) | 0.3 | Begrenzter Folgeentwurf: Qualitätsanforderungen und offene Mess-/Nachweisaufgaben. Zur Prüfung. |
+| [N2](N2-querschnittskonzepte.md) | 0.3 | Begrenzter Konzeptentwurf: Konten, Rechte, Schutz, Schlüssel, Audit, Löschung. Zur Prüfung. |
+| [E2](E2-glossar.md) | 0.3 | Glossar mit fachlichen Begriffsgrenzen. Zur Prüfung. |
+| [E3](E3-pruefnachweis.md) | 0.3 | Änderungsmatrix, Kennungsbestand und tatsächliche Dokumentationsprüfungen. Zur Prüfung. |
 
 E1 ist als Leseanleitung in diesem README enthalten und bleibt mit dem Index zur Prüfung. [S2 — Datenmigration](S2-datenmigration.md) ist zur Prüfung ausgearbeitet. **S3 — Inbetriebnahme** bleibt geplant, ohne Link auf eine fehlende Datei; S3 übernimmt sicheren Betriebsstart und den Bootstrap des einzigen Super Admin. Die vollständige Harmonisierung von DEC-V1-01 bis DEC-V1-25 bleibt ein gesonderter Vorgang; S2 berücksichtigt ihre Daten-/Schutzgrenzen, ohne neue Lernalgorithmen oder UI-Funktionen vollständig einzuführen. Die technische Architektur wird separat erarbeitet.
 
@@ -82,3 +82,7 @@ In jedem neuen Spezifikationsdokument ist eine Sektion "Verweise" aufzunehmen, d
 Datum der Erstellung dieses Dokuments: 2026-10-12
 Verantwortlich: (wird bei Veröffentlichung eingetragen)
 
+
+## Bestätigte Entwicklungszuordnungen und aktueller Entscheidungsumfang
+
+[Entwicklungszuordnungen — Teilstand](ENTWICKLUNGSPLAN.md), Version 0.1, Zur Prüfung: UC-09 → M5, grundlegender UC-39 → M2b, UC-65 intern → M5 und externe Erweiterungen → M8. Kein zuvor im Repository fehlender Gesamtplan wird als bereits freigegeben ausgegeben. L-08/L-04/L-09/L-02 sind nun integriert; die vollständige Harmonisierung aller übrigen DEC-V1-Punkte bleibt separat. UC-65 und UC-66 sind die einzigen neuen UC, FE-01 bis FE-89 und FE-56 als offen bleiben erhalten. Der [Prüfnachweis](E3-pruefnachweis.md) dokumentiert Quelle, Versionen und tatsächlich ausgeführte Dokumentprüfungen.

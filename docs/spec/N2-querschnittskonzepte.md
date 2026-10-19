@@ -1,8 +1,8 @@
 # N2 — Querschnittskonzepte
 
 **Projekt:** Syllentra AI\
-**Version:** 0.2\
-**Stand:** 16.10.2026\
+**Version:** 0.3\
+**Stand:** 19.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber
 
 ## N2.1 Zweck und Ausarbeitungsgrenze
@@ -55,3 +55,11 @@ O-S1-06 bis O-S1-13 bleiben offen: Verifikations-/Sitzungsfristen und Ratenbegre
 **Schlüssel/Schutz:** Fehlende persönliche Dokumentenschlüssel können weder Betrieb noch Kontorecovery rekonstruieren. Geschütztes Paket und Quellschutz sind getrennte Ebenen; Übernahme ist keine Cloud-Klartextanalysefreigabe. FE-78 bleibt pro Vorgang gesondert. Integrations-/Support-/Geräte- und Adminrechte werden nicht aus Paketen aktiviert; historische private Logs enthalten keine Secrets. Eigene Altaccount-/Neukontoübernahme ist bis zum starken Verfahren O-S2-09 nicht automatisch erlaubt.
 
 **Planung:** Reimport erhält manuelle Herkunft/Terminbindung und jüngere Lernbelege. Restore oder Plan-Undo darf diese nicht still überschreiben. S2 führt keine neue automatische Lernheftordnung aus und ändert keine Kalenderbestätigungsgrenze. Die separate vollständige Post-S1-Harmonisierung der DEC-V1-Vorgaben bleibt offen.
+
+## N2.9 Kontrollgrenzen der persönlichen Lern- und Hinweisfunktionen
+
+L-08-Aktivierung gilt nur für die persönliche pädagogische Reihenfolge DM-75, nicht für DM-35-Kalender, DM-41-Vorschlagsannahme oder Drittanbieteranalyse. Vor automatischer Wirkung aktuelle Konto-/Objektrechte, Aktivierungs-, Plan- und Evidenzrevision prüfen. Deaktivierung sperrt weitere autonome Umordnung. Undo ist ein begrenzter neuer eigener Korrekturvorgang unter aktuellen Rechten, kein Wiederaufspielen alter Antworten, Rollen, Quellen oder Löschungen. Historie geschützt und endlich, kontrollierte Löschung ohne Schatteninhalte.
+
+L-04/UC-65-Regeln DM-77 erteilen kein OS-/Push-/E-Mail-Recht. Ruhe-/Fokuszurückstellung und Dringlichkeit sind keine Datenschutzumgehung. DM-52-Hinweisinhalt, DM-78-Zustellnachweis und pädagogische Langzeiterinnerung bleiben getrennt. Löschung des Verlaufs entfernt keine Termine/Belege, verhindert aber Wiederzustellung durch veraltete Jobs; minimale endliche Deduplizierungs-/Löschinformationen enthalten keine privaten Textkopien. Konkretes Retentions-/Wiederholungsprotokoll bleibt offen und muss Nichtwiederbelebung nachweisen. Sicherheitspost behält ihren gesonderten Kontozweck; FE-56 weiter offen.
+
+L-09/UC-66-Geltungsprüfung lässt Quellenautorität und persönlichen Regelumfang nachprüfbar. Nutzerbestätigung legitimiert keine falsche amtliche Anerkennung oder private Datenkorrektur außerhalb des gewählten Umfangs. L-02 reduziert Anzeigeunterbrechungen, niemals notwendige Rechte-/Sicherheitsprüfung oder Fortschrittssicherung. SEC-01 bis SEC-16 und sämtliche Konten-/Schlüssel-/Supportgrenzen werden weder umnummeriert noch erweitert. [F2](F2-anwendungsfaelle.md), [S1](S1-nachbarsysteme.md) und [S2](S2-datenmigration.md) bleiben zusammen verbindliche Grenzen der Sollfassung.

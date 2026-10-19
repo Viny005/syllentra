@@ -1,8 +1,8 @@
 # N1 — Nichtfunktionale Anforderungen
 
 **Projekt:** Syllentra AI\
-**Version:** 0.2\
-**Stand:** 16.10.2026\
+**Version:** 0.3\
+**Stand:** 19.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber
 
 ## N1.1 Zweck und begrenzter Ausarbeitungsstand
@@ -37,3 +37,11 @@ Die offenen Punkte O-S1-02 bis O-S1-14 im [S1-Risikoregister](S1-nachbarsysteme.
 [S2](S2-datenmigration.md) vertieft NFR-02/03/04/07/08/09/10/11/12. Vor Produktfreigabe sind sichere Export-/Importkapazität, Browser-/PWA-Speichergrenzen, unterstützte Paketfassungen, Quoten, Wiederholungsbudgets und Disaster-Recovery-Ziele RPO/RTO zu messen und festzulegen. O-S2-01 bis O-S2-12 bleiben technische offene Arbeiten; keine erfundenen Paketgrößen, Zeiten, Retentionwerte oder unbegrenzte Gratisrechenleistung.
 
 **Künftige Qualitätsprüfungen:** Großer/rekursiver Archivbestand bleibt begrenzt; fehlender Schlüssel führt zu sicherem Teilweg oder Sperre; abgebrochener Lauf legt nichts doppelt an; definitive Löschung überlebt Restore und alten PWA-Client. Oberfläche für Export/Vorschau/Konflikt/Teilbericht in DE/FR/EN mit Tastatur, Screenreader, Fokus-/Fehler-/Fortschrittsanzeigen und textlichen Differenzen prüfen. Diese Dokumentationslieferung führt keine dieser Produktprüfungen aus und installiert keine neue Laufzeitabhängigkeit.
+
+## N1.5 Qualitätsanforderungen für L-08, L-04, L-09 und L-02
+
+**NFR-08 konkretisiert:** Ablenkungsarmer Modus jederzeit mit Tastatur/Screenreader beendbar; kein Fokusverlust, keine verworfenen Antworten/Entwürfe/Fortschritte. Reduzierte Bewegung und deaktivierbare Motivation prüfen; keine Ranglistenpflicht, Serienzwänge oder künstlicher Zeitdruck. Vier Fortschrittsarten durch Text und Beleg verständlich, nicht nur Farbe/Animation. UI DE/FR/EN bleibt von Lern-/Audiosprache unabhängig.
+
+**Nachweise für L-08:** Aktivierungs-/Deaktivierungsrennen, parallele manuelle Planänderung, fehlende/veraltete Evidenz und konfliktgeprüftes Undo an repräsentativen Fällen evaluieren. Geeignete alternative Erklärungen nach belegten Schwierigkeiten pädagogisch prüfen, ohne feste Wiederholungsformel oder Erfolgsquote zu erfinden. Manuelle/bestätigte Termine und jüngere gültige Lernbelege bleiben erhalten.
+
+**Nachweise für L-04/UC-65 und L-09/UC-66:** M5-Kandidaten/Regelpriorität/J−5/J−1 und M8-DST-/Ruhezeit-/Geräte-/Kanal-/Zustellfehler getrennt testen; Ausgangsruhezeit 22:00–08:00 ist ausdrücklich bestätigt, konkrete Timer-/Retry-/Retentionsgrenzen weiterhin offen. Quellen-/Kohorten-/Übergangsfälle, unvollständige Sollabdeckung und fehlende Nachweise prüfen; kein Konnektorzwang. [F2](F2-anwendungsfaelle.md) enthält Soll-Abnahmen, [E3](E3-pruefnachweis.md) tatsächliche Dokumentprüfungen. Hier keine behaupteten Produkt-/Accessibility-/Pädagogiktests.

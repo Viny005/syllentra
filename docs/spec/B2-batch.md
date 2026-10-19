@@ -2,11 +2,11 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** B2 — Batch-Prozesse\
-**Version:** 0.3\
-**Stand:** 16.10.2026\
+**Version:** 0.4\
+**Stand:** 19.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Methode:** Bausteinspezifikation nach Johannes Siedersleben; periodische und zeitversetzte Fachabläufe\
-**Bezugsstand:** S2-Abgleich vom 16.10.2026 auf `723af7fa1692f8dbaf888b694fa63806d7d5fc5f`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1; aktuelle Versionen im [Index](README.md).\
+**Bezugsstand:** Vier bestätigte Entscheidungen vom 19.10.2026; Ausgangs-HEAD `53ef171be4783748b5c7e3a84bb0cc363d5b4194`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1; aktuelle Fassungen im [Index](README.md).\
 
 **Geltung und Freigabe:** FE-01 bis FE-24 gelten als fachliche Nutzerentscheidungen. FE-22 bis FE-24 werden in B2 erstmals konkretisiert. Die Dokumente P1 bis B1 sind nicht rückwirkend überarbeitet; ihre fehlenden Querbezüge werden als Folgearbeit ausgewiesen. Dieses Dokument spezifiziert Zielverhalten, keine bereits bereitgestellten Scheduler, Push-Dienste, APIs, Hintergrundrechte oder produktiven Jobs. Angaben zu Prüffrequenzen sind Produktvorgaben unter tatsächlichen Betriebsbedingungen, keine Zustellgarantien.
 
@@ -247,7 +247,7 @@ Alle tatsächlich erkannten, noch zulässig aufbewahrten Hinweise bleiben im ges
 | Auslöser | nach wirksam gespeicherter interner Frist, geänderter Nutzerregel oder geplantem Kontrolllauf |
 | Eingaben / Vorbedingungen | intern gespeicherte und valide Termin-/Prüfungs-/Aufgabenzeit, individuelle Erinnerungsregel, Zeitzone, Berechtigung |
 | Ergebnis / Nachbedingung | gültige Erinnerungskandidaten zu J−5 und J−1 oder explizit gewähltem Ersatz, ohne ungefragten Versand |
-| Wiederholungs-/Duplikatschlüssel | Fachliche Eindeutigkeit: Eigentümer + interner Termin + Terminversion + Regelversion + relativer Erinnerungspunkt. |
+| Wiederholungs-/Duplikatschlüssel | Fachliche Eindeutigkeit: Eigentümer + interner Termin + fachlich zeit-/zielrelevante Termin-/Regelgrundlage + relativer Erinnerungspunkt; reine Beschriftungsrevision erzeugt keine neue Absicht. |
 | Fehler / Wiederaufnahme | Bei unpräzisem Terminzeitpunkt nur datumbezogene Erinnerung in sicherer Form anbieten und ggf. Klärung anfordern. |
 | Schutz- und Freigabegrenzen | Vorgeschlagene, aber unbestätigte Prüfungsverschiebungen beeinflussen keine wirksamen Fälligkeiten; Fremdkalender nur lesend. |
 | Rückverweise | UC-30, UC-32, UC-35, UC-37, UC-41; GP-05, GP-06, GP-09; AF-13; DM-11, DM-18, DM-35, DM-52; DT-02, DT-04, DT-05, DT-52; FE-05, FE-08, FE-24 |
@@ -261,6 +261,8 @@ Alle tatsächlich erkannten, noch zulässig aufbewahrten Hinweise bleiben im ges
 5. Je relevantem Termin-/Friststand, gültiger Regel und Erinnerungspunkt genau einen fachlichen Kandidaten an BAT-07 weitergeben; die erlaubten Geräte-/Kanalzustellungen werden erst in BAT-19 getrennt bestimmt.
 
 **Abnahmebeispiel:** Prüfung 20. November um 10:00 in Europe/Berlin: Kandidaten für 15. und 19. November; eine verschobene, noch unbestätigte Planung überschreibt sie nicht.
+
+**Präzisierung L-04/UC-65:** DM-77/DT-93 liefert effektive Ereignis-/Kategorie-/Globalwerte; explizite individuelle Regel ersetzt geerbte Werte im gewählten Merkmal. J−5/J−1 bleiben Standardtage, Stundenpunkte ohne bekannte Ereignisuhrzeit/Zone werden nicht wirksam. Unbestätigte Terminverschiebung ändert keinen Kandidaten; bloße Regeltitel- oder Hinweistextänderung erzeugt keinen zweiten fachlichen Erinnerungspunkt.
 
 ### BAT-07 — Dringlichkeit einstufen und Erinnerungshinweise erzeugen
 
@@ -285,6 +287,8 @@ Alle tatsächlich erkannten, noch zulässig aufbewahrten Hinweise bleiben im ges
 
 **Abnahmebeispiel:** Eine wichtige Verschiebung erhält kurzfristige zulässige Benachrichtigung; bloße Kursmeldung erscheint nur im Tagesdigest.
 
+**Präzisierung L-04/L-02:** Konfigurierbare Ausgangsruhezeit 22:00–08:00 in gewählter Benachrichtigungszone beachten. Fokusmodus stellt nicht dringende Unterbrechungen zurück, erhält aber den berechtigten Verlauf. Dringlichkeit ist keine Erlaubnis, Ruhezeit, Kontenschutz oder Vorschauverbote zu umgehen; zusätzliche Ausnahmen werden hier nicht beschlossen.
+
 ### BAT-08 — Nicht dringende Meldungen als Tagesübersicht bündeln
 
 | Merkmal | Fachliche Festlegung |
@@ -308,6 +312,8 @@ Alle tatsächlich erkannten, noch zulässig aufbewahrten Hinweise bleiben im ges
 
 **Abnahmebeispiel:** Fünf harmlose Änderungen desselben Tags erscheinen in genau einem Digest, ohne Noten im externen Preview.
 
+**Präzisierung L-04:** Persönliche Digestwahl aus UC-65/DM-77 beachten; M8-Zuordnung des Tagesdigest, keine neue obligatorische externe Tagesmail. Hinweisverlauf bleibt intern zugänglich, eine Änderung/Löschung historischer Meldung startet keinen neuen Digest. Nach Ruhe-/Fokuszeit nur noch aktuelle zulässige Hinweise dedupliziert nach bestehender Regel behandeln.
+
 ### BAT-09 — Personalisierte Lernplanvarianten auf Aktualität prüfen
 
 | Merkmal | Fachliche Festlegung |
@@ -330,6 +336,8 @@ Alle tatsächlich erkannten, noch zulässig aufbewahrten Hinweise bleiben im ges
 5. Die spätere Übernahme gehört zum wirksam bestätigten Wirkungspfad aus F2/B1: erst Annahme dieser konkreten neuen Fassung, dann interne Wirkung mit DM-42-Nachweis. BAT-15 greift nur bei unklarer/teilweiser Wirkung; BAT-09 selbst speichert keine Termine und schreibt nie persönliche externe Kalender.
 
 **Abnahmebeispiel:** Nach bestätigter Prüfungsverschiebung erscheint ein neuer Planvorschlag; bis zur Annahme bleibt der Kalender unverändert.
+
+**Präzisierung L-08:** Dieser Ablauf bleibt die Vorbereitung prüfpflichtiger Kalenderplanvarianten. Er schreibt keine Termine und stellt keine bestätigte Fassung automatisch um. Die ausdrückliche Lernheftautomatik ist keine Kalenderzustimmung und verändert ausschließlich DM-75 über BAT-26; sie ist kein Annahmenachweis für DM-39 bis DM-42. Manuelle Fixierungen/bestätigte Kalendertermine begrenzen auch nach pädagogischer Umordnung jeden Folgevorschlag.
 
 ### BAT-10 — Semesterabschluss und Archivierungseignung prüfen
 
@@ -376,6 +384,8 @@ Alle tatsächlich erkannten, noch zulässig aufbewahrten Hinweise bleiben im ges
 5. Bei Bedarf eine neue Übung als Option im geschützten Fachkontext anbieten, keine echte Prüfung oder neue sichere Kompetenz vortäuschen. Markierung benötigt keine zusätzliche Einzelbestätigung, bleibt erklärbar und korrigierbar; keine unautorisierte neue KI-Analyse.
 
 **Abnahmebeispiel:** Eine zuvor bestätigte SQL-Fähigkeit wird nach Widerspruch „zur Neubewertung“, nicht automatisch gelöscht oder als neue Note gezählt.
+
+**Präzisierung L-08:** Verpasste Wiederholung und fehlende Lernstandsevidenz sind keine selbstständigen Belege für fehlende Kompetenz. Neue qualitativ/zeitlich passende Belege können die begründete Wiederholungsreihenfolge über AF-09/BAT-26 beeinflussen; Neubewertungsmarkierung wird weder amtliche Leistung noch automatische Kalenderzustimmung.
 
 ### BAT-12 — Integrations- und Kostengrenzen vor Folgeläufen kontrollieren
 
@@ -563,6 +573,8 @@ Alle tatsächlich erkannten, noch zulässig aufbewahrten Hinweise bleiben im ges
 
 **Abnahmebeispiel:** Pushdienst nimmt Auftrag an, Empfang ist aber unbekannt: Syllentra zeigt weder „ausgeliefert“ noch „gelesen“ ohne Nachweis; In-App-Hinweis bleibt zugänglich. Derselbe unklare Auftrag wird nicht blind erneut versandt; eine physische Genau-einmal-Zustellung durch fremde Dienste wird nicht zugesichert.
 
+**Präzisierung L-04/UC-65:** Effektive persönliche Regel und aktuelle Geräte-/Kanalrechte vor jedem Versuch; M8 führt Hauptgerät/freiwillige weitere Geräte, Push, Digest, optionale Erinnerungsmail und DM-78-Zustellnachweise ein. Keine Erinnerungsmail ohne passende Aktivierung, kein Ausfall-Push-zu-Mail-Autofallback. Providerannahme, Auslieferung und Lesen getrennt, Unbekanntheit wahrheitsgemäß. Hinweislöschung/Widerruf sperrt offene alte Zustellversuche; minimale endliche Wiedererkennungsnachweise enthalten keine gelöschten privaten Inhalte. In-App bleibt unabhängig verfügbar.
+
 ## B2.6 Fachliche Abhängigkeiten und Prioritäten
 ### B2.6.1 Abhängigkeitsgraph
 ```mermaid
@@ -572,6 +584,10 @@ flowchart TB
   S2 --> P["BAT-05: konkrete Vorschlagsfassung"]
   S2 --> PLAN["BAT-09: Planvariante vorbereiten"]
   M["BAT-11: Erinnerung zur Neubewertung"] --> PLAN
+  M --> AUTO{"Persönliche Automatik aktiv und Basis aktuell?"}
+  AUTO -->|nein| WAIT["Keine automatische Reihenfolgeänderung"]
+  AUTO -->|ja| ORDER["BAT-26: Nur pädagogische Reihenfolge, Grund und Undo"]
+  ORDER --> KEEP["Keine Kalenderwirkung; jüngere Lernfortschritte bleiben"]
   KAL["BAT-03: nur lesende Verfügbarkeit"] --> PLAN
   PLAN --> P
   P --> C{"Nutzer entscheidet über diese Fassung"}
@@ -867,6 +883,8 @@ Jeder externe Konnektor startet standardmäßig manuell. FE-22 ist ein Ziel für
 
 ### BAT-20 — Quelländerung und Ableitungsprüfung vorbereiten
 
+**Anschluss L-09/UC-66:** Geltungs-/Vorgabenableitungen und Soll-Ist-Abgleiche DM-24/DT-95 sind quellengebundene Ableitungen. Nach bestätigter neuer Quellfassung betroffene Vergleiche als prüfbedürftig markieren; keine neue Ordnung automatisch für jede Kohorte anwenden und keine persönliche Leistung überschreiben.
+
 | Merkmal | Festlegung |
 |---|---|
 | Auslöser | Erlaubter manueller Import/Abruf oder ausdrücklich aktivierter externer Sync; akzeptierte neue Quellversion für die Ableitungsphase |
@@ -956,3 +974,24 @@ Bestehende BAT-14-Gerätesynchronisation, BAT-16-Lösch-/Retentionpflege und BAT
 | Rückverweise | MIG-15 bis MIG-24, MIG-29/MIG-30; NFR-04/NFR-12; SEC-04/SEC-08/SEC-15; S3 weiterhin geplant |
 
 **Abnahme:** Gleich große Bestände nach Transformation reichen nicht zur Freigabe, wenn ein Eigentümerbezug falsch ist. Ein alter Offlineclient oder Rückfallbestand darf aktuelle Löschmarkierungen nicht überschreiben; fehlender Nachweis blockiert den Cutover.
+
+## B2.18 Ausdrücklich aktivierte pädagogische Reihenfolgeanpassung
+
+### BAT-26 — Aktivierte pädagogische Lernreihenfolge aktualisieren
+
+| Merkmal | Fachliche Festlegung |
+|---|---|
+| Auslöser | Zulässiger Wiederholungszeitpunkt, neue Antwort/Evidenz, geändertes Lernziel, Prüfungsnähe oder bewusste Planprüfung bei ausdrücklich aktivierter persönlicher Automatik |
+| Eingaben / Recht | DM-75-Plan-/Aktivierungsrevision, eigene Ziele DM-09/DM-10, DM-28/DM-30/DM-31/DM-32-Evidenz, verfügbare Zeit und bestehende Termingrenzen; AF-01/AF-09/AF-12/AF-13 |
+| Regel / Wirkung | Zeitliche Wiederholungsregeln mit Qualität/Aktualität der tatsächlichen Evidenz verbinden; begründete pädagogische Reihenfolge in DM-75 ändern und jede angewandte Änderung in DM-76 nachweisen |
+| Vor Wirkung | Aktuelle Plan-/Aktivierungs-/Evidenzrevision und sichere begrenzte Undo-Grundlage prüfen; bei fehlender Rücknahmegrundlage oder Deaktivierung stoppen, konkurrierende manuelle Änderung nicht überschreiben, unbekannte Grundlage ausdrücklich unsicher behandeln |
+| Duplikat-/Wiederanlaufgrenze | Eigentümer, Planbasis, konkreter Anlass-/Evidenzstand und zulässiger Änderungsumfang; bereits angewandte Änderung nicht erneut anwenden, unklare Wirkung zuerst prüfen |
+| Undo / Datenschutz | Nur konkrete Reihenfolgeänderung konfliktgeprüft rücknehmen; jüngere gültige Lernfortschritte, Antworten, Korrekturen, manuelle Termine und Löschungen erhalten; private kontrolliert löschbare Historie |
+| Verbotene Wirkung | Keine DM-35-Terminverschiebung/-löschung, keine autonome DM-41-Annahme, keine externe Kalenderänderung, keine erfundene Kompetenz oder verpflichtende bezahlte KI |
+| Rückverweise | L-08; UC-23 bis UC-30/UC-32/UC-35/UC-37, FE-03/FE-05/FE-07/FE-08/FE-11; DLG-32; DT-91/DT-92 |
+
+**Positive Abnahme:** Aktivierte Automatik priorisiert nach wiederholten belegten Schwierigkeiten eine passende alternative Erklärung/Übung, zeigt Grund und Verlauf, lässt bereits bestätigten Lerntermin unverändert. Undo danach erhält eine inzwischen neu erbrachte richtige Antwort.
+
+**Negative Abnahme:** Automatik wurde zwischen Berechnung und Speicherung ausgeschaltet oder Plan manuell geändert: keine veraltete autonome Wirkung. Ohne Lernbeleg kein sicherer Beherrschungsgrad; eine verpasste Wiederholung allein ist kein Fehlernachweis. Ein zur Kalenderübernahme geeigneter Vorschlag bleibt BAT-09/UC-35 vorbehalten.
+
+**Abgrenzung:** BAT-09 bereitet Kalenderplanvarianten vor, BAT-11 kennzeichnet Evidenzneubewertung, BAT-26 ändert nur die persönlich erlaubte pädagogische Reihenfolge. Dies sind verschiedene fachliche Wirkungen; kein zweiter Benachrichtigungsbatch wird eingeführt. BAT-06/07/08/19 bleiben für Hinweise zuständig.

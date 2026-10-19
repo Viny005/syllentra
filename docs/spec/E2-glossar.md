@@ -1,8 +1,8 @@
 # E2 — Glossar
 
 **Projekt:** Syllentra AI\
-**Version:** 0.2\
-**Stand:** 16.10.2026\
+**Version:** 0.3\
+**Stand:** 19.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber
 
 ## E2.1 Verbindliche Begriffsabgrenzung
@@ -58,3 +58,20 @@ Dieses Glossar erläutert die Verwendung in [P1](P1-ziele-rahmenbedingungen.md),
 | MIG / AT-S2 / DEC-V1 | S2-interne Migrationsregel / künftiger S2-Abnahmefall / temporärer Post-S1-Auditbezug; keine neuen offiziellen FE-Kennungen. |
 
 Verträge und offene Nachweise: [S2](S2-datenmigration.md). Eine Wiederherstellungsoption in der Spezifikation beweist keine heute implementierte Produktfähigkeit.
+
+## E2.3 Begriffe der vier bestätigten Fachentscheidungen
+
+| Begriff | Bedeutung |
+|---|---|
+| Hybride Wiederholung | Zeitliche Wiederholungsregeln plus evidenzabhängige Auswahl anhand Lernziel, Antworten, Schwierigkeiten, Prüfungsnähe und Zeit; konkrete Formel offen. |
+| Pädagogische Lernreihenfolge | Persönliche nichtterminierte Reihenfolge/Priorisierung von Lernschritten; keine Buchung, Verschiebung oder Löschung im Kalender. |
+| Lernheftautomatik | Ausdrücklich persönlich aktivierte automatische Änderung dieser Reihenfolge mit Grund, Verlauf, Abschaltung und sicherem Undo; keine Vorschlagsannahme für Kalender. |
+| Plan-Undo | Neue konfliktgeprüfte Rücknahme einer konkreten pädagogischen Reihenfolgeänderung unter Erhalt jüngerer gültiger Lernfortschritte und manueller Termine. |
+| Erinnerungsregel / pädagogische Erinnerung | Fälligkeits-/Kanal-/Ruhezeitvorgabe DM-77 versus personalisiertes Langzeitwissen DM-33; getrennte Zwecke und Löschfolgen. |
+| Hinweis / Zustellnachweis | Logische geschützte Nutzerinformation DM-52 versus tatsächliche externe Zustellversuche DM-78; Providerannahme beweist weder Auslieferung noch Lesen. |
+| Geltende Studienvorgabe | Belegte Regel einer Quellenfassung für die konkrete Hochschule, den Studiengang, die Ordnung, Kohorte und Übergangslage; neuer ist nicht automatisch anwendbar. |
+| Soll-Ist-Abgleich | Vergleich bestätigter anwendbarer Anforderungen mit eigenen belegten/offenen Studienleistungen; keine amtliche Anerkennung. |
+| Ablenkungsarmer Lernmodus | Freiwillige jederzeit beendbare Minimalansicht mit optionaler Zeitbegrenzung, zurückgestellten nicht dringenden Hinweisen und zugänglicher Bedienung; kein Leistungs-/Zeitdruck. |
+| Fortschrittsaussagen | Bearbeitet, Verständnis überprüft, Wissensstand geschätzt und Kompetenz nachgewiesen sind eigenständige belegbezogene Aussagen, keine automatische Stufenleiter. |
+
+UC-65 verwaltet Erinnerungsregeln/Zustellnachweise; UC-66 den geltungsgeprüften Studienabgleich. L-08, L-04, L-09 und L-02 sind die bestätigten Auftragspunkte vom 19.10.2026, keine neuen FE-Kennungen. [F2](F2-anwendungsfaelle.md) enthält ihre Vorgänge, [Entwicklungszuordnungen](ENTWICKLUNGSPLAN.md) den begrenzten Meilensteinstand.
