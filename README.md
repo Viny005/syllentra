@@ -42,3 +42,7 @@ This project follows a disciplined, incremental approach: research and document 
 ## Note
 
 Syllentra AI is intentionally not claiming finished features at this stage. The project is being structured for future, evidence-based development using GitHub Issues and Pull Requests.
+
+## AI development workflow
+
+Start with [AGENTS.md](AGENTS.md), the [PACE workflow](docs/ai/WORKFLOW.md), and the [verified project context](docs/ai/PROJECT_CONTEXT.md).
