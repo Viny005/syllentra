@@ -1,7 +1,7 @@
 # E3 — Änderungs- und Prüfnachweis
 
 **Projekt:** Syllentra AI\
-**Version:** 0.12\
+**Version:** 0.13\
 **Stand:** 22.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber
 
@@ -445,3 +445,19 @@ Alle technischen Empfehlungen bleiben zur Entscheidung und Fachentwürfe Zur Pr�
 
 
 **Dokument-/Erhaltungsprüfung:** 71 Markdown-Dateien, 928 lokale Links, 664 Tabellen ohne Struktur-/Linkfehler; 1.349 historische Anker erhalten und 14 Mermaid-Quellblöcke unverändert. Kanonische FE-/UC-/DEC-/REL-Bestände und 28 AT-L/20 AT-S3 inhaltlich erhalten. Diff-/Dateiumfang und öffentliche Inhalte mit Secretmustern geprüft, git diff --check erfolgreich. Keine vollständige Secretscanner-/Historiengarantie aus der Mustersuche ableiten.
+
+
+## E3.26 Mission 9 — lokale Backend-Sicherheitsgrundlage
+
+**Quelle / Ausgang:** Vollständiger Nutzerauftrag Mission 9, Abschnitte 1–12; lokaler/Remote-/PR-HEAD `8ad51e8ef1ed010b20907602fe742268d799621e`, sauberer bestehender Spezifikationsbranch, PR #1 öffentlich OPEN. Autorisiert: lokales Experiment, geprüfte kostenfreie Abhängigkeiten, synthetische Tests, normaler Commit/Push auf bestehender Branch. Kein main-Eingriff, neue Branch/PR, Merge, Cloud, Ausgabe oder Deployment.
+
+**Änderung / Begründung:** [ADR-0008](../ARCHITECTURE_DECISIONS.md#adr-0008--lokale-backendprobe-aus-mission-9), [Backend/Vertrag](../../prototypes/backend/README.md) und [Prüfbericht](../development/BACKEND_PROTOTYPE_REVIEW.md): FastAPI/Python/PostgreSQL als reversible lokale Probe. Kontomodell, Argon2id, begrenzte opake gehashte Sessions mit Entzug, serverseitige Eigentums-/Rollen-/Flaggrenzen, getrennte DBrechte und migrationsgebundene Integrität. Nur künstliche Testkonten; keine echte Adminerstbesetzung oder Implementierung aller Super-Admin-Rollen. Keine endgültige TECH-O-Auswahl.
+
+**Tatsächlich geprüft:** 44 Unit-/API-/PostgreSQL-Tests bestanden, strict Mypy für acht Quelldateien, Ruff und Format für neun Pythondateien. Wiederholbare Migration und Manipulationssperre, A/B-Lesen/Ändern/Löschen, Identitätstampering, Ablauf/Widerruf/aktueller Gerätestatus, gesperrte Flags, Adminverweigerung, generische Fehler und begrenzte Eingaben. Echter Loopback-HTTP-Smoke: health 200, private Routen anonym 401, normale Anmeldung 503. Python-Advisoryaudit über 58 Distributionen und npm-Audit ohne bekannte Schwachstellen am Prüftag; Lizenzinventur mit Herkunft/Hashes. Frontend strikt unverändert: TypeScriptbuild/Lint/Format, sieben Unit- und neun Chromium-Szenarien erneut bestanden. Alle 46 REL einzeln im Bericht zugeordnet, keine vollständige Produktkontrolle bestanden erklärt.
+
+**Korrigierter Befund:** Beschädigter Argon2hash führte zunächst zu nicht behandelter InvalidHashError-Ausnahme; Behandlung ergänzt und Negativtest erhalten. HTTPX-Testclient-Deprecation bleibt sichtbar und als Wartungsaufgabe dokumentiert; kein Test hierfür deaktiviert.
+
+**Offen / Grenzen:** Normale Anmeldung blockiert, kein öffentlicher Identitätsbypass; OTP, neue Geräte, Recovery, MFA und Adminbootstrap nicht implementiert. Künstliche Verifikationsfixtures sind kein Nachweis dieser Verfahren. Browserintegration bleibt gesperrt, keine authentifizierte UI. Flüchtiges PostgreSQL prüft keine dauerhafte Containerneustartpersistenz; Softdelete keine endgültige Löschung. Kein Backup-/Restore-/Last-/vollständiger Parallelitäts-/Krypto-/Datenschutz-/nativer Imageaudit. Fachentwürfe Zur Prüfung, FE-56 und 14 TECH-O offen; T01–T09 nicht als vollständig bestanden markieren. Bestehende 89 FE, 66 UC, 25 DEC-V1, DEC-48/49, 46 REL, 28 AT-L und 20 AT-S3 erhalten. Dokumentprüfungen siehe folgender Erhaltungsnachweis; End-SHA/Remote/PR im Abschlussbericht.
+
+
+**Dokument-/Erhaltungsprüfung:** 74 Markdown-Dateien, 966 lokale Links und 669 Tabellen ohne Struktur-/Linkfehler; 1.376 historische Anker erhalten, alle 14 Mermaid-Quellblöcke inhaltlich unverändert. Kanonische 89 FE, 66 UC, 25 DEC-V1, DEC-48/49, 46 REL, 28 AT-L, 20 AT-S3 und 14 offene TECH-O unverändert verglichen; alle fachlichen Primärdateien außer additivem E3/Index bytegleich. Frontend einschließlich Tests/Lockfile bytegleich. Acht bestehende Dateien geändert und 18 neue Dateien, ausschließlich autorisierte Backend-/Dokumentationspfade. Mustersuche plus Vergleich gegen die tatsächlich erzeugten lokalen DBgeheimnisse ohne Treffer in öffentlichen Änderungen; keine Vollgarantie für Historie oder unbekannte Secrets. git diff --check erfolgreich.

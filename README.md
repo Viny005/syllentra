@@ -56,3 +56,8 @@ Start with [AGENTS.md](AGENTS.md), the [PACE workflow](docs/ai/WORKFLOW.md), and
 ## Lokaler interaktiver Prototyp aus Mission 8
 
 Der [Frontend-Prototyp](prototypes/frontend/README.md) enthält acht navigierbare Bereiche, DE/FR/EN, Hell/Dunkel/System und ausschließlich fiktive lokale Daten. Start mit Node 24.x: im Verzeichnis `prototypes/frontend` zuerst `npm ci --ignore-scripts`, dann `npm run dev`. Keine operative V1, echte KI, Anmeldung, Synchronisierung oder Kontoisolation. [Prüfungen und Screenshots](docs/design/PROTOTYPE_REVIEW.md), [installierte Lizenzen](prototypes/frontend/LICENSES.md). Experimenteller Stack, TECH-O-03 offen; keine Ausgabe oder Veröffentlichung.
+
+
+## Lokale experimentelle Backendgrundlage aus Mission 9
+
+[Backendanleitung](prototypes/backend/README.md) und [Prüfbericht](docs/development/BACKEND_PROTOTYPE_REVIEW.md): FastAPI-/PostgreSQL-Probe mit synthetischen Sicherheitsprüfungen, Sessions, Kontofilterung und Serverflags. Normale Anmeldung bleibt blockiert; keine produktive Identität, Administration, KI oder Cloud. Frontend bleibt getrennte Demo, technische Auswahl offen. Keine Veröffentlichung oder Ausgabe.

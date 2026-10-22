@@ -101,3 +101,19 @@ Vor einer technischen Entscheidung aktuelle Angebote, individuelle Gewichts-/Sti
 React + Vite + TypeScript für einen lokalen, reversiblen, synthetischen UI-Prototyp gewählt: stärkster bisher dokumentierter Frontendkandidat, keine fachliche Gegenanforderung festgestellt. Node 24.x, npm mit exakten Versionen/Lockfile, Installskripte aus. Eigenes tokenbasiertes CSS und native Controls statt zusätzlicher UI-/Router-/Editor-/Kalenderframeworks halten den Umfang klein. TypeScript 6.0.3 wegen tatsächlichem Peerbereich des Linters, keine blinde Latestinstallation. Lizenzen und echte [Prüfungen](design/PROTOTYPE_REVIEW.md) dokumentiert.
 
 TECH-O-03 und sämtliche übrigen TECH-O bleiben offen; keine Bestätigung von FastAPI, Datenbank, Hosting, Authentisierung oder KIanbieter. Keine fachliche FE-/UC-/DECänderung, keine Produktfreigabe, Kosten, Cloud oder Merge/Deployment. [Prototyp](../prototypes/frontend/README.md) kann nach UXreview ersetzt/entfernt werden; kein eigener Backendvertrag oder persistentes Produktdatenformat angelegt.
+
+
+### ADR-0008 — Lokale Backendprobe aus Mission 9
+
+**Datum:** 22.10.2026\
+**Status:** Lokales Experiment durch Nutzerauftrag autorisiert; Umsetzung Zur Prüfung. Keine endgültige Technologieentscheidung.
+
+**Kontext:** Mission 8 liefert ausschließlich eine UI-Demo. Mission 9 autorisiert eine reversible lokale Sicherheitsgrundlage mit synthetischen Daten auf dem bestehenden Spezifikationsbranch. FE-57/58/59, SEC-01..07 und S3.5 bleiben unverändert; fehlende OTP-/Geräte-/MFA-/Recoverywege dürfen keinen realen Benutzerzugang eröffnen.
+
+**Experiment:** FastAPI/Python mit PostgreSQL und direktem psycopg, ein modular gegliederter Prozess ohne Queue/Worker/ORM. Argon2id, opake gehashte Serversitzungen, aktuelle Eigentums-/Rollen-/Flagprüfung und eingeschränkter SQL-Servicezugang. PostgreSQL im lokalen flüchtigen offiziellen Docker-Image, getrennte Entwicklungs-/Testdatenbanken, versionierte Vorwärtsmigration. Laufzeit ohne Seed und mit gesperrter Anmeldung; künstliche Verifikation/Geräte nur im internen isolierten Testharness. Keine funktionale Administration und keine Super-Admin-Erstbesetzung.
+
+**Alternativen / Konsequenzen:** Keycloak/authentik bzw. geprüfter Bibliotheksansatz aus TECH-O-05 bleiben zu vergleichen; das Testharness ist kein alternativer produktiver Identitätsanbieter. Django, TS-Backend und ORM bleiben möglich. Direkte kleine SQLschicht vermeidet zusätzliche Abhängigkeit, verlangt dafür disziplinierte serverseitige Filter und Negativtests. Keine technische Hypothese wird durch begrenzte Tests automatisch endgültig gewählt. TECH-O-01/03/04/05/06/13 bleiben insbesondere offen.
+
+**Review / Git:** PR #1 ist offen und umfasste vor Mission 9 112 Dateien mit 26.168 hinzugefügten und 217 entfernten Zeilen. Bestehenden autorisierten Branch beibehalten, Backendcode separat unter `prototypes/backend` und in eigenem Commit reviewen; Ausgang `8ad51e8ef1ed010b20907602fe742268d799621e` begrenzt das Reviewdelta. Eine neue Branch/PR wurde nicht genehmigt oder angelegt. Spätere Aufteilung nur mit ausdrücklicher Zustimmung: gestapelte Backendbranch auf PR-#1-HEAD, zunächst gegen die Spezifikationsbranch reviewen, nach deren Merge Ziel/Basis sorgfältig aktualisieren. Eine vorzeitige zweite PR gegen main würde die bestehenden 112 Dateien duplizieren. Kein Rebase, Force-Push oder Merge hier.
+
+**Belege / Grenzen:** [Lokale Anleitung](../prototypes/backend/README.md), [APIvertrag](../prototypes/backend/openapi.json), [Prüfbericht](development/BACKEND_PROTOTYPE_REVIEW.md). Keine produktive Auth, KI, Cloud, Ausgaben, vollständige REL-Abnahme oder Deployment. Browserintegration bleibt gesperrt, Frontend unveränderte Demo; endgültige Anbieter-/Stack-/Frist-/Bootstrapentscheidungen beim Projektinhaber.

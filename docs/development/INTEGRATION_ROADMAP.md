@@ -1,6 +1,6 @@
 # Integrationsfolge — von Vorbereitung zu prüfbaren Funktionen
 
-**Version:** 0.2 · **Stand:** 22.10.2026 · **Status:** Empfohlen / Zur Entscheidung
+**Version:** 0.3 · **Stand:** 22.10.2026 · **Status:** Empfohlen / Zur Entscheidung
 
 ## 1. Bestätigter Rahmen und ausdrückliche Nichtfreigaben
 
@@ -31,3 +31,8 @@ Persönlicher Qualitätserfolg als späterer Referenzpfad: synthetisches Modulma
 ## Fortschreibung aus Mission 8
 
 Der neue konkrete Eigentümerauftrag autorisiert eine lokale experimentelle UIprobe. Die früheren Nichtimplementierungs-/Nichtinstallationsaussagen dieses Mission-7-Studienstands sind historische Grenzen, keine Sperre des neueren Auftrags. [Code/Anleitung](../../prototypes/frontend/README.md) und [tatsächlicher UI-Prüfbericht](../design/PROTOTYPE_REVIEW.md) dokumentieren den begrenzten Fortschritt. Keine allgemeine Stack-/Bibliotheks-/Produktfreigabe; TECH-O-03 offen. Eigene CSS-Token und native Controls genügen für die Probe, daher keine Tailwind-/shadcn-/Richtext-/PDF-/Graph-/Kalenderinstallation. Fach- und Releaseziele bleiben vollständig bestehen, Backend-/Geräte-/Assistenztechnik-/Sicherheitsabnahmen offen.
+
+
+## Lokale Backendtranche aus Mission 9
+
+[Backend/Vertrag](../../prototypes/backend/README.md), [Prüfbericht](BACKEND_PROTOTYPE_REVIEW.md) und [ADR-0008](../ARCHITECTURE_DECISIONS.md#adr-0008--lokale-backendprobe-aus-mission-9): synthetische PostgreSQL-/APIgrundlage, nicht produktive Auth. Registrierung/OTP/Geräte/MFA/Recovery sowie Adminerstbesetzung bleiben gesperrt. UIcode unverändert, kein Demo-als-Konto und keine Tokenpersistenz. Erst Identitäts-/Browsertransportentscheidung und Negativtests, dann schmaler eigener Notizadapter mit Laufzeitvalidierung, Konto-/Demowechsel und Ende-zu-Ende-Isolation. Tests im aktuellen Bericht; keine Vollfreigabe der 46 REL oder TECH-O-Endauswahl.

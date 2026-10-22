@@ -1,0 +1,30 @@
+[project]
+name = "syllentra-backend-prototype"
+version = "0.1.0"
+description = "Experimentelle lokale Sicherheitsprobe, ausschließlich synthetische Daten"
+requires-python = ">=3.12,<3.13"
+dependencies = ["fastapi==0.161.0", "psycopg[binary]==3.3.6", "argon2-cffi==25.1.0", "uvicorn==0.54.0"]
+
+[dependency-groups]
+dev = ["pytest==9.1.1", "httpx==0.28.1", "ruff==0.17.2", "mypy==2.4.0", "pip-audit==2.10.1"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src", "."]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+mypy_path = "src"
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "S"]
+ignore = ["S101"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S105", "S106"]
+"scripts/*" = ["S603", "S607"]

@@ -41,7 +41,7 @@ Hinweis: Diese Leseanleitung ist im README.md des Spezifikationsverzeichnisses i
 | [N1](N1-nichtfunktional.md) | 0.8 | Vollständiger fachlicher V1-Qualitätsentwurf: 25 Prüfprofile, Messverfahren und offene Zielwerte. Zur Prüfung. |
 | [N2](N2-querschnittskonzepte.md) | 0.7 | Fachlicher V1-Sicherheitsentwurf: 27 Prüfprofile, Vertrauensgrenzen und offene technische Verfahren. Zur Prüfung. |
 | [E2](E2-glossar.md) | 0.4 | Glossar mit fachlichen Begriffsgrenzen. Zur Prüfung. |
-| [E3](E3-pruefnachweis.md) | 0.12 | Änderungsmatrix, Kennungsbestand und tatsächliche Dokumentationsprüfungen. Zur Prüfung. |
+| [E3](E3-pruefnachweis.md) | 0.13 | Änderungsmatrix, Kennungsbestand und tatsächliche Dokumentationsprüfungen. Zur Prüfung. |
 
 E1 ist als Leseanleitung in diesem README enthalten und bleibt mit dem Index zur Prüfung. [S2 — Datenmigration](S2-datenmigration.md) ist zur Prüfung ausgearbeitet. [S3 — Inbetriebnahme](S3-inbetriebnahme.md) ist als fachlicher Prüfentwurf ausgearbeitet; zukünftiger Betriebsstart und Bootstrap des einzigen Super Admin sind beschrieben, nicht ausgeführt. Die [Entscheidungsmatrix](ENTSCHEIDUNGSMATRIX.md) ordnet jetzt alle 25 DEC-V1 den bestehenden Fach-/Dialog-/Datenbausteinen und überprüfbaren Soll-Abnahmen zu. Offene Präzisierungen und technische Nachweise bleiben ausdrücklich ausgewiesen; die Matrix ist keine Gesamtabnahme. Die technische Architektur wird separat erarbeitet.
 
@@ -127,3 +127,8 @@ Die [Machbarkeitsprüfung](../architecture/MACHBARKEITSPRUEFUNG.md), [Ressourcen
 ## Lokale Frontendprobe aus Mission 8
 
 [Experimenteller Prototyp](../../prototypes/frontend/README.md), [UI-Prüfbericht](../design/PROTOTYPE_REVIEW.md) und [ADR-0007](../ARCHITECTURE_DECISIONS.md#adr-0007--lokale-frontendprobe-aus-mission-8) beschreiben erste tatsächlich ausführbare Oberflächen mit synthetischen Daten. Keine fachliche V1-/Backend-/KI-/Auth-/Isolationsabnahme, keine endgültige Stackwahl. Spezifikationen Zur Prüfung, FE-56 und 14 TECH-O offen. E3 hält eng begrenzte reale UIprüfungen getrennt von historischen Dokumentchecks und noch offenen Produkttests fest.
+
+
+## Lokale Backendprobe aus Mission 9
+
+[Experimentelle Backendanleitung](../../prototypes/backend/README.md), [Prüfbericht](../development/BACKEND_PROTOTYPE_REVIEW.md) und [ADR-0008](../ARCHITECTURE_DECISIONS.md#adr-0008--lokale-backendprobe-aus-mission-9) ergänzen reale synthetische PostgreSQL-/APItests zu Sitzungen, Isolation und Serverflags. Normale Anmeldung, reale OTP-/Geräte-/Recovery-/MFAwege und Administration bleiben gesperrt; Frontend weiterhin Demo. Keine fachliche Abnahme, Stackendentscheidung oder Betriebsfreigabe. E3 Version 0.13 trennt neue begrenzte Implementierungsbelege von historischen Dokumentprüfungen und weiterhin ausstehenden Produktkontrollen.
