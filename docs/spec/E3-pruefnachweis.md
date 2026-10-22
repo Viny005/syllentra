@@ -1,7 +1,7 @@
 # E3 — Änderungs- und Prüfnachweis
 
 **Projekt:** Syllentra AI\
-**Version:** 0.8\
+**Version:** 0.9\
 **Stand:** 22.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber
 
@@ -361,3 +361,24 @@ Diese Prüfungen belegen Dokumentationskonsistenz und Bestandserhalt. Keine Prod
 **Prüfmittel und Grenzen:** Lokale Bestands-/Kennungs-/Strukturprüfungen, markdown-it-Link-/Tabellenprüfung, historischer Ankervergleich und tatsächliches Mermaid-Browserrendering; Hilfsmittel außerhalb des Repositorys. Keine App-/CI-/Cloudprüfung. Musterprüfung und redaktionelle Sichtung sind kein umfassender Secret- oder Sicherheitsnachweis; externe Normverifikation und sämtliche Produkt-/Betriebsprüfungen bleiben offen.
 
 **Abgrenzung und verbleibende Risiken:** Ausschließlich Dokumentation, keine Umsetzung, Apppipeline, Cloudressource, Kontoeinrichtung, Ausgabe, Datenmigration, Betriebs-/Restore-/Bootstrapprobe oder Veröffentlichung. Architektur, konkrete Verfahren, Personen, technische Zielwerte und tatsächliche Betriebsnachweise fehlen weiterhin. Die fachlich formulierten Abläufe sind keine einsatzfertigen technischen Runbooks. 89 FE, 66 UC, 25 DEC-V1, DEC-48/49, 28 AT-L und 46 REL bleiben erhalten; FE-56 offen. Alle Entwürfe Zur Prüfung durch den Projektinhaber; spätere Veröffentlichung benötigt ausdrückliche konkrete menschliche Genehmigung. Endcommit und Remote-/PR-Stand nach normalem Push im Abschlussbericht.
+
+## E3.22 Mission 5 — Technische Vergleichsstudie
+
+**Quelle und Ausgangsstand:** Vollständig gelesener Auftrag „SYLLENTRA AI — MISSION 5“, Abschnitte 1–14; `5ab55032b66e87950411cf6c1323fb3284d63eb6`, sauberer bestehender Spezifikationsbranch, lokaler/entfernter/PR-Head identisch, PR #1 offen. Keine Wiederholung früherer Spezifikationsmissionen.
+
+**Tatsächliche Änderung:** Neun deutsche Dokumente in `docs/architecture/` vergleichen modularen Monolith/Verteilung, drei zentrale Hostingkonzepte mit unabhängigem Backup und Diagrammen, OCI zuerst und zwei Alternativen, Frontend/Backend/Identität, PostgreSQL/Suche/Dateien, KI-Motoren und individuelle Modell-/Stimmenlizenzen, Sicherungsverfahren sowie vier Last-/Kostenhypothesen. Gewichtete Entscheidungsmatrix ausdrücklich hypothetisch und sensitiv; 14 TECH-O-Punkte bleiben offen. Architekturform empfohlen, keine Technologie/Provider freigegeben. Nur notwendige Verweise in ADRübersicht, Spezifikationsindex und PACE sowie dieser Nachweis ergänzt; keine fachliche Umnummerierung oder neue REL-Kontrolle.
+
+**Tatsächliche Recherche:** 63 offizielle URL-Bezüge, davon 50 mit lesbarem Inhalt/Releasebeobachtung und 13 nicht verifiziert (Netzwerk-403 oder nicht gefundener Parser-Lizenzpfad). OCI-/Hetzner-/Scaleway-/Modellhostseiten auch nach erneut autorisiertem Abruf blockiert. Offizielle GitHub-Quellen lieferten u. a. Lizenztexte, Software-Releaseweiterleitungen, Qwen-/Whisper-Herstellerangaben, pgvector-/ARM-Dokumentation und R2-Standardpreise/EU-Jurisdiktion. Abrufdatum, Status, Quellen und Hashes in der [Studie](../architecture/QUELLEN.md). Kein aktueller Cloudgesamtpreis, individueller unlesbarer Gewichtslizenztext oder Benchmark erfunden. Technische Einzelquellen belegen keine Vertrags-/Produktkonformität.
+
+**Tatsächlich ausgeführte Dokumentationsprüfungen:**
+
+- markdown-it 14.1.0: **44 Markdown-Dateien, 729 lokale Links/Anker und 614 Tabellen** ohne Fehler. **1.165 vorhandene Abschnitts-/HTML-Anker** erhalten. Externe URL-Belege separat mit tatsächlichem Abrufstatus statt pauschalem Linkerfolg geführt.
+- **14 Mermaid-Diagramme**, davon drei neue Architekturkonzepte, mit Mermaid 11.15.0 im lokalen Chromium erfolgreich geparst und als SVG gerendert. Alle elf bisherigen Diagrammquellen wortgleich; keine Projektabhängigkeit oder Apppipeline angelegt.
+- Bestands-/Umfangsvergleich zur Ausgangsbasis: sämtliche bisherigen versionierten Dateien außer den fünf notwendigen Referenz-/PACE-/Nachweisdateien bytegleich; ausschließlich neun neue Markdown-Studien. **89 FE, FE-56 offen, 66 UC, 25 DEC-V1, DEC-48/49, 28 AT-L, 20 AT-S3, 25 NFR-/27 SEC-Profile und 46 REL** erhalten. Bestehende ADRdefinitionen/Entscheidungen unverändert, keine neue ADR-Kennung; historische E3-Nachweise bis auf Versionsfortschreibung vollständig erhalten.
+- **14 eindeutige TECH-O-Punkte** ohne Kollision, drei Konzeptdiagramme, vier Kostenprofile und gewichtete Matrix geprüft. Gewichtssumme 100 %, Werte **2,85 / 3,30 / 3,10**, Sensitivität 3,50 sowie R2-Speicherrechnungen 0 / 1,35 / 5,85 / 29,85 USD rechnerisch kontrolliert; keine realen Preise/Benchmarks aus diesen Rechnungen abgeleitet.
+- Alle 63 Quellenbezüge und 50 verfügbaren Quellhashes mit den gesicherten öffentlichen Abrufen abgeglichen; 13 nicht verifizierte Bezüge sichtbar. Lizenztexte geprüft, insbesondere Auth.js **ISC** statt angenommener MIT-Zuordnung korrigiert; Motor-/Gewichts-/Stimmenbedingungen getrennt. Status aller neun Studien Empfohlen / Zur Entscheidung, Fachstatus weiter Zur Prüfung. Keine implizite Architekturfreigabe.
+- **14 Markdown-Dateien** im freigegebenen Umfang, keine sonstigen neuen Dateien; bekannte Kennungsbereiche, öffentliche Inhalte, Geheimnis-/Tokenmuster, temporäre Dateipfade und deutsche KI-Bezeichnung kontrolliert, ohne Schlussbefund. Keine privaten Echtdaten. `git diff --check` erfolgreich; gestagten Umfang vor Commit gesondert kontrollieren.
+
+**Prüfgrenze:** Dokumentstruktur, Bestandserhalt, arithmetische Modellrechnungen, tatsächliche Quellenabrufe und Diagrammrendering. Keine Inferenz-/ARM-/Cloud-/Preisvertrags-/Sicherheits-/Lastabnahme. Musterprüfungen sind kein umfassender Geheimnisfreiheits- oder Konformitätsnachweis; offene Angebots-/Gewichts-/Vertrags-/Support-/Leistungsfragen bleiben vor Entscheidung zu schließen.
+
+**Grenzen und offene Risiken:** Primärcloudangebote/-verfügbarkeit, genaue Verträge/Subprozessoren, einige Checkpoint-/Stimmen-/Parserlizenzen, Support-/ARM64-Buildpassung und vollständige V1-Last-/Gütenachweise teils offen. Keine vollständige Mehrnutzer-KI unter 10 EUR brutto/Monat nachgewiesen; Grenze ist keine Ausgabe. Empfehlungen Empfohlen / Zur Entscheidung, alle Fachentwürfe Zur Prüfung. 89 FE/FE-56 offen, 66 UC, 25 DEC-V1, DEC-48/49, 28 AT-L und 46 REL bleiben erhalten. Keine App-/Cloud-/Modell-/Last-/Restore-/Bootstraptests, Installation, Ressource, Account, Ausgabe, Merge oder Deployment. Endcommit und PR-Stand nach normalem Push im Abschlussbericht.

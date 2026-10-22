@@ -75,3 +75,9 @@ Quelle: Nutzerauftrag „Syllentra AI — Mission 2: Consolidation documentaire 
 **Alternativen:** Geeignete unabhängige EU-Sicherungsverfahren sind zu vergleichen. Eine Sicherung nur beim Primäranbieter oder bloßer Nutzerselfservice-Export ersetzt DEC-49 nicht; ergänzende interne Kopien bleiben möglich.
 
 **Verweise:** [S2](spec/S2-datenmigration.md), [N2](spec/N2-querschnittskonzepte.md), [Release-Register](quality/RELEASE_READINESS_40.md), [Entscheidungsmatrix](spec/ENTSCHEIDUNGSMATRIX.md).
+
+## Technische Vergleichsstudie vom 22.10.2026 — keine zusätzliche Architekturfreigabe
+
+Mission 5 dokumentiert [Architekturvergleich](architecture/README.md), [offene technische Entscheidungen](architecture/OFFENE_ENTSCHEIDUNGEN.md) und [Quellen/Abrufgrenzen](architecture/QUELLEN.md) im Status **Empfohlen / Zur Entscheidung**. Modularer Monolith, PostgreSQL, Vite/FastAPI, begrenzte CPU-Worker, konkrete KI-/Authkandidaten und drei Hostingkonzepte sind Untersuchungsempfehlungen, keine beschlossenen ADRs. Bestehende ADR-0004/0005 und DEC-48/49 unverändert: Oracle zuerst bewerten, unabhängiges verschlüsseltes EU-Backup erforderlich. Keine neue ADR-Kennung, kein Anbieter/Stack ausgewählt, kein Ausgaben-/Implementierungs-/Deploymentauftrag.
+
+Vor einer technischen Entscheidung aktuelle Angebote, individuelle Gewichts-/Stimmenlizenzen, Support-/ARM64-Nachweise und geeignete Leistungs-/Sicherheitsmessungen nach eigenem Auftrag schließen. Erst die ausdrückliche Eigentümerentscheidung darf einen entsprechenden ADRstatus ändern. Ein hypothesenbasierter Punktwert oder zugängliches README ist keine Sicherheits-/Verfügbarkeits-/Budgetgarantie.

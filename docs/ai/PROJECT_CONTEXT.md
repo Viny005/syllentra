@@ -1,12 +1,12 @@
 # Syllentra AI — überprüfter Projektkontext
 
-**Version:** 0.6 · **Stand:** 22.10.2026 · **Status:** Zur Prüfung durch den Projektinhaber
+**Version:** 0.7 · **Stand:** 22.10.2026 · **Status:** Zur Prüfung durch den Projektinhaber
 
 ## Git-Snapshot und Geltung
 
 Repository: `Viny005/syllentra` — <https://github.com/Viny005/syllentra>.
 Aktueller Arbeitsbranch: `docs/spec/p1-p2-mobile-workspaces`, zugeordnet zu [PR #1](https://github.com/Viny005/syllentra/pull/1).
-Am 22.10.2026 lokal, per entferntem Branch und PR-Git-Ref überprüfter Ausgangscommit der Mission 4: `1885a9c76ed549367097ac15d3960399a8651b88`. Arbeitsbaum vor Bearbeitung sauber, PR #1 auf der öffentlichen GitHub-Seite als offen geprüft. PACE ist durch PR #2 seit `39261a5816a99f7c10c79344e5a1adc03b685d49` integriert. Der Snapshot ist eine datierte Ausgangsbasis, kein dauerhaft aktueller HEAD; bei jeder Aufgabe erneut prüfen. Endcommit/Push werden im Abschlussbericht nachgewiesen.
+Am 22.10.2026 lokal, per entferntem Branch und PR-Git-Ref überprüfter Ausgangscommit der Mission 5: `5ab55032b66e87950411cf6c1323fb3284d63eb6`. Arbeitsbaum vor Bearbeitung sauber, PR #1 auf der öffentlichen GitHub-Seite als offen geprüft. PACE ist durch PR #2 seit `39261a5816a99f7c10c79344e5a1adc03b685d49` integriert. Der Snapshot ist eine datierte Ausgangsbasis, kein dauerhaft aktueller HEAD; bei jeder Aufgabe erneut prüfen. Endcommit/Push werden im Abschlussbericht nachgewiesen.
 
 ## Ziel und Aufbau
 
@@ -29,6 +29,7 @@ Adaptiver Lernbegleiter für Studierende: Materialien, Audio und Gespräche mit 
 | [E2](../spec/E2-glossar.md), [E3](../spec/E3-pruefnachweis.md) | Begriffe sowie datierte tatsächliche Dokumentationsprüfungen; kein Produktabnahmetest. |
 | [Entscheidungsmatrix](../spec/ENTSCHEIDUNGSMATRIX.md) | Aktuelle DEC-V1-/FE-21-Zuordnung und DEC-48/49, Soll-Abnahmen und verbleibende Präzisierungen; zur Prüfung. |
 | [Entwicklungszuordnungen](../spec/ENTWICKLUNGSPLAN.md) | Bestätigter Teilstand, kein vollständiger freigegebener Meilensteinplan. |
+| [Technische Vergleichsstudie](../architecture/README.md) | Neun Dokumente: Empfehlungen zu Architektur/Hosting/KI/Daten/Stack/Backup/Kosten, offene technische Punkte und Quellen; Empfohlen / Zur Entscheidung, keine Auswahl. |
 | [ADR-Konvention](../ARCHITECTURE_DECISIONS.md), [Roadmap](../ROADMAP.md) | Noch keine finale Stackwahl; historische Forschungs-/Entwicklungsphasen. |
 | [Vision](../PROJECT_VISION.md), [ursprüngliche Anforderungen](../REQUIREMENTS.md) | Historische Grundlagen; bei Abweichungen aktuelle bestätigte Entscheidungen und deren Quellenstatus prüfen. |
 | [PACE-Auftrag im Kontextprotokoll](CONTEXT_CHANGELOG.md) | Quelle der neuen Arbeitskonvention und des Untersuchungslimits; keine Änderung fachlicher FE/UC. |
@@ -59,7 +60,9 @@ Keine Geheimnisse, privaten Lernmaterialien oder personenbezogenen Echtdaten ins
 
 ## Auftragsumfang und nächste Schritte
 
-Mission 4 autorisiert ausschließlich die vollständige fachliche S3-Ausarbeitung, notwendige Querverweis-/Index-/Kontextpflege und tatsächliche Dokumentprüfungen sowie Commit/normalen Push auf dem bestehenden Spezifikationsbranch zur Aktualisierung von PR #1. Kein Merge, keine Änderung von `main`, kein Anwendungscode, Account, Anbieter-/Stackwechsel, Infrastrukturtest, Deployment oder Ausgabe. Die 89 FE, 66 UC, 25 DEC-V1, DEC-48/49, 28 pädagogischen Sollfälle und 46 Releasekontrollen bleiben erhalten, FE-56 offen. S3 beschreibt zukünftige Abläufe; keine neue Produktfunktion oder zusätzliche REL-Kontrolle. Alle Dokumente Zur Prüfung.
+Mission 5 autorisiert ausschließlich aktuelle öffentliche Recherche, Vergleich und Dokumentation der technischen Architektur-/Anbieterkandidaten, notwendige Referenz-/PACEpflege und Dokumentprüfungen sowie Commit/normalen Push auf dem bestehenden Spezifikationsbranch zur Aktualisierung von PR #1. Kein Merge, keine Änderung von `main`, keine Anwendung, Cloudressource, Registrierung, Installation/Modellausführung, Ausgabe oder Deployment. Kein Stack-/Providerbeschluss; Empfehlungen bleiben Empfohlen / Zur Entscheidung. Alle Fachentwürfe Zur Prüfung, 89 FE, 66 UC, 25 DEC-V1, DEC-48/49, 28 AT-L und 46 REL erhalten; FE-56 offen.
+
+**Aktueller Untersuchungsstand:** Modularer Kern mit PostgreSQL, begrenzten separaten Workern und austauschbaren KI-Adaptern empfohlen; Vite/React + FastAPI, llama.cpp/kleine Qwen3-Kandidaten und selbst gehostete Identitätsoptionen zu prüfen. OCI zuerst bewerten; Hetzner/Scaleway echte Vergleichsoptionen. Keine komplette kostenlose Multiuser-KI nachgewiesen. Primärcloudpreise/-quoten und viele konkrete Gewichtslizenzen bleiben nicht verifiziert (Netzwerk-403); offizielle GitHub-Quellen belegen u. a. Softwarelizenzen, Releaseweiterleitungen und R2-Standardpreise/EU-Jurisdiktion. Gesamte R2-Vertrags-/Datenschutzlage noch offen. Gewichtete Scores sind transparente Hypothesen, keine Auswahl; Quellen-, Angebots-, Lizenz- und Benchmarklücken vor Entscheidung schließen.
 
 **Aktueller Qualitätsstand:** NFR-01..25 und SEC-01..27 fachlich mit Ziel, Geltung, Methode, Abnahmekriterium, Beleg, Abhängigkeiten und offenen Parametern ausgearbeitet. [Kontrollmatrix](../quality/RELEASE_KONTROLLMATRIX.md): REL-A01/05/07/13/16/18 zusätzlich, insgesamt 46. [Referenzrahmen](../quality/REFERENZRAHMEN.md): ASVS 5.0.0, LLM Top 10 2026 und API Top 10 2023 über offizielle Projektquellen belegt; WCAG-Normtext, NIST- und DSGVO-Aktualitätsprüfung durch Zugriffsverweigerung offen. WCAG 2.2 AA bleibt zu bestätigendes Ziel. [Freigabevoraussetzungen](../quality/FREIGABEVORAUSSETZUNGEN.md) bündeln künftige Nachweise; [S3](../spec/S3-inbetriebnahme.md) ordnet sie 18 Veröffentlichungsschritten, Zuständigkeiten, Rollout-/Rückwegen, Incidentverfahren und 20 Soll-Abnahmen zu. 14 O-S3-Arbeiten bleiben offen. Produktkontrollen sind nicht implementiert/nicht getestet; Grenzwerte, technische Entscheidungen, pädagogische Rubriken und menschliche Freigaben fehlen weiterhin. Dokumente bleiben Zur Prüfung; der Kontext erteilt keinen Folgeauftrag.
 
