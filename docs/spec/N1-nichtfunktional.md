@@ -1,7 +1,7 @@
 # N1 — Nichtfunktionale Anforderungen
 
 **Projekt:** Syllentra AI\
-**Version:** 0.3\
+**Version:** 0.4\
 **Stand:** 19.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber
 
@@ -45,3 +45,12 @@ Die offenen Punkte O-S1-02 bis O-S1-14 im [S1-Risikoregister](S1-nachbarsysteme.
 **Nachweise für L-08:** Aktivierungs-/Deaktivierungsrennen, parallele manuelle Planänderung, fehlende/veraltete Evidenz und konfliktgeprüftes Undo an repräsentativen Fällen evaluieren. Geeignete alternative Erklärungen nach belegten Schwierigkeiten pädagogisch prüfen, ohne feste Wiederholungsformel oder Erfolgsquote zu erfinden. Manuelle/bestätigte Termine und jüngere gültige Lernbelege bleiben erhalten.
 
 **Nachweise für L-04/UC-65 und L-09/UC-66:** M5-Kandidaten/Regelpriorität/J−5/J−1 und M8-DST-/Ruhezeit-/Geräte-/Kanal-/Zustellfehler getrennt testen; Ausgangsruhezeit 22:00–08:00 ist ausdrücklich bestätigt, konkrete Timer-/Retry-/Retentionsgrenzen weiterhin offen. Quellen-/Kohorten-/Übergangsfälle, unvollständige Sollabdeckung und fehlende Nachweise prüfen; kein Konnektorzwang. [F2](F2-anwendungsfaelle.md) enthält Soll-Abnahmen, [E3](E3-pruefnachweis.md) tatsächliche Dokumentprüfungen. Hier keine behaupteten Produkt-/Accessibility-/Pädagogiktests.
+
+
+## N1.6 Produktionsreife, Lastverhalten und Freigabekontrollen (zwei Checklisten vom 22.10.2026)
+
+Der Projektinhaber hat zwei ergänzende Prüflisten mit zusammen **40 Einzelpunkten** für die spätere Produktfreigabe übernommen. Das Original mit eindeutigen Kennungen **REL-S01 bis REL-S20** (Sicherheit) und **REL-Q01 bis REL-Q20** (Betrieb, Performanz, UX) steht in [Release Readiness — 40 Prüfungen](../quality/RELEASE_READINESS_40.md). Die Nummerierungen sind keine neuen FE-Kennungen und keine Implementierungsbehauptungen.
+
+**Nichtfunktionale Verantwortung von N1:** Raten-/API-/Rechenlimits, bewilligte Budgets, Antwort- und Abbruchverhalten, klare Lade-/Leer-/Fehlerzustände, deduplizierte Aktionen, Datenminimierung, Indizes, Paginierung, passende Kompression und Zwischenspeicherung, Datei-/Archivlast, Verfügbarkeitsüberwachung, aussagekräftige datensparsame Betriebslogs, parallele Nutzung, Restore-Proben und gemessene Wiederherstellungsziele. Die Security-Details stehen in [N2](N2-querschnittskonzepte.md). S2 bleibt für Daten-/Restoreverträge zuständig.
+
+**Freigabebedingung:** Vor Aktivierung bzw. Produktivstart sind die einschlägigen Tests tatsächlich durchzuführen und nachzuweisen. Technische Grenzwerte, Kapazitäten, Warnschwellen und RPO/RTO sind noch offen und dürfen nicht erfunden werden. Zahlungstransaktionen und Schutz vor Doppelzahlung (REL-Q10) sind ausdrücklich nur für eine später eigens genehmigte kommerzielle Funktion relevant. Die übrigen Punkte gelten für die V1 insoweit, wie die jeweils geprüften Funktionen/Techniken vorhanden sind. Produktprüfungen wurden durch diese Dokumentänderung nicht ausgeführt.
