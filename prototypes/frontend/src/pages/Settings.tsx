@@ -72,6 +72,9 @@ export function Settings({
           <TextLink href="#/administration">{t('administration')}</TextLink>
         </div>
       </section>
+      <a className="button secondary" href="#/identity">
+        {t('identityTitle')}
+      </a>
     </>
   );
 }

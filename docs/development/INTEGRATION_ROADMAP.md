@@ -1,6 +1,6 @@
 # Integrationsfolge — von Vorbereitung zu prüfbaren Funktionen
 
-**Version:** 0.3 · **Stand:** 22.10.2026 · **Status:** Empfohlen / Zur Entscheidung
+**Version:** 0.4 · **Stand:** 22.10.2026 · **Status:** Empfohlen / Zur Entscheidung
 
 ## 1. Bestätigter Rahmen und ausdrückliche Nichtfreigaben
 
@@ -36,3 +36,8 @@ Der neue konkrete Eigentümerauftrag autorisiert eine lokale experimentelle UIpr
 ## Lokale Backendtranche aus Mission 9
 
 [Backend/Vertrag](../../prototypes/backend/README.md), [Prüfbericht](BACKEND_PROTOTYPE_REVIEW.md) und [ADR-0008](../ARCHITECTURE_DECISIONS.md#adr-0008--lokale-backendprobe-aus-mission-9): synthetische PostgreSQL-/APIgrundlage, nicht produktive Auth. Registrierung/OTP/Geräte/MFA/Recovery sowie Adminerstbesetzung bleiben gesperrt. UIcode unverändert, kein Demo-als-Konto und keine Tokenpersistenz. Erst Identitäts-/Browsertransportentscheidung und Negativtests, dann schmaler eigener Notizadapter mit Laufzeitvalidierung, Konto-/Demowechsel und Ende-zu-Ende-Isolation. Tests im aktuellen Bericht; keine Vollfreigabe der 46 REL oder TECH-O-Endauswahl.
+
+
+## Lokale Identitätswege aus Mission 10
+
+[Architektur](IDENTITY_ARCHITECTURE.md) und [Validierung](IDENTITY_PROTOTYPE_REVIEW.md): Registrierung, gebundener lokaler OTP, Gerätefreigabe, Sessions/Entzug und Recovery mit persönlichem Offlinecode im expliziten lokalen TLS-Modus. Eigener Reactbereich, keine Kontodaten in den acht Demolernräumen. Noch keine Echtzustellung oder sichere reale Codeübergabe. Admin-MFA, Bootstrap, Passkeys, lokale Sperre, Dokumentenschlüsselrecovery und Produktfreigabe bleiben gesperrt/offen. TECH-O-05/06 entscheiden, danach unabhängige Faktor-/Recoveryprobe; erst nach Review eine einzelne kontogebundene Lernfunktion anschließen. Beobachteter nicht reproduzierter Sitzungslesefehler im Bericht bleibt vor Produktfreigabe zu klären. Keine automatische nächste Entwicklungs-/Cloud-/Ausgabenfreigabe.

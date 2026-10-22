@@ -27,15 +27,31 @@
         }
       }
     },
-    "/auth/login": {
+    "/auth/csrf": {
+      "get": {
+        "summary": "Csrf",
+        "operationId": "csrf_auth_csrf_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/register": {
       "post": {
-        "summary": "Login",
-        "operationId": "login_auth_login_post",
+        "summary": "Register",
+        "operationId": "register_auth_register_post",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Login"
+                "$ref": "#/components/schemas/Registration"
               }
             }
           },
@@ -46,20 +62,474 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
                 "schema": {
-                  "additionalProperties": {
-                    "anyOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "integer"
-                      }
-                    ]
-                  },
-                  "type": "object",
-                  "title": "Response Login Auth Login Post"
+                  "$ref": "#/components/schemas/HTTPValidationError"
                 }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/verify": {
+      "post": {
+        "summary": "Verify",
+        "operationId": "verify_auth_verify_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Otp"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/resend": {
+      "post": {
+        "summary": "Resend",
+        "operationId": "resend_auth_resend_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Challenge"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "summary": "Login",
+        "operationId": "login_auth_login_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/recover": {
+      "post": {
+        "summary": "Recover Request",
+        "operationId": "recover_request_auth_recover_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Email"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/recover/complete": {
+      "post": {
+        "summary": "Recover",
+        "operationId": "recover_auth_recover_complete_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Recover"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/device/complete": {
+      "post": {
+        "summary": "Complete",
+        "operationId": "complete_auth_device_complete_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Challenge"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/devices/requests": {
+      "get": {
+        "summary": "Requests",
+        "operationId": "requests_devices_requests_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "additionalProperties": true,
+                    "type": "object"
+                  },
+                  "type": "array",
+                  "title": "Response Requests Devices Requests Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          },
+          {
+            "LocalSessionCookie": []
+          }
+        ]
+      }
+    },
+    "/devices/requests/{reference}/approve": {
+      "post": {
+        "summary": "Approve",
+        "operationId": "approve_devices_requests__reference__approve_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          },
+          {
+            "LocalSessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "reference",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Reference"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Password"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/devices": {
+      "get": {
+        "summary": "Devices",
+        "operationId": "devices_devices_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "additionalProperties": true,
+                    "type": "object"
+                  },
+                  "type": "array",
+                  "title": "Response Devices Devices Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          },
+          {
+            "LocalSessionCookie": []
+          }
+        ]
+      }
+    },
+    "/devices/{device_id}/revoke": {
+      "post": {
+        "summary": "Revoke",
+        "operationId": "revoke_devices__device_id__revoke_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          },
+          {
+            "LocalSessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "device_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Device Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Password"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sessions": {
+      "get": {
+        "summary": "Sessions",
+        "operationId": "sessions_sessions_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "additionalProperties": true,
+                    "type": "object"
+                  },
+                  "type": "array",
+                  "title": "Response Sessions Sessions Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          },
+          {
+            "LocalSessionCookie": []
+          }
+        ]
+      }
+    },
+    "/sessions/{session_id}/revoke": {
+      "post": {
+        "summary": "Revoke Session",
+        "operationId": "revoke_session_sessions__session_id__revoke_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          },
+          {
+            "LocalSessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Session Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
               }
             }
           },
@@ -99,6 +569,9 @@
         "security": [
           {
             "HTTPBearer": []
+          },
+          {
+            "LocalSessionCookie": []
           }
         ]
       }
@@ -115,6 +588,9 @@
         "security": [
           {
             "HTTPBearer": []
+          },
+          {
+            "LocalSessionCookie": []
           }
         ]
       }
@@ -142,6 +618,9 @@
         "security": [
           {
             "HTTPBearer": []
+          },
+          {
+            "LocalSessionCookie": []
           }
         ]
       }
@@ -170,6 +649,9 @@
         "security": [
           {
             "HTTPBearer": []
+          },
+          {
+            "LocalSessionCookie": []
           }
         ]
       }
@@ -181,6 +663,9 @@
         "security": [
           {
             "HTTPBearer": []
+          },
+          {
+            "LocalSessionCookie": []
           }
         ],
         "parameters": [
@@ -226,6 +711,9 @@
         "security": [
           {
             "HTTPBearer": []
+          },
+          {
+            "LocalSessionCookie": []
           }
         ],
         "parameters": [
@@ -281,6 +769,9 @@
         "security": [
           {
             "HTTPBearer": []
+          },
+          {
+            "LocalSessionCookie": []
           }
         ],
         "parameters": [
@@ -345,6 +836,9 @@
         "security": [
           {
             "HTTPBearer": []
+          },
+          {
+            "LocalSessionCookie": []
           }
         ]
       }
@@ -352,6 +846,37 @@
   },
   "components": {
     "schemas": {
+      "Challenge": {
+        "properties": {
+          "challenge_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Challenge Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "challenge_id"
+        ],
+        "title": "Challenge"
+      },
+      "Email": {
+        "properties": {
+          "email": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 3,
+            "title": "Email"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "email"
+        ],
+        "title": "Email"
+      },
       "HTTPValidationError": {
         "properties": {
           "detail": {
@@ -365,11 +890,11 @@
         "type": "object",
         "title": "HTTPValidationError"
       },
-      "Login": {
+      "LoginInput": {
         "properties": {
           "login": {
             "type": "string",
-            "maxLength": 80,
+            "maxLength": 100,
             "minLength": 1,
             "title": "Login"
           },
@@ -382,22 +907,28 @@
             "writeOnly": true
           },
           "device_proof": {
-            "type": "string",
-            "maxLength": 128,
-            "minLength": 32,
-            "format": "password",
-            "title": "Device Proof",
-            "writeOnly": true
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 128,
+                "minLength": 32,
+                "format": "password",
+                "writeOnly": true
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Device Proof"
           }
         },
         "additionalProperties": false,
         "type": "object",
         "required": [
           "login",
-          "password",
-          "device_proof"
+          "password"
         ],
-        "title": "Login"
+        "title": "LoginInput"
       },
       "NoteChange": {
         "properties": {
@@ -420,6 +951,115 @@
           "body"
         ],
         "title": "NoteChange"
+      },
+      "Otp": {
+        "properties": {
+          "challenge_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Challenge Id"
+          },
+          "code": {
+            "type": "string",
+            "maxLength": 8,
+            "minLength": 8,
+            "format": "password",
+            "title": "Code",
+            "writeOnly": true
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "challenge_id",
+          "code"
+        ],
+        "title": "Otp"
+      },
+      "Password": {
+        "properties": {
+          "password": {
+            "type": "string",
+            "maxLength": 256,
+            "minLength": 12,
+            "format": "password",
+            "title": "Password",
+            "writeOnly": true
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "password"
+        ],
+        "title": "Password"
+      },
+      "Recover": {
+        "properties": {
+          "challenge_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Challenge Id"
+          },
+          "code": {
+            "type": "string",
+            "maxLength": 8,
+            "minLength": 8,
+            "format": "password",
+            "title": "Code",
+            "writeOnly": true
+          },
+          "recovery_code": {
+            "type": "string",
+            "maxLength": 128,
+            "minLength": 32,
+            "format": "password",
+            "title": "Recovery Code",
+            "writeOnly": true
+          },
+          "new_password": {
+            "type": "string",
+            "maxLength": 256,
+            "minLength": 12,
+            "format": "password",
+            "title": "New Password",
+            "writeOnly": true
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "challenge_id",
+          "code",
+          "recovery_code",
+          "new_password"
+        ],
+        "title": "Recover"
+      },
+      "Registration": {
+        "properties": {
+          "email": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 3,
+            "title": "Email"
+          },
+          "password": {
+            "type": "string",
+            "maxLength": 256,
+            "minLength": 12,
+            "format": "password",
+            "title": "Password",
+            "writeOnly": true
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "email",
+          "password"
+        ],
+        "title": "Registration"
       },
       "ValidationError": {
         "properties": {
@@ -466,6 +1106,11 @@
       "HTTPBearer": {
         "type": "http",
         "scheme": "bearer"
+      },
+      "LocalSessionCookie": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "__Host-syllentra-session"
       }
     }
   }

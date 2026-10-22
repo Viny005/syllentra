@@ -1,23 +1,28 @@
-"""Strikt lokale API-Probe; Anmeldung ausschließlich im synthetischen Testharness."""
+"""Lokale API-Probe mit explizitem synthetischem Identitätsmodus; keine Produktfreigabe."""
 
+import hmac
+import logging
 import secrets
 from collections.abc import Callable, Iterator
 from dataclasses import dataclass
-from datetime import UTC, datetime, timedelta
+from datetime import UTC, datetime
 from typing import Annotated, Any
 from uuid import UUID
 
 import psycopg
-from fastapi import Depends, FastAPI, Header, HTTPException, Request
+from fastapi import Depends, FastAPI, Header, HTTPException, Request, Response
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
-from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+from fastapi.security import APIKeyCookie, HTTPAuthorizationCredentials, HTTPBearer
 from psycopg.rows import dict_row
-from pydantic import BaseModel, ConfigDict, Field, SecretStr
+from pydantic import BaseModel, ConfigDict, Field
+from starlette.concurrency import run_in_threadpool
 from starlette.middleware.trustedhost import TrustedHostMiddleware
 
+from .identity import CSRF, SESSION, IdentityService, LocalIdentity, cookie
+from .identity_routes import install as install_identity
 from .limits import BodyLimit
-from .security import DUMMY_HASH, PASSWORDS, LoginBudget, digest, verify_password
+from .security import digest
 
 
 @dataclass(frozen=True)
@@ -25,13 +30,6 @@ class Principal:
     account_id: UUID
     kind: str
     token_hash: str
-
-
-class Login(BaseModel):
-    model_config = ConfigDict(extra="forbid")
-    login: str = Field(min_length=1, max_length=80)
-    password: SecretStr = Field(min_length=12, max_length=256)
-    device_proof: SecretStr = Field(min_length=32, max_length=128)
 
 
 class NoteChange(BaseModel):
@@ -43,12 +41,12 @@ class NoteChange(BaseModel):
 def create_app(
     database_url: str,
     *,
-    synthetic_test_harness: bool = False,
+    identity: LocalIdentity | None = None,
     clock: Callable[[], datetime] = lambda: datetime.now(UTC),
 ) -> FastAPI:
-    # Selbst versehentliche Aktivierung ist auf eine explizite Testdatenbank beschränkt.
-    if synthetic_test_harness and not database_url.endswith("/syllentra_test"):
-        raise ValueError("Testharness nur mit isolierter synthetischer Testdatenbank erlaubt.")
+    if identity:
+        identity.validate(database_url)
+    service = IdentityService(identity, clock) if identity else None
     app = FastAPI(
         title="Syllentra lokale Backendprobe", docs_url=None, redoc_url=None, openapi_url=None
     )
@@ -56,17 +54,60 @@ def create_app(
         TrustedHostMiddleware, allowed_hosts=["127.0.0.1", "localhost", "testserver"]
     )
     app.add_middleware(BodyLimit)
-    budget = LoginBudget()
 
     @app.middleware("http")
     async def boundaries(request: Request, call_next: Any) -> Any:
-        # Keine Cookieauth und kein CORS; Browser-Ursprünge werden vor jedem APIzugriff gesperrt.
-        if request.headers.get("origin"):
-            response = JSONResponse({"detail": "browser_integration_unavailable"}, status_code=403)
+        origin = request.headers.get("origin")
+        denied = None
+        if identity:
+            if request.url.scheme != "https" or (
+                request.client and request.client.host not in {"127.0.0.1", "::1", "testclient"}
+            ):
+                denied = "local_https_required"
+            elif request.headers.get("sec-fetch-site") == "cross-site":
+                denied = "origin_denied"
+            elif origin and origin != identity.origin:
+                denied = "origin_denied"
+            elif request.method not in {"GET", "HEAD", "OPTIONS"}:
+                proof = request.headers.get("x-csrf-token", "")
+                stored = request.cookies.get(CSRF, "")
+                if (
+                    origin != identity.origin
+                    or len(stored) != 43
+                    or not hmac.compare_digest(proof, stored)
+                    or request.headers.get("sec-fetch-site") not in {None, "same-origin"}
+                ):
+                    denied = "csrf_denied"
+        elif origin:
+            denied = "browser_integration_unavailable"
+        if denied:
+            response = JSONResponse({"detail": denied}, status_code=403)
         else:
             try:
+                if service and request.method == "POST" and request.url.path.startswith("/auth/"):
+
+                    def network_budget() -> bool:
+                        with psycopg.connect(
+                            database_url, row_factory=dict_row, connect_timeout=3
+                        ) as db:
+                            return service.budget(
+                                db,
+                                "network",
+                                request.client.host if request.client else "local",
+                                100,
+                            )
+
+                    if not await run_in_threadpool(network_budget):
+                        return JSONResponse(
+                            {"detail": "try_later"},
+                            status_code=429,
+                            headers={"Cache-Control": "no-store"},
+                        )
                 response = await call_next(request)
-            except Exception:
+            except Exception as error:
+                logging.getLogger("syllentra.local").warning(
+                    "backend_failure:%s", type(error).__name__
+                )
                 response = JSONResponse({"detail": "service_unavailable"}, status_code=503)
         response.headers["Cache-Control"] = "no-store"
         response.headers["X-Content-Type-Options"] = "nosniff"
@@ -85,21 +126,36 @@ def create_app(
     Db = Annotated[psycopg.Connection[dict[str, Any]], Depends(connection, scope="function")]
 
     bearer = HTTPBearer(auto_error=False)
+    session_cookie = APIKeyCookie(name=SESSION, scheme_name="LocalSessionCookie", auto_error=False)
 
     def principal(
-        db: Db, credentials: Annotated[HTTPAuthorizationCredentials | None, Depends(bearer)]
+        request: Request,
+        db: Db,
+        credentials: Annotated[HTTPAuthorizationCredentials | None, Depends(bearer)],
+        session_value: Annotated[str | None, Depends(session_cookie)],
     ) -> Principal:
-        if credentials is None:
+        token = credentials.credentials if credentials else session_value
+        if (
+            not token
+            or (request.headers.get("authorization") and not credentials)
+            or (
+                credentials
+                and request.cookies.get(SESSION)
+                and not hmac.compare_digest(token, request.cookies[SESSION])
+            )
+        ):
             raise HTTPException(401, "unauthorized", headers={"WWW-Authenticate": "Bearer"})
-        token = credentials.credentials
         if len(token) != 43:
             raise HTTPException(401, "unauthorized")
         row = db.execute(
             "SELECT a.id, a.kind FROM sessions s JOIN accounts a ON a.id = s.account_id "
             "JOIN devices d ON d.id = s.device_id AND d.account_id = a.id "
             "WHERE s.token_hash = %s AND s.expires_at > %s AND NOT s.revoked "
-            "AND a.status = 'active' AND a.verification = 'verified' AND d.authorized",
-            (digest(token), clock()),
+            "AND a.status = 'active' AND a.verification = 'verified' AND d.authorized "
+            "AND d.expires_at > %s AND NOT a.mfa_required "
+            "AND s.security_epoch = a.security_epoch AND d.security_epoch = a.security_epoch "
+            "FOR UPDATE OF a",
+            (digest(token), clock(), clock()),
         ).fetchone()
         if not row:
             raise HTTPException(401, "unauthorized")
@@ -123,54 +179,44 @@ def create_app(
 
     @app.get("/health")
     def health() -> dict[str, str]:
-        return {"status": "local-experimental", "authentication": "unavailable"}
+        return {
+            "status": "local-experimental",
+            "authentication": "local-synthetic" if identity else "unavailable",
+        }
 
-    @app.post("/auth/login")
-    def login(body: Login, db: Db) -> dict[str, str | int]:
-        if not synthetic_test_harness:
+    @app.get("/auth/csrf")
+    def csrf() -> JSONResponse:
+        if not identity:
             raise HTTPException(503, "identity_flow_unavailable")
-        if not budget.allow():
-            raise HTTPException(429, "try_later")
-        row = db.execute("SELECT * FROM accounts WHERE login = %s", (body.login,)).fetchone()
-        ok = verify_password(
-            row["password_hash"] if row else DUMMY_HASH, body.password.get_secret_value()
-        )
-        if not ok or not row or row["verification"] != "verified" or row["status"] != "active":
-            raise HTTPException(401, "unauthorized")
-        # Admin-MFA ist nicht implementiert; daher keine privilegierte Anmeldung.
-        if row["kind"] != "user":
-            raise HTTPException(401, "unauthorized")
-        device = db.execute(
-            "SELECT id FROM devices WHERE account_id = %s AND proof_hash = %s AND authorized",
-            (row["id"], digest(body.device_proof.get_secret_value())),
-        ).fetchone()
-        if not device:
-            raise HTTPException(401, "unauthorized")
-        if PASSWORDS.check_needs_rehash(row["password_hash"]):
-            # Runtime darf Accounts absichtlich nicht ändern; Migration/Identitätsweg bleibt offen.
-            raise HTTPException(503, "identity_upgrade_required")
-        token = secrets.token_urlsafe(32)
-        db.execute(
-            "INSERT INTO sessions (token_hash, account_id, device_id, expires_at) "
-            "VALUES (%s, %s, %s, %s)",
-            (digest(token), row["id"], device["id"], clock() + timedelta(minutes=15)),
-        )
-        return {"access_token": token, "token_type": "bearer", "expires_in": 900}
+        value = secrets.token_urlsafe(32)
+        response = JSONResponse({"csrf_token": value})
+        cookie(response, CSRF, value, 3600)
+        return response
+
+    def identity_actor(actor: Actor) -> Principal:
+        if actor.kind != "user":
+            raise HTTPException(403, "administration_unavailable")
+        return actor
+
+    install_identity(app, service, connection, identity_actor)
 
     @app.get("/session")
     def session(actor: Actor) -> dict[str, str]:
         return {
             "account_id": str(actor.account_id),
             "kind": actor.kind,
-            "assurance": "synthetic-test-only",
+            "assurance": "local-synthetic-otp",
         }
 
     @app.post("/auth/logout", status_code=204)
-    def logout(db: Db, actor: Actor) -> None:
+    def logout(db: Db, actor: Actor, response: Response) -> None:
         db.execute(
             "UPDATE sessions SET revoked = true WHERE token_hash = %s AND account_id = %s",
             (actor.token_hash, actor.account_id),
         )
+        if service:
+            service.audit(db, "session_revoked", actor.account_id)
+        response.delete_cookie(SESSION, secure=True, httponly=True, samesite="strict")
 
     @app.get("/capabilities")
     def capabilities(db: Db, actor: Actor) -> dict[str, str]:

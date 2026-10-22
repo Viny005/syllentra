@@ -10,6 +10,7 @@ import { Calendar } from './pages/Calendar';
 import { Progress } from './pages/Progress';
 import { Settings } from './pages/Settings';
 import { Assistant } from './pages/Assistant';
+import { Identity } from './pages/Identity';
 import { SessionForm } from './features/SessionForm';
 import { Badge, Dialog, EmptyState, PageHeading } from './ui/primitives';
 import { initialEvents } from './data/demo';
@@ -69,6 +70,7 @@ export default function App() {
     page = <Courses selected={route.startsWith('/courses/') ? route.slice(9) : undefined} />;
   else if (route === '/library') page = <Library language={language} onPreview={setPreview} />;
   else if (route === '/assistant') page = <Assistant language={language} />;
+  else if (route === '/identity') page = <Identity />;
   else if (route === '/notes') page = <Notes />;
   else if (route === '/calendar')
     page = <Calendar events={events} language={language} onPlan={() => setModal('session')} />;

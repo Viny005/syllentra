@@ -41,6 +41,26 @@ def migrate(url: str) -> None:
         db.execute("REVOKE ALL ON sessions, notes FROM syllentra_runtime")
         db.execute("GRANT SELECT, INSERT ON sessions TO syllentra_runtime")
         db.execute("GRANT UPDATE (revoked) ON sessions TO syllentra_runtime")
+        db.execute(
+            "GRANT INSERT (id,login,password_hash,verification,status) ON accounts "
+            "TO syllentra_runtime"
+        )
+        db.execute(
+            "GRANT UPDATE (password_hash,verification,security_epoch) ON accounts "
+            "TO syllentra_runtime"
+        )
+        db.execute("REVOKE INSERT, UPDATE ON devices FROM syllentra_runtime")
+        db.execute(
+            "GRANT INSERT (id,account_id,proof_hash,authorized,expires_at,security_epoch) "
+            "ON devices TO syllentra_runtime"
+        )
+        db.execute(
+            "GRANT UPDATE (authorized,expires_at,security_epoch) ON devices TO syllentra_runtime"
+        )
+        db.execute(
+            "GRANT SELECT, INSERT, UPDATE, DELETE ON identity_challenges, recovery_codes, "
+            "identity_budgets, security_events TO syllentra_runtime"
+        )
         db.execute("GRANT SELECT ON notes TO syllentra_runtime")
         db.execute("GRANT UPDATE (title, body, deleted_at) ON notes TO syllentra_runtime")
 

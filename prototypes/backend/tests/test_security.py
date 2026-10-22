@@ -9,9 +9,12 @@ from uuid import uuid4
 import psycopg
 import pytest
 from fastapi.testclient import TestClient
+from private_fixtures import PrivateEnvironment
 
 from scripts.migrate import migrate, urls
 from syllentra_backend.api import create_app
+from syllentra_backend.delivery import MemoryChannel
+from syllentra_backend.identity import SESSION, LocalIdentity
 from syllentra_backend.security import PASSWORDS, LoginBudget, digest, verify_password
 
 PASSWORD = "synthetic-test-password-only"
@@ -27,7 +30,7 @@ def setup() -> Iterator[dict[str, Any]]:
     ids = {key: uuid4() for key in ["a", "b", "pending", "admin", "da", "db", "na", "nb"]}
     proof = secrets.token_urlsafe(32)
     with psycopg.connect(admin_url) as db:
-        for table in ["sessions", "notes", "devices", "accounts"]:
+        for table in ["identity_budgets", "sessions", "notes", "devices", "accounts"]:
             db.execute(f"DELETE FROM {table}")  # noqa: S608 -- ausschließlich konstante Tabellenliste
         db.execute(
             "UPDATE capabilities SET mode = 'available', allowed_kind = 'user' WHERE name = 'notes'"
@@ -35,10 +38,11 @@ def setup() -> Iterator[dict[str, Any]]:
         encoded = PASSWORDS.hash(PASSWORD)
         for key in ["a", "b", "pending", "admin"]:
             db.execute(
-                "INSERT INTO accounts VALUES (%s, %s, %s, %s, %s, 'active')",
+                "INSERT INTO accounts (id,login,password_hash,kind,verification,status) "
+                "VALUES (%s, %s, %s, %s, %s, 'active')",
                 (
                     ids[key],
-                    key,
+                    key + "@example.test",
                     encoded,
                     "administrator" if key == "admin" else "user",
                     "pending" if key == "pending" else "verified",
@@ -46,32 +50,45 @@ def setup() -> Iterator[dict[str, Any]]:
             )
         for key in ["a", "b"]:
             db.execute(
-                "INSERT INTO devices VALUES (%s, %s, %s, true)",
-                (ids["d" + key], ids[key], digest(proof + key)),
+                "INSERT INTO devices (id,account_id,proof_hash,authorized,expires_at) "
+                "VALUES (%s, %s, %s, true, %s)",
+                (ids["d" + key], ids[key], digest(proof + key), NOW + timedelta(days=7)),
             )
             db.execute(
                 "INSERT INTO notes VALUES (%s, %s, %s, %s, NULL)",
                 (ids["n" + key], ids[key], "Notiz " + key, "Synthetischer Inhalt " + key),
             )
-    app = create_app(runtime_url, synthetic_test_harness=True, clock=lambda: NOW)
-    with TestClient(app) as client:
-        yield {
-            "client": client,
-            "ids": ids,
-            "proof": proof,
-            "admin_url": admin_url,
-            "runtime_url": runtime_url,
-            "app": app,
-        }
+    config = LocalIdentity(secrets.token_bytes(32), MemoryChannel(), MemoryChannel())
+    app = create_app(runtime_url, identity=config, clock=lambda: NOW)
+    with TestClient(app, base_url="https://testserver") as client:
+        csrf = client.get("/auth/csrf").json()["csrf_token"]
+        client.headers.update({"Origin": config.origin, "X-CSRF-Token": csrf})
+        yield PrivateEnvironment(
+            {
+                "client": client,
+                "ids": ids,
+                "proof": proof,
+                "admin_url": admin_url,
+                "runtime_url": runtime_url,
+                "app": app,
+            }
+        )
 
 
 def login(setup: dict[str, Any], account: str = "a") -> dict[str, str]:
     response = setup["client"].post(
         "/auth/login",
-        json={"login": account, "password": PASSWORD, "device_proof": setup["proof"] + account},
+        json={
+            "login": account + "@example.test",
+            "password": PASSWORD,
+            "device_proof": setup["proof"] + account,
+        },
     )
     assert response.status_code == 200, response.text
-    return {"Authorization": "Bearer " + response.json()["access_token"]}
+    token = setup["client"].cookies.get(SESSION)
+    assert token
+    setup["client"].cookies.delete(SESSION)
+    return {"Authorization": "Bearer " + token}
 
 
 def test_password_hash_and_budget() -> None:
@@ -95,8 +112,11 @@ def test_default_runtime_has_no_login_or_seed(setup: dict[str, Any]) -> None:
             == 503
         )
         assert client.get("/health").json()["authentication"] == "unavailable"
-    with pytest.raises(ValueError, match="Testharness"):
-        create_app("postgresql://localhost/production", synthetic_test_harness=True)
+    with pytest.raises(ValueError, match="Identitätsprobe"):
+        create_app(
+            "postgresql://localhost/production",
+            identity=LocalIdentity(secrets.token_bytes(32), MemoryChannel(), MemoryChannel()),
+        )
 
 
 @pytest.mark.parametrize("path", ["/session", "/notes", "/capabilities", "/administration"])
@@ -117,7 +137,11 @@ def test_anonymous_invalid_token(
 def test_unverified_admin_unknown_login_denied(setup: dict[str, Any], account: str) -> None:
     result = setup["client"].post(
         "/auth/login",
-        json={"login": account, "password": PASSWORD, "device_proof": setup["proof"] + account},
+        json={
+            "login": account + "@example.test",
+            "password": PASSWORD,
+            "device_proof": setup["proof"] + account,
+        },
     )
     assert result.status_code == 401 and result.json() == {"detail": "unauthorized"}
 
@@ -127,12 +151,13 @@ def test_password_device_rate_limit_and_no_echo(setup: dict[str, Any]) -> None:
         r = setup["client"].post(
             "/auth/login",
             json={
-                "login": "a",
+                "login": "a@example.test",
                 "password": PASSWORD,
                 "device_proof": "wrong-device-proof-not-authorized-000",
             },
         )
-        assert r.status_code == (401 if i < 10 else 429)
+        assert r.status_code == (202 if i < 10 else 429)
+        assert not setup["client"].cookies.get(SESSION)
         assert PASSWORD not in r.text
     r = setup["client"].post("/auth/login", json={"password": PASSWORD, "token": "private-probe"})
     assert r.status_code == 422 and "private-probe" not in r.text and PASSWORD not in r.text
@@ -251,11 +276,18 @@ def test_admin_never_gets_private_content(setup: dict[str, Any]) -> None:
     with psycopg.connect(setup["admin_url"]) as db:
         device = uuid4()
         db.execute(
-            "INSERT INTO devices VALUES (%s, %s, %s, true)",
-            (device, setup["ids"]["admin"], digest(secrets.token_urlsafe(32))),
+            "INSERT INTO devices (id,account_id,proof_hash,authorized,expires_at) "
+            "VALUES (%s, %s, %s, true, %s)",
+            (
+                device,
+                setup["ids"]["admin"],
+                digest(secrets.token_urlsafe(32)),
+                NOW + timedelta(days=1),
+            ),
         )
         db.execute(
-            "INSERT INTO sessions VALUES (%s, %s, %s, %s, false)",
+            "INSERT INTO sessions (token_hash,account_id,device_id,expires_at,revoked) "
+            "VALUES (%s, %s, %s, %s, false)",
             (digest(token), setup["ids"]["admin"], device, NOW + timedelta(minutes=1)),
         )
     h = {"Authorization": "Bearer " + token}
@@ -296,7 +328,8 @@ def test_database_constraints_and_runtime_privileges(setup: dict[str, Any]) -> N
     with psycopg.connect(setup["admin_url"]) as db:
         with pytest.raises(psycopg.errors.ForeignKeyViolation):
             db.execute(
-                "INSERT INTO sessions VALUES (%s, %s, %s, %s, false)",
+                "INSERT INTO sessions (token_hash,account_id,device_id,expires_at,revoked) "
+                "VALUES (%s, %s, %s, %s, false)",
                 (digest("wrong-owner"), setup["ids"]["a"], setup["ids"]["db"], NOW),
             )
 
@@ -319,7 +352,10 @@ def test_wrong_password_and_missing_identity_flows(setup: dict[str, Any]) -> Non
         "/auth/mfa",
         "/admin/bootstrap",
     ]:
-        assert client.post(path, json={"account_id": str(setup["ids"]["a"])}).status_code == 404
+        expected = 404 if path in {"/auth/mfa", "/admin/bootstrap"} else 422
+        assert (
+            client.post(path, json={"account_id": str(setup["ids"]["a"])}).status_code == expected
+        )
     response = client.post("/auth/login", content=b"x" * 17000)
     assert response.status_code == 413 and response.json() == {"detail": "input_too_large"}
 

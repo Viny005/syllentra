@@ -72,3 +72,8 @@ psycopg und das getrennte binäre Wheel sind LGPL-3.0-only, keine pauschale MIT-
 Offizielles Docker-Library-Image für PostgreSQL per Digest in `scripts/local_db.py`; PostgreSQL 17.11 und dessen Debian-Copyrightdatei tatsächlich im Container gelesen (PostgreSQL-Lizenz plus dort ausgewiesene Drittanteile). Digest fixiert das beobachtete Artefakt, garantiert weder langfristige Aktualität noch Schwachstellenfreiheit. Betriebssystem-/native Komponenten nicht vom Python-Advisoryaudit abgedeckt.
 
 `pip-audit` über alle 58 installierten Distributionen: keine bekannten Schwachstellen am Prüftag. Kein Nachweis unbekannter Schwachstellen oder vollständiger Container-/Lieferkettensicherheit. Lockfileänderungen erfordern erneute Inventur und Prüfung; keine automatische Versionsanhebung.
+
+
+## Fortschreibung Mission 10
+
+Keine Pythonabhängigkeit und kein Lockfile geändert; dieselben 58 installierten Distributionen erneut mit pip-audit geprüft, keine bekannten Schwachstellen am Prüftag. HMAC, Zufallswerte, lokale Adapter und TLSsteuerung verwenden vorhandene Python-/Systemkomponenten, keine fremde OTP-/MFA-Erweiterung installiert. Vorhandenes OpenSSL 3.5.7 dient ausschließlich kurzlebigem lokalem TLS: Debian-Copyrightbeilage gelesen, OpenSSL-Kern Apache-2.0; mitgelieferte Hilfsskripte können weitere Artistic-/GPL-Bedingungen haben. Keine pauschale Lizenz-/Sicherheitsfreigabe des Betriebssystemimages oder Binärweitergabe. Frontend nur Scripts/Code erweitert, seine Paketfassungen und Lockfile unverändert.

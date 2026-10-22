@@ -1,7 +1,7 @@
 # E3 — Änderungs- und Prüfnachweis
 
 **Projekt:** Syllentra AI\
-**Version:** 0.13\
+**Version:** 0.14\
 **Stand:** 22.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber
 
@@ -461,3 +461,19 @@ Alle technischen Empfehlungen bleiben zur Entscheidung und Fachentwürfe Zur Pr�
 
 
 **Dokument-/Erhaltungsprüfung:** 74 Markdown-Dateien, 966 lokale Links und 669 Tabellen ohne Struktur-/Linkfehler; 1.376 historische Anker erhalten, alle 14 Mermaid-Quellblöcke inhaltlich unverändert. Kanonische 89 FE, 66 UC, 25 DEC-V1, DEC-48/49, 46 REL, 28 AT-L, 20 AT-S3 und 14 offene TECH-O unverändert verglichen; alle fachlichen Primärdateien außer additivem E3/Index bytegleich. Frontend einschließlich Tests/Lockfile bytegleich. Acht bestehende Dateien geändert und 18 neue Dateien, ausschließlich autorisierte Backend-/Dokumentationspfade. Mustersuche plus Vergleich gegen die tatsächlich erzeugten lokalen DBgeheimnisse ohne Treffer in öffentlichen Änderungen; keine Vollgarantie für Historie oder unbekannte Secrets. git diff --check erfolgreich.
+
+
+## E3.27 Mission 10 — lokale Identitätswege
+
+**Quelle / Ausgang:** Vollständiger Nutzerauftrag Mission 10, Abschnitte 1–18; `cd971cd57ff7c968d6439375aaf1c1798cf16a81` lokal/Remote/PR-Ref, saubere bestehende Spezifikationsbranch, PR #1 OPEN. Erlaubt: lokale synthetische Entwicklung, PostgreSQL, Tests, Dokumentation und normaler Commit/Push. Keine neue Branch/PR, main-Änderung, Cloud, echten Maildienste/Accounts, Ausgaben, Merge oder Deployment.
+
+**Änderung / Grund:** [ADR-0009](../ARCHITECTURE_DECISIONS.md#adr-0009--lokale-identitätsprobe-aus-mission-10), [Architektur](../development/IDENTITY_ARCHITECTURE.md), [Anleitung](../../prototypes/backend/README.md) und [Validierung](../development/IDENTITY_PROTOTYPE_REVIEW.md): expliziter lokaler TLS-Identitätsmodus mit Registrierung/pending, HMAC-OTP über privaten Testkanal, servergebundenem Gerät, bestätigter neuer Gerätefreigabe, Sessions/Entzug und Recovery über E-Mail-OTP plus persönlichen Offline-Einmalcode. Kein Dokumentenschlüsselzugriff. Additive Migrationen 002/003, alte Vertrauensfixtures widerrufen, Testharness-Anmeldeverzweigung entfernt. Separater Reactbereich, acht Demo-Lernräume erhalten, kein Secret in localStorage. Standardbackend weiterhin geschlossen, MFA/Admin/Bootstrap nicht freigegeben.
+
+**Tatsächlich geprüft:** 66 PostgreSQL-/API-/Unitfälle bestanden, darunter bisherige 44 Fälle erhalten und an echte lokale Übergänge angepasst. Neue Negativ-/Parallelfälle für OTPverbrauch, Zählercommit, Neuversand, Gerätebindung, persönliche Recovery, Sitzungen und eigene Rechte. Strict Mypy (13 Quelldateien), Ruff/Format (16 Pythondateien); OpenAPI-Snapshot einschließlich Cookie-/Bearernachweisen. Unveränderte Paketfassungen/Lockfiles, Python-Audit über 58 Distributionen und npm-Audit ohne bekannte Schwachstellen am Prüftag. Frontendstrictbuild/Lint/Format, sieben Vitest-, neun Demobrowser- und vier zusätzliche TLS-Identitätsbrowserfälle bestanden; insgesamt 26 axeanalysen ohne gemeldeten Verstoß, keine WCAG-Abnahme. Zwei leere mobile Formularbilder lokal erzeugt/visuell geprüft, keine öffentlichen neuen Bilder. Vollständiger begrenzter 46-REL-Abgleich im Bericht, keine Gesamtfreigabe.
+
+**Befunde / Restbeobachtung:** Fixture-Diagnosen konnten lokale DBcredentials darstellen; Repräsentation redigiert, synthetische lokale Credentials rotiert und keine entsprechenden Diagnosen versioniert. Ein einmaliger Sitzungslesefehler nach Login blieb in abschließender Vollprüfung und drei gezielten Wiederholungen nicht reproduzierbar; Ursache ausdrücklich offen, nicht als bewiesene Fehlerbehebung ausgeben. Zusätzlich parallele Sessionlese-/Revocationprüfung bestanden. HTTPX-Deprecation weiterhin Wartungsbedarf. Keine Prüfung deaktiviert oder Ausnahmen zur Produktfreigabe erteilt.
+
+**Nicht geliefert / Status:** Kein echter Mailversand oder sicherer realer Offlinecodeausgabenachweis, MFA/Passkeys, lokale Sperre, Super-Admin-Erstbesetzung, persönliche Schlüsselrecovery, unabhängiger Restore, dauerhafte Containerpersistenz, physische Lösch-/Last-/Timing-/Pentest-/Datenschutzfreigabe. Alle 14 TECH-O und FE-56 offen, fachliche Spezifikation Zur Prüfung; 89 FE, 66 UC, 25 DEC-V1, DEC-48/49, 46 REL und sämtliche vorhandenen Abnahmen bewahrt. Dokument-/Diff-/Inhaltsprüfungen im folgenden Erhaltungsnachweis; End-SHA und PRstatus im Abschlussbericht.
+
+
+**Dokument-/Erhaltungsprüfung:** 76 Markdown-Dateien, 1.043 lokale Links und 674 Tabellen ohne Struktur-/Linkfehler; 1.397 historische Anker erhalten, alle 14 Mermaid-Quellblöcke unverändert. Kanonische 89 FE/66 UC/25 DEC-V1/DEC-48/49, 46 REL, 28 AT-L/20 AT-S3 und 14 offene TECH-O erhalten. Primärdateien außer additivem E3/Index bytegleich; 001-Migration, Paketfassungen/Lockfiles und bestehende UItestquellen unverändert. Alle bisherigen 18 Backendtestfunktionen mit 44 parametrisierten Fällen erhalten, keine Skip-/Xfail-Abschaltung. 38 Dateien im erlaubten Backend-/Frontend-/Dokumentumfang (23 bestehende, 15 neue); Secretmuster und tatsächlich erzeugte aktuelle DB-/HMAC-/Testzustellgeheimnisse ohne Treffer in öffentlichen Änderungen. Private Testdiagnosen/Kanäle ignoriert; keine vollständige Historien-/Secretscanner-Garantie. git diff --check erfolgreich. Abschließende vollständige PostgreSQL-Passprüfung erneut 66/66, lokaler ignorierter JUnitbeleg erzeugt.

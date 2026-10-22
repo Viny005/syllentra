@@ -2124,3 +2124,41 @@ dialog::backdrop {
     scroll-behavior: auto !important;
   }
 }
+
+.identity-panel {
+  max-width: 48rem;
+  padding: 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: var(--panel);
+}
+.identity-form {
+  display: grid;
+  gap: 1rem;
+  max-width: 28rem;
+  margin-block: 1rem;
+}
+.identity-panel label {
+  display: grid;
+  gap: 0.5rem;
+  margin-block: 1rem;
+}
+.identity-panel input {
+  width: 100%;
+  min-width: 0;
+}
+.identity-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-block: 1rem;
+}
+.identity-panel > .button {
+  margin: 0.25rem;
+}
+
+.identity-reference {
+  overflow-wrap: anywhere;
+  font-size: 0.875rem;
+  color: var(--muted);
+}

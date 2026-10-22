@@ -1,34 +1,42 @@
 # Lokale experimentelle Backendgrundlage
 
-**Version:** 0.1 · **Stand:** 22.10.2026 · **Status:** Experimentell / Zur Prüfung
+**Version:** 0.2 · **Stand:** 22.10.2026 · **Status:** Experimentell / Zur Prüfung
 
-Mission 9 prüft Python/FastAPI und PostgreSQL reversibel mit synthetischen Daten. Kein produktiver Identitätsdienst, keine vollständige V1 und keine endgültige Stackentscheidung. [ADR-0008](../../docs/ARCHITECTURE_DECISIONS.md#adr-0008--lokale-backendprobe-aus-mission-9), [Prüfbericht](../../docs/development/BACKEND_PROTOTYPE_REVIEW.md), [Lizenzen](LICENSES.md).
+Mission 10 erweitert die lokale Sicherheitsprobe aus Mission 9 um tatsächlich testbare synthetische Identität. Keine öffentliche Registrierung, produktive Authentifizierung, echte Mailzustellung oder endgültige Stackwahl. [Identitätsarchitektur](../../docs/development/IDENTITY_ARCHITECTURE.md), [aktueller Prüfbericht](../../docs/development/IDENTITY_PROTOTYPE_REVIEW.md), [historische Mission 9](../../docs/development/BACKEND_PROTOTYPE_REVIEW.md), [Lizenzen](LICENSES.md).
 
 ## Aufbau und Grenzen
 
-Ein modular gegliederter Prozess: `api.py` für validierte Anwendungsoperationen und aktuelle Rechte, `security.py` für Passwort-/Sitzungsnachweise, `limits.py` für begrenzte Eingaben. Direkte parametrisierte psycopg-Abfragen statt zusätzlichem ORM. Keine Worker, Queue, KI, Vektordatenbank oder externen Dienste. Spätere Worker müssen dieselben aktuellen Konto-/Objekt-/Funktionsgrenzen prüfen; heute nicht implementiert.
-
-Der normale lokale Einstieg `syllentra_backend.local:app` legt **keine Konten an** und verweigert jede Anmeldung mit 503. Registrierung, OTP, neue Geräte, Recovery und MFA sind nicht implementiert; entsprechende Endpunkte existieren nicht. Es gibt keinen öffentlichen Verifikations-, Seed- oder Bootstrapweg. Das interne Python-Testharness ermöglicht ausschließlich gegen `syllentra_test` die Anmeldung künstlicher bereits verifizierter Konten mit künstlichem autorisiertem Gerätenachweis. Diese Fixtures sind kein ausgeführter OTP-/Geräteverifikationsprozess. Kein Schalter in HTTP-Headern, Queryparametern oder im Frontend aktiviert das Testharness.
+FastAPI/Python mit PostgreSQL, direktem psycopg, Argon2id und getrennten Modulen für API, Identitätsübergänge, Eingabegrenze, Kryptonachweise und private lokale Zustelladapter. Kein externer IdP, keine Worker/Queue/KI. `syllentra_backend.local:app` bleibt ohne aktivierten Identitätsdienst und verweigert Anmeldung mit 503. Die bisherige Anmeldeverzweigung `synthetic_test_harness` ist entfernt. Nur der ausdrücklich gestartete TLS-Einstieg erlaubt lokale Registrierung/Verifikation mit synthetischen `example.test`-Adressen. Keine Seeds und kein Super Admin.
 
 ## Reproduzierbarer lokaler Einstieg
 
-Voraussetzungen: bestehendes Docker mit lokalem Daemon, Python 3.12 und `uv`. Keine Installation über fremde Shellskripte. Der Container ist ausschließlich für synthetische Daten bestimmt, loopbackgebunden, ressourcenbegrenzt und verwendet flüchtigen tmpfs-Speicher. Kein Cloudhosting. Vor Ausführung prüfen, dass Port 55439 und Containername frei sind. Niemals Produktionsdatenbanken einsetzen.
-
-Vom Repositoryverzeichnis:
+Voraussetzungen: vorhandenes Python 3.12, uv, Docker mit lokalem Daemon und OpenSSL. Keine fremden Installationsskripte. Aus dem Repository:
 
 ```bash
 cd prototypes/backend
 uv sync --locked --cache-dir /tmp/syllentra-uv
 python scripts/local_db.py start
 .venv/bin/python scripts/migrate.py
-PYTHONPATH=src .venv/bin/uvicorn syllentra_backend.local:app --host 127.0.0.1 --port 8000 --no-access-log
+.venv/bin/python scripts/prepare_identity.py
+PYTHONPATH=src .venv/bin/python -m scripts.identity_server
 ```
 
-Das Startscript verwendet das offizielle Image `postgres@sha256:858bb5e98eed02eb8cafbcdc007f9a65d1b613972028944a8ec2133ccaf80d27` (beobachtet: PostgreSQL 17.11, Debian Bookworm). Bei fehlendem Image zuerst diesen Digest bewusst mit `docker pull` beziehen. Kein veränderlicher Tag im Startscript. PostgreSQL-Lizenz und Debian-Paketbeilage gelesen; das gesamte Betriebssystemimage ist damit nicht sicherheits-/lizenzfreigegeben.
+`local_db.py start` nur ausführen, wenn der eigene Containername/Port 55439 und `.local/database.json` noch nicht belegt sind. Vorhandenen eigenen laufenden Zustand weiterverwenden, nicht überschreiben. Das offizielle Image ist per Digest `postgres@sha256:858bb5e98eed02eb8cafbcdc007f9a65d1b613972028944a8ec2133ccaf80d27` fixiert, beobachtet PostgreSQL 17.11 / Debian Bookworm. Bei fehlendem Image zuerst diesen Digest bewusst mit `docker pull` beziehen. Kein Cloudhosting. Zufällige Datenbankpasswörter nur in ignorierter `.local/database.json` (0600, Verzeichnis 0700); getrennte Migrations-/APIrolle und Entwicklungs-/Testdatenbanken.
 
-Zufällige lokale Datenbankpasswörter werden ausschließlich in ignoriertem `.local/database.json` (0600, Verzeichnis 0700) abgelegt und nicht ausgegeben. `syllentra_prototype` bleibt ohne Konten, `syllentra_test` enthält nur kurzlebige Fixtures. Der Migrationszugang besitzt DDL-Rechte, der getrennte APIzugang `syllentra_runtime` nicht. Lokale Dateirechte ersetzen kein produktives Secretmanagement. Keinen Debugger, Requestbody-/Authorizationlog oder öffentliche Bindung aktivieren.
+`prepare_identity.py` erzeugt ausschließlich lokale 0600-Dateien für Servergeheimnis und zweitägiges selbst signiertes Loopback-TLS. Bestehende Dateien werden nicht überschrieben; abgelaufene Testzertifikate bewusst prüfen/erneuern. Keine vertrauenswürdige öffentliche Zertifikatskette behauptet. `identity_server` bindet fest an Loopback:8443, erlaubt ausschließlich lokale bekannte Datenbankziele und startet ohne Konten. Option `--test` ausschließlich für Browserprüfungen gegen `syllentra_test`, nie parallel zu pytest.
 
-Das Script überschreibt vorhandenen Zustand nicht. Stoppen/Entfernen des eigenen Containers verwirft den tmpfs-Datenbestand; die lokale Zustandsdatei wird dadurch ungültig. Nach bewusster eigener Bereinigung erneut starten und migrieren. **Kein Nachweis dauerhafter Speicherung über Containerneustart, kein Backup oder Restore.** PostgreSQL-Persistenz ist hier nur über getrennte Verbindungen im laufenden lokalen Container geprüft. Auf Hardware ohne zuverlässiges isoliertes Docker/PostgreSQL Tests als blockiert melden, nicht auf SQLite umstellen und PostgreSQL-Erfolg behaupten.
+In einem zweiten Terminal:
+
+```bash
+cd prototypes/frontend
+npm ci --ignore-scripts --cache /tmp/syllentra-npm
+npm run build
+npm run preview:identity
+```
+
+Nur dieser explizite Startmodus verwendet Loopback:5174 mit HTTPS und festem geprüftem HTTPS-Proxy zum lokalen Backend. Im lokalen Identitätsbereich über Einstellungen synthetische Registrierung versuchen. Selbst signiertes Zertifikat nur für diesen eigenen lokalen Test prüfen; keinen allgemeinen Zertifikatsschutz abschalten. Gewöhnlicher Frontendstart und acht Demo-Lernräume bleiben getrennt, keine Demoobjekte werden zu Kontodaten.
+
+OTP und Offline-Testcode werden nicht im Browser angezeigt und nicht von einer API zurückgegeben. Die berechtigten automatisierten Tests erhalten sie ausschließlich aus getrennten privaten Kanälen (`.local/mail/otp.jsonl` und `.local/offline/recovery.jsonl`), außerhalb des Webroots. Keine wirkliche E-Mail oder sichere reale Offlineübergabe bewiesen. Nach dem Test private Kanäle durch berechtigten lokalen Betreiber bereinigen; `LocalFileChannel.prune()` entfernt abgelaufene Einträge. Kein automatischer Bereinigungsscheduler, kein Logging von Nachrichteninhalten.
 
 Prüfungen aus `prototypes/backend`:
 
@@ -40,56 +48,44 @@ Prüfungen aus `prototypes/backend`:
 .venv/bin/pip-audit --cache-dir /tmp/syllentra-pip-audit --format json
 ```
 
-Die Tests migrieren ausschließlich `syllentra_test` und löschen/ersetzen deren künstliche Fixtures. Nicht parallel gegen dieselbe Testdatenbank ausführen. Entwicklungsdaten bleiben getrennt. Die Syntaxgrenze 16 KiB, zehn synthetische Loginversuche pro Prozess/Minute und 15 Minuten Testsession sind bewusst begrenzte **Experimentparameter**, keine genehmigten V1-Fristen, Quoten oder SLO.
+Zusätzlich aus `prototypes/frontend`: `npm run build`, `npm run lint`, `npm run format:check`, `npm test`, `npm run test:e2e`, **anschließend** `npm run test:identity` und `npm audit --json`. Vorhandenen Chromium nutzen (optional CHROMIUM_PATH); keine Browserdownloads nötig. E2E-Demo startet/stoppt Preview auf 4173, Identitäts-E2E seinen eigenen TLS-Backend-/Frontendprozess auf 8443/5174 gegen die separate Testdatenbank. Diese Ports müssen frei sein. Die Testkonfiguration akzeptiert das selbst signierte Browserzertifikat nur lokal; der Frontendproxy prüft weiterhin die konkrete Backend-CAbeilage. Auth-Traces/Videos/automatische Fehlerscreenshots aus, damit Testartefakte keine Anmeldedaten kopieren.
+
+PostgreSQL liegt in ressourcenbegrenztem **tmpfs**. Stoppen/Entfernen des eigenen Containers verliert den Inhalt und macht die lokale Zustandsdatei ungültig. Keine Persistenz über Containerneustart, verschlüsselte Sicherung oder Restore nachgewiesen. Ohne zuverlässigen isolierten PostgreSQL Tests als blockiert melden; kein stiller SQLite-Ersatz. Nur eigene Prozesse beenden. Kein Deployment, externer Account oder Ausgabe autorisiert.
 
 ## Minimales Datenmodell und Migration
 
-| Tabelle | Zweck / Integrität |
-|---|---|
-| accounts | UUID, eindeutiger Login, Argon2id-Hash, Benutzer-/Administrationskonto, pending/verified, active/suspended/deleted; keine Super-Admin-Identität |
-| devices | Kontobindung, SHA-256 des zufälligen künstlichen Gerätenachweises, aktuelle Autorisierung; kein Ersatz für echte Geräteverifikation |
-| sessions | SHA-256 des zufälligen Sitzungstokens als Schlüssel, Konto/Gerät, Ablauf, Widerruf; zusammengesetzter Fremdschlüssel verhindert kontoabweichendes Gerät |
-| notes | Eigene künstliche Notiz, begrenzter Titel/Text, Eigentumsindex und Löschzeitpunkt; Inhalt bleibt beim Softdelete gespeichert |
-| capabilities | Kontrollierter Funktionsname, hidden/unavailable/available, erlaubte Kontoart; validierte persistente Serverkonfiguration |
-| schema_migrations | Angewandter Dateiname und SHA-256; historische Migrationen nach Anwendung unveränderlich |
+001 bewahrt Konto-/Geräte-/Session-/Notiz-/Flagmodell mit Eigentums-FK und Constraints. 002 ergänzt Sicherheitsrevision, MFA-Pflicht, Ablauf und nicht geheime Verwaltungs-UUIDs sowie Identitätschallenges, Recoveryverifikatoren, persistente Budgets und sichere Ereignismetadaten. Altes synthetisches Vertrauen wird widerrufen. 003 ergänzt persönliche Codegültigkeit und vorherige OTPverifikatoren. Historische Migrationen nicht nachträglich ändern; Migrationen transaktional, wiederholbar und gegen Prüfsummenabweichung gesperrt. Kein destruktives Downgrade.
 
-[001_foundation.sql](migrations/001_foundation.sql) erzeugt Schema/Constraints und ausschließlich Funktionskonfiguration, keine Konten. `scripts/migrate.py` verwendet Transaktion, Advisory-Lock und Prüfsummenvergleich; Wiederholung erhält Daten, veränderte Historie stoppt sicher. Runtime darf Konten/Geräte/Flags nur lesen, Sitzungen einfügen und widerrufen, Notizen lesen und ausschließlich Titel/Text/Löschzeitpunkt ändern. Kein DDL, kein Ändern des Eigentümers oder der Kontorolle. Neue Schemastände benötigen neue Migration; kein automatisches destruktives Downgrade.
-
-Notizlöschung verlangt das Ziel als `X-Confirm-Delete`, setzt `deleted_at` und sperrt weitere Zugriffe. Das ist ein getesteter Softdelete, **keine endgültige physische Löschung**, kein vollständiger Papierkorb und kein fertiger Kontolöschprozess nach SEC-15/16. Purge, Retention, Export, Derivate, Offline-/Restoremarker bleiben offen. Die API besitzt kein Kontoanlage-/Kontolöschrecht.
+Runtime hat kein DDL, keine Rollen-/Flagänderung und kein Notizeigentümer-/Gerätebesitzerwechselrecht. Benutzeranlage und Identitätszustände sind ausschließlich im festen serverseitigen Benutzerweg zugänglich. Notizlöschung bleibt bestätigter **Softdelete**, keine physische endgültige Löschung oder vollständiger Papierkorb. Datenexport, Retention aller Produktdaten, Nichtwiederbelebung und unabhängiger Restore bleiben offen.
 
 ## APIvertrag
 
-[openapi.json](openapi.json) ist ein erzeugter, im Test mit der Anwendung verglichener Vertragsstand; Swagger/ReDoc/OpenAPI-HTTPendpunkte sind ausgeschaltet. JSON-Eingaben verbieten zusätzliche Modellfelder. Öffentliche Fehler spiegeln weder Eingabewerte noch DBdetails. Private Antworten tragen `Cache-Control: no-store`.
+[openapi.json](openapi.json) wird gegen die tatsächlich registrierten Routen geprüft, inklusive Cookie-/Bearernachweis. Swagger/ReDoc/OpenAPI-HTTPansichten sind ausgeschaltet. JSONwerte streng begrenzt, Extra-Felder verboten, Eingabe-/DBfehler nicht gespiegelt, Antworten no-store. Kein Roh-OTP/Recoverycode/Sessiontoken im Antwort-JSON; notwendige Cookies Secure/HttpOnly/SameSite Strict.
 
-| Methode / Pfad | Zugriff / tatsächliches Verhalten |
+| Pfad / Methode | Tatsächlicher Zweck / Grenze |
 |---|---|
-| GET /health | Öffentlich; ausdrücklich local-experimental und authentication unavailable; keine Datenbankbereitschaftsgarantie |
-| POST /auth/login | Normal immer 503; im internen Testharness nur verifiziertes aktives künstliches Benutzerkonto mit Passwort und autorisiertem künstlichem Gerät; keine Adminanmeldung |
-| GET /session | Gültige Sitzung; eigene Konto-ID/Kontoart und synthetic-test-only, keine Hashes, Gerätegeheimnisse oder Tokens |
-| POST /auth/logout | Aktuelle Sitzung atomar widerrufen, 204; Folgezutritt 401; kein fremder Token als Parameter |
-| GET /capabilities | Authentifiziert; aktuelle freigegebene/uneingeschränkt verfügbare oder sichtbare unverfügbare Modi, hidden ausgelassen; Rollenrechte wirken zusätzlich |
-| GET /notes | Eigene nicht gelöschte künstliche Notizen, maximal 50, stabile UUID-Sortierung; keine Pagination implementiert |
-| GET /notes/{note_id} | Eigener nicht gelöschter Datensatz; fremd, gelöscht und unbekannt einheitlich 404 |
-| PATCH /notes/{note_id} | Nur eigener Datensatz unter aktuellem Notizrecht; Titel/Text validiert; Besitzer nicht änderbar |
-| DELETE /notes/{note_id} | Eigenes aktuelles Recht und explizite Zielbestätigung; Softdelete, 204 |
-| GET /administration | Identität wird geprüft, danach immer 403; kein funktionsfähiger Administrationshandler |
+| GET /health | Lokaler Experimentstatus; kein DBbereitschaftsbeweis |
+| GET /auth/csrf | CSRFnonce und geschützter Cookie; kein Anmeldenachweis |
+| POST /auth/register, /auth/verify, /auth/resend | Synthetische Benutzerregistrierung, gebundener Einmalcode, begrenzter Neuversand |
+| POST /auth/login | Erst nach Passwort, aktivem verifiziertem Konto und berechtigtem Gerät; geforderte aber fehlende MFA sperrt |
+| POST /auth/device/complete | Vorherige Freigabe vom berechtigten Gerät plus gebundener Antragsteller; danach neu anmelden |
+| POST /auth/recover, /auth/recover/complete | Generische Anfrage; E-Mail-OTP **plus** persönlicher Einmalcode, Entzug alten Vertrauens; keine Dokumentenschlüsselrecovery |
+| GET /session; POST /auth/logout | Eigene aktuelle Identität; aktuelle Session widerrufen und Cookie löschen |
+| GET /devices, /devices/requests; POST /devices/requests/{id}/approve, /devices/{id}/revoke | Nur eigenes Gerät/Anfrage, aktuelle Rechte und Passwortbestätigung bei Geräteaktionen |
+| GET /sessions; POST /sessions/{id}/revoke | Nur eigene nicht geheime Verwaltungsreferenzen; niemals Token/Hashausgabe |
+| GET /capabilities; GET/PATCH/DELETE /notes/{id}; GET /notes | Bestehende aktuelle Rollen-/Flag-/Eigentumsprüfung und endliche Liste |
+| GET /administration | Immer gesperrt; kein funktionsfähiger Adminhandler, keine öffentliche Erstbesetzung |
 
-401 bedeutet fehlende/ungültige/abgelaufene/widerrufene oder nicht mehr berechtigte Sitzung; 403 gesperrte Funktion/Browserintegration, 409 fehlende Löschbestätigung, 413 zu große Eingabe, 422 ungültige Eingabe, 429 Testloginbudget, 503 fehlender Identitätsweg/Datenbankfehler. Keine Tokens in URLs. Bearer nur im Authorization-Header; keine Cookies, CORS oder Querytoken-Alternative.
+401 ungültige Identität, 403 Rechte-/Transport-/CSRFsperre, 404 unbekannt/fremd, 409 fehlende Notizlöschbestätigung, 413 Eingabe zu groß, 422 ungültiges Modell, 429 Budget, 503 fehlender Modus/Dienst. Identitätsfehlversuche liefern generische kontrollierte Antworten, damit nötige Zähler erhalten bleiben. Ohne explizite lokale Konfiguration bleiben Identitywege blockiert. Vollständige Sicherheitsgrenzen und Testfristen in der Architektur.
 
 ## Sitzung, Rechte und Bedrohungen
 
-Argon2id mit gesalzenen Bibliotheksparametern, begrenzte Passwortlänge, Dummyhashprüfung für unbekannte Logins. Nachweislücken werden nicht durch neue Rollen oder Dauerfristen übergangen. Zufälliges 256-Bit-Bearertoken; nur sein SHA-256 liegt in PostgreSQL. Bei jedem Zugriff aktuelle Verifikation, Kontostatus, Gerät, Ablauf und Widerruf nachschlagen; Rollen nicht im Token einfrieren. Die Ablaufuhr ist für deterministische Tests injizierbar, zur Laufzeit UTC. Transaktion inklusive Commit endet vor der Antwort; Fehler liefern keine irreführende Erfolgsmeldung.
+Opake zufällige 256-Bit-Sitzung, nur SHA-256 in DB; jede Anfrage kontrolliert aktuellen Konto-/Verifikations-/Geräte-/MFA-/Revisions-/Ablauf-/Widerrufszustand. Neues Passwort über Recovery entzieht alle alten Sessions/Geräte. Keine vom Browser frei wählbare Geräte-ID als Vertrauensnachweis. OTP-HMAC mit geheimem separatem Schlüssel und Zweck-/Challengebindung; falsche, alte, wiederverwendete und fremd gebundene Codes verweigert. Testfristen, Budgets und endliche Metadatenretention sind keine Produkt-SLO oder bestätigten V1-Zahlen.
 
-Alle Notizabfragen enthalten `account_id = authentifizierte Identität`; Clientheader, Querywerte und Objektkennungen ersetzen diese nie. Auch direkte PATCH/DELETE-Aufrufe prüfen den aktuellen Serverflag. Administratoren erhalten kein Notizrecht. Die lokale Serverkonfiguration darf keine neue Funktion aus Text oder URL ausführen. Konfigurationseditor, Historie, Vorschau, Rollback und Adminrechte fehlen und bleiben gesperrt.
-
-Adminbootstrap ist ausschließlich vorbereitet als Grenze/Protokollbedarf: null privilegierte Standardkonten; vor jeder zukünftigen Erstbesetzung Eigentümerauftrag, geprüfte Identitäts-/MFA-/Recoverybindung, atomare Einmaligkeit, Audit und Nachweis gegen Konkurrenz/Replay. Erst danach genau ein Super Admin gemäß S3.5. Hier weder Bootstrapkommando noch Standardpasswort oder realer Super Admin; die allgemeine Kontoart administrator ist keine Implementierung der Super-Admin-/Delegationsrollen.
-
-Anwendungsschutz ist **kein PostgreSQL-RLS-Beweis**: Der begrenzte Servicedatenbankzugang kann alle für seinen Zweck freigegebenen Zeilen lesen. Prozess-/DBkompromittierung, produktive Konkurrenzfälle zwischen Rechteänderung und laufender Operation, verteiltes Ratelimiting, Audit/Alarmierung und Secretrotation benötigen weitere Arbeit. Keine komplette Pentest-/ASVS-Konformität behaupten.
+Account- und sensible Übergangssperren verhindern konkurrierende Mehrfachverwendung. Eigene Notizen bleiben serverseitig gefiltert, Adminrolle kein privates Inhaltsrecht. Keine RLS-/Pentest-/ASVS- oder Gesamt-REL-Konformität behauptet. Bibliotheks-/IdPwahl, Hardware-/Gerätebindung, produktive Parallelität/Last, echte Offlinecodeübergabe, MFA, Schlüsselverwaltung und Wiederherstellung offen. Produktive sensitive Passwörter niemals in dieser Probe verwenden.
 
 ## Frontendanschluss und nächste Sperren
 
-Der bestehende [Frontend-Prototyp](../frontend/README.md) bleibt Demo mit acht Bereichen, DE/FR/EN, Themes, Navigation und unveränderten UItests. Keine Testsession im Browser, kein Token in localStorage, keine Übernahme von Demoressourcen als authentifizierte Inhalte. Auch ein erfolgreicher Healthcheck ist keine authentifizierte Session. Browser-Origin-Requests werden absichtlich 403 gesperrt, kein CORS-Wildcard oder automatische Backendverbindung.
+Eigener lokaler Identitätsbereich in DE/FR/EN, Hell/Dunkel/System; Registrierung, maskierte OTP-/Recoveryeingabe, Login, Geräteprüfung/-freigabe, eigene Sessions und Logout. Kein Secret in localStorage, kein Kontoexport ins Demo-Dataset. Gerätefreigabereferenzen sind bewusst nicht geheime Vergleichswerte. Standardstart zeigt Identität unverfügbar. Die bestehenden acht Lernbereiche bleiben Demo und erhalten ihre UItests.
 
-Reihenfolge der späteren Integration: Identitätsentscheidung und OTP-/Geräte-/Recovery-/MFA-Negativtests; geprüfte Browsertransportsitzung einschließlich CSRF/CORS/HTTPS; schmale getrennte APIadapter mit Laufzeitvalidierung auf Basis des Vertrags; ausdrücklicher Demo-/Kontowechsel mit Bereinigung; zunächst eigene Notizen und Fähigkeiten; End-to-End-A/B-, Logout-, Ablauf-/Widerrufs- und Nichtverfügbarkeitsfälle. Keine versteckte Zusammenführung beider Datenquellen. Erst nach separater Berechtigung aktivieren. [Integrationsfolge](../../docs/development/INTEGRATION_ROADMAP.md).
-
-Offen bleiben echte Registrierung/OTP, Geräteverwaltung, MFA/Recovery, sichere einmalige Super-Admin-Erstbesetzung, Endnutzerkonto-Lifecycle, HTTPS/Ruhendverschlüsselung, Sicherung/Restore, Audit/Retention, Last-/Parallelitätsnachweise und Datenschutzfreigabe. Alle 14 TECH-O und FE-56 bleiben offen; 46 REL sind nicht insgesamt bestanden. Keine Cloud, Ausgaben, externen Benutzerkonten, KI oder Veröffentlichung durchgeführt.
+MFA, Passkeys, lokale Inaktivitätssperre, echte Zustellung, sichere reale Wiederherstellung/Schlüsselrecovery und jeder Adminweg bleiben unvollständig bzw. gesperrt. Nächster Schritt: Eigentümerreview der lokalen Belege, dann getrennte Entscheidung und Testmission zu echten Faktor-/Recovery-/Bootstrapverfahren. Keine Cloud, Ausgabe oder öffentliche Nutzerfreigabe ableiten. Alle 14 TECH-O und FE-56 bleiben offen, Fachspezifikationen Zur Prüfung.

@@ -137,14 +137,25 @@ export function Shell({
             <span>Syllentra AI</span>
             <ChevronRight size={14} aria-hidden="true" />
             <strong>
-              {t(current?.[1] || (route === '/administration' ? 'administration' : 'notFound'))}
+              {t(
+                current?.[1] ||
+                  (route === '/identity'
+                    ? 'identityTitle'
+                    : route === '/administration'
+                      ? 'administration'
+                      : 'notFound'),
+              )}
             </strong>
           </div>
           <div className="topbar-actions">
             <span className="prototype-badge">
               <span className="tiny-dot" />
-              <span className="prototype-wide">{t('demo')}</span>
-              <span className="prototype-compact">{t('demoShort')}</span>
+              <span className="prototype-wide">
+                {t(route === '/identity' ? 'identityBadge' : 'demo')}
+              </span>
+              <span className="prototype-compact">
+                {t(route === '/identity' ? 'identityBadge' : 'demoShort')}
+              </span>
             </span>
             <a
               href="#/library"

@@ -14,7 +14,10 @@
     "test": "vitest run",
     "test:e2e": "playwright test",
     "preview": "vite preview --host 127.0.0.1",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "dev:identity": "vite --config vite.identity.config.ts",
+    "preview:identity": "vite preview --config vite.identity.config.ts",
+    "test:identity": "playwright test --config playwright.identity.config.ts"
   },
   "dependencies": {
     "i18next": "26.5.5",

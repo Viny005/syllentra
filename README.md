@@ -61,3 +61,8 @@ Der [Frontend-Prototyp](prototypes/frontend/README.md) enthält acht navigierbar
 ## Lokale experimentelle Backendgrundlage aus Mission 9
 
 [Backendanleitung](prototypes/backend/README.md) und [Prüfbericht](docs/development/BACKEND_PROTOTYPE_REVIEW.md): FastAPI-/PostgreSQL-Probe mit synthetischen Sicherheitsprüfungen, Sessions, Kontofilterung und Serverflags. Normale Anmeldung bleibt blockiert; keine produktive Identität, Administration, KI oder Cloud. Frontend bleibt getrennte Demo, technische Auswahl offen. Keine Veröffentlichung oder Ausgabe.
+
+
+## Lokale Identitätsprobe aus Mission 10
+
+[Startanleitung](prototypes/backend/README.md), [Architektur](docs/development/IDENTITY_ARCHITECTURE.md) und [Tests/Grenzen](docs/development/IDENTITY_PROTOTYPE_REVIEW.md): expliziter lokaler TLS-Modus für ausschließlich synthetische Registrierung, OTP, Geräte, Sessions und Zweikanal-Recovery. Eigener Reactbereich, acht Demo-Lernräume weiterhin getrennt. Kein öffentlicher Benutzerzugang, echte Mailzustellung, Admin-MFA/Bootstrap oder Produktfreigabe; Standardbackend bleibt geschlossen.
