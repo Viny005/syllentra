@@ -1,6 +1,6 @@
 # Syllentra AI — überprüfter Projektkontext
 
-**Version:** 0.2 · **Stand:** 19.10.2026 · **Status:** Zur Prüfung durch den Projektinhaber
+**Version:** 0.3 · **Stand:** 22.10.2026 · **Status:** Zur Prüfung durch den Projektinhaber
 
 ## Git-Snapshot und Geltung
 
@@ -22,7 +22,7 @@ Adaptiver Lernbegleiter für Studierende: Materialien, Audio und Gespräche mit 
 | [D1](../spec/D1-datenmodell.md), [D2](../spec/D2-datentypen.md) | Fachliche Daten, Beziehungen, Invarianten und Datentypen. |
 | [B1](../spec/B1-dialogspezifikation.md), [B2](../spec/B2-batch.md), [B3](../spec/B3-druckausgaben.md) | Dialoge, Hintergrundverarbeitung und Ausgaben. |
 | [S1](../spec/S1-nachbarsysteme.md), [S2](../spec/S2-datenmigration.md) | Nachbarverträge, kanonische 89 FE in S1.18.1, Migration/Export/Wiederherstellung. |
-| [N1](../spec/N1-nichtfunktional.md), [N2](../spec/N2-querschnittskonzepte.md) | Qualitätsanforderungen und Schutzkonzepte als begrenzte Prüfentwürfe. |
+| [N1](../spec/N1-nichtfunktional.md), [N2](../spec/N2-querschnittskonzepte.md) | Qualitätsanforderungen und Schutzkonzepte als begrenzte Prüfentwürfe. |\n| [40-Punkte-Release-Checkliste](../quality/RELEASE_READINESS_40.md) | Zwei vom Projektinhaber am 22.10.2026 bestätigte Quellenlisten mit je 20 Prüfpunkten (REL-S01..20, REL-Q01..20); V1-Freigabekriterien, REL-Q10 Zahlung nur spätere Option. Ohne Produktnachweise. |
 | [E2](../spec/E2-glossar.md), [E3](../spec/E3-pruefnachweis.md) | Begriffe sowie datierte tatsächliche Dokumentationsprüfungen; kein Produktabnahmetest. |
 | [Entwicklungszuordnungen](../spec/ENTWICKLUNGSPLAN.md) | Bestätigter Teilstand, kein vollständiger freigegebener Meilensteinplan. |
 | [ADR-Konvention](../ARCHITECTURE_DECISIONS.md), [Roadmap](../ROADMAP.md) | Noch keine finale Stackwahl; historische Forschungs-/Entwicklungsphasen. |
@@ -57,4 +57,4 @@ Keine Geheimnisse, privaten Lernmaterialien oder personenbezogenen Echtdaten ins
 
 Zuletzt freigegeben ist die redaktionelle Bereinigung von E3 und PACE-Kontextdateien einschließlich notwendiger Indexanpassung, Commit und normalem Push auf den bestehenden Spezifikationsbranch zur Aktualisierung von PR #1. Fachliche Entscheidungen, 89 FE, 66 UC und Sicherheitsanforderungen bleiben unverändert. Kein Anwendungscode, keine Technologieentscheidung, Ausgabe, Änderung an `main`, Rebase, Force-Push, Merge oder Deployment. Nach Abschluss erteilt dieser Kontext keinen weiteren Produkt-/Architektur-/Implementierungsauftrag. PR #1 bleibt ohne Merge; die Spezifikation bleibt zur Prüfung.
 
-Arbeitsregeln: [AGENTS.md](../../AGENTS.md), [Workflow](WORKFLOW.md). Übergaben und Kontextänderungen verwenden die dort verlinkten Vorlagen und das [Protokoll](CONTEXT_CHANGELOG.md).
+**Ergänzung vom 22.10.2026:** Neuer Auftrag zur Übernahme von 40 Sicherheits-/Betriebschecks. Als eigenständiges Qualitäts-Freigaberegister angelegt und in N1, N2, Spezifikationsindex, E3 und PACE-Workflow querverlinkt. Dies ist **keine** Implementierung, kein erfolgreicher Produkttest, keine Stack-/Anbieter-/Kostenfreigabe; Zahlungen bleiben außerhalb der V1. Bestehende PR #1 nicht mergen, `main` nicht verändern. Der ältere Git-Snapshot oben bleibt ausdrücklich ein datierter Ausgangsstand.\n\nArbeitsregeln: [AGENTS.md](../../AGENTS.md), [Workflow](WORKFLOW.md). Übergaben und Kontextänderungen verwenden die dort verlinkten Vorlagen und das [Protokoll](CONTEXT_CHANGELOG.md).
