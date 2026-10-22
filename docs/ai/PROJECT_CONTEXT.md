@@ -1,12 +1,12 @@
 # Syllentra AI — überprüfter Projektkontext
 
-**Version:** 0.4 · **Stand:** 22.10.2026 · **Status:** Zur Prüfung durch den Projektinhaber
+**Version:** 0.5 · **Stand:** 22.10.2026 · **Status:** Zur Prüfung durch den Projektinhaber
 
 ## Git-Snapshot und Geltung
 
 Repository: `Viny005/syllentra` — <https://github.com/Viny005/syllentra>.
 Aktueller Arbeitsbranch: `docs/spec/p1-p2-mobile-workspaces`, zugeordnet zu [PR #1](https://github.com/Viny005/syllentra/pull/1).
-Am 22.10.2026 lokal, per entferntem Branch und PR-Git-Ref überprüfter Ausgangscommit dieser Konsolidierung: `f12a46881f54dccc8568d9982bba0c41564b052e`. Arbeitsbaum vor Bearbeitung sauber, PR #1 auf der öffentlichen GitHub-Seite als offen geprüft. PACE ist durch PR #2 seit `39261a5816a99f7c10c79344e5a1adc03b685d49` integriert. Der Snapshot ist eine datierte Ausgangsbasis, kein dauerhaft aktueller HEAD; bei jeder Aufgabe erneut prüfen. Endcommit/Push werden im Abschlussbericht nachgewiesen.
+Am 22.10.2026 lokal, per entferntem Branch und PR-Git-Ref überprüfter Ausgangscommit der Mission 3: `fb4c5074bf6bb8b4c0d2e381340b0702cff7275a`. Arbeitsbaum vor Bearbeitung sauber, PR #1 auf der öffentlichen GitHub-Seite als offen geprüft. PACE ist durch PR #2 seit `39261a5816a99f7c10c79344e5a1adc03b685d49` integriert. Der Snapshot ist eine datierte Ausgangsbasis, kein dauerhaft aktueller HEAD; bei jeder Aufgabe erneut prüfen. Endcommit/Push werden im Abschlussbericht nachgewiesen.
 
 ## Ziel und Aufbau
 
@@ -22,8 +22,9 @@ Adaptiver Lernbegleiter für Studierende: Materialien, Audio und Gespräche mit 
 | [D1](../spec/D1-datenmodell.md), [D2](../spec/D2-datentypen.md) | Fachliche Daten, Beziehungen, Invarianten und Datentypen. |
 | [B1](../spec/B1-dialogspezifikation.md), [B2](../spec/B2-batch.md), [B3](../spec/B3-druckausgaben.md) | Dialoge, Hintergrundverarbeitung und Ausgaben. |
 | [S1](../spec/S1-nachbarsysteme.md), [S2](../spec/S2-datenmigration.md) | Nachbarverträge, kanonische 89 FE in S1.18.1, Migration/Export/Wiederherstellung. |
-| [N1](../spec/N1-nichtfunktional.md), [N2](../spec/N2-querschnittskonzepte.md) | Qualitätsanforderungen und Schutzkonzepte als begrenzte Prüfentwürfe. |
+| [N1](../spec/N1-nichtfunktional.md), [N2](../spec/N2-querschnittskonzepte.md) | Fachlich vervollständigte V1-Prüfentwürfe: 25 NFR- und 27 SEC-Profile; Zielwerte, Verfahren und Produktnachweise offen. |
 | [40-Punkte-Release-Checkliste](../quality/RELEASE_READINESS_40.md) | Zwei vom Projektinhaber am 22.10.2026 bestätigte Quellenlisten mit je 20 Prüfpunkten (REL-S01..20, REL-Q01..20); V1-Freigabekriterien, REL-Q10 Zahlung nur spätere Option. Ohne Produktnachweise. |
+| [Qualitäts-/Freigabeergänzungen](../quality/RELEASE_KONTROLLMATRIX.md) | 20 Kandidaten konsolidiert: sechs neue Kontrollen, 46 insgesamt. Verlinkter Referenzrahmen und Freigabevoraussetzungen bereiten S3 nur vor; keine Produktprüfung. |
 | [E2](../spec/E2-glossar.md), [E3](../spec/E3-pruefnachweis.md) | Begriffe sowie datierte tatsächliche Dokumentationsprüfungen; kein Produktabnahmetest. |
 | [Entscheidungsmatrix](../spec/ENTSCHEIDUNGSMATRIX.md) | Aktuelle DEC-V1-/FE-21-Zuordnung und DEC-48/49, Soll-Abnahmen und verbleibende Präzisierungen; zur Prüfung. |
 | [Entwicklungszuordnungen](../spec/ENTWICKLUNGSPLAN.md) | Bestätigter Teilstand, kein vollständiger freigegebener Meilensteinplan. |
@@ -57,7 +58,9 @@ Keine Geheimnisse, privaten Lernmaterialien oder personenbezogenen Echtdaten ins
 
 ## Auftragsumfang und nächste Schritte
 
-Mission 2 erlaubt dokumentarische Konsolidierung der DEC-V1/FE-21 und DEC-48/49, Katalog-/Referenz-/Metadatenkorrektur, tatsächliche Dokumentprüfungen sowie Commit/normalen Push auf den bestehenden Spezifikationsbranch zur Aktualisierung von PR #1. Kein Merge, `main` unverändert, keine Anwendung, kein Account, keine Infrastruktur-/Externprobe oder Ausgabe. S3 und allgemeine Finalisierung von N1/N2 sind ausdrücklich nicht Teil dieser Mission. Die 89 FE, 66 UC, 28 pädagogischen Sollfälle und 40 Release-Kontrollen bleiben erhalten, FE-56 offen. Dokumente bleiben zur Prüfung; nach Abschluss ist kein weiterer Produkt-/Architekturauftrag durch diesen Kontext erteilt.
+Mission 3 autorisiert ausschließlich die fachliche Vervollständigung von N1/N2, Bewertung der 20 Release-Kandidaten, projektbezogene Referenzzuordnung, Vorbereitung von S3-Eingaben, nötige Kontext-/Referenzpflege und tatsächliche Dokumentprüfungen mit Commit/normalem Push auf dem bestehenden Spezifikationsbranch zur Aktualisierung von PR #1. Kein Merge, keine Änderung von `main`, kein Anwendungscode, Account, Infrastrukturtest, Deployment oder Ausgabe. S3 selbst wird nicht begonnen. Die 89 FE, 66 UC, 25 DEC-V1, DEC-48/49, 28 pädagogischen Sollfälle und ursprünglichen 40 Kontrollen bleiben erhalten, FE-56 offen. Die sechs neuen Kontrollprofile sind Prüfentwürfe; keine neue Produktentscheidung.
+
+**Aktueller Qualitätsstand:** NFR-01..25 und SEC-01..27 fachlich mit Ziel, Geltung, Methode, Abnahmekriterium, Beleg, Abhängigkeiten und offenen Parametern ausgearbeitet. [Kontrollmatrix](../quality/RELEASE_KONTROLLMATRIX.md): REL-A01/05/07/13/16/18 zusätzlich, insgesamt 46. [Referenzrahmen](../quality/REFERENZRAHMEN.md): ASVS 5.0.0, LLM Top 10 2026 und API Top 10 2023 über offizielle Projektquellen belegt; WCAG-Normtext, NIST- und DSGVO-Aktualitätsprüfung durch Zugriffsverweigerung offen. WCAG 2.2 AA bleibt zu bestätigendes Ziel. [Freigabevoraussetzungen](../quality/FREIGABEVORAUSSETZUNGEN.md) bündeln künftige Nachweise. Produktkontrollen sind nicht implementiert/nicht getestet; Grenzwerte, technische Entscheidungen, pädagogische Rubriken und menschliche Freigaben fehlen weiterhin. Dokumente bleiben Zur Prüfung; der Kontext erteilt keinen Folgeauftrag.
 
 Die Übernahme der 40 Release-Kontrollen vom 22.10.2026 bleibt als historische Kontextänderung im [Protokoll](CONTEXT_CHANGELOG.md) und in E3.18 nachvollziehbar; sie ist kein bestandener Produkttest oder Zahlungsumfang.
 

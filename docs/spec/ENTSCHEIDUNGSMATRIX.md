@@ -1,7 +1,7 @@
 # Entscheidungsabdeckung — konsolidierter Fachstand
 
 **Projekt:** Syllentra AI\
-**Version:** 0.1\
+**Version:** 0.2\
 **Stand:** 22.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber
 
@@ -71,7 +71,7 @@ Jede DEC-V1 besitzt genau eine Zuordnungszeile je Matrix. FE-Bezüge benennen be
 | DEC-V1-24 | DM-14, DM-32, DM-48 | DT-44, DT-58, DT-61 | —; Dashboard ist kein neuer Analysejob | NFR-01, NFR-08 | SEC-04, SEC-07, SEC-11 |
 | DEC-V1-25 | DM-02, DM-10, DM-48, DM-75 | DT-05, DT-44, DT-61 | —; keine Kalender-/Sitzungswirkung durch Zielwahl | NFR-08 | SEC-04, SEC-07 |
 
-**Fundstellen:** UC-Einzelvarianten in [F2](F2-anwendungsfaelle.md), qualifizierende Funktionen in [F3](F3-anwendungsfunktionen.md), optionale Felder/Beziehungen direkt bei den genannten [D1](D1-datenmodell.md)-/[D2](D2-datentypen.md)-Definitionen und beobachtbare Aktionen in den genannten [B1](B1-dialogspezifikation.md)-Dialogen. [F1.13](F1-geschaeftsprozesse.md#f113-konsolidierte-dec-v1-varianten-ohne-neue-prozesse) führt Prozessvarianten, [B2.19](B2-batch.md#b219-ausführungsgrenzen-der-konsolidierten-dec-v1) begrenzt Hintergrundwirkung; [B3.17](B3-druckausgaben.md#b317-dec-v1-sichten-und-berichtsumfang) begrenzt Berichte. N1/N2 werden dadurch nicht allgemein finalisiert; die Tabelle referenziert vorhandene Schutz-/Qualitätsziele.
+**Fundstellen:** UC-Einzelvarianten in [F2](F2-anwendungsfaelle.md), qualifizierende Funktionen in [F3](F3-anwendungsfunktionen.md), optionale Felder/Beziehungen direkt bei den genannten [D1](D1-datenmodell.md)-/[D2](D2-datentypen.md)-Definitionen und beobachtbare Aktionen in den genannten [B1](B1-dialogspezifikation.md)-Dialogen. [F1.13](F1-geschaeftsprozesse.md#f113-konsolidierte-dec-v1-varianten-ohne-neue-prozesse) führt Prozessvarianten, [B2.19](B2-batch.md#b219-ausführungsgrenzen-der-konsolidierten-dec-v1) begrenzt Hintergrundwirkung; [B3.17](B3-druckausgaben.md#b317-dec-v1-sichten-und-berichtsumfang) begrenzt Berichte. Die Tabelle bewahrt die bestätigten Schutz-/Qualitätsziele; Mission 3 vervollständigt N1/N2 fachlich, ohne technische Auswahl oder Produktfreigabe.
 
 ## 3. Prüffähige fachliche Abnahme je DEC-V1
 
@@ -143,8 +143,12 @@ FE-20 betrifft Eingabe/Sprachdialog; FE-21 betrifft gewählte Einzelwiedergabe u
 - **Weitere fachliche Präzisierung mit Projektinhaber:** Unterstützter Umfang einer einfachen Wissenskarte/Relationssemantik und zitierfähiger Quellenformate, konkrete messbare Lern-/Bewertungskriterien, Häufigkeit/Deaktivierung von Hilfe-/Pausenangeboten und zulässige Zeitmessbasis/Datensparsamkeit. Keine neue Schwelle, Gesundheitsinferenz, versteckte Erhebung, Pflicht oder feste Formel wurde beschlossen. Wo eine neue Produktwirkung nötig wäre, vor Änderung eine explizite Entscheidung einholen.
 - **Technische Auswahl/Nachweise später:** Oracle-/Alternativvergleich, unabhängiger Backupanbieter und Rechte-/Schlüsselverfahren, tatsächliche PWA-/TTS-/OCR-/Modellfähigkeiten, Kosten und kommerziell passende Lizenzkette; Quoten, RPO/RTO, Frequenzen und Retention bleiben die vorhandenen O-S1/O-S2-Arbeiten. Keine externe Infrastrukturprobe in dieser Mission.
 - **Planung:** Bestehende M2b/M5/M8-Zuordnungen bleiben unverändert. Für übrige DEC-V1 und technische Abhängigkeiten ist ein vollständiger Meilensteinplan separat zu erarbeiten; keine neuen Termine/Meilensteinnummern.
-- **Abnahme:** Die Spezifikation insgesamt, konkrete Darstellungen, Typausprägungen und alle Produktnachweise bleiben zur Prüfung beziehungsweise noch auszuführen. S3 und allgemeine Finalisierung von N1/N2 bleiben Folgeaufgaben. FE-56 bleibt offen. REL-Q10 bleibt außerhalb V1.
+- **Abnahme:** Die Spezifikation insgesamt, konkrete Darstellungen, Typausprägungen und alle Produktnachweise bleiben zur Prüfung beziehungsweise noch auszuführen. S3 bleibt Folgeaufgabe. N1/N2 sind jetzt fachlich vervollständigt; technische Konkretisierung, Zielwertbestätigung und tatsächliche Produktprüfungen bleiben offen. FE-56 bleibt offen. REL-Q10 bleibt außerhalb V1.
 
 ## 7. Verweise
 
 [Spezifikationsindex](README.md), [S2-Quellenregister](S2-datenmigration.md), [S1-FE-Register](S1-nachbarsysteme.md), [Prüfnachweis](E3-pruefnachweis.md), [Entwicklungszuordnungen](ENTWICKLUNGSPLAN.md), [ADR](../ARCHITECTURE_DECISIONS.md), [Release-Register](../quality/RELEASE_READINESS_40.md), [PACE-Kontext](../ai/PROJECT_CONTEXT.md).
+
+## 8. Qualitäts- und Schutzanschluss aus Mission 3
+
+[N1](N1-nichtfunktional.md) führt NFR-01..25 und [N2](N2-querschnittskonzepte.md) SEC-01..27 mit Prüfprofilen. Die [Kontrollmatrix](../quality/RELEASE_KONTROLLMATRIX.md) bewahrt die 40 ursprünglichen Kontrollen und ergänzt sechs eigenständige Kontrollen; [Referenzrahmen](../quality/REFERENZRAHMEN.md) und [Freigabevoraussetzungen](../quality/FREIGABEVORAUSSETZUNGEN.md) dokumentieren Quellen-/Nachweisgrenzen. Alle 25 DEC-V1- und lokalen Sollfallzeilen oben bleiben unverändert. Die Auswahl von Grenzwerten, Geräten, Verfahren, Quellen-/Bewertungsrubriken und dem WCAG-AA-Ziel benötigt menschliche Bestätigung; FE-56 bleibt offen.

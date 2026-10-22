@@ -35,12 +35,12 @@ Hinweis: Diese Leseanleitung ist im README.md des Spezifikationsverzeichnisses i
 | [B1](B1-dialogspezifikation.md) | 0.5 | DLG-01 bis DLG-67; persönliche und getrennte administrative Bedienung. Zur Prüfung. |
 | [B2](B2-batch.md) | 0.5 | BAT-01 bis BAT-26; autorisierte Hintergrundverarbeitung, Wiederanlauf und Löschfolgen. Zur Prüfung. |
 | [B3](B3-druckausgaben.md) | 0.5 | OUT-01 bis OUT-08; kontoisolierte Berichte und geschützte Exporte. Zur Prüfung. |
-| [S1](S1-nachbarsysteme.md) | 0.4 | NB-01 bis NB-12, vollständige FE-01..FE-89-Matrix und Schnittstellen-Abnahmeszenarien. Zur Prüfung. |
+| [S1](S1-nachbarsysteme.md) | 0.5 | NB-01 bis NB-12, vollständige FE-01..FE-89-Matrix und Schnittstellen-Abnahmeszenarien. Zur Prüfung. |
 | [S2](S2-datenmigration.md) | 0.3 | MIG-01 bis MIG-36, AT-S2-01 bis AT-S2-40; eigene Pakete, sichere Migration und Wiederherstellung. Zur Prüfung. |
-| [N1](N1-nichtfunktional.md) | 0.5 | Begrenzter Folgeentwurf: Qualitätsanforderungen und offene Mess-/Nachweisaufgaben. Zur Prüfung. |
-| [N2](N2-querschnittskonzepte.md) | 0.5 | Begrenzter Konzeptentwurf: Konten, Rechte, Schutz, Schlüssel, Audit, Löschung. Zur Prüfung. |
+| [N1](N1-nichtfunktional.md) | 0.6 | Vollständiger fachlicher V1-Qualitätsentwurf: 25 Prüfprofile, Messverfahren und offene Zielwerte. Zur Prüfung. |
+| [N2](N2-querschnittskonzepte.md) | 0.6 | Fachlicher V1-Sicherheitsentwurf: 27 Prüfprofile, Vertrauensgrenzen und offene technische Verfahren. Zur Prüfung. |
 | [E2](E2-glossar.md) | 0.4 | Glossar mit fachlichen Begriffsgrenzen. Zur Prüfung. |
-| [E3](E3-pruefnachweis.md) | 0.6 | Änderungsmatrix, Kennungsbestand und tatsächliche Dokumentationsprüfungen. Zur Prüfung. |
+| [E3](E3-pruefnachweis.md) | 0.7 | Änderungsmatrix, Kennungsbestand und tatsächliche Dokumentationsprüfungen. Zur Prüfung. |
 
 E1 ist als Leseanleitung in diesem README enthalten und bleibt mit dem Index zur Prüfung. [S2 — Datenmigration](S2-datenmigration.md) ist zur Prüfung ausgearbeitet. **S3 — Inbetriebnahme** bleibt geplant, ohne Link auf eine fehlende Datei; S3 übernimmt sicheren Betriebsstart und den Bootstrap des einzigen Super Admin. Die [Entscheidungsmatrix](ENTSCHEIDUNGSMATRIX.md) ordnet jetzt alle 25 DEC-V1 den bestehenden Fach-/Dialog-/Datenbausteinen und überprüfbaren Soll-Abnahmen zu. Offene Präzisierungen und technische Nachweise bleiben ausdrücklich ausgewiesen; die Matrix ist keine Gesamtabnahme. Die technische Architektur wird separat erarbeitet.
 
@@ -93,4 +93,14 @@ Verantwortlich: (wird bei Veröffentlichung eingetragen)
 
 ## Konsolidierte Entscheidungen und Bewertungsrahmen
 
-[Entscheidungsmatrix](ENTSCHEIDUNGSMATRIX.md), Version 0.1, **Zur Prüfung**: 25 DEC-V1 mit FE/UC/AF/DM/DT/DLG/BAT/NFR/SEC und Soll-Abnahmen, vollständiger FE-21-Ausgabeanschluss sowie getrennte DEC-48/49. Kein neuer Siedersleben-Baustein und keine neue FE/UC. [ADR-0004/0005](../ARCHITECTURE_DECISIONS.md) halten Oracle als ersten Bewertungskandidaten und die unabhängige verschlüsselte EU-Sicherung fest; endgültige Anbieter/Verfahren, Kapazität/Kosten, RPO/RTO und Fristen offen. Kein Account, externer Infrastrukturtest oder Ausgabe autorisiert. S3 bleibt nicht begonnen, N1/N2 bleiben begrenzte Prüfentwürfe; das [40-Punkte-Register](../quality/RELEASE_READINESS_40.md) bleibt unverändert erhalten.
+[Entscheidungsmatrix](ENTSCHEIDUNGSMATRIX.md), Version 0.2, **Zur Prüfung**: 25 DEC-V1 mit FE/UC/AF/DM/DT/DLG/BAT/NFR/SEC und Soll-Abnahmen, vollständiger FE-21-Ausgabeanschluss sowie getrennte DEC-48/49. Kein neuer Siedersleben-Baustein und keine neue FE/UC. [ADR-0004/0005](../ARCHITECTURE_DECISIONS.md) halten Oracle als ersten Bewertungskandidaten und die unabhängige verschlüsselte EU-Sicherung fest; endgültige Anbieter/Verfahren, Kapazität/Kosten, RPO/RTO und Fristen offen. Kein Account, externer Infrastrukturtest oder Ausgabe autorisiert. S3 bleibt nicht begonnen; N1/N2 sind fachlich vervollständigte Prüfentwürfe mit offenen technischen Nachweisen. Die ursprünglichen 40 Kontrollen im [Originalregister](../quality/RELEASE_READINESS_40.md) bleiben vollständig erhalten.
+
+## Qualitäts- und Freigabeergänzung aus Mission 3
+
+| Dokument | Version / Stand | Zuständigkeit |
+|---|---|---|
+| [Konsolidierte Kontrollmatrix](../quality/RELEASE_KONTROLLMATRIX.md) | 0.1 · Zur Prüfung | Alle 20 Kandidaten bewertet; sechs neue eigenständige Kontrollen, 46 insgesamt; Prüfprofile und tatsächlicher Status je Kontrolle. |
+| [Referenzrahmen](../quality/REFERENZRAHMEN.md) | 0.1 · Zur Prüfung | Belegte ASVS-/OWASP-Ausgaben, eingeschränkte Normabrufe, projektbezogene Zuordnung ohne Konformitätsbehauptung. |
+| [Freigabevoraussetzungen](../quality/FREIGABEVORAUSSETZUNGEN.md) | 0.1 · Zur Prüfung | Vorbedingungen für spätere S3-Ausarbeitung: Erstfreigabe, Funktionsgates, Regression, Periodik, Blocker und menschliche Entscheidungen. Kein S3-Verfahren. |
+
+NFR-01..12 und SEC-01..16 bleiben erhalten, ergänzt um NFR-13..25 und SEC-17..27. Messziele und technische Verfahren sind nicht frei erfunden. Alle Kontrollen sind noch ohne Implementierung und Produktnachweis; die vollständige fachliche Formulierung ist keine Abnahme. FE-56 offen, keine neue Zahlungs-, Anbieter-, Architektur- oder Betriebsfreigabe.
