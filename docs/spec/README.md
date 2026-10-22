@@ -41,7 +41,7 @@ Hinweis: Diese Leseanleitung ist im README.md des Spezifikationsverzeichnisses i
 | [N1](N1-nichtfunktional.md) | 0.7 | Vollständiger fachlicher V1-Qualitätsentwurf: 25 Prüfprofile, Messverfahren und offene Zielwerte. Zur Prüfung. |
 | [N2](N2-querschnittskonzepte.md) | 0.7 | Fachlicher V1-Sicherheitsentwurf: 27 Prüfprofile, Vertrauensgrenzen und offene technische Verfahren. Zur Prüfung. |
 | [E2](E2-glossar.md) | 0.4 | Glossar mit fachlichen Begriffsgrenzen. Zur Prüfung. |
-| [E3](E3-pruefnachweis.md) | 0.9 | Änderungsmatrix, Kennungsbestand und tatsächliche Dokumentationsprüfungen. Zur Prüfung. |
+| [E3](E3-pruefnachweis.md) | 0.10 | Änderungsmatrix, Kennungsbestand und tatsächliche Dokumentationsprüfungen. Zur Prüfung. |
 
 E1 ist als Leseanleitung in diesem README enthalten und bleibt mit dem Index zur Prüfung. [S2 — Datenmigration](S2-datenmigration.md) ist zur Prüfung ausgearbeitet. [S3 — Inbetriebnahme](S3-inbetriebnahme.md) ist als fachlicher Prüfentwurf ausgearbeitet; zukünftiger Betriebsstart und Bootstrap des einzigen Super Admin sind beschrieben, nicht ausgeführt. Die [Entscheidungsmatrix](ENTSCHEIDUNGSMATRIX.md) ordnet jetzt alle 25 DEC-V1 den bestehenden Fach-/Dialog-/Datenbausteinen und überprüfbaren Soll-Abnahmen zu. Offene Präzisierungen und technische Nachweise bleiben ausdrücklich ausgewiesen; die Matrix ist keine Gesamtabnahme. Die technische Architektur wird separat erarbeitet.
 
@@ -113,3 +113,7 @@ NFR-01..12 und SEC-01..16 bleiben erhalten, ergänzt um NFR-13..25 und SEC-17..2
 ## Technische Vergleichsstudie aus Mission 5
 
 Die [Architekturstudie](../architecture/README.md) mit acht verlinkten Teilstudien vergleicht Architekturform, Hosting, Stack/Identität, Daten/Suche, KI, unabhängige Sicherung und Kosten. Status **Empfohlen / Zur Entscheidung**; kein zusätzlicher Siedersleben-Baustein und keine technische Auswahl. [Quellen/Abrufgrenzen](../architecture/QUELLEN.md) unterscheiden gelesene offizielle Quellen, eigene Rechnungen und nicht verifizierte Angebote/Leistungsannahmen. [Offene technische Entscheidungen](../architecture/OFFENE_ENTSCHEIDUNGEN.md) benötigen Eigentümerfreigabe. Alle Fachanforderungen, 46 Kontrollen und der S3-Prüfentwurf bleiben erhalten; keine Implementierung, Cloudressource, Ausgabe oder Veröffentlichung.
+
+## Machbarkeitsprüfung und Testplanung aus Mission 6
+
+Die [Machbarkeitsprüfung](../architecture/MACHBARKEITSPRUEFUNG.md), [Ressourcenrechnung](../architecture/RESSOURCENBEDARF.md), [geplanten Protokolle T01–T09](../architecture/BENCHMARKPLAN.md) und [TECH-O-Entscheidungsvorlage](../architecture/ENTSCHEIDUNGSVORLAGE.md) ergänzen die Architekturstudie. Keine neuen Fachanforderungen, 46 REL unverändert, alle technischen Tests nicht durchgeführt. Status Empfohlen / Zur Entscheidung; Spezifikationen weiter Zur Prüfung, FE-56 offen, kein Provider-/Stack-/Kosten-/Implementierungsbeschluss.

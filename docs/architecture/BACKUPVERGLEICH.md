@@ -1,6 +1,6 @@
 # Unabhängige Sicherung — Verfahren und Anbieter
 
-**Version:** 0.1 · **Stand:** 22.10.2026 · **Status:** Empfohlen / Zur Entscheidung
+**Version:** 0.2 · **Stand:** 22.10.2026 · **Status:** Empfohlen / Zur Entscheidung
 
 ## 1. Verbindlicher Rahmen
 
@@ -26,3 +26,7 @@ Konsistenten PostgreSQL-Sicherungsstand, Dokumentversionen, freigegebene Konfigu
 Erstellen/Lesen/Prunen/Löschen mit passenden begrenzten Rechten trennen. Ein voll berechtigtes Backupcredential auf kompromittiertem Primärserver erlaubt eventuell Backupzerstörung: append-only bzw. nachweisbare getrennte Löschautorität/Retention prüfen, keine R2-Object-Lock-Unterstützung ohne Quelle behaupten. Recoveryzugang und Backupschlüssel unabhängig vom Hauptaccount, ohne private Dokumentenschlüssel im Backend. Schlüsselrotation darf vorhandene Sicherungen nicht unbemerkt unlesbar machen.
 
 Restores zuerst isoliert, Konten-/Quellschutz/Rechte/Integrität prüfen, aktuelle Löschungen/Entzüge priorisieren; alte Integrations-/MFA-/Session-/Supportzustände nicht aktivieren. Fehlender heutiger Kontrollstand oder Schlüssel sperrt Wiederfreigabe. RPO/RTO und Retention nach S3-Methode bestätigen, kein beliebiges tägliches Intervall. Primärplattformverlust und Backup-/Schlüsselkompromittierung als getrennte Szenarien wirklich üben, erst nach eigener Autorisierung. In Mission 5 keine Sicherung, Installation, Ressource oder Probe ausgeführt.
+
+## 4. Präzisierung aus neuer offizieller Quelle — Mission 6
+
+R2-Bucketlocks sind nun dokumentarisch belegt, einschließlich Vorrang gegenüber Lifecyclelöschung und Entfernbarkeit durch Konfigurationsberechtigte. Kein nachgewiesener unentfernbarer Schutz gegen kompromittierte Accountadministration. Endliche Retention, gesonderte Löschrechte und restic-Prune-/Scratchanforderungen müssen abgestimmt werden. Neue Quellen, Vertragslücken und T07-Voraussetzungen: [Machbarkeit](MACHBARKEITSPRUEFUNG.md#6-backup-neue-technische-aussage-vertrag-weiter-offen), [Quellen](QUELLEN.md#6-nachrecherche-mission-6), [Testplan](BENCHMARKPLAN.md). Kein Bucket, Lock oder Backup eingerichtet und keine Restoreprobe ausgeführt.

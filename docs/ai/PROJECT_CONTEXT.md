@@ -1,12 +1,12 @@
 # Syllentra AI — überprüfter Projektkontext
 
-**Version:** 0.7 · **Stand:** 22.10.2026 · **Status:** Zur Prüfung durch den Projektinhaber
+**Version:** 0.8 · **Stand:** 22.10.2026 · **Status:** Zur Prüfung durch den Projektinhaber
 
 ## Git-Snapshot und Geltung
 
 Repository: `Viny005/syllentra` — <https://github.com/Viny005/syllentra>.
 Aktueller Arbeitsbranch: `docs/spec/p1-p2-mobile-workspaces`, zugeordnet zu [PR #1](https://github.com/Viny005/syllentra/pull/1).
-Am 22.10.2026 lokal, per entferntem Branch und PR-Git-Ref überprüfter Ausgangscommit der Mission 5: `5ab55032b66e87950411cf6c1323fb3284d63eb6`. Arbeitsbaum vor Bearbeitung sauber, PR #1 auf der öffentlichen GitHub-Seite als offen geprüft. PACE ist durch PR #2 seit `39261a5816a99f7c10c79344e5a1adc03b685d49` integriert. Der Snapshot ist eine datierte Ausgangsbasis, kein dauerhaft aktueller HEAD; bei jeder Aufgabe erneut prüfen. Endcommit/Push werden im Abschlussbericht nachgewiesen.
+Am 22.10.2026 lokal, per entferntem Branch und PR-Git-Ref überprüfter Ausgangscommit der Mission 6: `9eb07f3fdc7c3b7c73b762af7fbfe761e9341807`. Arbeitsbaum vor Bearbeitung sauber, PR #1 auf der öffentlichen GitHub-Seite als offen geprüft. PACE ist durch PR #2 seit `39261a5816a99f7c10c79344e5a1adc03b685d49` integriert. Der Snapshot ist eine datierte Ausgangsbasis, kein dauerhaft aktueller HEAD; bei jeder Aufgabe erneut prüfen. Endcommit/Push werden im Abschlussbericht nachgewiesen.
 
 ## Ziel und Aufbau
 
@@ -29,7 +29,7 @@ Adaptiver Lernbegleiter für Studierende: Materialien, Audio und Gespräche mit 
 | [E2](../spec/E2-glossar.md), [E3](../spec/E3-pruefnachweis.md) | Begriffe sowie datierte tatsächliche Dokumentationsprüfungen; kein Produktabnahmetest. |
 | [Entscheidungsmatrix](../spec/ENTSCHEIDUNGSMATRIX.md) | Aktuelle DEC-V1-/FE-21-Zuordnung und DEC-48/49, Soll-Abnahmen und verbleibende Präzisierungen; zur Prüfung. |
 | [Entwicklungszuordnungen](../spec/ENTWICKLUNGSPLAN.md) | Bestätigter Teilstand, kein vollständiger freigegebener Meilensteinplan. |
-| [Technische Vergleichsstudie](../architecture/README.md) | Neun Dokumente: Empfehlungen zu Architektur/Hosting/KI/Daten/Stack/Backup/Kosten, offene technische Punkte und Quellen; Empfohlen / Zur Entscheidung, keine Auswahl. |
+| [Technische Vergleichsstudie](../architecture/README.md) | 13 Dokumente einschließlich Mission-6-Machbarkeit/Testplanung: Empfehlungen zu Architektur/Hosting/KI/Daten/Stack/Backup/Kosten, offene technische Punkte und Quellen; Empfohlen / Zur Entscheidung, keine Auswahl. |
 | [ADR-Konvention](../ARCHITECTURE_DECISIONS.md), [Roadmap](../ROADMAP.md) | Noch keine finale Stackwahl; historische Forschungs-/Entwicklungsphasen. |
 | [Vision](../PROJECT_VISION.md), [ursprüngliche Anforderungen](../REQUIREMENTS.md) | Historische Grundlagen; bei Abweichungen aktuelle bestätigte Entscheidungen und deren Quellenstatus prüfen. |
 | [PACE-Auftrag im Kontextprotokoll](CONTEXT_CHANGELOG.md) | Quelle der neuen Arbeitskonvention und des Untersuchungslimits; keine Änderung fachlicher FE/UC. |
@@ -60,7 +60,7 @@ Keine Geheimnisse, privaten Lernmaterialien oder personenbezogenen Echtdaten ins
 
 ## Auftragsumfang und nächste Schritte
 
-Mission 5 autorisiert ausschließlich aktuelle öffentliche Recherche, Vergleich und Dokumentation der technischen Architektur-/Anbieterkandidaten, notwendige Referenz-/PACEpflege und Dokumentprüfungen sowie Commit/normalen Push auf dem bestehenden Spezifikationsbranch zur Aktualisierung von PR #1. Kein Merge, keine Änderung von `main`, keine Anwendung, Cloudressource, Registrierung, Installation/Modellausführung, Ausgabe oder Deployment. Kein Stack-/Providerbeschluss; Empfehlungen bleiben Empfohlen / Zur Entscheidung. Alle Fachentwürfe Zur Prüfung, 89 FE, 66 UC, 25 DEC-V1, DEC-48/49, 28 AT-L und 46 REL erhalten; FE-56 offen.
+Mission 6 autorisiert ausschließlich dokumentarische Machbarkeitsprüfung, neue öffentliche Quellenrecherche, Ressourcenrechnung, künftige T01–T09-Planung und Neubewertung der 14 TECH-O sowie nötige Referenz-/PACE-/E3-Pflege mit Commit/normalem Push auf der bestehenden Spezifikationsbranch zur Aktualisierung von PR #1. Der zunächst abgeschnittene Auftrag wurde durch Abschnitte 12–16 vervollständigt. Kein Merge, `main` unverändert, keine Installation, Gewichtsdownloads/Modellausführung, technische Tests, Appentwicklung, Cloudressource, Account oder Ausgabe. Fachentwürfe Zur Prüfung; Studien Empfohlen / Zur Entscheidung.
 
 **Aktueller Untersuchungsstand:** Modularer Kern mit PostgreSQL, begrenzten separaten Workern und austauschbaren KI-Adaptern empfohlen; Vite/React + FastAPI, llama.cpp/kleine Qwen3-Kandidaten und selbst gehostete Identitätsoptionen zu prüfen. OCI zuerst bewerten; Hetzner/Scaleway echte Vergleichsoptionen. Keine komplette kostenlose Multiuser-KI nachgewiesen. Primärcloudpreise/-quoten und viele konkrete Gewichtslizenzen bleiben nicht verifiziert (Netzwerk-403); offizielle GitHub-Quellen belegen u. a. Softwarelizenzen, Releaseweiterleitungen und R2-Standardpreise/EU-Jurisdiktion. Gesamte R2-Vertrags-/Datenschutzlage noch offen. Gewichtete Scores sind transparente Hypothesen, keine Auswahl; Quellen-, Angebots-, Lizenz- und Benchmarklücken vor Entscheidung schließen.
 
@@ -69,3 +69,7 @@ Mission 5 autorisiert ausschließlich aktuelle öffentliche Recherche, Vergleich
 Die Übernahme der 40 Release-Kontrollen vom 22.10.2026 bleibt als historische Kontextänderung im [Protokoll](CONTEXT_CHANGELOG.md) und in E3.18 nachvollziehbar; sie ist kein bestandener Produkttest oder Zahlungsumfang.
 
 Arbeitsregeln: [AGENTS.md](../../AGENTS.md), [Workflow](WORKFLOW.md). Übergaben und Kontextänderungen verwenden die dort verlinkten Vorlagen und das [Protokoll](CONTEXT_CHANGELOG.md).
+
+## Aktuelle Machbarkeitspräzisierungen Mission 6
+
+[Neue Quellen/Prüfung](../architecture/MACHBARKEITSPRUEFUNG.md): Keycloak Link/Generator-OTP nicht mit E-Mail-OTP gleichsetzen; authentik-Recoveryreaktivierung und Anti-Enumeration gezielt prüfen. R2 dokumentiert entfernbare Bucketlocks; restic-Prune/Retention/Schutz gegen kompromittierte Credentials abstimmen. Host-/Modellhost-/Vertragsseiten trotz neuer offizieller API-/Repositorywege teils unlesbar. Keine Preise, garantierte Zuteilung oder Gewichtsrechte erfinden. [Ressourcenrechnungen](../architecture/RESSOURCENBEDARF.md) sind keine Messung; [T01–T09](../architecture/BENCHMARKPLAN.md) nicht ausgeführt. [14 TECH-O](../architecture/ENTSCHEIDUNGSVORLAGE.md) in A/B/C/D gegliedert, keine genehmigt. Ein persönlicher begrenzter Prototyp theoretisch prüfbar; vollständige Multiuser-V1 auf Always Free oder unter 10 EUR weiter unbewiesen. 89 FE, FE-56 offen, 66 UC, 25 DEC-V1, DEC-48/49 und 46 REL unverändert.

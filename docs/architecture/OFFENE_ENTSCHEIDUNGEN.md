@@ -1,6 +1,6 @@
 # Offene technische Entscheidungen und Belegbedarf
 
-**Version:** 0.1 · **Stand:** 22.10.2026 · **Status:** Empfohlen / Zur Entscheidung
+**Version:** 0.2 · **Stand:** 22.10.2026 · **Status:** Empfohlen / Zur Entscheidung
 
 Alle folgenden TECH-O-Bezüge sind Untersuchungspunkte, keine neuen FE/DEC oder beschlossenen ADRs. **Status aller Zeilen: Offen / Zur Entscheidung durch den Projektinhaber.** Keine Ressource, Installation, Modellausführung, Ausgabe oder Entwicklung ist durch einen Vorschlag autorisiert.
 
@@ -26,3 +26,7 @@ Alle folgenden TECH-O-Bezüge sind Untersuchungspunkte, keine neuen FE/DEC oder 
 Zuerst Quellenlücken schließen; dann fachlich geeignete Alternativen und harte Ausschlussgründe prüfen. Eigentümer bestätigt Zielwerte, Bewertungsgewichte und gegebenenfalls konkreten Messauftrag. Erst nach tatsächlich vorliegenden Ergebnissen eine technische Entscheidung als neuer/ergänzter ADR mit Kontext, Alternativen, Konsequenzen und explizitem Status dokumentieren. Dieser Auftrag enthält keine Architekturadoption und keine Testinfrastrukturfreigabe.
 
 [Architekturvergleich](README.md), [Quellen](QUELLEN.md) und [Kostenanalyse](KOSTEN_UND_MACHBARKEIT.md) liefern überprüfbare Hypothesen. FE-56 bleibt offen; DEC-48/49 und alle 25 DEC-V1 sind nicht durch TECH-O-Punkte ersetzt. Der bestehende Teilmeilensteinplan bleibt unverändert.
+
+## Neubewertung Mission 6
+
+Die [Entscheidungsvorlage](ENTSCHEIDUNGSVORLAGE.md) bewertet alle 14 bestehenden TECH-O mit Befund, Unsicherheit, Alternativen, Nutzen, Risiken, Kosten, Abhängigkeiten, Empfehlung und tatsächlichem Status. Kategorien A/B/C/D sind Prüfprioritäten, keine erteilte Zustimmung. [T01–T09](BENCHMARKPLAN.md) sind ausschließlich geplante zukünftige Protokolle; Quellen-/Ressourcen-/Vertragslücken bleiben sichtbar. Keine Umnummerierung oder neue Produktentscheidung.

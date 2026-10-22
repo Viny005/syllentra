@@ -1,6 +1,6 @@
 # Frontend, Backend und Identität
 
-**Version:** 0.1 · **Stand:** 22.10.2026 · **Status:** Empfohlen / Zur Entscheidung
+**Version:** 0.2 · **Stand:** 22.10.2026 · **Status:** Empfohlen / Zur Entscheidung
 
 ## 1. Vergleich der Laufzeit-/Oberflächenvarianten
 
@@ -36,3 +36,7 @@ Authentisierung liefert Identität, nicht Produktberechtigung. Server prüft Kon
 Adminoberfläche als eigener geschützter Bedienbereich mit getrenntem Adminaccount/-kontext; eigener Origin ist eine mögliche technische Grenze, kein hier beschlossener Domainkauf. Genau ein Super Admin; IdP-/Cloudadmin ist nicht automatisch App-Super-Admin oder privater Inhaltsleser. Delegierte dürfen keine Selbstbeförderung oder andere Adminverwaltung. Auth-/IdP-/Backendbetrieb kann technisch Klartextverarbeitung sehen; sensible geräteseitige Schlüssel und explizite temporäre Serveranalyse bleiben ehrlich getrennt.
 
 Sicherer Bootstrap, administrative MFA-Recovery und Schlüsselrecovery bleiben [S3.5](../spec/S3-inbetriebnahme.md#s35-sicherer-erstbootstrap-und-administrative-kontinuität) und O-S3-04/05/11. Keine sichere Lösung aus dem Produktnamen ableiten. Vor Architekturfreigabe Rollen-/Session-/OTP-/Isolationsmatrix inklusive A/B und Verlustfall vorlegen; vor Produktstart tatsächliche Tests.
+
+## 5. Präzisierung aus neuer offizieller Quelle — Mission 6
+
+Neu gelesene Keycloak-Anleitung bestätigt Linkverifikation; Generator-OTP ist kein E-Mail-Codeflow. Die authentik Email-Stage kann bei Recovery standardmäßig einen inaktiven Benutzer aktivieren. Appkontostatus, Konfiguration und Anti-Enumeration deshalb gezielt gegen Pause/Adminsperre/Löschung prüfen. Quellen und konkrete Beleggrenzen in [Machbarkeit Abschnitt 5](MACHBARKEITSPRUEFUNG.md#5-identität-fähigkeiten-und-konkrete-integrationslücken) und [Quellen M6](QUELLEN.md#6-nachrecherche-mission-6); T06/T09 im [Testplan](BENCHMARKPLAN.md) sind nur geplant. Keine endgültige Authauswahl.

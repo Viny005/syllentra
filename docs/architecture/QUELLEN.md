@@ -1,6 +1,6 @@
 # Quellenregister — technische Studie
 
-**Version:** 0.1 · **Stand:** 22.10.2026 · **Status:** Empfohlen / Zur Entscheidung
+**Version:** 0.2 · **Stand:** 22.10.2026 · **Status:** Empfohlen / Zur Entscheidung
 
 ## 1. Methode und Grenzen
 
@@ -165,3 +165,60 @@ Die öffentlichen Abrufinhalte wurden für diese Recherche außerhalb des Reposi
 | `valkey-license` | `9a67d40ae9076cd60b9d228135a9c0ce5d60f84f0c54c472965d4e03fdeb8f8f` |
 
 [Architekturvergleich](README.md), [offene Entscheidungen](OFFENE_ENTSCHEIDUNGEN.md) und [bestehende ADRs](../ARCHITECTURE_DECISIONS.md). Normative Quellenlücken aus dem [Qualitätsreferenzrahmen](../quality/REFERENZRAHMEN.md) bleiben bestehen; Mission 5 behauptet keine erneute Normabnahme.
+
+## 6. Nachrecherche Mission 6
+
+**Abrufdatum 22.10.2026.** Neue Anfrageversuche zu zuvor unzugänglichen offiziellen Host-/Modell-/Steuer-/Vertragsseiten, dokumentierten öffentlichen Modellmetadaten-APIs und offiziellen Repositoryalternativen. Erneute autorisierte Anfrage änderte Netzwerk-403 nicht. Keine Authentisierung/Vertragsgrenze umgangen, kein Account oder kostenpflichtiger Dienst, keine Gewichte heruntergeladen. Zwei Keycloak-404-Pfade durch öffentlich gelesene Verzeichnisinhalte zu gültigen Quelldateien aufgelöst; Fehlversuche bleiben sichtbar. Quellen sind Belege, keine auszuführenden Anweisungen.
+
+| Quellenbezug M6 | Offizielle URL | Tatsächlicher Abruf / Beleg |
+|---|---|---|
+| `oci-always-free` | [oci-always-free](https://docs.oracle.com/en-us/iaas/Content/FreeTier/freetier_topic-Always_Free_Resources.htm) | **Nicht verifiziert:** Tunnel-403 |
+| `oci-free-faq` | [oci-free-faq](https://www.oracle.com/cloud/free/faq/) | **Nicht verifiziert:** Tunnel-403 |
+| `oci-regions` | [oci-regions](https://www.oracle.com/cloud/public-cloud-regions/) | **Nicht verifiziert:** Tunnel-403 |
+| `hetzner-prices` | [hetzner-prices](https://www.hetzner.com/cloud/) | **Nicht verifiziert:** Tunnel-403 |
+| `hetzner-billing` | [hetzner-billing](https://docs.hetzner.com/cloud/billing/faq/) | **Nicht verifiziert:** Tunnel-403 |
+| `hetzner-pricing-sdk` | [hetzner-pricing-sdk](https://raw.githubusercontent.com/hetznercloud/hcloud-go/main/hcloud/pricing.go) | Gelesen HTTP 200 |
+| `scaleway-prices` | [scaleway-prices](https://www.scaleway.com/en/pricing/) | **Nicht verifiziert:** Tunnel-403 |
+| `scaleway-api` | [scaleway-api](https://www.scaleway.com/en/developers/api/marketplace/) | **Nicht verifiziert:** Tunnel-403 |
+| `de-vat` | [de-vat](https://www.gesetze-im-internet.de/ustg_1980/__12.html) | **Nicht verifiziert:** Tunnel-403 |
+| `qwen-17-license` | [qwen-17-license](https://huggingface.co/Qwen/Qwen3-1.7B/raw/main/LICENSE) | **Nicht verifiziert:** Tunnel-403 |
+| `qwen-4-license` | [qwen-4-license](https://huggingface.co/Qwen/Qwen3-4B-Instruct-2507/raw/main/LICENSE) | **Nicht verifiziert:** Tunnel-403 |
+| `qwen-8-config` | [qwen-8-config](https://huggingface.co/Qwen/Qwen3-8B/raw/main/config.json) | **Nicht verifiziert:** Tunnel-403 |
+| `qwen-17-api` | [qwen-17-api](https://huggingface.co/api/models/Qwen/Qwen3-1.7B) | **Nicht verifiziert:** Tunnel-403 |
+| `qwen-4-api` | [qwen-4-api](https://huggingface.co/api/models/Qwen/Qwen3-4B-Instruct-2507) | **Nicht verifiziert:** Tunnel-403 |
+| `qwen-8-api` | [qwen-8-api](https://huggingface.co/api/models/Qwen/Qwen3-8B) | **Nicht verifiziert:** Tunnel-403 |
+| `qwen-doc-config` | [qwen-doc-config](https://raw.githubusercontent.com/QwenLM/Qwen3/main/README.md) | Gelesen HTTP 200 |
+| `qwen-embedding` | [qwen-embedding](https://raw.githubusercontent.com/QwenLM/Qwen3-Embedding/main/README.md) | Gelesen HTTP 200 |
+| `keycloak-email` | [keycloak-email](https://raw.githubusercontent.com/keycloak/keycloak/main/docs/documentation/server_admin/topics/users/con-email.adoc) | **Nicht verifiziert:** HTTP 404 |
+| `keycloak-otp` | [keycloak-otp](https://raw.githubusercontent.com/keycloak/keycloak/main/docs/documentation/server_admin/topics/authentication/otp.adoc) | **Nicht verifiziert:** HTTP 404 |
+| `authentik-email` | [authentik-email](https://raw.githubusercontent.com/goauthentik/authentik/main/website/docs/add-secure-apps/flows-stages/stages/email/index.mdx) | Gelesen HTTP 200 |
+| `authentik-doc-tree` | [authentik-doc-tree](https://github.com/goauthentik/authentik/tree/main/website/docs/add-secure-apps/flows-stages/stages/email) | Gelesen HTTP 200 |
+| `restic-append` | [restic-append](https://raw.githubusercontent.com/restic/restic/master/doc/060_forget.rst) | Gelesen HTTP 200 |
+| `r2-lock` | [r2-lock](https://raw.githubusercontent.com/cloudflare/cloudflare-docs/production/src/content/docs/r2/buckets/bucket-locks.mdx) | Gelesen HTTP 200 |
+| `r2-legal` | [r2-legal](https://www.cloudflare.com/cloudflare-customer-dpa/) | **Nicht verifiziert:** Tunnel-403 |
+| `keycloak-users-tree` | [keycloak-users-tree](https://github.com/keycloak/keycloak/tree/main/docs/documentation/server_admin/topics/users) | Gelesen HTTP 200 |
+| `keycloak-auth-tree` | [keycloak-auth-tree](https://github.com/keycloak/keycloak/tree/main/docs/documentation/server_admin/topics/authentication) | Gelesen HTTP 200 |
+| `whisper-catalog` | [whisper-catalog](https://raw.githubusercontent.com/openai/whisper/main/whisper/__init__.py) | Gelesen HTTP 200 |
+| `piper-voices-doc` | [piper-voices-doc](https://raw.githubusercontent.com/OHF-Voice/piper1-gpl/main/docs/VOICES.md) | Gelesen HTTP 200 |
+| `keycloak-verify-email` | [keycloak-verify-email](https://raw.githubusercontent.com/keycloak/keycloak/main/docs/documentation/server_admin/topics/users/proc-verify-user-email.adoc) | Gelesen HTTP 200 |
+| `keycloak-otp-policies` | [keycloak-otp-policies](https://raw.githubusercontent.com/keycloak/keycloak/main/docs/documentation/server_admin/topics/authentication/otp-policies.adoc) | Gelesen HTTP 200 |
+
+Neue belegte Präzisierungen: Keycloak Verify Email verwendet einen Link; seine OTP-Policy beschreibt Generator-TOTP/HOTP. authentik Email-Stage dokumentiert tokenisierte Rückkehr und mögliche standardmäßige Reaktivierung inaktiver Konten bei Recovery. R2 dokumentiert Bucketlocks mit konfigurationsberechtigtem Entfernen; daraus folgt kein unentfernbarer Schutz gegen kompromittierte Hauptcredentials. restic beschreibt physische Prunebereinigung, Scratchspace und append-only-Risiken. Qwen3-Embedding-Herstellerkatalog nennt für 0,6B 32K/1024 sowie multilingualen Support; sein großer Modellbenchmark beweist keine Didaktik oder Leistung des kleinen Kandidaten. Hetzner-SDK-Preisstruktur ist kein aktuelles Tarifangebot. Dokumentierte Fähigkeiten bleiben vor Integration und Vertrags-/Ausführungsfreigabe zu prüfen.
+
+| Gelesener M6-Beleg | SHA-256 des tatsächlich gelesenen Inhalts |
+|---|---|
+| `hetzner-pricing-sdk` | `08f41db394b84109032ff6e2525e5c262bcd7f3c33efac842c5afd3b0d594707` |
+| `qwen-doc-config` | `0b2c2bb11806f7a00c8465f2586e2e99f15de28622fd5c9b70b83ae1ab18c75d` |
+| `qwen-embedding` | `cb77a65d92c429684ce41c839f959d151021b9fc37a40b9dfddfdb7449790599` |
+| `authentik-email` | `468724cc5cad8c1225a3c2980f72ef873aee22ec2cd134dcb7ccfb74401826f1` |
+| `authentik-doc-tree` | `75912a4c5ea15a713a33457791c6c45e9905ab1d403606613ea4b231a25f943c` |
+| `restic-append` | `deed2c7aa2cd6fb5c5bd2da0daab184281aac4f92e17b11e3355f88cbd130aee` |
+| `r2-lock` | `49b9c4ede9e0bfbda4fd068f00ab36f7d877e7f6ea1abd6019eb99c5391b56ba` |
+| `keycloak-users-tree` | `78020597f5f336b3abf188aaf18e9521c2c1a4530b0b0fd4c71eee704bd4d8a6` |
+| `keycloak-auth-tree` | `b4d47bf2a06f20699f70f3e2c87da8ed1d35214278481425da30cb1e2f075de7` |
+| `whisper-catalog` | `79ecbed714783b6230931a3dba6d5da6d386e2d44f9fc27256e4fc72751e1f62` |
+| `piper-voices-doc` | `cc724e58206cfaa94e2894544b9a1aca89ea45c85b36df1645a1719b029fdb55` |
+| `keycloak-verify-email` | `833fe0c0c93a729a66f519376d15367d5278b8e4208f661cc1821959526fe626` |
+| `keycloak-otp-policies` | `fe4c28eec49cb0b35ef53e87bbb6faa1ea6571f249c29bf1bd76ed6cd3f58cd2` |
+
+[Machbarkeit](MACHBARKEITSPRUEFUNG.md), [Ressourcen](RESSOURCENBEDARF.md), [Testprotokolle](BENCHMARKPLAN.md) und [Entscheidungsvorlage](ENTSCHEIDUNGSVORLAGE.md) trennen Herstellerangaben, Vertragslücken, Benchmarkklassen und Rechnungen. Alle früheren Quellenbezüge bleiben erhalten; keine unlesbare individuelle LICENSE oder Preisliste als bestätigt ausgegeben.

@@ -1,6 +1,6 @@
 # Technische Architekturstudie — Vergleich und Empfehlung
 
-**Version:** 0.1 · **Stand:** 22.10.2026 · **Status:** Empfohlen / Zur Entscheidung
+**Version:** 0.2 · **Stand:** 22.10.2026 · **Status:** Empfohlen / Zur Entscheidung
 
 ## 1. Auftrag, Status und Leitentscheidung zur Prüfung
 
@@ -180,3 +180,7 @@ Die robuste Empfehlung betrifft **die Architekturform**, nicht endgültig den Pr
 | DEC-48/49, S2/S3 und 46 REL-Profile | Erstbewertung OCI, unabhängige EU-Sicherung, tatsächliche spätere Prüfungen und menschliche Freigabe |
 
 [Spezifikationsindex](../spec/README.md), [S1](../spec/S1-nachbarsysteme.md), [S2](../spec/S2-datenmigration.md), [S3](../spec/S3-inbetriebnahme.md), [N1](../spec/N1-nichtfunktional.md), [N2](../spec/N2-querschnittskonzepte.md), [Entscheidungsmatrix](../spec/ENTSCHEIDUNGSMATRIX.md), [ADR](../ARCHITECTURE_DECISIONS.md), [46 Kontrollen](../quality/RELEASE_KONTROLLMATRIX.md) und [PACE](../ai/WORKFLOW.md) bleiben maßgeblich. Kein neuer Stack-/Hostingbeschluss wird durch diese Studie eingetragen.
+
+## 8. Machbarkeitsnachtrag aus Mission 6
+
+[Machbarkeitsprüfung](MACHBARKEITSPRUEFUNG.md) ergänzt neue öffentliche Quellen zu Auth/Recovery, R2-Locks, restic und Modellmetadaten; Hostpreise/-garantien und konkrete Modellartefakte teils weiter nicht verifiziert. [Ressourcenbedarf](RESSOURCENBEDARF.md) trennt vier Szenarien A–D und theoretische Reserven von Messwerten. [Benchmarkplan](BENCHMARKPLAN.md) beschreibt T01–T09 reproduzierbar mit DE/FR/EN-Startkorpus, aber ohne Ausführung. [Entscheidungsvorlage](ENTSCHEIDUNGSVORLAGE.md) klassifiziert alle 14 TECH-O neu, keine Entscheidung genehmigt. Die obige Mission-5-Matrix bleibt unveränderte Hypothese; neue Beobachtungen ersetzen keinen Cloud-/Modellbenchmark. Empfehlungen weiter Empfohlen / Zur Entscheidung.

@@ -1,7 +1,7 @@
 # E3 — Änderungs- und Prüfnachweis
 
 **Projekt:** Syllentra AI\
-**Version:** 0.9\
+**Version:** 0.10\
 **Stand:** 22.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber
 
@@ -382,3 +382,24 @@ Diese Prüfungen belegen Dokumentationskonsistenz und Bestandserhalt. Keine Prod
 **Prüfgrenze:** Dokumentstruktur, Bestandserhalt, arithmetische Modellrechnungen, tatsächliche Quellenabrufe und Diagrammrendering. Keine Inferenz-/ARM-/Cloud-/Preisvertrags-/Sicherheits-/Lastabnahme. Musterprüfungen sind kein umfassender Geheimnisfreiheits- oder Konformitätsnachweis; offene Angebots-/Gewichts-/Vertrags-/Support-/Leistungsfragen bleiben vor Entscheidung zu schließen.
 
 **Grenzen und offene Risiken:** Primärcloudangebote/-verfügbarkeit, genaue Verträge/Subprozessoren, einige Checkpoint-/Stimmen-/Parserlizenzen, Support-/ARM64-Buildpassung und vollständige V1-Last-/Gütenachweise teils offen. Keine vollständige Mehrnutzer-KI unter 10 EUR brutto/Monat nachgewiesen; Grenze ist keine Ausgabe. Empfehlungen Empfohlen / Zur Entscheidung, alle Fachentwürfe Zur Prüfung. 89 FE/FE-56 offen, 66 UC, 25 DEC-V1, DEC-48/49, 28 AT-L und 46 REL bleiben erhalten. Keine App-/Cloud-/Modell-/Last-/Restore-/Bootstraptests, Installation, Ressource, Account, Ausgabe, Merge oder Deployment. Endcommit und PR-Stand nach normalem Push im Abschlussbericht.
+
+## E3.23 Mission 6 — Machbarkeit und technische Prüfplanung
+
+**Quelle und Umfang:** Vollständig gelesene Mission 6 mit nachgereichten Abschnitten 12–16; `9eb07f3fdc7c3b7c73b762af7fbfe761e9341807`, sauberer bestehender Branch, lokaler/entfernter/PR-Head gleich, PR #1 offen. Vor Vervollständigung keine Repositorydatei verändert. Nur Dokumentation und öffentliche Quellen, keine technische Testausführung.
+
+**Tatsächliche Änderungen:** Vier neue Architekturunterlagen trennen angekündigte/garantierte/kapazitäts-/zahlmittelabhängige/unbekannte Cloudaspekte, dokumentieren Modell-/Auth-/Backupbelege und Lücken, rechnen Komponenten-/Szenarioreserven A–D, planen neun Tests mit je elf Pflichtfeldern und selbst verfasstem DE/FR/EN-Startkorpus. Alle 14 TECH-O nach Befunden/Alternativen/Nutzen/Risiken/Kosten/Abhängigkeiten/Empfehlung/Status erneut eingeordnet: zwei A-, drei B-, fünf C-, vier D-Schwerpunkte, keine genehmigt. Bestehende Studien nur durch neue Quellenpräzisierungen/Verweise ergänzt, keine Wiederholung als neues Messergebnis.
+
+**Recherchegrenze:** Neuer Abruf offizieller Anbieter-/Steuer-/Modellseiten und öffentlicher Modellmetadaten-APIs trotz erneuter autorisierter Anfrage teils Tunnel-403; öffentliche Repositories lieferten neue Auth-, Bucketlock-, Prune-, Whisper- und Embeddingbelege. Zwei Keycloak-404-Pfade über öffentliche Verzeichnisinhalte korrigiert. Keine Zugriffs-/Vertrags-/Authentisierungsgrenze umgangen, SDKstruktur nicht als Tarifangebot ausgegeben. Datierter Quellstatus/Hashes im Quellenregister M6. Keine Preis-, Gewichtsrechte-, Kontext-, ARM-/Güte-/Zuteilungs- oder Gesamtkostengarantie erfunden; VAT19 % nur ausdrücklich bezeichnete deutsche Rechenannahme, Gesetzesabruf unlesbar.
+
+**Tatsächlich ausgeführte Dokumentationsprüfungen:**
+
+- markdown-it 14.1.0: **48 Markdown-Dateien, 772 lokale Links/Anker, 635 Tabellen** ohne Fehler; **1.221 bestehende Abschnitts-/HTML-Anker** zur Ausgangsbasis erhalten.
+- **14 bestehende Mermaid-Diagramme** mit Mermaid 11.15.0 im lokalen Chromium erfolgreich geparst und als SVG gerendert; alle Diagrammquellen wortgleich, kein neues Diagramm/Projektpaket. Das Rendering ist ausschließlich Dokumentprüfung, kein T01–T09-Lauf.
+- Bestandsvergleich: **89 FE, FE-56 offen, 66 UC, 25 DEC-V1, DEC-48/49, 46 REL, 28 AT-L, 20 AT-S3, N1/N2/S3 und ADRs** unverändert. Alle bisherigen versionierten Dateien außer neun notwendigen Nachweis-/Referenz-/Quellen-/PACEdateien bytegleich; nur vier neue Markdown-Dateien. Alte Architekturunterlagen jeweils nach Versionsfortschreibung vollständig als Anfang erhalten, nur neue Quellenpräzisierungen/Verweise angehängt; historische E3-Belege erhalten.
+- **Neun eindeutige T01–T09-Profile mit je elf Pflichtfeldern**, neun selbst verfasste DE/FR/EN-Startfälle und drei geplante Aufnahmeskripte geprüft; alle Tests ausdrücklich nicht durchgeführt. Beide TECH-O-Zuordnungstabellen jeweils vollständig/eindeutig 01–14, Kategorien **A=2, B=3, C=5, D=4**, sämtliche Entscheidungsstatus offen. Keine neue TECH-/FE-/REL-Entscheidung.
+- Grund-RAM **3,2–6,5 GiB**, Szenariorechnungen einschließlich **5,2–10,5 / 7,2–14,5 / 7,95–16,75 / 12,45–26,75 GiB** und hypothetische VATrechnung 8,00 × 1,19 = 9,52 EUR rechnerisch geprüft; ausdrücklich keine Messwerte/Anbieterpreise. Neue **30 Quellenbezüge: 13 lesbare Belege, 17 fehlgeschlagene Versuche**; URL-/Status-/Hashzuordnung gegen gesicherte öffentliche Abrufe kontrolliert, korrigierte 404-Pfade nicht als bestätigte Inhalte ausgegeben.
+- Freigegebenen Dateiumfang (**13 Markdown-Dateien**) und Status kontrolliert, keine anderen neuen Dateien. Öffentliche Inhalte auf Geheimnis-/Tokenmuster, private Echtdaten, temporäre Pfade und deutsche KI-Bezeichnung geprüft, kein Befund. `git diff --check` erfolgreich; gestagten Umfang vor Commit gesondert prüfen.
+
+**Prüfgrenze:** Bestands-/Struktur-/Hashvergleich, arithmetische Prüfung, tatsächliche öffentliche Quellenabrufe und Mermaidrendering. Kein eigener Ressourcen-/Inferenz-/Didaktik-/Audio-/Auth-/Backup-/Kosten-/Isolationstest durchgeführt. Geheimnismuster und redaktionelle Sichtung sind kein vollständiger Sicherheits-/Datenschutznachweis; offene externe Quellen bleiben nicht verifiziert.
+
+**Offen und nicht durchgeführt:** Alle T01–T09, Anbieter-/Steuer-/Vertragslücken, exakte Artefaktlizenzen/-hashes, Auth-/Recoveryverfahren und N1-Zielwerte vor späterem autorisiertem Experiment schließen. Grund-V1 bleibt vollständig spezifiziert, progressive Aktivierung keine Löschung bestätigter Funktionen. Keine Software installiert, Gewichte geladen, Modelle/Cloud/Last/Restore/Authprototypen ausgeführt, Accounts/Ressourcen erstellt, Ausgaben, Code, Merge oder Deployment. Empfehlungen Empfohlen / Zur Entscheidung, Fachentwürfe Zur Prüfung; FE-56 offen. Finalen Commit/Remote-/PR-Stand nach normalem Push im Abschlussbericht nennen.
