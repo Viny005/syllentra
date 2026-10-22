@@ -1,7 +1,7 @@
 # E3 — Änderungs- und Prüfnachweis
 
 **Projekt:** Syllentra AI\
-**Version:** 0.4\
+**Version:** 0.5\
 **Stand:** 19.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber
 
@@ -284,3 +284,12 @@ Historische GitHub-API-Einschränkungen betrafen den Metadatenzugriff, nicht die
 - Neue öffentliche Inhalte und Diff auf Geheimnis-/Tokenmuster, private Daten und unzulässige Änderungen geprüft; keine Befunde. `git diff --check` erfolgreich.
 
 Diese Prüfungen belegen Dokumentationskonsistenz und Bestandserhalt. Keine Produkt-, Sicherheits-, Geräte- oder Integrationstests ausgeführt; unveränderte Mermaid-Diagramme wurden in dieser Bereinigung nicht erneut gerendert. Die erforderlichen Produktnachweise aus E3.6, E3.10 und E3.16 bleiben offen.
+
+
+## E3.18 Aufnahme zweier Release-Checklisten vom 22.10.2026
+
+**Quelle / Umfang:** Der Projektinhaber übernahm zwei Listen mit **20 Sicherheitsprüfungen** und **20 Betriebs-/Performanz-/UX-Prüfungen** und bat um fachlich korrekte Zuordnung zu heutiger Dokumentation und künftigen Umsetzungsschritten. Die 40 Originalpunkte werden einzeln und in Reihenfolge unter `REL-S01..REL-S20` und `REL-Q01..REL-Q20` in [docs/quality/RELEASE_READINESS_40.md](../quality/RELEASE_READINESS_40.md) geführt. N1/N2 wurden um die jeweilige fachliche Einordnung ergänzt, der Index und PACE-Workflow verlinken auf den Nachweiskatalog.
+
+**Abgrenzung:** Es wurden keine FE-, UC-, DM-, DT- oder bestehenden SEC-/NFR-IDs umnummeriert, keine Infrastruktur, kostenpflichtige API, Zahlfunktion oder Stackentscheidung aktiviert und kein Anwendungscode geändert. FE-56 bleibt offen; Zahlungen (REL-Q10) sind kein V1-Ziel. Die bestehenden Fachbausteine bleiben **Zur Prüfung durch den Projektinhaber**.
+
+**Dokumentationskontrollen:** Die Anlage hat genau 20 `REL-Sxx`-Zeilen und 20 `REL-Qxx`-Zeilen, alle eindeutig, und die verlinkten Primärdokumente bestehen im Repository. Weitere vollständige Markdown-/Diff-/Linkprüfungen sind im Abschlussbericht nur anzuführen, wenn sie tatsächlich durchgeführt wurden. **Keine** Authentifizierungs-, Last-, Browser-, Sicherheits-, Backup- oder Wiederherstellungstests wurden im Zuge dieser Dokumentergänzung ausgeführt. Alle produktiven Freigabenachweise bleiben offen.
