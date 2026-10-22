@@ -28,3 +28,11 @@ Wesentliche Kontextänderungen begründet versionieren. Kein automatischer Eintr
 - **Grund:** Langfristig wartbare öffentliche Dokumentation bei vollständigem Erhalt fachlicher Nachweise, historischer Prüfergebnisse, aller 28 Abnahmeszenarien und offenen Risiken. Keine fachliche oder sicherheitsbezogene Entscheidung geändert; PACE-Methode und Vorlagen bleiben vollständig erhalten.
 - **Referenz:** Ausgangscommit `39261a5816a99f7c10c79344e5a1adc03b685d49`, bestehende [PR #1](https://github.com/Viny005/syllentra/pull/1), [E3.17](../spec/E3-pruefnachweis.md#e317-redaktionelle-bereinigung-und-erhaltungsprüfung), [Projektkontext](PROJECT_CONTEXT.md).
 - **Freigabestatus:** Redaktionelle Bearbeitung, Commit und Push autorisiert. Spezifikation weiter **Zur Prüfung durch den Projektinhaber**; keine Zusammenführung von PR #1 oder Änderung an `main`.
+
+
+## 22.10.2026 — 40 Prüfungen als späteres Release-Gate vorgemerkt
+
+- **Quelle:** Zwei vom Projektinhaber übermittelte Listen mit je 20 Kontrollpunkten zu Sicherheit sowie Betrieb, Performance, UX und Wiederherstellung; Nutzerauftrag, beide vollständig zu erhalten und jetzt/später fachlich richtig einzuordnen.
+- **Bisher → neu:** Allgemeine Sicherheits-/Qualitätsgrenzen in N1/N2 und technische offene Punkte → vollständiges nummeriertes [REL-S01..REL-S20 / REL-Q01..REL-Q20-Register](../quality/RELEASE_READINESS_40.md), operative Zuordnung in [N1](../spec/N1-nichtfunktional.md)/[N2](../spec/N2-querschnittskonzepte.md), Index-/PACE-Verweise und dokumentierter [E3.18](../spec/E3-pruefnachweis.md#e318-aufnahme-zweier-release-checklisten-vom-22102026).
+- **Grund:** Keine Sicherheits-/Betriebsprüfungen bei späterer Implementierung/Freigabe vergessen; keine 40 neuen FE oder unbelegten Produktbehauptungen erzeugen. Zahlungsschutz ausschließlich spätere Option.
+- **Freigabestatus:** Aufnahme/Zuordnung der zwei Checklisten durch aktuellen Nutzerauftrag; Spezifikation und Prüfentwurf bleiben **Zur Prüfung durch den Projektinhaber**. Keine Produktimplementierung, keine technische Produkttest-Abnahme, keine kostenpflichtige API, kein Merge oder Deployment genehmigt. FE-56 bleibt offen.
