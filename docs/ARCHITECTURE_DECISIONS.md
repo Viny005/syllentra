@@ -92,3 +92,12 @@ Vor einer technischen Entscheidung aktuelle Angebote, individuelle Gewichts-/Sti
 **Bestätigt:** Zuerst hochwertige persönliche Lernassistenz mit guter UX, nützlicher Pädagogik und zufriedenstellender Leistung. Künftige Vergleiche dürfen bis zu **20 EUR brutto/Monat** untersuchen; frühere 10-EUR-Hypothese ersetzt, historische Rechnungen bleiben datierte Nachweise. **Keine Ausgabe genehmigt.** V1-Registrierung/Multiuser mit strikter Isolation, getrennten Adminaccounts, Serverrechten und progressiver Aktivierung bleibt unverändert. Mögliche spätere Nutzerbeiträge nur untersuchen; kein V1-Zahlungssystem genehmigt.
 
 **Folgen / Grenzen:** Neue [Design-/Entwicklungsstudie](development/INTEGRATION_ROADMAP.md) ergänzt die bisherigen Alternativen, wählt keinen Anbieter/Stack/Modell und genehmigt keine Installation, API, Cloud oder Inbetriebnahme. DEC-48/49 und alle TECH-O bleiben bestehen. Persönlicher Prototyp ersetzt keine vollständige Multiuser-V1-Abnahme; Sicherheit wird nicht später nachgerüstet. Budgetplausibilität und Leistung benötigen aktuelle Angebote und gesondert erlaubte Tests.
+
+
+### ADR-0007 — Lokale Frontendprobe aus Mission 8
+
+**Status:** Vom Eigentümer autorisierter experimenteller Umfang, **keine endgültige Stackentscheidung**. Quelle: vollständige Mission 8, Abschnitte 1–13, 22.10.2026; Ausgangscommit `2f526e4c3120353be9b9648af3956b89372acb90`.
+
+React + Vite + TypeScript für einen lokalen, reversiblen, synthetischen UI-Prototyp gewählt: stärkster bisher dokumentierter Frontendkandidat, keine fachliche Gegenanforderung festgestellt. Node 24.x, npm mit exakten Versionen/Lockfile, Installskripte aus. Eigenes tokenbasiertes CSS und native Controls statt zusätzlicher UI-/Router-/Editor-/Kalenderframeworks halten den Umfang klein. TypeScript 6.0.3 wegen tatsächlichem Peerbereich des Linters, keine blinde Latestinstallation. Lizenzen und echte [Prüfungen](design/PROTOTYPE_REVIEW.md) dokumentiert.
+
+TECH-O-03 und sämtliche übrigen TECH-O bleiben offen; keine Bestätigung von FastAPI, Datenbank, Hosting, Authentisierung oder KIanbieter. Keine fachliche FE-/UC-/DECänderung, keine Produktfreigabe, Kosten, Cloud oder Merge/Deployment. [Prototyp](../prototypes/frontend/README.md) kann nach UXreview ersetzt/entfernt werden; kein eigener Backendvertrag oder persistentes Produktdatenformat angelegt.

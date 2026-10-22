@@ -1,12 +1,12 @@
 # Syllentra AI — überprüfter Projektkontext
 
-**Version:** 0.9 · **Stand:** 22.10.2026 · **Status:** Zur Prüfung durch den Projektinhaber
+**Version:** 0.10 · **Stand:** 22.10.2026 · **Status:** Zur Prüfung durch den Projektinhaber
 
 ## Git-Snapshot und Geltung
 
 Repository: `Viny005/syllentra` — <https://github.com/Viny005/syllentra>.
 Aktueller Arbeitsbranch: `docs/spec/p1-p2-mobile-workspaces`, zugeordnet zu [PR #1](https://github.com/Viny005/syllentra/pull/1).
-Am 22.10.2026 lokal, per entferntem Branch und PR-Git-Ref überprüfter Ausgangscommit der Mission 7: `f3e3aa647cd96171e300056379063d5761f16e70`. Arbeitsbaum vor Bearbeitung sauber, PR #1 auf der öffentlichen GitHub-Seite als offen geprüft. PACE ist durch PR #2 seit `39261a5816a99f7c10c79344e5a1adc03b685d49` integriert. Der Snapshot ist eine datierte Ausgangsbasis, kein dauerhaft aktueller HEAD; bei jeder Aufgabe erneut prüfen. Endcommit/Push werden im Abschlussbericht nachgewiesen.
+Am 22.10.2026 lokal, per entferntem Branch und PR-Git-Ref überprüfter Ausgangscommit der Mission 8: `2f526e4c3120353be9b9648af3956b89372acb90`. Arbeitsbaum vor Bearbeitung sauber, PR #1 auf der öffentlichen GitHub-Seite als offen geprüft. PACE ist durch PR #2 seit `39261a5816a99f7c10c79344e5a1adc03b685d49` integriert. Der Snapshot ist eine datierte Ausgangsbasis, kein dauerhaft aktueller HEAD; bei jeder Aufgabe erneut prüfen. Endcommit/Push werden im Abschlussbericht nachgewiesen.
 
 ## Ziel und Aufbau
 
@@ -50,7 +50,7 @@ Die Zusammenfassung ersetzt keine Primärquelle: S1.18.1 enthält **89 FE, davon
 
 **Architektur:** ADR-Konvention vorhanden, keine finale Framework-, Datenbank-, Hostinganbieter- oder KI-Modellwahl. [S3](../spec/S3-inbetriebnahme.md) liegt als fachlicher Prüfentwurf vor; keine Betriebsaufnahme oder technische Prozedur wurde ausgeführt. DEC-48 priorisiert Oracle Cloud Infrastructure zur späteren Bewertung; Alternativen bleiben bei fehlender Eignung offen, kein Anbieter endgültig ausgewählt. DEC-49 verlangt verschlüsselte EU-Sicherung unabhängig vom Primäranbieter mit sicheren Schlüsseln/Rechten und periodischen verifizierbaren Restore-Proben. [ADR-0004/0005](../ARCHITECTURE_DECISIONS.md) halten Rahmen und offene Verfahren fest. Keine Accounts, Infrastrukturtests, Ressourcen oder Ausgaben sind autorisiert; RPO/RTO, Frequenz und Retention bleiben offen.
 
-**Entwicklung und Tests:** Am überprüften Ausgangsstand ausschließlich Dokumentation und `.gitignore`, kein Anwendungscode, keine App-Testpipeline, keine implementierten oder getesteten Produktfunktionen. E3 dokumentiert frühere Dokumentprüfungen; sie ersetzen keine neuen Prüfungen. Die aktuelle Konsolidierung prüft Dokumentation und Bestandserhalt, keine Authentisierung, Konnektoren oder Laufzeitfunktionen.
+**Entwicklung und Tests:** Am Mission-8-Ausgang ausschließlich Dokumentation und `.gitignore`. Jetzt experimenteller [Frontend-Prototyp](../../prototypes/frontend/README.md) mit synthetischen Daten: acht UIbereiche, DE/FR/EN, Themes und lokale Interaktionen. Build/Lint/Format, 7 Unit- und 9 Chromium-Szenarien tatsächlich bestanden; [Prüfbericht](../design/PROTOTYPE_REVIEW.md). Keine operative Produktfunktion, echte Authentisierung/Kontoisolation, Backend, KI, Sync oder Produktfreigabe; keine App-CI eingerichtet. Frühe Dokumentprüfungen ersetzen diese eng begrenzten neuen UIbelege nicht und umgekehrt.
 
 ## Sicherheits- und Kostengrenzen
 
@@ -60,7 +60,7 @@ Keine Geheimnisse, privaten Lernmaterialien oder personenbezogenen Echtdaten ins
 
 ## Auftragsumfang und nächste Schritte
 
-Mission 7 autorisiert Quellen-/Lizenz-/Tool-/APIstudie, Design-/Entwicklungskonzepte, wenige sichere lokale deklarative Skills nach Formatnachweis, optionale CLAUDE-Einstiegsdatei und gezielte Referenz-/PACE-/E3-Pflege mit Commit/normalem Push auf derselben Spezifikationsbranch zur Aktualisierung von PR #1. Der vollständige Auftrag umfasst 26 Abschnitte. Kein Merge, `main` unverändert, keine Installation, Gewichtsdownloads/Modellausführung, technische Tests, Appentwicklung, Cloudressource, Account oder Ausgabe. Fachentwürfe Zur Prüfung; Studien Empfohlen / Zur Entscheidung.
+Mission 8 autorisiert ausdrücklich lokalen experimentellen Frontendcode, notwendige kostenfreie geprüfte Installationen, Lockfile, UItests und Captures sowie zugehörige Dokumentation mit Commit/normalem Push auf derselben Spezifikationsbranch zur Aktualisierung von PR #1. Der vollständige Auftrag umfasst 13 Abschnitte. Kein Merge, main unverändert, keine echte KI/Backendauth, Cloudressource, Account, Ausgabe oder Deployment. Fachentwürfe Zur Prüfung; technische Empfehlungen zur Entscheidung, Prototyp experimentell. Die frühere Nichtimplementierungsgrenze der Mission 7 ist für diesen konkreten UIumfang durch den neueren Auftrag ersetzt.
 
 **Aktueller Untersuchungsstand:** Modularer Kern mit PostgreSQL, begrenzten separaten Workern und austauschbaren KI-Adaptern empfohlen; Vite/React + FastAPI, llama.cpp/kleine Qwen3-Kandidaten und selbst gehostete Identitätsoptionen zu prüfen. OCI zuerst bewerten; Hetzner/Scaleway echte Vergleichsoptionen. Keine komplette kostenlose Multiuser-KI nachgewiesen. Primärcloudpreise/-quoten und viele konkrete Gewichtslizenzen bleiben nicht verifiziert (Netzwerk-403); offizielle GitHub-Quellen belegen u. a. Softwarelizenzen, Releaseweiterleitungen und R2-Standardpreise/EU-Jurisdiktion. Gesamte R2-Vertrags-/Datenschutzlage noch offen. Gewichtete Scores sind transparente Hypothesen, keine Auswahl; Quellen-, Angebots-, Lizenz- und Benchmarklücken vor Entscheidung schließen.
 
@@ -80,3 +80,8 @@ Arbeitsregeln: [AGENTS.md](../../AGENTS.md), [Workflow](WORKFLOW.md). Übergaben
 [Neue Übersicht](../development/INTEGRATION_ROADMAP.md): hochwertige persönliche Lernassistenz zuerst, V1-Registrierung/Isolation/Admin/Serverflags unverändert, keine Zahlung genehmigt. [Design](../design/DESIGN_SYSTEM.md) mit Token/Themes/Responsive; kleine UIauswahl, keine Installation. [Codex/Claude](../ai-tooling/CODEX_CLAUDE_WORKFLOW.md) trennt Formate; drei lokale Markdown-Skills strukturell vorbereitet, tatsächliche Invocation/Discovery nicht getestet. Keine aktiven Hooks/MCP-/Agentenkonfigurationen.
 
 [APIvergleich](../integrations/LLM_API_COMPARISON.md): Cloudflare-/OpenRouter-Dokumente belegen begrenzte Freeangebote, HF-Free ohne Credits laut neuer offizieller Quelle; Groq/Gemini/Mistral/Cerebras kommerziell/vertraglich weiter nicht verifiziert. Keine Liveinferenz. [Lizenzen](../development/DEPENDENCY_SELECTION.md) an konkreten Quellrevisionen gelesen, vollständige Paket-/Transitiv-/Modellrechte vor Einführung offen. Kleinere Adapter/PG-Volltext und menschliche pädagogische Evaluation empfohlen, keine Stack-/Hosting-/APIwahl. Bestehende T01–T09 nicht ausgeführt; 14 TECH-O weiter offen. Finanzielle Tragfähigkeit auch unter neuem 20-EUR-Rahmen nicht nachgewiesen.
+
+
+## Tatsächlicher UIstand nach Mission 8
+
+[ADR-0007](../ARCHITECTURE_DECISIONS.md#adr-0007--lokale-frontendprobe-aus-mission-8), [Prüfbericht](../design/PROTOTYPE_REVIEW.md) und [lokale Anleitung](../../prototypes/frontend/README.md) trennen ausführbare Oberfläche von Fach-/Sicherheitsimplementierung. 17 axeanalysen ohne gemeldeten Verstoß, 18 lokale Bilder erzeugt und visuell geprüft; vier versioniert. Rückfokus/Tabzyklus von Dialogen nach Testbefund korrigiert. Alle 46 REL einzeln über vollständige Gruppierung auf Prototypevidenz/Nichtumfang eingeordnet, keine gesamte Produktkontrolle bestanden erklärt. Keine externen Laufzeitrequests im geprüften Hauptparcours; nur Sprache/Theme gespeichert. Alle FE/UC/DEC bleiben erhalten, FE-56 und 14 TECH-O offen. Die vollständige V1-Leistung und Kosten unter 20 EUR sind weiterhin nicht nachgewiesen. Nächster Schritt: Eigentümerreview, anschließend separat genehmigte sichere Backendtranche, kein automatischer Auftrag.

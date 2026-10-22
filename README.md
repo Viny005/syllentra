@@ -51,3 +51,8 @@ Start with [AGENTS.md](AGENTS.md), the [PACE workflow](docs/ai/WORKFLOW.md), and
 ## Vorbereitung von Gestaltung und Entwicklung
 
 [Design System](docs/design/DESIGN_SYSTEM.md), [Integration und offene Entscheidungen](docs/development/INTEGRATION_ROADMAP.md), [Codex-/Claude-Verfahren](docs/ai-tooling/CODEX_CLAUDE_WORKFLOW.md) sowie [Quellen und Lizenzen](docs/development/SOURCES.md) sind Vorschläge **Empfohlen / Zur Entscheidung**. Drei deklarative lokale Skills, keine Anwendung oder neue Toolaktivierung. Persönliche Qualitätspriorität und künftiger Vergleichsrahmen bis 20 EUR brutto/Monat sind bestätigt; **keine Ausgabe genehmigt**, V1-Multiuser-/Schutzanforderungen unverändert.
+
+
+## Lokaler interaktiver Prototyp aus Mission 8
+
+Der [Frontend-Prototyp](prototypes/frontend/README.md) enthält acht navigierbare Bereiche, DE/FR/EN, Hell/Dunkel/System und ausschließlich fiktive lokale Daten. Start mit Node 24.x: im Verzeichnis `prototypes/frontend` zuerst `npm ci --ignore-scripts`, dann `npm run dev`. Keine operative V1, echte KI, Anmeldung, Synchronisierung oder Kontoisolation. [Prüfungen und Screenshots](docs/design/PROTOTYPE_REVIEW.md), [installierte Lizenzen](prototypes/frontend/LICENSES.md). Experimenteller Stack, TECH-O-03 offen; keine Ausgabe oder Veröffentlichung.

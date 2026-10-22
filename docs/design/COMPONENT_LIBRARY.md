@@ -1,10 +1,10 @@
 # UI-Bibliotheken — schlanke Auswahl
 
-**Version:** 0.1 · **Stand:** 22.10.2026 · **Status:** Empfohlen / Zur Entscheidung
+**Version:** 0.2 · **Stand:** 22.10.2026 · **Status:** Empfohlen / Zur Entscheidung
 
 ## 1. Auswahlregel
 
-Voraussetzung ist eine spätere React-/Stackfreigabe (TECH-O-03); hier keine Installation oder Abhängigkeit eingeführt. [Lizenzregister](../development/DEPENDENCY_SELECTION.md) enthält offizielle Repositories, untersuchte Revisionen, Bedingungen und offene Prüfungen. Bevorzugter Kern: Tailwind + ausgewählte shadcn-Komponenten + **eine** Primitivenfamilie + Lucide. Alternative normales CSS reduziert Buildabhängigkeiten. shadcn kopiert Quelltext: Herkunft/Lizenz und spätere Sicherheitsupdates bleiben eigene Verantwortung.
+Voraussetzung ist eine spätere React-/Stackfreigabe (TECH-O-03); im Mission-7-Vergleich keine Installation oder Abhängigkeit eingeführt; der konkrete Mission-8-Auftrag erlaubt die unten verlinkte begrenzte Probe. [Lizenzregister](../development/DEPENDENCY_SELECTION.md) enthält offizielle Repositories, untersuchte Revisionen, Bedingungen und offene Prüfungen. Bevorzugter Kern: Tailwind + ausgewählte shadcn-Komponenten + **eine** Primitivenfamilie + Lucide. Alternative normales CSS reduziert Buildabhängigkeiten. shadcn kopiert Quelltext: Herkunft/Lizenz und spätere Sicherheitsupdates bleiben eigene Verantwortung.
 
 | Kandidat | Konkreter Bedarf / Nutzen | Alternative / Komplexität / Urteil |
 |---|---|---|
@@ -36,3 +36,8 @@ Toolaktionen sind Vorschläge mit Ziel, Datenumfang und Kostenstatus. Bestätigu
 ## 3. Rückbau und Versionspflege
 
 Jede Fremdbibliothek hinter kleiner eigener Komponentenschnittstelle; fachliche Daten nicht in proprietärem Editor-/Cloudformat als einzige Kopie speichern. Nur benötigte Module lazy laden. Bei Auswahl exakte Pakete/Peerabhängigkeiten/Transitive/Advisories/Support und Lizenzbeilagen erneut prüfen und locken. Aktuelle Quellrevision ist kein garantierter stabiler Paketstand. Kein CLIgenerator oder Registrycode wurde ausgeführt.
+
+
+## Fortschreibung aus Mission 8
+
+Der neue konkrete Eigentümerauftrag autorisiert eine lokale experimentelle UIprobe. Die früheren Nichtimplementierungs-/Nichtinstallationsaussagen dieses Mission-7-Studienstands sind historische Grenzen, keine Sperre des neueren Auftrags. [Code/Anleitung](../../prototypes/frontend/README.md) und [tatsächlicher UI-Prüfbericht](../design/PROTOTYPE_REVIEW.md) dokumentieren den begrenzten Fortschritt. Keine allgemeine Stack-/Bibliotheks-/Produktfreigabe; TECH-O-03 offen. Eigene CSS-Token und native Controls genügen für die Probe, daher keine Tailwind-/shadcn-/Richtext-/PDF-/Graph-/Kalenderinstallation. Fach- und Releaseziele bleiben vollständig bestehen, Backend-/Geräte-/Assistenztechnik-/Sicherheitsabnahmen offen.

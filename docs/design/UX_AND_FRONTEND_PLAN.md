@@ -1,6 +1,6 @@
 # Lernräume, Responsive und Frontendprüfung
 
-**Version:** 0.1 · **Stand:** 22.10.2026 · **Status:** Empfohlen / Zur Entscheidung
+**Version:** 0.2 · **Stand:** 22.10.2026 · **Status:** Empfohlen / Zur Entscheidung
 
 ## 1. Arbeitsräume und Aufgabenpfade
 
@@ -44,4 +44,9 @@ DE/FR/EN mit langen Übersetzungen, Plural, Datums-/Zahl-/Zeitzonenformat und Sp
 | Performance | Lighthouse lokal + Browserprofil und echte Nutzermessung nach Freigabe | Kalte/warme Navigation, Bundle/Editor/PDF-Lazyload, Streaminteraktion, langsames Gerät; Zielwerte nach N1.10 vor Messung vereinbaren |
 | Visuelle Regression | Gepinnter Browser/Fonts/Viewport, synthetische Daten | Stabiler Referenzstand, Änderungen menschlich prüfen; kein automatisches Akzeptieren neuer Screenshots |
 
-Vitest für kleine deterministische Logik, Testing Library für beobachtbare Bedienung, Playwright für wenige kritische End-to-End-Flows. Storybook erst bei wiederkehrender Komponentenpflege, visuelle SaaSdienste nicht nötig. CIausbau separat autorisieren; keine Tests oder UI-Konformität in dieser Mission behaupten. Anknüpfung an T01/T03/T05/T06/T09 im [bestehenden Testplan](../architecture/BENCHMARKPLAN.md), NFR-01/02/08/13/18/19/20 und REL-A16. Keine konkurrierenden Produktabnahmekataloge erzeugen.
+Vitest für kleine deterministische Logik, Testing Library für beobachtbare Bedienung, Playwright für wenige kritische End-to-End-Flows. Storybook erst bei wiederkehrender Komponentenpflege, visuelle SaaSdienste nicht nötig. CIausbau separat autorisieren; im Mission-7-Plan keine ausgeführten Tests oder UI-Konformität behaupten; eng begrenzte Mission-8-Ergebnisse im Nachtrag. Anknüpfung an T01/T03/T05/T06/T09 im [bestehenden Testplan](../architecture/BENCHMARKPLAN.md), NFR-01/02/08/13/18/19/20 und REL-A16. Keine konkurrierenden Produktabnahmekataloge erzeugen.
+
+
+## Fortschreibung aus Mission 8
+
+Der neue konkrete Eigentümerauftrag autorisiert eine lokale experimentelle UIprobe. Die früheren Nichtimplementierungs-/Nichtinstallationsaussagen dieses Mission-7-Studienstands sind historische Grenzen, keine Sperre des neueren Auftrags. [Code/Anleitung](../../prototypes/frontend/README.md) und [tatsächlicher UI-Prüfbericht](../design/PROTOTYPE_REVIEW.md) dokumentieren den begrenzten Fortschritt. Keine allgemeine Stack-/Bibliotheks-/Produktfreigabe; TECH-O-03 offen. Eigene CSS-Token und native Controls genügen für die Probe, daher keine Tailwind-/shadcn-/Richtext-/PDF-/Graph-/Kalenderinstallation. Fach- und Releaseziele bleiben vollständig bestehen, Backend-/Geräte-/Assistenztechnik-/Sicherheitsabnahmen offen.

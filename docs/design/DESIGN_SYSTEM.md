@@ -1,10 +1,10 @@
 # Syllentra AI — Design System
 
-**Version:** 0.1 · **Stand:** 22.10.2026 · **Status:** Empfohlen / Zur Entscheidung
+**Version:** 0.2 · **Stand:** 22.10.2026 · **Status:** Empfohlen / Zur Entscheidung
 
 ## 1. Gestaltungsziel und Entscheidungsgrenze
 
-Ruhiger akademischer Arbeitsplatz: Inhalte und nachprüfbare Lernentwicklung vor dekorativen KI-Effekten. Eigenständiger Vorschlag mit tiefem Petrol, warmen neutralen Flächen und sparsamem Türkis; keine Übernahme einer fremden Produktidentität. Persönliche Nutzung erhält zuerst hohe Qualität; Kontoisolation, getrennte Administration und spätere Registrierung bleiben V1-Ziele. Kein fertiges UI, keine freigegebene Marke und keine nachgewiesene WCAG-Konformität.
+Ruhiger akademischer Arbeitsplatz: Inhalte und nachprüfbare Lernentwicklung vor dekorativen KI-Effekten. Eigenständiger Vorschlag mit tiefem Petrol, warmen neutralen Flächen und sparsamem Türkis; keine Übernahme einer fremden Produktidentität. Persönliche Nutzung erhält zuerst hohe Qualität; Kontoisolation, getrennte Administration und spätere Registrierung bleiben V1-Ziele. Ausgang der Mission 7: kein fertiges UI. Die begrenzte UIprobe aus Mission 8 steht im Nachtrag; keine freigegebene Marke oder nachgewiesene WCAG-Konformität.
 
 Herkunft: Mission 7, P1/P2, B1, NFR-08/18/19/20 und FE-57/58 in [S1](../spec/S1-nachbarsysteme.md). Grundlagen und Lizenzbefunde: [Quellen](../development/SOURCES.md). Namen der Tokens sind konzeptionell, keine bereits existierenden CSS-Variablen.
 
@@ -63,4 +63,9 @@ Nutzerpräferenzen für Sprache/Theme/Dichte sind vom globalen Markenentwurf get
 
 ## 6. Designabnahme vor Umsetzung
 
-Eigentümer bestätigt Richtung, Lesedichte und vorgeschlagene Zielwerte. Danach Komponentenproben auf echten Smartphone-/Tablet-/Desktopkonfigurationen in beiden Themes und DE/FR/EN; Tastatur, Screenreader, Zoom und lange Texte. Tokenkontraste, Zustandsvollständigkeit, erlaubte Konfigurationsänderung und UI-/Servergrenzen nach [Frontendplan](UX_AND_FRONTEND_PLAN.md) prüfen. Keine UI ist bisher implementiert oder getestet.
+Eigentümer bestätigt Richtung, Lesedichte und vorgeschlagene Zielwerte. Danach Komponentenproben auf echten Smartphone-/Tablet-/Desktopkonfigurationen in beiden Themes und DE/FR/EN; Tastatur, Screenreader, Zoom und lange Texte. Tokenkontraste, Zustandsvollständigkeit, erlaubte Konfigurationsänderung und UI-/Servergrenzen nach [Frontendplan](UX_AND_FRONTEND_PLAN.md) prüfen. Am Mission-7-Ausgang war keine UI implementiert/getestet; der nachfolgende Mission-8-Nachtrag dokumentiert den begrenzten neuen Stand.
+
+
+## Fortschreibung aus Mission 8
+
+Der neue konkrete Eigentümerauftrag autorisiert eine lokale experimentelle UIprobe. Die früheren Nichtimplementierungs-/Nichtinstallationsaussagen dieses Mission-7-Studienstands sind historische Grenzen, keine Sperre des neueren Auftrags. [Code/Anleitung](../../prototypes/frontend/README.md) und [tatsächlicher UI-Prüfbericht](../design/PROTOTYPE_REVIEW.md) dokumentieren den begrenzten Fortschritt. Keine allgemeine Stack-/Bibliotheks-/Produktfreigabe; TECH-O-03 offen. Eigene CSS-Token und native Controls genügen für die Probe, daher keine Tailwind-/shadcn-/Richtext-/PDF-/Graph-/Kalenderinstallation. Fach- und Releaseziele bleiben vollständig bestehen, Backend-/Geräte-/Assistenztechnik-/Sicherheitsabnahmen offen.

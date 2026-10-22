@@ -1,7 +1,7 @@
 # E3 — Änderungs- und Prüfnachweis
 
 **Projekt:** Syllentra AI\
-**Version:** 0.11\
+**Version:** 0.12\
 **Stand:** 22.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber
 
@@ -431,3 +431,17 @@ Diese Prüfungen belegen Dokumentationskonsistenz und Bestandserhalt. Keine Prod
 Alle technischen Empfehlungen bleiben zur Entscheidung und Fachentwürfe Zur Prüfung. Prüfungen beziehen sich auf den dokumentierten Diff, nicht auf ein getestetes Produkt.
 
 **Offen / nicht durchgeführt:** Codex-/Claude-Discovery und Skillinvokation nicht funktional getestet, keine neuen Agenten oder MCPserver gestartet, keine UI/Anwendung erstellt, keine echten Browser-/A11y-/Modell-/API-/Auth-/Restore-/Lasttests. T01–T09 weiterhin geplant. Groq/Gemini/Mistral/Cerebras-Tarife/-Quoten/-Verträge und andere gesperrte Primärseiten nicht aktuell verifiziert; Software-/Quelllizenzprüfung ersetzt weder vollständige Transitiv-/Gewichtsprüfung noch Herstellervertrag. 14 TECH-O offen; FE-56 offen. Eignung vollständiger V1 auch bis 20 EUR brutto unbewiesen. Endcommit/Push-/PRstatus erst nach tatsächlicher Gitaktion im Abschlussbericht.
+
+
+## E3.25 Mission 8 — lokaler interaktiver Frontend-Prototyp
+
+**Quelle / Ausgang:** Vollständiger Nutzerauftrag Mission 8, Abschnitte 1–13; `2f526e4c3120353be9b9648af3956b89372acb90` lokal/Remote/PR-Ref geprüft, sauberer bestehender Spezifikationsbranch und PR #1 OPEN. Keine App am Ausgang. Erlaubt: experimentelles lokales Frontend mit geprüften kostenlosen Paketen, Tests und Screenshots, normaler Commit/Push. Kein Backend/Auth/KI/Cloud/Account/Deployment/Merge oder Ausgabe.
+
+**Ergebnis:** [Prototyp/Anleitung](../../prototypes/frontend/README.md), [Lizenznachweise](../../prototypes/frontend/LICENSES.md) und [vollständiger UI-Prüfbericht](../design/PROTOTYPE_REVIEW.md): acht navigierbare Lernräume, Detail-/Leer-/Fehlerzustände, lokale Suche/Filter/Preview, simulierter fester Chat mit Stop, Notizansichten, RAMkalender, illustrative Fortschritte und Einstellungen. Administration eigenständig abgegrenzt ohne falsche Rechteverwaltung. Drei Sprachen und Themes, persistiert nur Sprache/Theme. React/Vite/TypeScript in [ADR-0007](../ARCHITECTURE_DECISIONS.md#adr-0007--lokale-frontendprobe-aus-mission-8) als begrenzte Probe dokumentiert, keine endgültige TECH-O-03-Wahl.
+
+**Tatsächliche Prüfungen:** Wiederholtes npm ci aus Lockfile ohne Installskripte, TypeScript strict, Produktionsbuild, ESLint und Prettier erfolgreich. 7 Unit- und 9 reale Chromium-Szenarien bestanden, darin 17 axeanalysen ohne gemeldeten Verstoß; alle acht Seiten mobil in DE/FR/EN, kein horizontaler Überlauf bei 390/320 px, Systemtheme/Storageausfall und Dialogtastatur geprüft. 18 lokale Bilder erzeugt und visuell untersucht, vier bereinigte Bilder versioniert. Devserver-Smoke rendert Übersicht/Bibliothek. Keine Seitenfehler/externen Requests im Desktop-Hauptparcours. npm audit alle Schweregrade 0 am 22.10.2026; 18 direkte Lizenzdateien gelesen und Runtimebeilagen mitgeführt. Korrigiert: CSS-Typdeklaration, Rückfokus und Tabzyklus im Dialog, Singular/Plural; keine fehlgeschlagene Prüfung abgeschaltet. Detaillierte Befehle/Umgebung und 46-REL-Anwendbarkeitsabgleich im Prüfbericht.
+
+**Grenzen / Erhaltung:** Nur UIbelege, keine fachliche V1-/WCAG-/Sicherheitsabnahme. Keine reale Auth/Kontoisolation, Serverflags, KI/RAG/Medien, Dateien, Synchronisierung, Backup-/Restore-/Lastprüfung oder echten Geräte-/Screenreaderläufe. T01–T09 nicht als vollständig ausgeführt markieren. 89 FE (FE-56 offen), 66 UC, 25 DEC-V1, DEC-48/49, 46 REL und alle bisherigen Abnahmen bleiben erhalten; Spezifikationen außerhalb E3/Index unverändert. Alle 14 TECH-O offen. PACE/AGENTS und relevante Design-/Roadmapverweise auf tatsächlichen Prototyp fortgeschrieben, kein Sitzungsarchiv. PR #1 inzwischen umfangreich: getrennte Fach-/Frontendreview empfohlen, keine automatische Aufteilung oder Zusammenführung. End-SHA/Remote/PR nach tatsächlichem Push im Abschlussbericht.
+
+
+**Dokument-/Erhaltungsprüfung:** 71 Markdown-Dateien, 928 lokale Links, 664 Tabellen ohne Struktur-/Linkfehler; 1.349 historische Anker erhalten und 14 Mermaid-Quellblöcke unverändert. Kanonische FE-/UC-/DEC-/REL-Bestände und 28 AT-L/20 AT-S3 inhaltlich erhalten. Diff-/Dateiumfang und öffentliche Inhalte mit Secretmustern geprüft, git diff --check erfolgreich. Keine vollständige Secretscanner-/Historiengarantie aus der Mustersuche ableiten.
