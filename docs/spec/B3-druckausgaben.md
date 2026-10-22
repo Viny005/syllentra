@@ -2,8 +2,8 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** B3 — Druckausgaben\
-**Version:** 0.4\
-**Stand:** 19.10.2026\
+**Version:** 0.5\
+**Stand:** 22.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Methode:** Baustein B3 nach Johannes Siedersleben — fachlich prüfbare Ausgaben, unabhängig von Layoutbibliothek und Drucktechnik\
 **Bezugsstand:** Vier bestätigte Entscheidungen vom 19.10.2026; Ausgangs-HEAD `53ef171be4783748b5c7e3a84bb0cc363d5b4194`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1; aktuelle Fassungen im [Index](README.md).
@@ -455,7 +455,11 @@ Ein Abbruch vor Erzeugung erzeugt keine neue Berichtsdatei. Nach tatsächlich ge
 
 Diese `B3-R`-Kennungen sind **nur B3-eigene Prüfregeln**, keine neuen `INV-01..INV-25`; bestehende D1-Invarianten behalten ihre Kennungen und ihren Vorrang.
 
-## B3.9 Rückverfolgung zu allen 50 bestehenden Anwendungsfällen
+<a id="b39-rückverfolgung-zu-allen-50-bestehenden-anwendungsfällen"></a>
+
+## B3.9 Ausgangsmatrix der ursprünglichen 50 Anwendungsfälle
+
+Diese Tabelle bewahrt den ursprünglichen Bezugsumfang. Ergänzte Kennungen stehen im vollständigen Katalog und den jeweiligen Nachträgen; die [aktuelle Entscheidungsmatrix](ENTSCHEIDUNGSMATRIX.md) ergänzt die 25 DEC-V1. Kein alter Eintrag entfällt.
 
 Die folgende Matrix macht ausdrücklich kenntlich, dass nicht jeder interaktive Anwendungsfall automatisch einen Bericht auslöst. `—` bezeichnet **keine direkte B3-Ausgabe** und ist keine Behauptung, das UC sei im Gesamtsystem nicht unterstützt. Die Zuordnung ist eine Daten-, Kontext- oder Ausgabesicht, keine neue Bestimmung der UC-Abläufe: UC-50 liefert beispielsweise nur den tatsächlich zulässigen Verfügbarkeitsstand, keinen durch Export ausgelösten Löschauftrag. Die Einzelbeschreibungen und die Matrix benennen dieselben Bezüge. Ein in B3 genannter UC wird durch einen Benutzerauftrag relevant; ein bloßer Besuch seiner Oberfläche erzeugt keinen Bericht.
 
@@ -547,23 +551,21 @@ Die Kurztexte dienen nur als Rückverfolgung: **FE-01..FE-24 bleiben in ihren je
 
 ## B3.11 Bausteinübergreifende Schnittstellen und offene Ergänzungen
 
-| Baustein | Gegenstand des bestehenden Dokuments | B3-Zuständigkeit / späterer Abgleich |
-|---|---|---|
-| P1 v0.6 | Ziele, Nachweisorientierung, Dateneinsicht/Export, Nichtziele | B3 enthält keine erfundenen amtlichen Leistungen oder zusätzlichen Rollen |
-| P2 v0.7 | Facharchitektur, CFG-01..CFG-17, DK-01..DK-12, Datenschutzgrenzen | CFG-08/CFG-12/CFG-14 und DK-03, DK-04, DK-07, DK-08, DK-09, DK-10, DK-11 sind relevante Quellenklassen |
-| F1 v0.3 | GP-01..GP-15 | Berichte unterstützen insbesondere GP-02, GP-04..GP-06, GP-09, GP-11, GP-12, GP-15; kein neuer verbindlicher Prozess |
-| F2 v0.2 | UC-01..UC-50 | UC-49 ist der bestehende Datenexport; keine stillschweigende neue UC-Nummer |
-| F3 v0.2 | AF-01..AF-27 | AF-02, AF-05, AF-12, AF-13, AF-15, AF-23, AF-26, AF-27 sind fachliche Vorverarbeitungen; keine neue Report-Engine als AF behaupten |
-| D1 v0.2 | DM-01..DM-52 und INV-01..INV-25 | Identitäten/Versionen/Nachweise schützen; Dateierzeugung, Berichtsversion und eigener Exportauftrag könnten D1-Nachtrag benötigen |
-| D2 v0.2 | DT-01..DT-64 | Typen für Zeit/Quelle/Noten/Statistik/Prüfstatus erhalten; konkrete Exportvertragstypen sind später zu ergänzen, nicht hier als bestehend deklarieren |
-| B1 v0.2 | DLG-01..DLG-50 | Einstiege und geschützte Dialoge nutzen; Exportauswahl/Vorschau/Bereitstellung später in B1 detaillieren |
-| B2 v0.2 | BAT-01..BAT-19 | Kein eigenständiger periodischer Report; ggf. berechtigt gestartete asynchrone Erstellung bedürfte ausdrücklicher neuer Spezifikation |
-| S1 (geplant) | Nachbarsysteme und offiziell verfügbare Konverter/Dateizugänge | Keine Anbieter-/Word-/Cloud-Verfügbarkeit fingieren |
-| [S2](S2-datenmigration.md) / S3 (geplant) | Portabilität/Migration und spätere Inbetriebnahme | S2 definiert fachliche Paket-/Berichtsgrenzen und endliche temporäre Exportablage; technische Verfahren bleiben offen |
-| N1/N2 (geplant) | Qualität und Querschnitt (Daten-/Drucksicherheit, Formate, Dateilebensdauer) | Konkrete Qualitätsschwellen, technische Fehler- und Aufbewahrungsregeln dort ermitteln |
-| E2 (geplant) | Begriffserläuterungen | Bericht, Datenexport, Notenauszug, indikative Äquivalenz präzisieren |
+Die aktuellen Fassungen stehen im [Index](README.md); historische Ausgangsversionen sind in [E3](E3-pruefnachweis.md) nachvollziehbar. Vorhandene Prüfentwürfe sind keine implementierten Fähigkeiten.
 
-**Wichtige offene fachliche Abstimmung:** D2/B1 beschreiben bereits die institutionsbezogene Note-Ansicht. Die dauerhafte **explizite DM-12→DM-04-Zuordnung auch ohne Modul/Prüfung** ist noch nicht abschließend in D1/F2 festgeschrieben. B3 darf die Modelllücke nicht durch automatisch geratene Institutionen überbrücken. FE-21 bis FE-26 sollen später in den jeweils benötigten älteren Fachbausteinen nachgetragen werden; diese Mission verändert sie nicht.
+| Baustein | Tatsächlicher Bestand / Zuständigkeit | Verbleibende Grenze |
+|---|---|---|
+| [P1](P1-ziele-rahmenbedingungen.md) / [P2](P2-architekturueberblick.md) | Ziele, Systemkontext, Daten- und Konfigurationsklassen | Keine zusätzliche Rolle oder Technologie aus Berichten ableiten |
+| [F1](F1-geschaeftsprozesse.md) / [F2](F2-anwendungsfaelle.md) | GP-01 bis GP-15 und UC-01 bis UC-66 | Eigene Berichte und Export auf Auftrag; kein neuer UC |
+| [F3](F3-anwendungsfunktionen.md) | AF-01 bis AF-37, insbesondere Herkunft, Schutz, Exportumfang und Paketprüfung | Keine technische Report-Engine voraussetzen |
+| [D1](D1-datenmodell.md) / [D2](D2-datentypen.md) | DM-01 bis DM-78, DT-01 bis DT-95; DM-12 besitzt den optionalen direkten DM-04-Bezug | Unbekannte Institution nicht erraten; konkrete Exportprofile bleiben offen |
+| [B1](B1-dialogspezifikation.md) / [B2](B2-batch.md) | DLG-01 bis DLG-67, BAT-01 bis BAT-26; Vorschau, Auftrag und tatsächliches Ergebnis | Kein periodischer Bericht oder fremder Versand ohne ausdrückliche Freigabe |
+| [S1](S1-nachbarsysteme.md) / [S2](S2-datenmigration.md) | Nachbarverträge, Portabilität, Manifest und kontrollierter Restore vorhanden | Anbieter-/Word-/Cloudfähigkeit und sichere Betriebsverfahren noch nachzuweisen |
+| [N1](N1-nichtfunktional.md) / [N2](N2-querschnittskonzepte.md) | Begrenzte Qualitäts-/Schutzentwürfe einschließlich Release-Register | Keine abschließend gemessene Qualitäts- oder Kryptospezifikation |
+| [E2](E2-glossar.md) / [E3](E3-pruefnachweis.md) | Begriffe und tatsächliche Dokumentationsnachweise vorhanden | Kein Produktabnahmebeleg |
+| S3 | Noch nicht erstellt; künftige Inbetriebnahme | Keine Betriebsfreigabe durch diese Mission |
+
+**Aktueller Abgleich:** Die frühere DM-12/DM-04-Modelllücke wurde am 16.10.2026 geschlossen. FE-21 wird jetzt in F2/F3/D1/D2 angeschlossen; weitere DEC-V1-Bezüge stehen in der [Entscheidungsmatrix](ENTSCHEIDUNGSMATRIX.md). Unbekannte Skalen, Exportfähigkeit und Quellgeltung bleiben offen, nicht als erledigt ausgeben.
 
 ## B3.12 Prüfszenarien und Abnahmebeispiele
 
@@ -679,3 +681,7 @@ OUT-01 bis OUT-08 behalten ihre Identitäten. L-08-Plan-/Fortschrittsausgaben un
 Ein L-09-Abgleich nach UC-66 bleibt eine quellen-/fassungs-/kohortengebundene eigene Ableitung DM-24/DT-95. Bestehende Studien-/Planungs-/Datenexporte dürfen nur tatsächlich vorhandene erlaubte Vergleiche mit Teilabdeckung und Unsicherheiten ausgeben, niemals amtliche Anerkennung oder erfundene Versuche. Persönliche Noten nur im ausdrücklich gewählten geschützten Umfang.
 
 UC-65-Hinweisverlauf und Zustellnachweise werden nur bei eigener zulässiger Auswahl über OUT-08 exportiert; keine private Lern-/Notenvorschau in externen Nachrichten und kein erneuter Versand durch Bericht/Reimport. Lernmodus L-02 verändert Darstellung, nicht den Nachweisgrad oder gespeicherte Ergebnisse. [F2](F2-anwendungsfaelle.md) und [N2](N2-querschnittskonzepte.md) bleiben die Wirkungs-/Schutzgrenzen.
+
+## B3.17 DEC-V1-Sichten und Berichtsumfang
+
+Optionale Sitzungsbilanz und begründetes Dashboard bleiben Ansichten aus vorhandenen eigenen Nachweisen; ein ausdrücklicher Bericht nutzt die bestehenden OUT-01 bis OUT-08, keinen neuen OUT. Tatsächliche Zeit mit Messbasis/Lücken von Schätzung trennen, Training/Hilfe von selbstständiger Prüfung und geschätzte Beherrschung von amtlichen Noten. Wissenskarte und fächerübergreifende Links dürfen nur vorhandene erlaubte Beziehungen mit Herkunft abbilden, keine neue sichere Kompetenz. Wochenziel/Ablehnung/Aufschub erzeugt keine Pflicht oder automatische Veröffentlichung. [DEC-V1-Matrix](ENTSCHEIDUNGSMATRIX.md) führt Abnahme und Grenzen; Bericht/Reimport startet keine Lernfunktion.

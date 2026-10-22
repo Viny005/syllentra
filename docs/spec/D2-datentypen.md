@@ -2,8 +2,8 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** D2 — Datentypen\
-**Version:** 0.4\
-**Stand:** 19.10.2026\
+**Version:** 0.5\
+**Stand:** 22.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Bezugsstand:** Vier bestätigte Entscheidungen vom 19.10.2026; Ausgangs-HEAD `53ef171be4783748b5c7e3a84bb0cc363d5b4194`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1; aktuelle Fassungen im [Index](README.md).\
 **Methode:** Spezifikationsbaustein nach Johannes Siedersleben, fachlich vergleichbar mit der [Herold-D2-Referenz](https://github.com/carstenlucke/herold/blob/main/docs/spec/D2-datentypen.md).
@@ -12,7 +12,7 @@
 
 ## D2.1 Auftrag und Abgrenzung
 
-D2 definiert fachliche Wertemengen, Abwesenheit, Vergleichbarkeit, Wertebereiche, Datensicherheit und Validierungsregeln für die 52 Entitätstypen `DM-01` bis `DM-52` aus [D1](D1-datenmodell.md). Es entscheidet weder über Datenbank, SQL-Spaltentyp, ORM, API-Schema, Verschlüsselungsprodukt noch technisches Authentifizierungsverfahren. Fachliche Bezeichnungen wie `DT-01` sind **neue D2-Typkennungen**, keine bestehenden D1-Entitäten oder DB-Tabellen. Bestehende Kennungen `UC-01..UC-50`, `GP-01..GP-15`, `AF-01..AF-27`, `INV-01..INV-25`, `FE-01..FE-17`, `DK-01..DK-12` und `CFG-01..CFG-17` behalten ihre Bedeutung.
+D2 definiert fachliche Wertemengen, Abwesenheit, Vergleichbarkeit, Wertebereiche, Datensicherheit und Validierungsregeln für die fachlichen Entitätstypen `DM-01` bis `DM-78` aus [D1](D1-datenmodell.md). Es entscheidet weder über Datenbank, SQL-Spaltentyp, ORM, API-Schema, Verschlüsselungsprodukt noch technisches Authentifizierungsverfahren. Fachliche Bezeichnungen wie `DT-01` sind **neue D2-Typkennungen**, keine bestehenden D1-Entitäten oder DB-Tabellen. Bestehende Kennungen `UC-01..UC-50`, `GP-01..GP-15`, `AF-01..AF-27`, `INV-01..INV-25`, `FE-01..FE-17`, `DK-01..DK-12` und `CFG-01..CFG-17` behalten ihre Bedeutung.
 
 ### D2.1.1 Allgemeine Typ- und Validierungsregeln
 
@@ -33,7 +33,7 @@ D2 definiert fachliche Wertemengen, Abwesenheit, Vergleichbarkeit, Wertebereiche
 
 | Kennung | Typ | Kategorie | D1-Bezug |
 |---|---|---|---|
-| DT-01 | `KennungDT` | Skalar | DM-01..DM-52 |
+| DT-01 | `KennungDT` | Skalar | DM-01..DM-78 |
 | DT-02 | `ZeitpunktDT` | Skalar | DM-01, DM-03, DM-21, DM-26, DM-35, DM-40, DM-41, DM-47 |
 | DT-03 | `KalenderdatumDT` | Skalar | DM-05, DM-11, DM-12, DM-35 |
 | DT-04 | `ZeitzoneDT` | Skalar | DM-05, DM-11, DM-35, DM-47 |
@@ -95,8 +95,39 @@ D2 definiert fachliche Wertemengen, Abwesenheit, Vergleichbarkeit, Wertebereiche
 | DT-60 | `LoeumfangDT` | Struktur | DM-20, DM-21, DM-22, DM-25, DM-33, DM-34, DM-50 |
 | DT-61 | `KonfigurationswertDT` | Struktur | DM-48, DM-49 |
 | DT-62 | `ArchivstatusDT` | Enumeration | DM-05, DM-16, DM-20, DM-25 |
-| DT-63 | `DatenkategorieDT` | Enumeration | DM-01..DM-52 |
+| DT-63 | `DatenkategorieDT` | Enumeration | DM-01..DM-78 |
 | DT-64 | `PruefergebnisDT` | Struktur | DM-12, DM-14, DM-30, DM-32, DM-37, DM-40 |
+| DT-65 | KontostatusDT | Fachlicher Zustands-/Wertebereich | DM-01 |
+| DT-66 | EMailAdressrolleDT | Fachlicher Zustands-/Wertebereich | DM-53 |
+| DT-67 | VerifikationszweckDT | Fachlicher Zustands-/Wertebereich | DM-54 |
+| DT-68 | SitzungsstatusDT | Fachlicher Zustands-/Wertebereich | DM-55 |
+| DT-69 | AdministrationsrechtDT | Fachlicher Zustands-/Wertebereich | DM-56 |
+| DT-70 | SupportumfangDT | Struktur | DM-58 |
+| DT-71 | QuotarahmenDT | Struktur | DM-59 |
+| DT-72 | FeatureSichtbarkeitDT | Fachlicher Zustands-/Wertebereich | DM-60 |
+| DT-73 | ReleaseStatusDT | Fachlicher Zustands-/Wertebereich | DM-61 |
+| DT-74 | IntegrationslaufstatusDT | Fachlicher Zustands-/Wertebereich | DM-62 |
+| DT-75 | SyncModusDT | Fachlicher Zustands-/Wertebereich | DM-63 |
+| DT-76 | QuellrevisionDT | Struktur | DM-21, DM-23, DM-38 |
+| DT-77 | SchutzstufeDT | Fachlicher Zustands-/Wertebereich | DM-64 |
+| DT-78 | SchlüsselverfügbarkeitDT | Fachlicher Zustands-/Wertebereich | DM-65 |
+| DT-79 | VerarbeitungsumfangDT | Struktur | DM-66 |
+| DT-80 | PapierkorbstatusDT | Fachlicher Zustands-/Wertebereich | DM-67, DM-68 |
+| DT-81 | SicherungsstatusDT | Fachlicher Zustands-/Wertebereich | DM-69 |
+| DT-82 | WiederherstellungsstatusDT | Fachlicher Zustands-/Wertebereich | DM-70 |
+| DT-83 | ArchivExtraktionsstatusDT | Fachlicher Zustands-/Wertebereich | DM-71 |
+| DT-84 | SprachpräferenzenDT | Struktur | DM-02, DM-09, DM-25, DM-48 |
+| DT-85 | GeheimnisNachweisDT | Struktur | DM-54, DM-65 |
+| DT-86 | ExportmanifestDT | Struktur | DM-72 |
+| DT-87 | MigrationszustandDT | Struktur | DM-73 |
+| DT-88 | MigrationsdeltaDT | Struktur | DM-73, DM-74 |
+| DT-89 | MigrationswirkungDT | Struktur | DM-74 |
+| DT-90 | MigrationswegDT | Struktur | DM-73 |
+| DT-91 | LernreihenfolgeDT | Struktur | DM-75 |
+| DT-92 | PädagogischePlanänderungDT | Struktur | DM-76 |
+| DT-93 | ErinnerungsregelDT | Struktur | DM-77 |
+| DT-94 | BenachrichtigungszustellungDT | Struktur | DM-78, DM-52 |
+| DT-95 | StudienvorgabenAbgleichDT | Struktur | DM-24, DM-04, DM-06, DM-11, DM-12 |
 
 ## D2.3 Fachliche Typdefinitionen
 
@@ -627,6 +658,10 @@ Die nachfolgenden Typen sind als fachliche Kontrakte zu lesen: `Werte/Felder` is
 
 **Prüfbeispiel:** Dasselbe PDF zu Kurs A und Projekt B verlinkt.
 
+**Präzisierung DEC-V1-02/09:** Auch qualifizierte sekundäre Themen-/Lernzielbezüge von DM-09 tragen erlaubte Zielkennung, Relationsgrund, Quellrevision, Herkunft und Unsicherheit; weder Elternhierarchie noch Kompetenzübertragung ableiten. Keine neue Zielart oder fremder Kontenzugriff durch die Kartenansicht.
+
+[Entscheidungsmatrix](ENTSCHEIDUNGSMATRIX.md).
+
 ### DT-36 — DokumentFassungDT
 
 **Art:** Struktur\
@@ -763,6 +798,10 @@ Die nachfolgenden Typen sind als fachliche Kontrakte zu lesen: `Werte/Felder` is
 **Prüfbeispiel:** Kapitel 100 % gelesen, Wissensstand unbekannt.
 
 **Präzisierung L-02/L-08:** `verstaendnis_geprueft` wird mit tatsächlichen Aufgaben-/Versuchs-/Hilfebelegen und Zeit geführt; `bearbeitet`, `wissensstand_geschaetzt` und `kompetenz_nachgewiesen` bleiben unabhängige Aussagen mit eigener Belegqualität. Kein automatischer Übergang durch Lesen, Timerablauf oder abgearbeitete Wiederholung. Plan-Undo ändert diese Evidenzfelder nicht.
+
+**Präzisierung DEC-V1-08/17/21:** Optionaler Bezug auf manuelles Sitzungsfeedback und tatsächliche Dauer/Messgrundlage samt Unterbrechungs-/Lückenangabe; fehlend bleibt unbekannt oder bewusst nicht gespeichert. Geschätzte Dauer ist kein Messwert. Eine Bilanz referenziert reale Antworten/Hilfen und Zeitraum, keine erfundene Bestehensprognose.
+
+[Entscheidungsmatrix](ENTSCHEIDUNGSMATRIX.md).
 
 ### DT-45 — ErinnerungsstatusDT
 
@@ -1019,6 +1058,12 @@ Die nachfolgenden Typen sind als fachliche Kontrakte zu lesen: `Werte/Felder` is
 
 **Prüfbeispiel:** Menütitel geändert; Zugriffsrechte unverändert.
 
+**FE-21-Parameter im vorhandenen Typ:** Unterstützte Schlüssel für Ausgabesprache (DT-07), Stimme (nur tatsächlich verfügbare Auswahl), Geschwindigkeit (nur belegter unterstützter Bereich) und ausdrückliche Hörmoduswahl (ein/aus, Standard aus). Kein beliebiger Servicecode und kein implizites Mikrofon-/Anbieterrecht. DM-02 referenziert persönliche Werte; DM-48/DM-49 führen gültige Fassungen. Unbekannte Fähigkeit ist nicht aktivierbar, fehlender Tempobereich wird nicht durch erfundene Zahlen ersetzt.
+
+**Präzisierung DEC-V1-06/18/19/25:** Ausschließlich unterstützte persönliche Präferenzen für Lernprofil-/Hilfe-/Pausen-/Zielangebote mit Aktivierung/Deaktivierung; manuelle Rückmeldung, Korrektur und Ablehnung/Aufschub getrennt von KI-Schätzung. Keine neue Gesundheitskategorie, Pflichtprofilierung oder automatische Kosten-/Kalenderfreigabe.
+
+[Entscheidungsmatrix](ENTSCHEIDUNGSMATRIX.md).
+
 ### DT-62 — ArchivstatusDT
 
 **Art:** Enumeration\
@@ -1157,7 +1202,11 @@ Die offiziell zulässigen Abrufverfahren und aktuellen Limits für öffentliche 
 | Privater Kalender nicht erreichbar | Verfügbarkeitsfenster unbekannt | Leere Zeiten als frei annehmen |
 | GitHub-Profil verweist auf Teamrepo | `KompetenzBelegDT` mit Nachweisgrad/Urheberschaft offen | Alle Beiträge dem Nutzer zurechnen |
 
-## D2.7 Rückverfolgbarkeit der 52 Entitäten
+<a id="d27-rückverfolgbarkeit-der-52-entitäten"></a>
+
+## D2.7 Ausgangsmatrix der ursprünglichen 52 Entitäten
+
+Diese Tabelle bewahrt den ursprünglichen Bezugsumfang. Ergänzte Kennungen stehen im vollständigen Katalog und den jeweiligen Nachträgen; die [aktuelle Entscheidungsmatrix](ENTSCHEIDUNGSMATRIX.md) ergänzt die 25 DEC-V1. Kein alter Eintrag entfällt.
 
 Die Zuordnung zeigt für jede D1-Entität die in D2 ausdrücklich relevanten Typen, einschließlich mittelbarer Ansichten, Quellen- und Prüfbezüge. Sie behauptet keine neuen direkten Pflichtattribute oder Beziehungen: etwa gehören Notenwerte weiter zu DM-12, die Studienzugehörigkeit DM-04 liefert ihren Kontext. DT-57 bleibt bei allen Bezügen ein bestätigter GitHub-V1-Umfang (FE-43), dessen technische Verfügbarkeit separat nachzuweisen ist. DT-01 und DT-63 gelten zusätzlich als allgemeine Identitäts- und Datenklassentypen, wenn fachlich erforderlich.
 
@@ -1216,7 +1265,11 @@ Die Zuordnung zeigt für jede D1-Entität die in D2 ausdrücklich relevanten Typ
 | DM-51 | ExterneDatenübermittlung | DT-01, DT-10, DT-59, DT-63 |
 | DM-52 | Änderungshinweis | DT-01, DT-14, DT-63 |
 
-## D2.8 Nachvollziehbarkeit der 50 Anwendungsfälle
+<a id="d28-nachvollziehbarkeit-der-50-anwendungsfälle"></a>
+
+## D2.8 Ausgangsmatrix der ursprünglichen 50 Anwendungsfälle
+
+Diese Tabelle bewahrt den ursprünglichen Bezugsumfang. Ergänzte Kennungen stehen im vollständigen Katalog und den jeweiligen Nachträgen; die [aktuelle Entscheidungsmatrix](ENTSCHEIDUNGSMATRIX.md) ergänzt die 25 DEC-V1. Kein alter Eintrag entfällt.
 
 Die originalen UC-Titel aus F2 bleiben unverändert. Die D2-Zuordnung ist eine Wert-/Validierungssicht, keine Umnummerierung der Use Cases.
 
@@ -1461,7 +1514,7 @@ Die bestehenden Kennungen `CFG-01`; `CFG-02`; `CFG-03`; `CFG-04`; `CFG-05`; `CFG
 | Ein globaler Messstand und Euro-Einheit zu eng | Messstand je Kennzahl, Geldwerte mit Währung und zeitbezogener Grundlage; keine erfundenen feinen Perioden aus gröberen Summen. |
 | GitHub-Ausschnitt könnte als festgelegte Produktgrenze gelesen werden | Historischer V1-Vorschlag durch FE-43 ersetzt; bestätigter öffentlicher Scope bei weiterhin ausstehender technischer Rechteprüfung; keine zugesagten privaten Repositories, weitere Plattformen oder aktuellen API-Rechte. Quellenabruf blockiert, spätere offizielle Prüfung erforderlich. |
 
-**Freigabestatus:** Zur Prüfung durch den Projektinhaber — D2 v0.4. Git-Commit und Push ersetzen keine gemeinsame fachliche Abnahme.
+**Freigabestatus:** Zur Prüfung durch den Projektinhaber — D2 v0.5. Git-Commit und Push ersetzen keine gemeinsame fachliche Abnahme.
 
 
 ## D2.12 Ergänzende Datentypen für Konten und sichere Lebenszyklen
@@ -1640,6 +1693,8 @@ Die folgenden Wertbereiche sind fachliche Typen, keine ausgewählten Kryptoverfa
 
 **Prüfbeispiel:** Ein Wert außerhalb des beschriebenen Bereichs wird sichtbar zurückgewiesen, ohne vorhandene gültige Daten zu überschreiben.
 
+**DEC-49-Nachweis im DM-69-Kontext (keine Erweiterung der obigen Zustandswerte):** Primär-/Sicherungsanbieterbezug, EU-Standort und geprüfte Unabhängigkeit mit Prüfzeit, Integrität und tatsächlichem Restorebeleg führen; unbekannt ist kein positiver Nachweis. Verschlüsselungs-/Schlüsselbezug ist geschützt, kein Schlüsselinhalt. Anbieterunabhängigkeit und erfolgreicher letzter Test sind getrennte Merkmale, keine pauschale Garantie zukünftiger Wiederherstellbarkeit.
+
 ### DT-82 — WiederherstellungsstatusDT
 
 **Art / Verwendung:** Fachlicher Zustands-/Wertebereich; DM-70.
@@ -1750,6 +1805,10 @@ INV-26 bis INV-31 aus [D1](D1-datenmodell.md) gelten unverändert auch für die 
 
 **Prüfbeispiel:** Unbekannter Wissensstand führt zu vorläufig begründeter Auswahl, nicht „0 % Wissen“ oder erzwungener Kalenderübernahme.
 
+**Präzisierung DEC-V1-14/15/16:** Manuell, ausdrücklich aktivierte Automatik und hybrid sind fachliche Modi des bestehenden Reihenfolgeplans; Fixierungen, aktuelle Evidenz und Zeitgrundlage bleiben getrennt. Ein importierter Modus ist keine heutige Aktivierung, kein neuer Termin und keine festgelegte Intervallformel.
+
+[Entscheidungsmatrix](ENTSCHEIDUNGSMATRIX.md).
+
 ### DT-92 — PädagogischePlanänderungDT
 
 **Art / Bezug:** Struktur für DM-76.
@@ -1789,3 +1848,9 @@ INV-26 bis INV-31 aus [D1](D1-datenmodell.md) gelten unverändert auch für die 
 **Werte/Validität:** Geltung `belegt_anwendbar`, `belegt_nicht_anwendbar` oder `ungeklaert`; Ergebnis pro Regel `belegt_erfuellt`, `abweichung_belegt`, `nachweis_fehlt` oder `nicht_pruefbar`. Unbekannt ist kein Gegenbeweis; fehlende Nachweise sind keine erfundene Fehlprüfung. Bestätigte Extraktion und persönlicher Geltungsnachweis sind getrennt, Nutzerbestätigung keine amtliche Anerkennung. Unvollständiger Regelumfang bleibt Teilvergleich. Kein Dateiname, Upload oder neueres Datum ersetzt Geltungs-/Autoritätsprüfung.
 
 **Prüfbeispiel:** Neue Ordnung ohne bekannte Kohortenzuordnung bleibt ungeklärt; ältere belegbar gültige Übergangsfassung wird nicht still verdrängt. Einheiten/ECTS/Versuche nur nach dokumentierter Semantik abgleichen, keine doppelte Anrechnung erfinden.
+
+## D2.15 FE-21 — Wiedergabestand getrennt von Präferenzen
+
+DM-25/DM-26 referenzieren den zulässigen Antwort-/Fassungsbezug; DT-07 beschreibt die Ausgabesprache, DT-61 die unterstützten persistenten persönlichen Parameter. Der vorübergehende Wiedergabestand unterscheidet fachlich bereit, laufend, pausiert, beendet und nicht verfügbar/Fehler samt tatsächlicher Position oder unbekannt. Das sind weder DT-38-Gesprächsstatus noch neue DM-/DT-Kennungen oder technische API-Enums. Pause/Fortsetzung/Replay und Medienfehler dürfen Text und Gesprächskontext nicht verwerfen. Wiederanlauf muss heutige Inhalts-/Geräte-/Anbieterrechte erneut prüfen; kein garantierter Browser-Hintergrund- oder Offlinebetrieb. Audio-/Positionkopien erben Quellschutz und zulässige Lösch-/Temporärregeln; keine Speicherung von Mikrofoninhalt beim bloßen Hören.
+
+**Abnahme:** Standard aus verhindert automatische neue Ausgabe, ausdrückliches Einschalten erlaubt nur aktuell zulässige Antworten; unbekannte Stimme bleibt unverfügbar. Mikrofonverweigerung sperrt eine tatsächlich verfügbare erlaubte TTS-Ausgabe nicht. Prüfbezüge: UC-20, DLG-26/DLG-50 und [FE-21-Abnahme](ENTSCHEIDUNGSMATRIX.md#4-fe-21--getrennte-ausgabevariante-und-abnahme).

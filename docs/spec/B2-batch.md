@@ -2,13 +2,13 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** B2 — Batch-Prozesse\
-**Version:** 0.4\
-**Stand:** 19.10.2026\
+**Version:** 0.5\
+**Stand:** 22.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Methode:** Bausteinspezifikation nach Johannes Siedersleben; periodische und zeitversetzte Fachabläufe\
 **Bezugsstand:** Vier bestätigte Entscheidungen vom 19.10.2026; Ausgangs-HEAD `53ef171be4783748b5c7e3a84bb0cc363d5b4194`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1; aktuelle Fassungen im [Index](README.md).\
 
-**Geltung und Freigabe:** FE-01 bis FE-24 gelten als fachliche Nutzerentscheidungen. FE-22 bis FE-24 werden in B2 erstmals konkretisiert. Die Dokumente P1 bis B1 sind nicht rückwirkend überarbeitet; ihre fehlenden Querbezüge werden als Folgearbeit ausgewiesen. Dieses Dokument spezifiziert Zielverhalten, keine bereits bereitgestellten Scheduler, Push-Dienste, APIs, Hintergrundrechte oder produktiven Jobs. Angaben zu Prüffrequenzen sind Produktvorgaben unter tatsächlichen Betriebsbedingungen, keine Zustellgarantien.
+**Geltung und Freigabe:** FE-01 bis FE-24 gelten als fachliche Nutzerentscheidungen. FE-22 bis FE-24 werden in B2 erstmals konkretisiert. Die frühere Einzellieferung änderte ältere Bausteine nicht; die folgenden Harmonisierungslieferungen und der aktuelle Index dokumentieren deren heutigen Stand. Dieses Dokument spezifiziert Zielverhalten, keine bereits bereitgestellten Scheduler, Push-Dienste, APIs, Hintergrundrechte oder produktiven Jobs. Angaben zu Prüffrequenzen sind Produktvorgaben unter tatsächlichen Betriebsbedingungen, keine Zustellgarantien.
 
 ## B2.1 Ziel, Abgrenzung und Notation
 B2 spezifiziert **fachlich erforderliche, zeitversetzte, wiederkehrende oder ausdrücklich angestoßene Hintergrundabläufe**: Auslöser, Vorbedingungen, Eingaben, Schritte, fachliche Ergebnisse, Fehlerreaktionen, Wiederholbarkeit, Freigaben und Abnahmepunkte. Die zugrunde liegenden Geschäftsprozesse sind in [F1](F1-geschaeftsprozesse.md), dialogausgelöste Handlungen in [F2](F2-anwendungsfaelle.md), fachliche Algorithmen in [F3](F3-anwendungsfunktionen.md), Entitäten in [D1](D1-datenmodell.md), Typen in [D2](D2-datentypen.md) und Bedienung in [B1](B1-dialogspezifikation.md) beschrieben. B2 ist **keine technische Job-Queue- oder Hostingentscheidung**.
@@ -60,6 +60,13 @@ Jeder `BAT-xx` ist eine stabile **B2-Arbeitsablaufkennung**; er bezeichnet eine 
 | [BAT-17](#bat-17--asynchrone-materialaufbereitung-nach-nutzerauftrag) | Asynchrone Materialaufbereitung nach Nutzerauftrag | Materialien | Bewusster Nutzerauftrag, asynchron nur soweit unterstützt | Fachlicher Zielumfang |
 | [BAT-18](#bat-18--optionale-öffentliche-github-nachweise-aktualisieren) | Optionale öffentliche GitHub-Nachweise aktualisieren | Projekte (bedingt) | Nutzerauftrag; Wiederholung nur nach gesonderter Freigabe und Unterstützung | Bestätigter Umfang FE-43, technische Verfügbarkeit bedingt |
 | [BAT-19](#bat-19--berechtigte-benachrichtigungen-zustellen-und-zustellstand-führen) | Berechtigte Benachrichtigungen zustellen und Zustellstand führen | Benachrichtigungen | Dringlicher Hinweis / Digest / zulässiges Zustellfenster | Fachlicher Zielumfang |
+| BAT-20 | Quelländerung und Ableitungsprüfung vorbereiten | Quellen | Bestätigter Quellversionswechsel | Vorschlag und Veraltet-Markierung getrennt |
+| BAT-21 | Veröffentlichungstermine und Ankündigungen kontrollieren | Administration | Berechtigter Veröffentlichungstermin | Aktuelle Freigabe vor Wirkung prüfen |
+| BAT-22 | Sitzungs- und Freigabeabläufe kontrollieren | Sicherheit | Ablauf oder Widerruf | Keine fortgeltenden abgelaufenen Rechte |
+| BAT-23 | EU-Sicherungen und kontrollierte Wiederherstellung vorbereiten | Sicherung | Zulässiger Sicherungsauftrag / bestätigter Restore | EU, unabhängige verschlüsselte Sicherung |
+| BAT-24 | Portabilitätsaufträge kontrolliert verarbeiten | Portabilität | Bestätigter persönlicher Export-/Importauftrag | Aktueller geschützter Umfang |
+| BAT-25 | Versions- und Betriebsdatenmigration kontrollieren | Betrieb | Gesondert autorisierter Versions-/Betriebswechsel | Keine laufende Migration durch Spezifikation |
+| BAT-26 | Aktivierte pädagogische Lernreihenfolge aktualisieren | Lernplanung | Aktivierte persönliche Automatik und aktuelle Evidenz | Reihenfolge, keine Kalenderwirkung |
 
 ## B2.4 Gemeinsamer Ablaufvertrag
 ### B2.4.1 Vorgesehene Prüfkette
@@ -685,7 +692,11 @@ flowchart TB
 9. Fehlende technische Hintergrundfähigkeit (insbesondere auf Mobilgeräten) nicht mit künstlicher „erfolgreich geprüft“-Zeit kaschieren.
 10. Für Nutzer sichtbare Zustände und letzte erfolgreiche Prüfung/Abdeckung vorbereiten; N1/N2 legen spätere technische Quoten, Fristen und Diagnose fest.
 
-## B2.10 Zuordnung zu allen bestehenden Anwendungsfällen UC-01 bis UC-50
+<a id="b210-zuordnung-zu-allen-bestehenden-anwendungsfällen-uc-01-bis-uc-50"></a>
+
+## B2.10 Ausgangsmatrix UC-01 bis UC-50
+
+Diese Tabelle bewahrt den ursprünglichen Bezugsumfang. Ergänzte Kennungen stehen im vollständigen Katalog und den jeweiligen Nachträgen; die [aktuelle Entscheidungsmatrix](ENTSCHEIDUNGSMATRIX.md) ergänzt die 25 DEC-V1. Kein alter Eintrag entfällt.
 Ein **nicht direkt durch BAT ausgelöster** Use Case ist nicht „ungedeckt“: Viele Benutzerhandlungen sind ausdrücklich synchron beziehungsweise interaktiv und gehören nach F2/B1, nicht in einen automatisch wiederkehrenden Job. Die folgende Übersicht nennt pro UC mögliche zeitversetzte Unterstützungen und grenzt direkte Dialogaktionen ab. Dieselben Bezüge stehen in den BAT-Rückverweisen; sie bezeichnen auch mittelbare Daten-/Prüfkontexte, keine automatische Ausführung des gesamten UC. Insbesondere wird weder UC-03 zur ungeprüften Profilübernahme noch UC-44 zur autonomen Studienentscheidung; direkt manuelle Zuordnung aus UC-13 braucht keinen Batch und keine zusätzliche KI-Freigabe.
 
 | UC | Bestehender Titel (F2) | B2-Bezug | Abgrenzung |
@@ -775,11 +786,11 @@ Ein **nicht direkt durch BAT ausgelöster** Use Case ist nicht „ungedeckt“: 
 | [P1](P1-ziele-rahmenbedingungen.md) | Ziele, Grenzen, Geräte, Datenschutz, Kosten, Studienorganisation | Keine Voraussetzung jederzeit laufender Mobilgerätejobs. |
 | [P2](P2-architekturueberblick.md) | P2.7 Hintergrundprüfungen; CFG-09 Benachrichtigungen und Prüfungen; CFG-10, CFG-11, CFG-12; DK-01..DK-12 | Kein konkreter Scheduler, Hostingdienst oder Anbieterzugang. |
 | [F1](F1-geschaeftsprozesse.md) | GP-01..GP-15, besonders GP-03, 04, 05, 06, 07, 11, 12, 13, 15 | B2 schafft keine selbstständigen Hochschulentscheidungen. |
-| [F2](F2-anwendungsfaelle.md) | UC-01..UC-50, vor allem UC-34..UC-38 und F2.11.1 Entscheidung/Ausführung | FE-22..FE-24 sind dort noch nicht rückwirkend aufgenommen. |
+| [F2](F2-anwendungsfaelle.md) | UC-01..UC-50, vor allem UC-34..UC-38 und F2.11.1 Entscheidung/Ausführung | Aktuelle Anschlüsse über UC-36..UC-38 und UC-65; Quellchecks erteilen kein Inboxrecht. |
 | [F3](F3-anwendungsfunktionen.md) | AF-01, AF-02, AF-03, AF-05..AF-07, AF-09..AF-15, AF-17..AF-23, AF-25..AF-27 | Batch enthält keine zusätzliche Beweis-/Auswahl-Logik jenseits der AF. |
-| [D1](D1-datenmodell.md) | DM-03, DM-11, DM-20..DM-24, DM-32..DM-52 für Quellen, Fristen, Vorschläge, Zähler und Löschung | Separates Run-Protokoll/Reminderobjekt noch nicht als bereits vorhanden behaupten. |
+| [D1](D1-datenmodell.md) | DM-03, DM-11, DM-20..DM-24, DM-32..DM-52 für Quellen, Fristen, Vorschläge, Zähler und Löschung | DM-62 sowie DM-52/DM-77/DM-78 sind vorhanden; Lauf, Hinweis, Regel und Zustellung bleiben getrennt. |
 | [D2](D2-datentypen.md) | DT-02, DT-04, DT-05 Zeit; DT-15, DT-18, DT-23 Rechte; DT-22, DT-24, DT-25 Statistik; DT-45, DT-48, DT-49, DT-50 Zustände; DT-58 Sichtbarkeit | Kein eigenmächtig eingeführter zusätzlicher Datentyp oder neuer Enumerationswert. |
-| [B1](B1-dialogspezifikation.md) | DLG-33, DLG-37, DLG-38, DLG-39, DLG-40, DLG-47, DLG-48, DLG-49, Benachrichtigung; DLG-26, DLG-50 Audio nur opt-in | Fehlende B2-UI-/Scheduler-Funktionen werden später in B1 nachgetragen. |
+| [B1](B1-dialogspezifikation.md) | DLG-33, DLG-37, DLG-38, DLG-39, DLG-40, DLG-47, DLG-48, DLG-49, Benachrichtigung; DLG-26, DLG-50 Audio nur opt-in | Ergänzte Dialoge einschließlich DLG-57/58/66 vorhanden; technische Scheduler-Fähigkeit weiterhin offen. |
 | [B3](B3-druckausgaben.md) / [S1](S1-nachbarsysteme.md) / [N1](N1-nichtfunktional.md) / [N2](N2-querschnittskonzepte.md) | Ausgabe, Nachbargrenzen, Qualitäts- und Schutzanforderungen | Ausgearbeitete Prüfentwürfe; S2 ergänzt unten die kontrollierten Migrationswege, technische Nachweise weiterhin offen. |
 
 ### B2.12.1 Vorbereitete administrative Optionen (CFG-09, CFG-11, CFG-12)
@@ -935,6 +946,8 @@ Jeder externe Konnektor startet standardmäßig manuell. FE-22 ist ein Ziel für
 
 **Abnahmebeispiel:** Wiederholung desselben zulässigen Auftrags erzeugt keine doppelte fachliche Wirkung. Widerruf vor einem Retry blockiert die weitere Ausführung, ohne vorhandene zulässige Daten zu löschen.
 
+**Präzisierung DEC-49:** Die automatische Sicherung verwendet einen vom Primäranbieter unabhängigen verschlüsselten EU-Speicher mit eigenen begrenzten Rechten und sicherer Schlüsselverwaltung. Wiederherstellungsproben sind periodisch vorzusehen und tatsächlich zu protokollieren; kein neuer BAT oder jetzt laufender Job. Fristen, Frequenz, RPO/RTO und Anbieter bleiben offen. Probe umfasst Ausfall, Korruption, versehentliche Löschung und Kompromittierung; ein aktueller Lösch-/Widerrufskontrollstand verhindert Wiederbelebung. [S2](S2-datenmigration.md), [ADR-0005](../ARCHITECTURE_DECISIONS.md#adr-0005--anbieterunabhängige-verschlüsselte-sicherung-dec-49).
+
 ### Präzisierungen vorhandener Verarbeitung
 
 - **BAT-01/BAT-03/BAT-18:** Vor Abruf gilt DM-63: manuell als Standard, automatische Intervalle nur explizit pro Verbindung. Bereits autorisierter allgemeiner öffentlicher Quellencheck nach FE-22 begründet keinen neuen Konnektor-Scope.
@@ -995,3 +1008,9 @@ Bestehende BAT-14-Gerätesynchronisation, BAT-16-Lösch-/Retentionpflege und BAT
 **Negative Abnahme:** Automatik wurde zwischen Berechnung und Speicherung ausgeschaltet oder Plan manuell geändert: keine veraltete autonome Wirkung. Ohne Lernbeleg kein sicherer Beherrschungsgrad; eine verpasste Wiederholung allein ist kein Fehlernachweis. Ein zur Kalenderübernahme geeigneter Vorschlag bleibt BAT-09/UC-35 vorbehalten.
 
 **Abgrenzung:** BAT-09 bereitet Kalenderplanvarianten vor, BAT-11 kennzeichnet Evidenzneubewertung, BAT-26 ändert nur die persönlich erlaubte pädagogische Reihenfolge. Dies sind verschiedene fachliche Wirkungen; kein zweiter Benachrichtigungsbatch wird eingeführt. BAT-06/07/08/19 bleiben für Hinweise zuständig.
+
+## B2.19 Ausführungsgrenzen der konsolidierten DEC-V1
+
+Die [25-zeilige Matrix](ENTSCHEIDUNGSMATRIX.md) ordnet BAT-09/11/26 nur der tatsächlich passenden Planungs-/Evidenzarbeit und BAT-14/16 nur Abgleich/Bereinigung zu. Wissenskarte, Quellenpassage, freiwilliges Feedback, diskrete Hilfe/Pause, Bilanz und Wochenzielwahl erzeugen keinen eigenen periodischen Batch. Vorhandene BAT dürfen diese Ansichten nicht als Freigabe für neue Analyse, Profilierung oder Sitzung missverstehen. Keine neuen BAT und keine festgelegten Häufigkeiten/Algorithmen.
+
+Aktivierte Reihenfolgeautomatik bleibt auf DM-75/DM-76 beschränkt; BAT-26 verschiebt keine Termine. Ablehnung oder Aufschub eines Wochenziels sowie Abschalten von Hilfe/Pause bleiben wirksam; Import/Restore startet weder Probeprüfung noch Feedbackabfrage, Hilfe, Pause, TTS oder Erinnerungsmail. Fehlende Rückmeldung ist keine negative Evidenz. Temporäre Daten und gelöschte Profilelemente werden nach BAT-16 ohne Schattenkopie behandelt; aktuelle Schutz-/Löschrechte gelten auch vor Retry.

@@ -1,8 +1,8 @@
 # E2 — Glossar
 
 **Projekt:** Syllentra AI\
-**Version:** 0.3\
-**Stand:** 19.10.2026\
+**Version:** 0.4\
+**Stand:** 22.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber
 
 ## E2.1 Verbindliche Begriffsabgrenzung
@@ -75,3 +75,14 @@ Verträge und offene Nachweise: [S2](S2-datenmigration.md). Eine Wiederherstellu
 | Fortschrittsaussagen | Bearbeitet, Verständnis überprüft, Wissensstand geschätzt und Kompetenz nachgewiesen sind eigenständige belegbezogene Aussagen, keine automatische Stufenleiter. |
 
 UC-65 verwaltet Erinnerungsregeln/Zustellnachweise; UC-66 den geltungsgeprüften Studienabgleich. L-08, L-04, L-09 und L-02 sind die bestätigten Auftragspunkte vom 19.10.2026, keine neuen FE-Kennungen. [F2](F2-anwendungsfaelle.md) enthält ihre Vorgänge, [Entwicklungszuordnungen](ENTWICKLUNGSPLAN.md) den begrenzten Meilensteinstand.
+
+## E2.4 Begriffe der dokumentarischen Konsolidierung
+
+| Begriff | Abgrenzung |
+|---|---|
+| Wissenskarte | Freiwillige einfache Ansicht vorhandener eigener Themen-/Quellenbeziehungen; kein automatischer Kompetenztransfer und keine Pflichtnavigation. |
+| Sitzungsrückmeldung / Sitzungsbilanz | Freiwillige manuelle Selbstaussage gegenüber einer optionalen Sicht auf tatsächliche Sitzungsbelege; keine amtliche Leistung und kein erfundener Messwert. |
+| DEC-48 / DEC-49 | Bestätigte Hostingbewertungspriorität beziehungsweise unabhängige verschlüsselte Sicherung; getrennt von FE und DEC-V1, keine technische Anbieterwahl oder Betriebsfreigabe. |
+| Anbieterunabhängige Sicherung | Verschlüsselter EU-Speicher außerhalb des Primäranbieters mit sicheren Rechten/Schlüsseln und verifizierbarem Restore; zusätzliche Region desselben Anbieters allein reicht nicht. |
+
+[Entscheidungsmatrix](ENTSCHEIDUNGSMATRIX.md), [ADR](../ARCHITECTURE_DECISIONS.md) und [S2](S2-datenmigration.md) enthalten Quellen, Grenzen und offene Nachweise.

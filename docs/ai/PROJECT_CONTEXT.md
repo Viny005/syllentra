@@ -1,12 +1,12 @@
 # Syllentra AI — überprüfter Projektkontext
 
-**Version:** 0.3 · **Stand:** 22.10.2026 · **Status:** Zur Prüfung durch den Projektinhaber
+**Version:** 0.4 · **Stand:** 22.10.2026 · **Status:** Zur Prüfung durch den Projektinhaber
 
 ## Git-Snapshot und Geltung
 
 Repository: `Viny005/syllentra` — <https://github.com/Viny005/syllentra>.
 Aktueller Arbeitsbranch: `docs/spec/p1-p2-mobile-workspaces`, zugeordnet zu [PR #1](https://github.com/Viny005/syllentra/pull/1).
-Am 19.10.2026 lokal und per Remote-Ref überprüfter Ausgangscommit der redaktionellen Bereinigung: `39261a5816a99f7c10c79344e5a1adc03b685d49`. Er enthält die PACE-Einführung aus Commit `abcfe13d1dd73fc4c5228821664f36b28ce6e7ba` über den Merge von [PR #2](https://github.com/Viny005/syllentra/pull/2); diese Einführung ist abgeschlossen. Der Arbeitsbaum war vor der Bereinigung sauber. Dieser Snapshot bezeichnet die überprüfte Ausgangsbasis, keinen dauerhaft aktuellen HEAD; bei jeder Aufgabe neu prüfen. Ein Git-Ref bestätigt den Inhalt, nicht allein den aktuellen PR-Status.
+Am 22.10.2026 lokal, per entferntem Branch und PR-Git-Ref überprüfter Ausgangscommit dieser Konsolidierung: `f12a46881f54dccc8568d9982bba0c41564b052e`. Arbeitsbaum vor Bearbeitung sauber, PR #1 auf der öffentlichen GitHub-Seite als offen geprüft. PACE ist durch PR #2 seit `39261a5816a99f7c10c79344e5a1adc03b685d49` integriert. Der Snapshot ist eine datierte Ausgangsbasis, kein dauerhaft aktueller HEAD; bei jeder Aufgabe erneut prüfen. Endcommit/Push werden im Abschlussbericht nachgewiesen.
 
 ## Ziel und Aufbau
 
@@ -22,8 +22,10 @@ Adaptiver Lernbegleiter für Studierende: Materialien, Audio und Gespräche mit 
 | [D1](../spec/D1-datenmodell.md), [D2](../spec/D2-datentypen.md) | Fachliche Daten, Beziehungen, Invarianten und Datentypen. |
 | [B1](../spec/B1-dialogspezifikation.md), [B2](../spec/B2-batch.md), [B3](../spec/B3-druckausgaben.md) | Dialoge, Hintergrundverarbeitung und Ausgaben. |
 | [S1](../spec/S1-nachbarsysteme.md), [S2](../spec/S2-datenmigration.md) | Nachbarverträge, kanonische 89 FE in S1.18.1, Migration/Export/Wiederherstellung. |
-| [N1](../spec/N1-nichtfunktional.md), [N2](../spec/N2-querschnittskonzepte.md) | Qualitätsanforderungen und Schutzkonzepte als begrenzte Prüfentwürfe. |\n| [40-Punkte-Release-Checkliste](../quality/RELEASE_READINESS_40.md) | Zwei vom Projektinhaber am 22.10.2026 bestätigte Quellenlisten mit je 20 Prüfpunkten (REL-S01..20, REL-Q01..20); V1-Freigabekriterien, REL-Q10 Zahlung nur spätere Option. Ohne Produktnachweise. |
+| [N1](../spec/N1-nichtfunktional.md), [N2](../spec/N2-querschnittskonzepte.md) | Qualitätsanforderungen und Schutzkonzepte als begrenzte Prüfentwürfe. |
+| [40-Punkte-Release-Checkliste](../quality/RELEASE_READINESS_40.md) | Zwei vom Projektinhaber am 22.10.2026 bestätigte Quellenlisten mit je 20 Prüfpunkten (REL-S01..20, REL-Q01..20); V1-Freigabekriterien, REL-Q10 Zahlung nur spätere Option. Ohne Produktnachweise. |
 | [E2](../spec/E2-glossar.md), [E3](../spec/E3-pruefnachweis.md) | Begriffe sowie datierte tatsächliche Dokumentationsprüfungen; kein Produktabnahmetest. |
+| [Entscheidungsmatrix](../spec/ENTSCHEIDUNGSMATRIX.md) | Aktuelle DEC-V1-/FE-21-Zuordnung und DEC-48/49, Soll-Abnahmen und verbleibende Präzisierungen; zur Prüfung. |
 | [Entwicklungszuordnungen](../spec/ENTWICKLUNGSPLAN.md) | Bestätigter Teilstand, kein vollständiger freigegebener Meilensteinplan. |
 | [ADR-Konvention](../ARCHITECTURE_DECISIONS.md), [Roadmap](../ROADMAP.md) | Noch keine finale Stackwahl; historische Forschungs-/Entwicklungsphasen. |
 | [Vision](../PROJECT_VISION.md), [ursprüngliche Anforderungen](../REQUIREMENTS.md) | Historische Grundlagen; bei Abweichungen aktuelle bestätigte Entscheidungen und deren Quellenstatus prüfen. |
@@ -41,11 +43,11 @@ Die Zusammenfassung ersetzt keine Primärquelle: S1.18.1 enthält **89 FE, davon
 
 ## Offene Entscheidungen und Status
 
-**FE-56 bleibt offen:** keine automatische Hochschulpost-/Inbox-Lesefunktion in V1. Technische Nachweise/Parameter aus S1.19 und S2.17 bleiben offen; insbesondere konkrete Provider, Verfahren für Schlüssel/Recovery, sichere PWA-/Offline-Fähigkeiten, Betriebs-/Lösch-/Backupnachweise sowie messbare Qualitäts- und Lizenznachweise. Vollständige Harmonisierung der übrigen DEC-V1-Punkte und vollständiger Meilensteinplan sind nicht abgeschlossen. Keine offenen Fragen durch Agentenannahmen schließen.
+**FE-56 bleibt offen:** keine automatische Hochschulpost-/Inbox-Lesefunktion in V1. Technische Nachweise/Parameter aus S1.19 und S2.17 bleiben offen; insbesondere konkrete Provider, Verfahren für Schlüssel/Recovery, sichere PWA-/Offline-Fähigkeiten, Betriebs-/Lösch-/Backupnachweise sowie messbare Qualitäts- und Lizenznachweise. Die [Entscheidungsmatrix](../spec/ENTSCHEIDUNGSMATRIX.md) dokumentiert jetzt alle 25 DEC-V1 einschließlich ergänzter Varianten und Soll-Abnahmen; weitere fachliche Präzisierungen und der vollständige Meilensteinplan bleiben offen. Keine offenen Fragen durch Agentenannahmen schließen.
 
-**Architektur:** ADR-Konvention vorhanden, keine finale Framework-, Datenbank-, Hostinganbieter- oder KI-Modellwahl. S3 ist geplant und nicht ausgearbeitet. Zentrale EU-Cloud ist fachlicher Rahmen, kein ausgewählter Anbieter.
+**Architektur:** ADR-Konvention vorhanden, keine finale Framework-, Datenbank-, Hostinganbieter- oder KI-Modellwahl. S3 ist geplant und nicht ausgearbeitet. DEC-48 priorisiert Oracle Cloud Infrastructure zur späteren Bewertung; Alternativen bleiben bei fehlender Eignung offen, kein Anbieter endgültig ausgewählt. DEC-49 verlangt verschlüsselte EU-Sicherung unabhängig vom Primäranbieter mit sicheren Schlüsseln/Rechten und periodischen verifizierbaren Restore-Proben. [ADR-0004/0005](../ARCHITECTURE_DECISIONS.md) halten Rahmen und offene Verfahren fest. Keine Accounts, Infrastrukturtests, Ressourcen oder Ausgaben sind autorisiert; RPO/RTO, Frequenz und Retention bleiben offen.
 
-**Entwicklung und Tests:** Am überprüften Ausgangsstand ausschließlich Dokumentation und `.gitignore`, kein Anwendungscode, keine App-Testpipeline, keine implementierten oder getesteten Produktfunktionen. E3 dokumentiert frühere Dokumentprüfungen; sie ersetzen keine neuen Prüfungen. Die aktuelle Protokollbereinigung prüft Dokumentation und Bestandserhalt, keine Authentisierung, Konnektoren oder Laufzeitfunktionen.
+**Entwicklung und Tests:** Am überprüften Ausgangsstand ausschließlich Dokumentation und `.gitignore`, kein Anwendungscode, keine App-Testpipeline, keine implementierten oder getesteten Produktfunktionen. E3 dokumentiert frühere Dokumentprüfungen; sie ersetzen keine neuen Prüfungen. Die aktuelle Konsolidierung prüft Dokumentation und Bestandserhalt, keine Authentisierung, Konnektoren oder Laufzeitfunktionen.
 
 ## Sicherheits- und Kostengrenzen
 
@@ -55,6 +57,8 @@ Keine Geheimnisse, privaten Lernmaterialien oder personenbezogenen Echtdaten ins
 
 ## Auftragsumfang und nächste Schritte
 
-Zuletzt freigegeben ist die redaktionelle Bereinigung von E3 und PACE-Kontextdateien einschließlich notwendiger Indexanpassung, Commit und normalem Push auf den bestehenden Spezifikationsbranch zur Aktualisierung von PR #1. Fachliche Entscheidungen, 89 FE, 66 UC und Sicherheitsanforderungen bleiben unverändert. Kein Anwendungscode, keine Technologieentscheidung, Ausgabe, Änderung an `main`, Rebase, Force-Push, Merge oder Deployment. Nach Abschluss erteilt dieser Kontext keinen weiteren Produkt-/Architektur-/Implementierungsauftrag. PR #1 bleibt ohne Merge; die Spezifikation bleibt zur Prüfung.
+Mission 2 erlaubt dokumentarische Konsolidierung der DEC-V1/FE-21 und DEC-48/49, Katalog-/Referenz-/Metadatenkorrektur, tatsächliche Dokumentprüfungen sowie Commit/normalen Push auf den bestehenden Spezifikationsbranch zur Aktualisierung von PR #1. Kein Merge, `main` unverändert, keine Anwendung, kein Account, keine Infrastruktur-/Externprobe oder Ausgabe. S3 und allgemeine Finalisierung von N1/N2 sind ausdrücklich nicht Teil dieser Mission. Die 89 FE, 66 UC, 28 pädagogischen Sollfälle und 40 Release-Kontrollen bleiben erhalten, FE-56 offen. Dokumente bleiben zur Prüfung; nach Abschluss ist kein weiterer Produkt-/Architekturauftrag durch diesen Kontext erteilt.
 
-**Ergänzung vom 22.10.2026:** Neuer Auftrag zur Übernahme von 40 Sicherheits-/Betriebschecks. Als eigenständiges Qualitäts-Freigaberegister angelegt und in N1, N2, Spezifikationsindex, E3 und PACE-Workflow querverlinkt. Dies ist **keine** Implementierung, kein erfolgreicher Produkttest, keine Stack-/Anbieter-/Kostenfreigabe; Zahlungen bleiben außerhalb der V1. Bestehende PR #1 nicht mergen, `main` nicht verändern. Der ältere Git-Snapshot oben bleibt ausdrücklich ein datierter Ausgangsstand.\n\nArbeitsregeln: [AGENTS.md](../../AGENTS.md), [Workflow](WORKFLOW.md). Übergaben und Kontextänderungen verwenden die dort verlinkten Vorlagen und das [Protokoll](CONTEXT_CHANGELOG.md).
+Die Übernahme der 40 Release-Kontrollen vom 22.10.2026 bleibt als historische Kontextänderung im [Protokoll](CONTEXT_CHANGELOG.md) und in E3.18 nachvollziehbar; sie ist kein bestandener Produkttest oder Zahlungsumfang.
+
+Arbeitsregeln: [AGENTS.md](../../AGENTS.md), [Workflow](WORKFLOW.md). Übergaben und Kontextänderungen verwenden die dort verlinkten Vorlagen und das [Protokoll](CONTEXT_CHANGELOG.md).

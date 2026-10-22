@@ -2,8 +2,8 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** P1 — Ziele und Rahmenbedingungen\
-**Version:** 0.8\
-**Stand:** 19.10.2026\
+**Version:** 0.9\
+**Stand:** 22.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Spezifikationsmethode:** Bausteine nach Johannes Siedersleben\
 **Geltungsbereich:** Fachlicher Zielumfang der ersten Produktversion (V1)
@@ -805,7 +805,7 @@ Alle bisherigen Ziele G-01 bis G-32, Rahmenbedingungen CON-01 bis CON-27, Kriter
 
 G-29, CON-03 und SC-30 präzisieren die bisher nur allgemeine Gerätenutzung zur installierbaren mobilen Anwendung. CON-10 und SC-19 sowie die Missionsformulierung ersetzen die bisher mögliche Interpretation externer Kalenderänderungen durch das ausdrücklich festgelegte ausschließliche Lesen. Das ist eine begründete Einschränkung der bisherigen Kalenderformulierung, keine Streichung der internen Kalenderpflege. G-20 und SC-21 übernehmen dieselbe Grenze. Die übrigen präzisierten Erfolgskriterien beschreiben beobachtbare Ergebnisse anhand vorgegebener Materialien, Lernaktivitäten oder Quellenänderungen; die bisherigen Lern-, Prüfungs- und Beratungsziele bleiben erhalten. CON-13 schließt private Daten und Geheimnisse im öffentlichen Repository eindeutig aus. CON-19 und CON-24 sowie SC-09, SC-34 und SC-36 präzisieren Konfigurierbarkeit, Kostenfreigaben und überprüfbare Ergebnisse, ohne ihren bisherigen Zweck aufzugeben.
 
-Die Ergänzungen konkretisieren den bereits vorgesehenen persönlichen Studien-, Kompetenz- und Verwaltungsumfang. Nachrichtenverlauf und pädagogische Erinnerung, temporäre Kopien und dauerhafte Quellen sowie manuelle Speicherung und bestätigungspflichtige Vorschläge sind nun ausdrücklich getrennt. Die historische Anforderung zu langfristiger Speicherung nur mit Autorisierung bleibt bestehen. Der Dokumentstatus „Zur Prüfung“ kennzeichnet die noch ausstehende Freigabe dieser überarbeiteten Fassung; er widerruft keine frühere Freigabe von Version 0.4. Der unveränderte Spezifikationsindex kann einen älteren Bearbeitungsstand zeigen.
+Die Ergänzungen konkretisieren den bereits vorgesehenen persönlichen Studien-, Kompetenz- und Verwaltungsumfang. Nachrichtenverlauf und pädagogische Erinnerung, temporäre Kopien und dauerhafte Quellen sowie manuelle Speicherung und bestätigungspflichtige Vorschläge sind nun ausdrücklich getrennt. Die historische Anforderung zu langfristiger Speicherung nur mit Autorisierung bleibt bestehen. Der Dokumentstatus „Zur Prüfung“ kennzeichnet die noch ausstehende Freigabe dieser überarbeiteten Fassung; er widerruft keine frühere Freigabe von Version 0.4. Der aktuelle Spezifikationsindex führt die heutigen Versionen; frühere Indexstände bleiben historisch nachvollziehbar.
 
 Bei inhaltlichen Widersprüchen zwischen älteren Entwürfen und der gemeinsam freigegebenen Spezifikation müssen die Unterschiede überprüft und dokumentiert werden.
 
@@ -839,7 +839,7 @@ Erforderliche Änderungen des fachlichen Zielumfangs werden ausdrücklich mit de
 
 **Ende von P1 — Ziele und Rahmenbedingungen**
 
-**Freigabestatus:** Zur Prüfung. Version 0.5 harmonisiert und erweitert die zuvor freigegebene Version 0.4; die Freigabe der Änderungen durch den Projektinhaber steht aus.
+**Freigabestatus:** Zur Prüfung. Die historische Version 0.4 war inhaltlich freigegeben; diese Freigabe erstreckt sich nicht automatisch auf die aktuelle erweiterte Fassung.
 
 ### P1.10.1 Harmonisierung vom 16.10.2026
 
@@ -858,3 +858,9 @@ L-08 verbindet regelbasierte Wiederholungszeiten mit evidenzabhängiger Anpassun
 L-04 ergänzt UC-65 mit persönlichen Erinnerungsregeln und der konfigurierbaren Ruhezeit 22:00–08:00 in der gewählten Benachrichtigungszeitzone. Individuelle Vorgaben gehen Standards vor; J−5/J−1 bleiben datumbezogene Standardpunkte, Stundenregeln brauchen eine tatsächlich bekannte Ereignisuhrzeit. Vertraulichkeit, zulässige Kanäle und Löschkontrolle bleiben verbindlich.
 
 L-09 konkretisiert G-15/CON-15 mit UC-66; L-02 konkretisiert G-26 bis G-28 und SC-31 innerhalb bestehender Lernfälle. Die vier L-Kennungen bezeichnen die bestätigten Auftragspunkte, keine neuen FE-Kennungen. Die 89 bestehenden FE bleiben erhalten, FE-56 offen. [F2](F2-anwendungsfaelle.md), [Prüfnachweis](E3-pruefnachweis.md) und [Entwicklungszuordnungen](ENTWICKLUNGSPLAN.md) dokumentieren Abnahme und begrenzte Meilensteinfolgen; alle Fassungen bleiben zur Prüfung.
+
+### P1.10.4 Bestätigter Bewertungs- und Sicherungsrahmen (DEC-48 / DEC-49)
+
+DEC-48 priorisiert Oracle Cloud Infrastructure für die spätere Hostingbewertung, ohne endgültige Auswahl oder Betriebsfreigabe. EU-Residenz, zentraler Betrieb ohne privaten Dauer-PC, Kapazität, Speicher, Verfügbarkeit, Netz, operative Grenzen, reale Kosten und Gratislimits, Abrechnungsrisiken, Sicherheit, Lizenzen und Entwicklungsmöglichkeiten sind nachzuweisen. Erfüllt Oracle die Anforderungen nicht, werden Alternativen geprüft. Die 10 EUR brutto/Monat begrenzen nur den Vergleich; keine Ausgabe, Kontoanlage oder externer Infrastrukturtest ist freigegeben.
+
+DEC-49 konkretisiert G-45, CON-36/40/42 und SC-60/61: Verschlüsselte EU-Sicherungen müssen unabhängig vom Primäranbieter gespeichert werden, mit sicherer Schlüssel-/Zugriffsverwaltung, Schutz gegen versehentliche Löschung, Korruption und Kompromittierung sowie nachprüfbarer Portabilität und periodischen Restore-Proben. Endliche Retention bleibt mit Benutzerlöschung und Nichtwiederbelebung vereinbar. Anbieter, RPO/RTO, Frequenzen und Fristen bleiben offen; kein kostenpflichtiger Dienst wird vorausgesetzt. [ADR-0004/0005](../ARCHITECTURE_DECISIONS.md), [S2](S2-datenmigration.md) und [Entscheidungsmatrix](ENTSCHEIDUNGSMATRIX.md) trennen Vorgabe, technische Bewertung und künftigen Betriebsnachweis.

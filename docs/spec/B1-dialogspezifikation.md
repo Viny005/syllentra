@@ -2,12 +2,12 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** B1 — Dialogspezifikation\
-**Version:** 0.4\
-**Stand:** 19.10.2026\
+**Version:** 0.5\
+**Stand:** 22.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Methode:** Spezifikationsbaustein nach Johannes Siedersleben (GUI-Statik und GUI-Dynamik), nach der [methodischen Herold-B1-Referenz](https://github.com/carstenlucke/herold/blob/main/docs/spec/B1-dialogspezifikation.md), ohne Übernahme ihrer Authentifizierungs- oder Produktentscheidungen\
-**Verifizierter Quellstand:** `docs/spec/p1-p2-mobile-workspaces` in `Viny005/syllentra`, PR #1; P1 v0.6, P2 v0.7, F1 v0.3, F2 v0.2, F3 v0.2, D1 v0.2, D2 v0.2; unveränderter Ausgangsstand `459787027ab941456d61d61da040649fb87709c3`.\
-**Freigegebene fachliche Entscheidungen:** FE-01 bis FE-20 aus dem Gespräch; **FE-21** ist eine vom Projektinhaber jetzt hinzugefügte B1-Anforderung, deren Abgleich mit F2/F3/D1/D2 noch aussteht. Die fachliche Abnahme von B1 ist nicht erfolgt.
+**Historischer Quellstand der B1-Einzellieferung:** `docs/spec/p1-p2-mobile-workspaces` in `Viny005/syllentra`, PR #1; P1 v0.6, P2 v0.7, F1 v0.3, F2 v0.2, F3 v0.2, D1 v0.2, D2 v0.2; unveränderter Ausgangsstand `459787027ab941456d61d61da040649fb87709c3`.\
+**Freigegebene fachliche Entscheidungen:** FE-01 bis FE-20 aus dem Gespräch; **FE-21** ist die bestätigte Ausgabe-/Hörmodusanforderung; der aktuelle Abgleich mit F2/F3/D1/D2 steht in der [Entscheidungsmatrix](ENTSCHEIDUNGSMATRIX.md#4-fe-21--getrennte-ausgabevariante-und-abnahme). Die fachliche Abnahme von B1 ist nicht erfolgt.
 
 > **Zweck und Grenze.** Dieses Dokument bestimmt *welche* Dialoge Syllentra anbietet, *welche Informationen* der Eigentümer sieht, *welche Aktionen* er auslösen kann und *welche Reaktionen* er beobachten muss. Es spezifiziert keine Frameworks, CSS-Pixelwerte, API-Endpunkte, Authentifizierungsmethoden, konkreten TTS-Anbieter, Mobilbetriebssystem-Implementierung oder zugesicherte Verfügbarkeit fremder Dienste. Die einzelnen UC-01 bis UC-50, AF-01 bis AF-27, DM-01 bis DM-52, DT-01 bis DT-64, GP-01 bis GP-15, INV-01 bis INV-25 und CFG-01 bis CFG-17 werden nicht umnummeriert oder neu definiert. Die DLG-Kennungen sind neu und gelten zunächst nur für B1.
 
@@ -16,7 +16,7 @@
 - **FE-18:** Nach erfolgreichem Zugriff führt der Einstieg zum personalisierten **Dashboard** mit Modulen, Fristen, Lernstand, offenen Vorschlägen und KI-Schnellstart; Widgets sind geschützt und konfigurierbar.
 - **FE-19:** Auf dem Telefon gibt es eine **untere Hauptnavigation**, auf breiten Desktopansichten eine **seitliche Navigation**; Tablet und schmale Desktopfenster folgen einer bedienbaren adaptiven Variante ohne Rechte- oder Funktionsverlust.
 - **FE-20:** Der Assistent unterstützt Texteingabe und, soweit technisch und vertraglich verfügbar sowie gesondert autorisiert, Diktat und optionale echte Sprachkonversation. Kein Mikrofonzwang.
-- **FE-21:** **Antwortvorlesen und Hörmodus**: zu geeigneten Antworten existiert eine bedienbare Vorleseaktion; ein optional vom Nutzer eingeschalteter Hörmodus liest neue erlaubte Antworten automatisch. Pause, Fortsetzung, Replay und eine unterstützte Geschwindigkeitsauswahl sind möglich. Keine Mikrofonberechtigung zum bloßen Vorlesen. Keine standardmäßig laute automatische Wiedergabe, keine ungeprüfte Drittübertragung oder Kosten; nur unterstützte und erlaubte Plattform-/Anbieterfähigkeiten. Die dauerhafte Typisierung und die F2-/F3-Querbezüge müssen später ohne Umnummerierung ergänzt werden.
+- **FE-21:** **Antwortvorlesen und Hörmodus**: zu geeigneten Antworten existiert eine bedienbare Vorleseaktion; ein optional vom Nutzer eingeschalteter Hörmodus liest neue erlaubte Antworten automatisch. Pause, Fortsetzung, Replay und eine unterstützte Geschwindigkeitsauswahl sind möglich. Keine Mikrofonberechtigung zum bloßen Vorlesen. Keine standardmäßig laute automatische Wiedergabe, keine ungeprüfte Drittübertragung oder Kosten; nur unterstützte und erlaubte Plattform-/Anbieterfähigkeiten. Persönliche Parameter nutzen DM-02/DM-48/DM-49 und DT-07/DT-61; UC-20 beschreibt die separate Ausgabevariante, F3.14 deren Prüfung.
 
 Bereits verbindlich: FE-01 optionale Einführung; FE-02 bestätigungspflichtige KI-Dokumentzuordnung; FE-03 adaptive Verständnisfragen; FE-04 automatische, sichtbare und korrigierbare Kurs-/Projektchatzuteilung; FE-05 bestätigungspflichtige interne Neuplanung nach Prüfungsänderung; FE-06 selektive Semesterarchivierung; FE-07 abgestufte Hilfen mit vollständiger Lösung auf Wunsch; FE-08 ein zentral und lokal sichtbarer Vorschlag; FE-09 gemeinsames Dokumentoriginal; FE-10 autorisierte adaptive Modellwahl; FE-11 vorläufige Erinnerung; FE-12 Versionen; FE-13 löschbare Erinnerungshistorie; FE-14 datensparsame KI-Statistik; FE-15 originale institutionelle Notenskala und getrennt gekennzeichnete Äquivalenz; FE-16 „Zur Neubewertung“ bei veralteten oder widersprüchlichen Einschätzungen, ohne willkürliche Löschung und ohne Sperre einer autorisierten Löschung; FE-17 nur vorhandene Statistikgranularität.
 
@@ -121,10 +121,27 @@ flowchart TB
 | DLG-48 | Verwaltung und Oberflächenkonfiguration | Integrationen und Administration | UC-48 |
 | DLG-49 | Dateneinsicht, Export und gezielte Löschung | Integrationen und Administration | UC-22, UC-49, UC-50 |
 | DLG-50 | Sprach-, Ausgabe- und Hörmodus-Einstellungen | Integrationen und Administration | UC-20, UC-46, UC-48 |
+| DLG-51 | Registrierung und E-Mail-Bestätigung | Konten / Datenkontrolle | UC-51 |
+| DLG-52 | Sitzungssperre und Wiederherstellung | Konten / Datenkontrolle | UC-52 |
+| DLG-53 | Rollenverwaltung und Administrationszugang | Konten / Datenkontrolle | UC-53 |
+| DLG-54 | Befristete Supportfreigabe | Konten / Datenkontrolle | UC-54 |
+| DLG-55 | Quotenverwaltung | Konten / Datenkontrolle | UC-55 |
+| DLG-56 | Feature-Test und Veröffentlichung | Konten / Datenkontrolle | UC-55 |
+| DLG-57 | Integrationsumfang, Synchronisation und Historie | Konten / Datenkontrolle | UC-56 |
+| DLG-58 | Quellversionsvergleich und Aktualisierungsprüfung | Konten / Datenkontrolle | UC-57 |
+| DLG-59 | Schutz und Dokumentenschlüssel | Konten / Datenkontrolle | UC-58 |
+| DLG-60 | Archiv- und Mehrfachimport | Konten / Datenkontrolle | UC-59 |
+| DLG-61 | Sicherung und Wiederherstellung | Konten / Datenkontrolle | UC-60 |
+| DLG-62 | Papierkorb und KI-Löschbestätigung | Konten / Datenkontrolle | UC-61 |
+| DLG-63 | Konto pausieren oder löschen | Konten / Datenkontrolle | UC-62 |
+| DLG-64 | Kontosperre begründen und überprüfen | Konten / Datenkontrolle | UC-63 |
+| DLG-65 | Portabilitätspaket, Importvorschau und Migrationsverlauf | Portabilität | UC-49, UC-64 |
+| DLG-66 | Erinnerungen und Benachrichtigungen | Studien- und Hinweisverwaltung | UC-65 |
+| DLG-67 | Studienvorgaben und Soll-Ist-Abgleich | Studien- und Hinweisverwaltung | UC-66 |
 
 ## B1.4 Schablone der Dialogbeschreibungen
 
-**Leseregel und Prüfstatus:** Ein F2-Bezug kann einen vollständigen Fachablauf, einen Einstieg oder eine Teilansicht abdecken. Insbesondere führt das Dashboard zu UC-09, ohne dort Noten anzuzeigen; FE-21 ergänzt bestehende Gesprächs-/Lernkontexte und wird dadurch nicht rückwirkend als bereits in F2 spezifizierte TTS-Funktion ausgegeben. Ein DLG kann als Seite, Panel oder Schritt ausgestaltet werden. Konkrete Feldanordnung, Rücksprünge, Eingabeprüfung und Wiedergabedetails dieses B1-Entwurfs stehen zur Prüfung; die bestätigten FE-18 bis FE-21 sind davon zu unterscheiden.
+**Leseregel und Prüfstatus:** Ein F2-Bezug kann einen vollständigen Fachablauf, einen Einstieg oder eine Teilansicht abdecken. Insbesondere führt das Dashboard zu UC-09, ohne dort Noten anzuzeigen; FE-21 ergänzt Gesprächs-/Lernkontexte; die heute vorhandene Ausgabevariante ist in UC-20 und F3.14 konkretisiert, ohne die frühere Einzelversion rückwirkend zu ändern. Ein DLG kann als Seite, Panel oder Schritt ausgestaltet werden. Konkrete Feldanordnung, Rücksprünge, Eingabeprüfung und Wiedergabedetails dieses B1-Entwurfs stehen zur Prüfung; die bestätigten FE-18 bis FE-21 sind davon zu unterscheiden.
 
 **Eingaben, Ausgaben und Grundbedingungen:** Die GUI-Statik unterscheidet Anzeige, Eingabe/Auswahl und deren Kombination im Bearbeitungszustand. Bestehende Werte werden nur aus dem berechtigten aktuellen Objekt übernommen; neue optionale Angaben sind leer, nicht fiktiv vorbelegt. Pflichtangaben richten sich nach D1/D2 und dem jeweiligen Fachstatus. Auslösen einer benannten Aktion bedeutet Aktivieren ihrer beschrifteten Schaltfläche oder gleichwertige Tastatur-/Hilfsmittelbedienung. Verändernde Aktionen setzen gültigen Zugriff, passende Objekt-/Geräterechte, fachlich gültige Eingaben und aktuelle geprüfte Grundlage voraus; externe Verarbeitung zusätzlich die tatsächlich erlaubte Verbindung und den Kostenrahmen.
 
@@ -228,6 +245,10 @@ Jeder Dialog hat eine **fachliche Zielbeschreibung**, **Einstieg**, **GUI Statik
 
 **Abnahmebeispiel:** Dashboard zeigt Prüfung in drei Tagen, aber nicht die Note aus einer anderen Hochschule.
 
+**Dialogvariante DEC-V1-24/25:** Dashboard nur aus erlaubter eigener aktueller Datenbasis, Schätzungen/Quellen/Unsicherheit erkennbar, keine Einzelnote in Widgets. Freiwillige Wochenzielwahl ist kein Zwang oder automatischer Lernstart; Ausblendung motivierender Elemente bleibt möglich.
+
+[Daten-/Funktionsbezüge und Soll-Abnahme](ENTSCHEIDUNGSMATRIX.md).
+
 #### DLG-04 — Globale Suche und Navigationssprung
 
 **Ziel und Einstieg:** Suche aus geschützter App-Navigation.
@@ -288,6 +309,10 @@ Jeder Dialog hat eine **fachliche Zielbeschreibung**, **Einstieg**, **GUI Statik
 **Schutz- und Freigaberegeln:** Keine implizit expandierten Noten. Persönliche Profiländerung ist nicht automatisch administrativer Branding-Parameter.
 
 **Abnahmebeispiel:** Nach Profilaufruf bleiben die Leistungen hinter dem geschlossenen Eintrag „Noten“.
+
+**Dialogvariante DEC-V1-06:** Verwendete zulässige Lernpräferenzen und als solche markierte Annahmen einsehen, korrigieren, begrenzen/zurücksetzen. Nutzerangabe, KI-Schätzung und belegte Leistung getrennt; Profilreset löscht keine Note oder unbekannten fremden Inhalt.
+
+[Daten-/Funktionsbezüge und Soll-Abnahme](ENTSCHEIDUNGSMATRIX.md).
 
 #### DLG-06 — Noten — Institutionen
 
@@ -528,6 +553,10 @@ Jeder Dialog hat eine **fachliche Zielbeschreibung**, **Einstieg**, **GUI Statik
 
 **Abnahmebeispiel:** Eine verschachtelte Themenzuordnung zu ihrem eigenen Kind wird abgewiesen.
 
+**Dialogvariante DEC-V1-02/09:** Zwischen zugänglicher Themenliste und einfacher Wissenskarte wechseln, eigenen Knoten auswählen, belegte Beziehung samt Grund/Unsicherheit öffnen und zur zulässigen Quelle/Lernzielansicht springen. Keine Kartenpflicht, keine nur grafisch erreichbare Funktion, keine fremden Daten oder erfundenen Beziehungen.
+
+[Daten-/Funktionsbezüge und Soll-Abnahme](ENTSCHEIDUNGSMATRIX.md).
+
 #### DLG-14 — Prüfungen und Nachweise
 
 **Ziel und Einstieg:** DLG-12 oder DLG-33.
@@ -765,6 +794,10 @@ Jeder Dialog hat eine **fachliche Zielbeschreibung**, **Einstieg**, **GUI Statik
 
 **Abnahmebeispiel:** Ein nicht lesbares PDF-Kapitel wird als Lücke gekennzeichnet, nicht als verifiziert zitiert.
 
+**Dialogvariante DEC-V1-03:** Zur belegten Originalfassung und PDF-Seite bzw. Audio-/Videozeit springen; fehlender Anker führt zu Quelle/Abschnitt oder kenntlicher Lücke, nicht zu erfundener Präzision.
+
+[Daten-/Funktionsbezüge und Soll-Abnahme](ENTSCHEIDUNGSMATRIX.md).
+
 ### B1.5.6 Gespräche und Audio
 
 #### DLG-22 — Allgemeiner KI-Chat
@@ -927,6 +960,8 @@ Jeder Dialog hat eine **fachliche Zielbeschreibung**, **Einstieg**, **GUI Statik
 
 **Abnahmebeispiel:** Bei verweigertem Mikrofon kann der Nutzer mit zulässiger verfügbarer Sprachausgabe eine Antwort anhören, pausieren, fortsetzen, neu starten und ein tatsächlich unterstütztes Tempo wählen. Ohne solche Fähigkeit erscheint ein verständlicher Hinweis; Text bleibt lesbar. Stoppen oder Geräte-/Sitzungsverlust erlaubt keinen automatischen Neustart auf einem anderen Gerät.
 
+**FE-21-Nachweis und Datenanschluss:** UC-20-Ausgabevariante, F3.14, DM-25/DM-26 und temporärer Wiedergabestand; persönliche Präferenzen DM-02/DM-48/DM-49 mit DT-07/DT-61. Pause, Fortsetzung, Replay und unterstütztes Tempo bleiben getrennt von Eingabe-/Mikrofonsteuerung. Bei Medienstartfehler Status anzeigen und Text erhalten; keine neue Anbieter- oder Kostenfreigabe aus einem Play-Klick ableiten. Hörmodus ausdrücklich an/aus, Standard aus; neue Antworten nur unter aktuellen Rechten.
+
 ### B1.5.7 Lernen und Prüfungen
 
 #### DLG-27 — Tutor — individuelle Lerneinheit
@@ -961,6 +996,10 @@ Jeder Dialog hat eine **fachliche Zielbeschreibung**, **Einstieg**, **GUI Statik
 **Abnahmebeispiel:** Nutzer verlangt praktisches Beispiel und hört die Erklärung statt sie zu lesen.
 
 **Ergänzung L-02/L-08:** „Ablenkungsarm lernen“ freiwillig einschalten, jederzeit sichtbar beenden; Minimalnavigation, optionale Zeitbegrenzung, reduzierte Bewegung und abschaltbare Motivation. Nicht dringende Hinweise zurückstellen, notwendige geschützte Prioritäts-/Sicherheitshinweise weiter erreichbar. Entwürfe/Antworten/Lernfortschritte bei Moduswechsel erhalten, Zeitablauf erzeugt keine Antwortpflicht. Lernheftautomatik separat ausdrücklich aktivieren/deaktivieren, nie durch Fokuswahl oder Lerneinheitsstart. Kein Mikrofon-/Anbietereingriff allein durch diesen Darstellungsmodus.
+
+**Dialogvariante DEC-V1-04/05/08/18/19:** Übung bewusst starten oder Empfehlung offenlassen; alternative Erklärung wählen, freiwilliges Sitzungsfeedback abgeben/überspringen/korrigieren, diskrete Hilfe oder Pause ablehnen/deaktivieren. Kein erzwungener Antwort-/Sitzungsabbruch und keine Diagnose. Entwürfe und Fortschritt erhalten.
+
+[Daten-/Funktionsbezüge und Soll-Abnahme](ENTSCHEIDUNGSMATRIX.md).
 
 #### DLG-28 — Adaptive Übung und Antwortbewertung
 
@@ -1050,6 +1089,10 @@ Jeder Dialog hat eine **fachliche Zielbeschreibung**, **Einstieg**, **GUI Statik
 
 **Abnahmebeispiel:** Hilfe bei Frage 3 reduziert deren Eigenständigkeitsnachweis, nicht die amtlichen ECTS.
 
+**Dialogvariante DEC-V1-22/23:** Freiwillig Training oder Probeprüfung mit sichtbaren Kriterien wählen; Start ausdrücklich, genutzte Hilfen und Moduswechsel im Ergebnis sichtbar. Kein Start durch Restore/Planung und keine offizielle Prüfungsanerkennung.
+
+[Daten-/Funktionsbezüge und Soll-Abnahme](ENTSCHEIDUNGSMATRIX.md).
+
 #### DLG-31 — Lernfortschritt und Kompetenzübersicht
 
 **Ziel und Einstieg:** Lerneinheit, Dashboard oder Profil.
@@ -1082,6 +1125,10 @@ Jeder Dialog hat eine **fachliche Zielbeschreibung**, **Einstieg**, **GUI Statik
 
 **Ergänzung L-02/L-08:** Vier beschriftete, nicht nur farblich getrennte Aussagen: bearbeitet, Verständnis überprüft, Wissensstand geschätzt, Kompetenz nachgewiesen, jeweils mit Beleg/Unsicherheit/Zeit. Gelesenes ist nicht beherrscht. Ablenkungsarmer Modus ist jederzeit ohne Fortschrittsverlust verlassbar; Tastatur/Screenreader und Bewegungsreduktion beachten. Keine Ranglistenpflicht, Serienzwänge oder künstlicher Zeitdruck, Motivationsanzeige deaktivierbar.
 
+**Dialogvariante DEC-V1-07/17/21:** Auf Wunsch Sitzungsbilanz mit tatsächlichen Aufgaben/Antworten/Hilfen/Quellen und offenen Punkten öffnen. Beobachtete Zeit samt Lücken getrennt von geschätzter Zeit, keine automatische sichere Kompetenz oder amtliche Note. Bilanz überspringbar; keine neue Analyse allein durch Ansicht.
+
+[Daten-/Funktionsbezüge und Soll-Abnahme](ENTSCHEIDUNGSMATRIX.md).
+
 #### DLG-32 — Prüfungsvorbereitungsplan
 
 **Ziel und Einstieg:** Prüfungsdetail, Dashboard.
@@ -1112,6 +1159,10 @@ Jeder Dialog hat eine **fachliche Zielbeschreibung**, **Einstieg**, **GUI Statik
 **Abnahmebeispiel:** Planänderung bleibt in „Zu prüfen“, bis sie als aktuelle Fassung bestätigt wird.
 
 **Ergänzung L-08:** Pädagogische Reihenfolge DM-75 und gebuchte Kalendertermine DM-35 deutlich getrennt anzeigen. Automatik nur ausdrücklich persönlich aktivieren, einzelne Gründe/Belegbasis und Änderungsverlauf DM-76 öffnen, deaktivieren und „Diese Reihenfolgeänderung zurücknehmen“ konfliktgeprüft auslösen. Bei konkurrierender manueller Änderung neue aktuelle Vorschau statt pauschalem Rücksetzen; jüngere Lernfortschritte und bestätigte Termine bleiben erhalten. Terminwirkung weiterhin nur über DLG-37/UC-35. Fehlende Evidenz/abgelaufene Beleggrundlage verständlich als unsicher darstellen.
+
+**Dialogvariante DEC-V1-14/15/16/25:** Manuelle/aktivierte automatische/hybride pädagogische Priorität anzeigen, Zeitmangel und Fixierungen erklären. Wochenziel annehmen, bearbeiten, ablehnen oder aufschieben; keine Pflicht, kein Kalendertermin durch Zielwahl. Kalenderübernahme separat DLG-37, Reihenfolge-Undo schützt jüngere Evidenz.
+
+[Daten-/Funktionsbezüge und Soll-Abnahme](ENTSCHEIDUNGSMATRIX.md).
 
 ### B1.5.8 Kalender und Vorschläge
 
@@ -1655,6 +1706,8 @@ Jeder Dialog hat eine **fachliche Zielbeschreibung**, **Einstieg**, **GUI Statik
 
 **Abnahmebeispiel:** Mit verweigertem Mikrofon bleibt Antwortvorlesen möglich, während Diktat deaktiviert ist.
 
+**Aktuelle Typisierung FE-21:** DT-07 und DT-61 mit DM-02/DM-48/DM-49 ersetzen fehlende persönliche Parameterbezüge. Verfügbare Stimme/Tempo anzeigen, nicht vorhandene Optionen erklären; tatsächlicher Wiedergabe-/Fehlerstand bleibt bei der Ausgabe DLG-26. Eine gespeicherte Präferenz beweist weder OS-Fähigkeit noch Mikrofon-/Anbieterrecht. [FE-21-Abnahmen](ENTSCHEIDUNGSMATRIX.md#4-fe-21--getrennte-ausgabevariante-und-abnahme).
+
 ## B1.6 Querschnittliche Dialogmuster
 
 ### B1.6.1 Einheitliche Rückmeldung
@@ -1762,7 +1815,11 @@ Noten und andere sensible Inhalte dürfen nicht über TTS, automatisch erzeugte 
 
 ## B1.8 Nachvollziehbarkeit: F2, F3, D1, D2 und Entscheidungen
 
-### B1.8.1 Vollständige Abdeckung UC-01 bis UC-50
+<a id="b181-vollständige-abdeckung-uc-01-bis-uc-50"></a>
+
+### B1.8.1 Ausgangsmatrix UC-01 bis UC-50
+
+Diese Tabelle bewahrt den ursprünglichen Bezugsumfang. Ergänzte Kennungen stehen im vollständigen Katalog und den jeweiligen Nachträgen; die [aktuelle Entscheidungsmatrix](ENTSCHEIDUNGSMATRIX.md) ergänzt die 25 DEC-V1. Kein alter Eintrag entfällt.
 
 | Anwendungsfall | Zugehörige B1-Dialoge |
 |---|---|
@@ -1926,9 +1983,9 @@ Die DM-/DT-Angaben in jeder GUI-Statik verweisen auf die vollständigen Kataloge
 
 ## B1.9 Offene Punkte, keine stillschweigende Freigabe
 
-1. **B1 zur Prüfung:** 50 Dialogkennungen sind beschreibende B1-Entwurfskandidaten, nicht 50 fertige implementierte Screens. Einzelne können später mit Begründung als Schritte, Panels oder modale Dialoge zusammengeführt werden; UC-Verfolgbarkeit muss bestehen bleiben.
-2. **FE-21:** Nutzerwunsch bestätigt, aber text-to-speech-spezifische Ergänzungen zu F2/F3/D1/D2 sowie messbare Qualitätsziele und Verfügbarkeitskriterien sind noch abzustimmen. Keine Änderung älterer Dokumente in diesem Arbeitsauftrag.
-3. **Notenbezug:** D2 erlaubt Notenansicht nach Institution; D1/F2 brauchen die explizite, eindeutige Beziehung für Studienleistungen ohne Modul-/Prüfungsbezug; B1 simuliert keine bereits modellierte Relation.
+1. **B1 zur Prüfung:** 67 Dialogkennungen sind beschreibende B1-Entwurfskandidaten, keine fertigen implementierten Screens. Einzelne können später mit Begründung als Schritte, Panels oder modale Dialoge zusammengeführt werden; UC-Verfolgbarkeit muss bestehen bleiben.
+2. **FE-21:** Nutzerwunsch bestätigt und jetzt in F2/F3/D1/D2 angeschlossen. Messbare Sprachqualität, Plattform-/Hintergrundfähigkeit und technische Anbieterrechte bleiben offen; keine TTS-Implementierung oder Produktabnahme.
+3. **Notenbezug:** D1 besitzt den optionalen direkten DM-12→DM-04-Bezug; D2/B1 schützen die institutionsbezogene Notenansicht. Unbekannte Institution bleibt ungeklärt, keine neue amtliche Zuordnung durch B1.
 4. **GitHub V1:** öffentliche Profil- und Repoanalyse ist im Umfang von FE-43 fachlich bestätigt; technische API-/Nutzungsprüfung bleibt Voraussetzung tatsächlicher Verfügbarkeit. Keine privaten Repositories, keine Schreibrechte, keine unbewiesene Besitz- oder Kompetenzbehauptung.
 5. **Geräte und Audio:** ob Vorlesen im Hintergrund, bei gesperrtem Bildschirm, offline oder bei bestimmten Stimmen möglich ist, hängt von der erlaubten und tatsächlich gewählten Plattform-/Anbieterfähigkeit ab; kein unbedingtes Versprechen. Anbieterabhängige Kosten und Sprachqualität sind nicht durch die UI geklärt.
 6. **V1-Priorisierung:** Für die erste Auslieferung dürfen nach gesonderter Priorisierung einzelne Dialoge reduziert werden, solange kein als V1 verbindlich bestätigter UC verschwindet. Nicht unterstützte Optionen müssen als solche klar sichtbar sein; ein nicht implementierter Dialog darf nicht als funktionsfähig bezeichnet werden.

@@ -2,8 +2,8 @@
 
 **Projekt:** Syllentra AI\
 **Baustein:** S2 — Datenmigration (fachliche Soll-Spezifikation)\
-**Version:** 0.2\
-**Stand:** 19.10.2026\
+**Version:** 0.3\
+**Stand:** 22.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Bezugsstand:** `Viny005/syllentra`, PR #1, Branch `docs/spec/p1-p2-mobile-workspaces`, verifizierter HEAD `723af7fa1692f8dbaf888b694fa63806d7d5fc5f` (vor Erstellung dieses Entwurfs).\
 **Methodik:** Fachbaustein S2 gemäß Siedersleben. Gelesene methodische Referenz: [Herold-Bausteinübersicht](https://github.com/carstenlucke/herold/blob/main/docs/spec/SIEDERSLEBEN.md), insbesondere „Schnittstellen zu Alt- und Nachbarsystemen“, und [Herold-README](https://github.com/carstenlucke/herold/blob/main/docs/spec/README.md), Abschnitt S2, im Git-Stand `fce50b47ae646a70bf4d796026dcd1a99d3ae3c2`. Herold erklärt S2 wegen fehlender Altdaten für nicht anwendbar und enthält keine eigene S2-Datei. Daher wird keine konkrete Herold-S2-Vertragsvorlage behauptet und Herolds Nichtanwendbarkeit nicht auf Syllentra übertragen. S1 beschreibt externe Nachbarn, S2 die Übernahme/Umwandlung eigener Daten und Bestände, S3 den sicheren Betriebsstart.\
@@ -292,7 +292,7 @@ Ein identischer Dateiname oder eine gleichartige Übungsfrage genügt nicht für
 
 ## S2.12 Verhalten von Lernheft, Lernprofil und neuer V1-Pädagogik
 
-Die nach S1 bestätigten, bisher **noch nicht vollständig im Repository harmonisierten** `DEC-V1-01` bis `DEC-V1-25` werden nicht als schon implementiert behandelt. S2 unterstützt ihre künftige Datenportabilität: einfache Wissenskarte, zitierfähige PDF-/Audioquellen, persönliche Lernpräferenzen, Kompetenzhistorie, fächerübergreifende Beziehungen, Wiederholungsplanung, automatische und manuelle Aufgaben/Sitzungen, Pausenhinweise, Fokusmodus, Lernbilanzen, Probeprüfungen, Dashboards und Wochenziele.
+Die nach S1 bestätigten `DEC-V1-01` bis `DEC-V1-25` waren am historischen S2-Ausgangsstand noch nicht vollständig harmonisiert. Die Konsolidierung vom 22.10.2026 ist jetzt in der [Entscheidungsmatrix](ENTSCHEIDUNGSMATRIX.md) mit Fachvarianten, Daten und Soll-Abnahmen nachgewiesen; keine dieser Vorgaben ist damit implementiert oder produktgetestet. S2 unterstützt ihre künftige Datenportabilität: einfache Wissenskarte, zitierfähige PDF-/Audioquellen, persönliche Lernpräferenzen, Kompetenzhistorie, fächerübergreifende Beziehungen, Wiederholungsplanung, automatische und manuelle Aufgaben/Sitzungen, Pausenhinweise, Fokusmodus, Lernbilanzen, Probeprüfungen, Dashboards und Wochenziele.
 
 **Bewahrung bei Restore:**
 - Eine **manuell terminierte Sitzung** behält Datum/Zeit und manuelle Herkunft; ein älteres Paket darf sie nicht unbemerkt verschieben. Jeder Vorschlag ist vor Wirkung konkret freizugeben.
@@ -303,7 +303,7 @@ Die nach S1 bestätigten, bisher **noch nicht vollständig im Repository harmoni
 
 ### S2.12.1 Vollständiger Abgleich des ergänzenden V1-Kontexts
 
-Die folgenden DEC-V1-Schlüssel sind ausschließlich die temporären Auditbezüge der dritten Anlage. Sie werden nicht in FE umnummeriert. Am Ausgangs-HEAD ist keine separate vollständige Post-S1-Harmonisierung nachgewiesen. Die Tabelle spezifiziert daher nur, wie S2 vorhandene kompatible Daten bewahrt und fehlende Inhalte/Adapter ehrlich ausweist. Sie führt weder neue Lernalgorithmen noch alle zugehörigen UI-/Datenfelder in den anderen Bausteinen ein.
+Die folgenden DEC-V1-Schlüssel sind ausschließlich die temporären Auditbezüge der dritten Anlage. Sie werden nicht in FE umnummeriert. Am damaligen S2-Ausgangs-HEAD war keine separate vollständige Post-S1-Harmonisierung nachgewiesen. Diese S2-Tabelle bleibt auf Bewahrung kompatibler Daten und ehrliche Lückenhinweise beschränkt; die heutigen Fach-/Dialog-/Datenanschlüsse und Abnahmen stehen in der [Entscheidungsmatrix](ENTSCHEIDUNGSMATRIX.md). Keine technische Implementierung oder neue Lernformel wird behauptet.
 
 | Auditbezug | Deutscher Fachkontext | S2-Grenze / Bewahrung |
 |---|---|---|
@@ -493,3 +493,9 @@ Vollständig gelesen wurden `PROMPT_CODEX_SYLLENTRA_S2_MIGRATION_COMPLETE_2026-1
 ### S2.18.3 Verweise und Übergabe
 
 [Projektvision](../PROJECT_VISION.md), „Design principles“, [Anforderungen](../REQUIREMENTS.md), Abschnitte 1/3/4, [Architekturentscheidungen](../ARCHITECTURE_DECISIONS.md), „Current position“, und [Roadmap](../ROADMAP.md), Phasen 2/3/5, begründen Datenhoheit, nachvollziehbare Verarbeitung und noch ausstehende Implementierungsvalidierung. Der S2-Umfang ist im aktuellen [Index](README.md) verzeichnet; tatsächliche Änderungen und Dokumentprüfungen stehen in [E3](E3-pruefnachweis.md). S3 bleibt geplant für Bootstrap, Betriebsrollen und konkrete Inbetriebnahme; technische Architektur bleibt separat.
+
+## S2.19 Unabhängige Sicherung nach DEC-49
+
+DEC-49 konkretisiert MIG-15/MIG-16/MIG-17/MIG-22/MIG-23 und UC-60/BAT-23, ohne die 36 bestehenden MIG-Definitionen oder 40 AT-S2-Fälle umzuschreiben. Verschlüsselte Sicherungen liegen in der EU bei einem vom primären Hostinganbieter unabhängigen Anbieter; eine zweite Primäranbieterregion/-konto reicht nicht. DM-69/DT-81 führen den tatsächlichen Unabhängigkeits-, Integritäts- und Restoreprüfstand, DM-70 den Wiederherstellungsvorgang. Sichere Schlüsselverwaltung und getrennte begrenzte Sicherungs-/Restore-/Löschrechte schützen gegen Ausfall, versehentliche Löschung, Korruption und Kompromittierung. Kein Admin erhält dadurch private Klartextschlüssel.
+
+Periodische Restore-Proben weisen Portabilität, Integrität, Kontentrennung und Nichtwiederbelebung unter heutigem Lösch-/Widerrufsstand nach. Retention, Marker, Schlüssel und rechtliche Restpflichten müssen zusammenpassen. O-S2-02/03/06/08/11/12 bleiben technische Nachweispflichten; RPO/RTO, Frequenz, Testintervalle und Retention werden nicht erfunden. Kein Backupanbieter oder kostenpflichtiger Dienst wird festgelegt. DEC-48 priorisiert Oracle nur als Hostingbewertungskandidaten; bei späterer Oracle-Auswahl liegt die unabhängige Sicherung außerhalb von Oracle. [ADR-0004/0005](../ARCHITECTURE_DECISIONS.md) und die [Matrix](ENTSCHEIDUNGSMATRIX.md) trennen bestätigte Ziele von offenen Verfahren; keine externe Probe oder S3-Erstellung in dieser Lieferung.

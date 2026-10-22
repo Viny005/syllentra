@@ -2,8 +2,8 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** F1 — Geschäftsprozesse\
-**Version:** 0.5\
-**Stand:** 19.10.2026\
+**Version:** 0.6\
+**Stand:** 22.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Spezifikationsmethode:** Bausteine nach Johannes Siedersleben\
 **Geltungsbereich:** Fachlicher Zielumfang der ersten Produktversion (V1), auf Grundlage von P1 Version 0.8 und P2 Version 0.9
@@ -650,3 +650,9 @@ GP-15 und [S2](S2-datenmigration.md) verbinden Datenkontrolle mit Wiederverwendb
 UC-60 bleibt für eigene Sicherung/Restore zuständig; UC-49 für Export. Die operative Ausführung von Schema-/Betriebswechseln ist ein ausdrücklich autorisierter Betriebsprozess nach S2.10 und später S3, keine von GP-14 automatisch erlaubte einfache Konfigurationsänderung und keine Inhaltsfreigabe an Administratoren. GP-01 bis GP-15 behalten ihre Identität.
 
 **Abnahmebeispiel:** Ein Nutzer exportiert Kurs A. Bei späterem Reimport bleibt eine inzwischen manuell verschobene Sitzung erhalten, bis genau eine aktuelle abweichende Fassung ausdrücklich bestätigt wird; jüngere Lernleistungen und endgültige Löschungen werden niemals durch den alten Paketstand zurückgesetzt.
+
+## F1.13 Konsolidierte DEC-V1-Varianten ohne neue Prozesse
+
+Die 25 bestätigten DEC-V1 werden in der [Matrix](ENTSCHEIDUNGSMATRIX.md) einzeln verfolgt. GP-02/03 verbinden die zugängliche Themenliste mit einer einfachen optionalen Wissenskarte und belegten Quellenpassagen. GP-04/05 tragen freiwillig gestartete Übungen/Probeprüfungen, adaptive Erklärungsalternativen, freiwillige Sitzungsrückmeldung, diskrete Hilfe/Pausenangebote und optionale Bilanz. GP-01/11 halten ein einsehbares korrigierbares Lernprofil sowie belegabhängige aktuelle Einschätzungen; keine feste Lernstil- oder Gesundheitsklassifikation. GP-06 umfasst manuelle/automatische/hybride pädagogische Priorität und freiwillige Wochenziele unter erhaltenem Schutz manueller Termine. GP-15 wahrt die Daten-/Lösch-/Restoregrenzen einschließlich DEC-49. Das sind Varianten der 15 bestehenden Prozesse, keine neue Produktentscheidung, keine neuen GP/UC und keine implizite Freigabe externer Datenverarbeitung.
+
+Alle freiwilligen Angebote sind ohne erfundene negative Bewertung ablehnbar; fehlende Rückmeldung bleibt unbekannt. Reine Ansichten/Bilanzen/Quellenzugänge starten keinen neuen KI-Auftrag oder Kalenderlauf. Konkrete Algorithmen, Impulsschwellen und Wirksamkeitsnachweise bleiben offen; kein Gesundheitsurteil oder Erfolg allein aus gelesener Zeit.

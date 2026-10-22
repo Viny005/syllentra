@@ -1,8 +1,8 @@
 # S1 — Nachbarsysteme und fachliche Schnittstellenverträge
 
 **Projekt:** Syllentra AI\
-**Version:** 0.3\
-**Stand:** 19.10.2026\
+**Version:** 0.4\
+**Stand:** 22.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Ausgangsstand:** `ace1d80e80245379beed02296c3c4dd184c8dd70` auf `docs/spec/p1-p2-mobile-workspaces`, bestehende [PR #1](https://github.com/Viny005/syllentra/pull/1).
 
@@ -463,3 +463,11 @@ L-04/UC-65 verändert keine NB-Kennung: In-App-Regeln/Hinweise/Verlauf sind inte
 **Zusätzlicher Vertragsbezug NB-09/NB-05:** DM-77-Regelfassung, aktuelle Ereignisrevision, tatsächliches Geräte-/Kanalrecht, Benachrichtigungszone und konfigurierbare Ruhezeit initial 22:00–08:00 vor jedem Zustellversuch prüfen. Unbestätigte Terminänderung verändert keine Erinnerungsfristen. Keine private Note/Lerninformation im ungeschützten Vorschautext; unbekannte Auslieferung/Lesenachweise in DM-78 nicht erfinden. Hinweis bleibt intern unabhängig vom Pushrecht. Kein automatischer E-Mail-Ersatz, kein Retry nach Widerruf/Hinweislöschung, keine doppelte fachliche Absicht durch wiederholte Jobs. Dringlichkeit oder Fokusmodus erlaubt keinen Bruch der bestehenden Schutz-/Ruhezeitregeln.
 
 L-09/UC-66 kann ohne NB-03/NB-04-Konnektor auf manuell bereitgestellten Unterlagen arbeiten; Quelle, persönliche Geltung und Nutzerprüfung bleiben getrennt. L-08-Reihenfolgeautomatik und L-02-Darstellungsmodus sind interne Vorgänge und erteilen weder Dritt-KI-, Mikrofon- noch Kalenderrechte. FE-56 bleibt ausdrücklich offen. [F2](F2-anwendungsfaelle.md), [D1](D1-datenmodell.md) und [B2](B2-batch.md) konkretisieren Wirkung/Nachweise; alle bestehenden S1-Verträge und die 89-FE-Matrix bleiben erhalten.
+
+## S1.21 Anschluss von DEC-48 und DEC-49
+
+Oracle Cloud ist ausschließlich der vorrangige spätere Bewertungskandidat gemäß [ADR-0004](../ARCHITECTURE_DECISIONS.md#adr-0004--vorrangige-hostingbewertung-von-oracle-cloud-dec-48), keine bereits ausgewählte/verbundene NB-Integration. Der interne Betrieb und die Sicherungsverantwortung bleiben Syllentra zugeordnet. DEC-49 fordert unabhängig vom Primäranbieter gespeicherte verschlüsselte EU-Sicherungen; dies ist kein NB-10-Schreibkonnektor und erteilt keine neuen Nutzer-/Drittrechte. Spätere Infrastrukturbindungen folgen [ADR-0005](../ARCHITECTURE_DECISIONS.md#adr-0005--anbieterunabhängige-verschlüsselte-sicherung-dec-49) und S3. Die zwölf NB-Verträge und 89 FE-Zeilen bleiben unverändert. O-S1-02 ist durch die Bewertungspriorität präzisiert, die technische Auswahl bleibt offen; O-S1-07/10/12/13 und S2 behalten ihre Schutz-/Nachweisgrenzen.
+
+## S1.22 FE-21 — Getrennte Sprachausgabe ohne Aufnahme
+
+Die bestehenden NB-01-/NB-08-Operationen zur Sprachausgabe werden durch UC-20-Ausgabevariante, F3.14, DLG-26/DLG-50 und D1/D2 angeschlossen. Nur gewählter zulässiger Antwortstand, erlaubte Sprache/Stimme/Geschwindigkeit, tatsächliche Fähigkeit und aktuelle Anbieter-/Kostenrechte bilden die Eingabe. Pause, Fortsetzung und Replay steuert der Client im verfügbaren Umfang; ein ausdrücklich eingeschalteter Hörmodus liest nur neue zulässige Antworten. Kein Mikrofonrecht zum Hören, kein automatischer Drittanbieterwechsel und kein periodischer TTS-Job. Vorübergehende Audio-/Wiedergabedaten erben Quellschutz und Löschregeln. Verweigerter Medienstart oder fehlende Stimme ist ein sichtbarer Fehler, kein erfolgreich abgespielter Beitrag; Text bleibt nutzbar. Die [Matrix](ENTSCHEIDUNGSMATRIX.md#4-fe-21--getrennte-ausgabevariante-und-abnahme) enthält überprüfbare Soll-Abnahmen, keine ausgeführten Audiotests.

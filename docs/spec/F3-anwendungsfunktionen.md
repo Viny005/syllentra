@@ -2,8 +2,8 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** F3 — Anwendungsfunktionen\
-**Version:** 0.4\
-**Stand:** 19.10.2026\
+**Version:** 0.5\
+**Stand:** 22.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Spezifikationsmethode:** Bausteine nach Johannes Siedersleben\
 **Bezugsstand:** Vier bestätigte Entscheidungen vom 19.10.2026; Ausgangs-HEAD `53ef171be4783748b5c7e3a84bb0cc363d5b4194`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1; aktuelle Fassungen im [Index](README.md).\
@@ -59,6 +59,16 @@ Die 27 Funktionen `AF-01` bis `AF-27` sind zunächst **fachliche Entwurfskennung
 | AF-25 | Konfiguration regelkonform prüfen | Abhängigkeiten, Grenzen, Vorschau und Wiederherstellung | UC-45, UC-46, UC-47, UC-48 |
 | AF-26 | Export- und Löschfolgen ermitteln | Datenarten, Abhängigkeiten, Grenzen und Nachweisstatus | UC-14, UC-22, UC-49, UC-50 |
 | AF-27 | Geräteübergreifende Änderungen abgleichen | Versionen, Berechtigungen und Konfliktauflösung | UC-04, UC-05, UC-19, UC-21, UC-38, UC-48 |
+| AF-28 | Berechtigungsschnittmenge und Supportumfang bestimmen | Aktuelle Rechte und Supportfreigaben schneiden | UC-51..UC-58 |
+| AF-29 | Quotenwirkung und Neuaufnahme beurteilen | Quoten und erlaubte Neuaufnahme vergleichen | UC-55, UC-59 |
+| AF-30 | Funktionssichtbarkeit und Veröffentlichungsreife prüfen | Feature-, Test- und Releasezustand bewerten | UC-55 |
+| AF-31 | Quellversionsunterschiede und Ableitungsbedarf bestimmen | Quellrevision und betroffene Ableitungen vergleichen | UC-57 |
+| AF-32 | Schutzvererbung und Analyseumfang bestimmen | Schutzklasse und konkreten Analyseumfang prüfen | UC-58 |
+| AF-33 | Sichere Archivaufnahme fachlich qualifizieren | Datei-/Archivgrenzen und Herkunft prüfen | UC-59 |
+| AF-34 | Wiederherstellungsmenge gegen Löschmarkierungen abgleichen | Restoreumfang gegen aktuelle Löschkontrolle prüfen | UC-60, UC-61 |
+| AF-35 | Integrationswiederaufnahme und Historie qualifizieren | Aktuelle Verbindung, Wiederaufnahme und Historie qualifizieren | UC-56 |
+| AF-36 | Portabilitätspaket und Importdifferenzen prüfen | Paketprofil und versionierte Importdifferenz prüfen | UC-49, UC-64 |
+| AF-37 | Studienvorgaben auf Geltung und Abdeckung prüfen | Persönliche Regelgeltung und Soll-Ist-Abdeckung prüfen | UC-66 |
 
 ## F3.3 Fachliche Funktionsbeschreibungen
 
@@ -137,6 +147,10 @@ Die 27 Funktionen `AF-01` bis `AF-27` sind zunächst **fachliche Entwurfskennung
 
 **Verwendung:** UC-11, UC-15, UC-16, UC-23, UC-42; FE-02, FE-09; GP-03, GP-04, GP-09, GP-11.
 
+**Präzisierung DEC-V1-03:** Quellenpassagen immer an echte Originalrevision und belegten PDF-/Medienanker binden. Unbekannte Zeit/Seite nicht interpolieren; Quelle/Abschnitt oder Lücke als Rückfallweg.
+
+Bezüge und Abnahme: [Entscheidungsmatrix](ENTSCHEIDUNGSMATRIX.md).
+
 ### AF-04 — Dokumentzuordnung vorschlagen
 
 **Zweck:** Eine passende Klassifizierung vorschlagen, ohne die Entscheidung des Nutzers vorwegzunehmen (FE-02).\
@@ -185,6 +199,10 @@ Die 27 Funktionen `AF-01` bis `AF-27` sind zunächst **fachliche Entwurfskennung
 **Zusätzlicher Grenzfall:** Auch nach Entfernung des letzten Kurslinks bleibt ein bewusst dauerhaftes Original erhalten. Die gleiche Operation erneut zu prüfen darf keine anderen Beziehungen oder das Original verändern.
 
 **Verwendung:** UC-07, UC-13, UC-14, UC-21, UC-22, UC-39, UC-40, UC-50; FE-09; GP-02, GP-03, GP-09, GP-10, GP-15.
+
+**Präzisierung DEC-V1-02/09:** Für die einfache Wissenskarte bestehende eigene Themen-/Lernziel-/Quellenbezüge qualifizieren. Grund, Herkunft, Unsicherheit und Zugriffsrecht je fachlichem Bezug prüfen; kein erfundener Fachbezug oder automatischer Kompetenztransfer. Hierarchiekante und fächerübergreifende Relation nicht verwechseln.
+
+Bezüge und Abnahme: [Entscheidungsmatrix](ENTSCHEIDUNGSMATRIX.md).
 
 ### AF-06 — Vorschlagsfassung und Entscheidung abgleichen
 
@@ -286,6 +304,10 @@ Die 27 Funktionen `AF-01` bis `AF-27` sind zunächst **fachliche Entwurfskennung
 
 **Präzisierung L-08:** Regelbasierte zeitliche Wiederholung und adaptive Auswahl werden kombiniert. Lernziele/Konzepte/Themen/Kapitel, tatsächliche Antworten mit Hilfen, Schwierigkeiten, Prüfungsnähe, freie Lernzeit, abgeschlossene/verpasste Wiederholungen und Qualität/Aktualität der Evidenz sind nachvollziehbare Eingaben. Wiederholte Schwierigkeiten führen zu alternativen Erklärungen und geeigneten Übungen. Fehlende Evidenz bleibt unsicher; Versäumnis allein ist kein Wissensdefizit. Konkrete Wiederholungsformel, Gewichtungen und Wirksamkeitsnachweis bleiben zur Evaluation offen. Eine reine Reihenfolgeänderung unter aktivierter Automatik ist von einem Kalenderplan nach AF-13 getrennt; sie nutzt DM-75/DM-76 und DT-91/DT-92.
 
+**Präzisierung DEC-V1-04/05/18/19:** Freiwillige manuelle Übung und vorgeschlagene Übung unterscheiden. Alternative Erklärungen und diskrete Hilfe/Pausen nur auf vorhandener zulässiger Grundlage anbieten; keine erzwungene Sitzung, Diagnose oder erfundene Ablehnungsevidenz. Häufigkeit/Schwellen bleiben offen.
+
+Bezüge und Abnahme: [Entscheidungsmatrix](ENTSCHEIDUNGSMATRIX.md).
+
 ### AF-10 — Lernantwort begründet einschätzen
 
 **Zweck:** Antworten anhand einer vorhandenen Aufgaben- und Bewertungsgrundlage nachvollziehbar beurteilen, einschließlich Unsicherheit und Hilfegrad.\
@@ -362,6 +384,10 @@ Die 27 Funktionen `AF-01` bis `AF-27` sind zunächst **fachliche Entwurfskennung
 
 **Präzisierung L-02/L-08:** Bearbeitet, Verständnis überprüft, Wissensstand geschätzt und Kompetenz nachgewiesen getrennt führen; aus Lesen oder erledigter Wiederholung folgt keine sichere Beherrschung. Eigenständigkeit/Hilfen und zeitliche Evidenzbasis bleiben sichtbar. Undo der pädagogischen Reihenfolge verändert keine jüngeren gültigen Lernfortschritte. Ein ablenkungsarmer oder bewegungsreduzierter Modus darf weder Kategorien zusammenlegen noch zur Sicherung des Fortschritts zuerst beendet werden.
 
+**Präzisierung DEC-V1-07/17/21/22/23:** Bilanz nur aus tatsächlichen eigenen Ergebnissen/Antworten/Hilfen bilden. Beobachtete Lerndauer, Schätzung und unbekannte Zeit getrennt; keine versteckte neue Telemetrie, Erfolgsquote oder amtliche Note. Trainingshilfe ist keine selbstständige Prüfungsantwort.
+
+Bezüge und Abnahme: [Entscheidungsmatrix](ENTSCHEIDUNGSMATRIX.md).
+
 ### AF-13 — Studienplanung und Konflikte ableiten
 
 **Zweck:** Studien-, Prüfungs- und Projektarbeit als überprüfbaren Vorschlag unter Beachtung verfügbarer Zeitfenster planen.\
@@ -388,6 +414,10 @@ Die 27 Funktionen `AF-01` bis `AF-27` sind zunächst **fachliche Entwurfskennung
 **Verwendung:** UC-30, UC-32, UC-33, UC-34, UC-35, UC-37, UC-41; FE-05, FE-08; GP-02, GP-05, GP-06, GP-07, GP-09.
 
 **Präzisierung L-08:** Automatisch begründete pädagogische Priorität in DM-75 verändert ausschließlich die Reihenfolge. Manuelle Fixierungen und bereits bestätigte DM-35-Termine begrenzen jeden Kalenderplan; dessen Verschiebung/Löschung verlangt weiterhin die erforderliche aktuelle Zustimmung. Ein Konflikt erzeugt einen prüfbaren Vorschlag, keine Termineingabe durch Nebenwirkung. AF-06/UC-35/BAT-09 bleiben maßgeblich. L-04/UC-65 verwenden nur aktuell wirksame Ereignis-/Regelfassungen für Erinnerungspunkte.
+
+**Präzisierung DEC-V1-14/15/16/25:** Gewählte manuelle/automatische/hybride pädagogische Priorisierung und verfügbare Zeit berücksichtigen. Wochenziel nur vorschlagen, bewusste Annahme/Änderung/Ablehnung/Aufschub respektieren. Ziel ist kein Termin oder Lernstart; Konflikte bei Zeitmangel ausweisen, keine erfundene Machbarkeit. Kalenderänderung nur über bestehenden Bestätigungsweg.
+
+Bezüge und Abnahme: [Entscheidungsmatrix](ENTSCHEIDUNGSMATRIX.md).
 
 ### AF-14 — Quellenänderung fachlich vergleichen
 
@@ -586,6 +616,10 @@ Die 27 Funktionen `AF-01` bis `AF-27` sind zunächst **fachliche Entwurfskennung
 
 **Verwendung:** UC-17, UC-18, UC-19, UC-23, UC-24, UC-27, UC-29, UC-31, UC-43; FE-11; GP-04, GP-05, GP-09, GP-10, GP-11.
 
+**Präzisierung DEC-V1-06/08:** Freiwilliges Sitzungsfeedback bleibt manuelle Selbstaussage, automatisch daraus gewonnene Erinnerung vorläufig. Überspringen ist keine bestätigte schlechte Bewertung. Keine starren Lernstilklassen oder Gesundheitsinferenz; Erfassung/Verwendung nur im erlaubten Zweck.
+
+Bezüge und Abnahme: [Entscheidungsmatrix](ENTSCHEIDUNGSMATRIX.md).
+
 ### AF-22 — Erinnerungsänderung und -korrektur auswerten
 
 **Zweck:** Automatisch abgeleitete pädagogische Erinnerung für den Nutzer überprüfbar und korrigierbar halten; ihren Lebenszyklus von Nachrichtenverlauf und amtlichen Leistungsdaten trennen.\
@@ -610,6 +644,10 @@ Die 27 Funktionen `AF-01` bis `AF-27` sind zunächst **fachliche Entwurfskennung
 **Zusätzlicher Grenzfall:** Ein Nutzer widerruft den Verwendungszweck einer alten Lernannahme. Sie wird nicht weiter für Aufgabenwahl benutzt. Die Bestätigung einer Löschung ohne Ausführungsnachweis darf nicht als bereits entferntes externes Datum erscheinen.
 
 **Verwendung:** UC-02, UC-19, UC-21, UC-22, UC-24, UC-29, UC-31, UC-43, UC-49, UC-50; FE-09, FE-11; GP-01, GP-04, GP-05, GP-10, GP-11, GP-15.
+
+**Präzisierung DEC-V1-06:** Einsehbare Annahmen/Präferenzen korrigieren, begrenzen oder nach gewähltem Umfang zurücksetzen; keine ungewollte Löschung amtlicher Nachweise. Fehlende Quelle/gelöschter Eintrag darf nicht aus Schattenhistorie wiederkehren.
+
+Bezüge und Abnahme: [Entscheidungsmatrix](ENTSCHEIDUNGSMATRIX.md).
 
 ### AF-23 — Kompetenznachweise gewichten
 
@@ -991,7 +1029,7 @@ Diese überarbeitete Fassung enthält 27 algorithmisch begründete Anwendungsfun
 
 Zur späteren Detaillierung in D1/D2, N1/N2, S1, B1 und Architektur bleiben insbesondere offen: konkrete erlaubte Anbieteranbindungen und ihr jeweiliger Gratis-/Abo-Status; überprüfbare Qualitätskriterien und Mindestleistung; Gebühren- und Quotalimits einschließlich unbekannter Provider-Verbrauchszustände; genaue Speicher-, Export- und Aufbewahrungsformate; Löschfristen und Backupprozesse; fachliche Kardinalitäten; Synchronisationskonfliktregeln und Authentisierungsdetails. Diese offenen Punkte berechtigen **nicht**, FE-01 bis FE-11 still umzudeuten oder Ereignisse in persönlichen externen Kalendern anzulegen, zu ändern oder zu löschen.
 
-**Freigabestatus:** Zur Prüfung durch den Projektinhaber. Die Aufnahme dieser Dokumentfassung in die Spezifikationsbranche ist keine fachliche Freigabe und kein Nachweis implementierter Funktionen. Die ursprüngliche F3-Einzellieferung änderte P1/P2/F1/F2 nicht; die aktuelle autorisierte S2-Harmonisierung betrifft die in E3 ausgewiesenen Bausteine.
+**Freigabestatus:** Zur Prüfung durch den Projektinhaber. Die Aufnahme dieser Dokumentfassung in die Spezifikationsbranche ist keine fachliche Freigabe und kein Nachweis implementierter Funktionen. Die ursprüngliche F3-Einzellieferung änderte P1/P2/F1/F2 nicht; die nachfolgenden Harmonisierungslieferungen einschließlich der DEC-V1-/FE-21-Konsolidierung betreffen die jeweils in E3 ausgewiesenen Bausteine.
 
 
 ## F3.11 Ergänzte fachliche Prüf- und Auswahlfunktionen
@@ -1139,3 +1177,11 @@ Diese Funktionen beschreiben fachliche Entscheidungen, keine Kryptographie, Midd
 **Ausgabe / Grenzen:** Eigene geschützte Inhaltsableitung mit Soll/Ist/Differenz, fehlenden Nachweisen und Unsicherheiten. Die Funktion führt keine Hochschulanmeldung oder Datenkorrektur aus und benötigt keinen Konnektor oder verpflichtenden LLM-Aufruf. Bekannte strukturierte Regeln sind KI-frei vergleichbar; KI-Extraktion bleibt ein gesondert zulässiger, prüfpflichtiger Weg.
 
 **Abnahme:** Neueres Handbuch mit anderer Kohorte wird nicht automatisch gültig. Bei passender Übergangsregel kann die ältere belegte Ordnung maßgeblich sein. Fehlendes ECTS-Feld bleibt unbekannt, nicht null; Abgleich bestätigt keine amtliche Anerkennung.
+
+## F3.14 FE-21 — Fachliche Prüfung der Ausgabevariante
+
+Die FE-21-Ausgabevariante in UC-20 ist von FE-20-Spracherkennung/Live-Eingabe getrennt. Sie verwendet vorhandene Funktionen: AF-01 prüft aktuellen Zugriff auf DM-25/DM-26 und das Gerät, AF-16 bildet nur den gewählten zulässigen Antwortkontext, AF-17/AF-18 beurteilen tatsächlich verfügbare offizielle TTS-Optionen, AF-19 Kosten/Quota und AF-32 Schutzvererbung. AF-25 validiert ausschließlich unterstützte persönliche Sprach-/Ausgabepräferenzen in DT-61/DM-48. Kein neuer AF und kein fachlich fingierter TTS-Algorithmus; die technische Synthese gehört nach S1/Architektur.
+
+**Fachliches Ergebnis:** Zulässiger Ausgabetext, tatsächlich unterstützte Sprache/Stimme/Geschwindigkeit und Freigabeumfang oder nachvollziehbare Ablehnung. Laufende Wiedergabe, Pause, Fortsetzung, Replay und ein ausdrücklich aktivierter Hörmodus werden von UC-20/DLG-26 gesteuert, nicht durch periodische Analysejobs. Hören benötigt kein Mikrofonrecht, nimmt keine neue Lernleistung an und erzeugt keine dauerhafte pädagogische Erinnerung allein durch Abspielen.
+
+**Negative Abnahme:** Verbraucherabo ohne API-Recht, unbekannte TTS-Kosten, widerrufene Inhaltsfreigabe oder nicht verfügbare Stimme ergeben keine automatische andere Verbindung. Text bleibt zugänglich. Automatische Ausgabe ohne Aktivierung bleibt aus. [D1](D1-datenmodell.md), [D2](D2-datentypen.md), [B1](B1-dialogspezifikation.md), [S1](S1-nachbarsysteme.md) und die [FE-21-Matrix](ENTSCHEIDUNGSMATRIX.md#4-fe-21--getrennte-ausgabevariante-und-abnahme) führen die Nachweise.

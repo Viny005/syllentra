@@ -2,8 +2,8 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** P2 — Architekturüberblick\
-**Version:** 0.9\
-**Stand:** 19.10.2026\
+**Version:** 0.10\
+**Stand:** 22.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Spezifikationsmethode:** Bausteine nach Johannes Siedersleben\
 **Geltungsbereich:** Fachlicher Zielumfang der ersten Produktversion (V1)
@@ -500,9 +500,11 @@ Diese offenen Punkte präzisieren die spätere Umsetzung. Sie streichen keine be
 ---
 
 **Ende von P2 — Architekturüberblick.**\
-**Freigabestatus:** Zur Prüfung durch den Projektinhaber. P2 Version 0.9 und P1 Version 0.8 sind zusammen mit den aktuellen S2-Verweisen zu prüfen. Der Index zeigt den tatsächlichen Dokumentbestand; frühere Änderungsgrenzen beziehen sich auf ihre ursprünglichen Lieferungen.
+**Freigabestatus:** Zur Prüfung durch den Projektinhaber. P2 Version 0.10 und P1 Version 0.9 sind zusammen mit den aktuellen S2-Verweisen zu prüfen. Der Index zeigt den tatsächlichen Dokumentbestand; frühere Änderungsgrenzen beziehen sich auf ihre ursprünglichen Lieferungen.
 
-### P2.9.1 Abgeglichene Produktgrenzen und Informationsklassen
+<a id="p291-abgeglichene-produktgrenzen-und-informationsklassen"></a>
+
+### P2.9.4 Abgeglichene Produktgrenzen und Informationsklassen
 
 Die Entscheidungen FE-27 bis FE-89 ergänzen den Bestand; mit Ausnahme von **FE-56 (offen)** sind ihre fachlichen Vorgaben bestätigt. Die vollständige deutsche Entscheidungsmatrix und die zwölf Nachbarverträge stehen in [S1](S1-nachbarsysteme.md). Eine fachliche Entscheidung ist keine Aussage über implementierte Funktionen oder aktuell erteilte Anbieterrechte. Alle Bausteine bleiben **Zur Prüfung**. Historische Prüfstände, frühere FE-Teilmengen und alte Versionsbezüge bezeichnen ausschließlich ihre damalige Grundlage; maßgeblich ist der aktuelle Index mit [Änderungs- und Prüfnachweis](E3-pruefnachweis.md).
 
@@ -518,14 +520,24 @@ Die PWA, zentrale EU-Cloud, interne Datenhaltung, eigene KI-Verarbeitung, Admini
 
 **Folgebausteine:** [S1](S1-nachbarsysteme.md) enthält NB-Verträge und Abnahmeszenarien; [N1](N1-nichtfunktional.md) Qualitätsbedingungen, [N2](N2-querschnittskonzepte.md) Konten-, Rechte-, Schlüssel-, Audit- und Löschgrenzen. [S2](S2-datenmigration.md) beschreibt jetzt die fachlichen Migrations-/Restoreverträge, während konkrete technische Verfahren offen bleiben; S3 sichere Inbetriebnahme und Bootstrap des einzigen Super Admin. Anbieter, Protokolle, Fristen und Zahlen bleiben dokumentierte offene technische Fragen.
 
-### P2.9.2 Datenmigration innerhalb der Produktgrenze
+<a id="p292-datenmigration-innerhalb-der-produktgrenze"></a>
+
+### P2.9.5 Datenmigration innerhalb der Produktgrenze
 
 [S2](S2-datenmigration.md) unterscheidet persönlichen Export/Reimport, akademische Dateieinfuhr, Geräteabgleich, internen Backup/Restore, Schemawechsel und EU-Betriebswechsel. Paketbesitz ist kein Konto- oder Inhaltsrecht. Persönliche Pakete enthalten keine Passwörter/Hashes, OTP, MFA-/Sitzungs-/OAuth-Geheimnisse, Gerätevertrauen oder aktiven Admin-/Integrationszustände. Der neue Portabilitätslauf gehört zur internen Produktverantwortung; NB-06/NB-12 Kalender sowie NB-07 GitHub und NB-10 Fremdspeicher bleiben nur lesend. S2 erweitert weder FE-56 noch externe Schreibrechte. Die sieben fachlichen Wege sind keine technische Komponentenarchitektur.
 
-### P2.9.3 Fachgrenzen der vier bestätigten Entscheidungen
+<a id="p293-fachgrenzen-der-vier-bestätigten-entscheidungen"></a>
+
+### P2.9.6 Fachgrenzen der vier bestätigten Entscheidungen
 
 Pädagogische Reihenfolge und Wiederholungspriorität sind persönliche interne Lerninformationen (DM-75/DM-76); sie sind keine Termine DM-35 und keine Befugnis für Kalenderänderungen. L-08 erlaubt bei aktivierter persönlicher Automatik nur diese Reihenfolgeänderung. Für Kalenderübernahme, Verschiebung oder Löschung gelten konkrete Rechte und erforderliche Zustimmung weiter; externe Kalender bleiben ausnahmslos nur lesend.
 
 UC-65 bündelt Ereignis-/Kategorie-/globale Regeln DM-77, Ruhezeiten, Kanäle, Hauptgerät, Digest und geschützte Historie. Interne Hinweise DM-52 bleiben unabhängig von externem Zustellerfolg; Zustellnachweise DM-78 sind weder der Hinweisinhalt noch pädagogische Langzeiterinnerung. M5 umfasst interne Regeln/Hinweise/Verlauf, M8 die erweiterten externen Wege nach [Entwicklungszuordnungen](ENTWICKLUNGSPLAN.md); P2 behauptet keine bereits verfügbare Anbindung.
 
 UC-66 verarbeitet manuelle Hochschulunterlagen ohne Konnektorpflicht. DM-04 beschreibt die persönliche Geltungsgrundlage, DM-21/DM-23 die versionierte Quelle und DM-24 geprüfte Extraktion/Abgleich. Persönliche Bestätigung ist keine institutionelle Anerkennung. L-02 ändert den freiwilligen Darstellungsmodus, keine Konten-/Daten-/Adminrechte. Die [F2-Verträge](F2-anwendungsfaelle.md) konkretisieren alle vier Punkte; Anbieter, Architektur und Wiederholungsformel bleiben offen.
+
+### P2.9.7 Hostingbewertung und unabhängige Sicherungsverantwortung
+
+DEC-48 benennt Oracle Cloud Infrastructure ausschließlich als vorrangigen Bewertungskandidaten. Der interne Syllentra-Verantwortungsbereich für zentralen EU-Betrieb, Rechte, Synchronisation und eigene KI bleibt bestehen; dies ist keine technische Komponenten- oder endgültige Anbieterwahl. Alternativen bleiben bei unzureichender Eignung prüfbar, ein privater Dauer-PC ist weiterhin keine Betriebsbedingung.
+
+DEC-49 verlangt eine verschlüsselte EU-Sicherung unabhängig vom jeweiligen Primäranbieter, bei Oracle als Primärhost also außerhalb von Oracle. Die interne Sicherungs-/Restoreverantwortung ist keine optionale persönliche NB-10-Dateiimportverbindung. Die Auswahl eines späteren Infrastrukturpartners erweitert weder NB-10 noch andere nutzerseitige Nachbarrechte. Technische Infrastrukturverträge und sichere Betriebsabläufe sind später in ADR/S3 zu konkretisieren; kein neuer NB wird fingiert. [ADR-0004/0005](../ARCHITECTURE_DECISIONS.md), [S2](S2-datenmigration.md) und [Matrix](ENTSCHEIDUNGSMATRIX.md) führen Grenzen und Nachweise; S3 wird in dieser Mission nicht erstellt.

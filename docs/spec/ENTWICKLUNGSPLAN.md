@@ -1,8 +1,8 @@
 # Entwicklungszuordnungen — bestätigter Teilstand
 
 **Projekt:** Syllentra AI\
-**Version:** 0.1\
-**Stand:** 19.10.2026\
+**Version:** 0.2\
+**Stand:** 22.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber
 
 ## 1. Herkunft und Ausarbeitungsgrenze
@@ -35,6 +35,6 @@ M5-/M8-Zuordnung ordnet Entwicklung, ist keine Behauptung heute implementierter 
 
 ## 4. Offene Planungs-/Nachweisarbeit
 
-Gesamtmeilensteinplan samt übrigen Zuordnungen ist nicht im Repository belegt. Es werden keine Meilensteine hinzugefügt oder Reihenfolgen zwischen unbenannten Gesprächsmeilensteinen behauptet. Unterstützte Sprach-/OCR-/LLM-Fähigkeiten, Hardware, Lizenzen, Kosten, Pädagogikevaluation und Produktabnahmetests bleiben nachzuweisen. Keine Framework-/Datenbank-/Hosting-/Modellwahl. Die vollständige Integration aller 25 DEC-V1-Vorgaben ist mit diesen vier bestätigten Entscheidungen nicht abgeschlossen.
+Gesamtmeilensteinplan samt übrigen Zuordnungen ist nicht im Repository belegt. Es werden keine Meilensteine hinzugefügt oder Reihenfolgen zwischen unbenannten Gesprächsmeilensteinen behauptet. Unterstützte Sprach-/OCR-/LLM-Fähigkeiten, Hardware, Lizenzen, Kosten, Pädagogikevaluation und Produktabnahmetests bleiben nachzuweisen. Keine Framework-/Datenbank-/Hosting-/Modellwahl. Die vier L-Entscheidungen allein deckten nicht alle 25 DEC-V1 ab; deren dokumentarische Konsolidierung steht nun in der [Entscheidungsmatrix](ENTSCHEIDUNGSMATRIX.md). Dieser Teilplan wird dadurch weder zu einem Gesamtplan noch um neue Meilensteine erweitert. DEC-48/49 sind Bewertungs-/Schutzziele nach [ADR](../ARCHITECTURE_DECISIONS.md), keine autorisierten Infrastrukturtests oder Ausgaben.
 
 Verträge und Belege: [F2](F2-anwendungsfaelle.md), [F3](F3-anwendungsfunktionen.md), [D1](D1-datenmodell.md), [B2](B2-batch.md), [S1](S1-nachbarsysteme.md), [N1](N1-nichtfunktional.md), [E3](E3-pruefnachweis.md) und [Index](README.md). Alle Prüfentwürfe bleiben zur Prüfung.

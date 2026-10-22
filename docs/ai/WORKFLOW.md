@@ -1,6 +1,6 @@
 # PACE — wiederverwendbarer Arbeitsablauf
 
-**Version:** 0.1 · **Stand:** 19.10.2026 · **Status:** Zur Prüfung durch den Projektinhaber
+**Version:** 0.2 · **Stand:** 22.10.2026 · **Status:** Zur Prüfung durch den Projektinhaber
 
 PACE verbindet Prompt Engineering, Context Engineering, Spec-Driven Development, kontrollierte Ausführung und Verifikation sowie kontinuierliche Kontextpflege. Es ist eine projektspezifisch eingeführte Arbeitskonvention, kein behaupteter externer Standard. Dieser Ablauf und die beiden Vorlagen sind ohne zusätzliche Dienste, Plugins oder kostenpflichtige Werkzeuge übertragbar. Projektwerte, Kennungen und Technologieentscheidungen gehören ausschließlich in den jeweiligen [Projektkontext](PROJECT_CONTEXT.md), konkrete Aufträge in ausgefüllte Auftragsvorlagen.
 

@@ -2,8 +2,8 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** F2 — Anwendungsfälle\
-**Version:** 0.4\
-**Stand:** 19.10.2026\
+**Version:** 0.5\
+**Stand:** 22.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Spezifikationsmethode:** Bausteine nach Johannes Siedersleben\
 **Bezugsstand:** Vier bestätigte Entscheidungen vom 19.10.2026; Ausgangs-HEAD `53ef171be4783748b5c7e3a84bb0cc363d5b4194`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1; aktuelle Fassungen im [Index](README.md).\
@@ -389,6 +389,10 @@ flowchart LR
 
 **Verbindung zu L-09/UC-66:** Studienvorgaben können aus manuell bereitgestellten zulässigen Unterlagen stammen. Bestätigte Extraktion und belegte persönliche Geltung sind getrennt von amtlicher Anerkennung. Hochschule, Studiengang, Ordnung, Einschreibung/Kohorte, Inkrafttreten und Übergänge entscheiden über Anwendbarkeit; eine neuere oder hochgeladene Fassung erhält nicht automatisch Vorrang. UC-66 liefert den quellengebundenen Soll-Ist-Abgleich; dieser Vorgang überschreibt keine Leistungen oder Termine pauschal.
 
+**DEC-V1-02/09 — Einfache Wissenskarte:** Zusätzlich zur zugänglichen Themenliste kann der Nutzer vorhandene eigene Begriffe, Themen und belegte Beziehungen als einfache interaktive Karte ansehen, Knoten auswählen und zu erlaubten Materialien, Lernzielen und Quellen wechseln. Die Karte ist keine Pflichtnavigation. Fächerübergreifende Bezüge zeigen Grund, Quelle/Unsicherheit und Geltung; ein Zusammenhang beweist keinen Kompetenztransfer. Fehlende Beziehung bleibt fehlend, keine KI-erfundene Kante oder fremdes Konto. Vorhandene Hierarchie und zusätzliche fachliche Beziehung sind verschieden (DM-09/DM-10, DT-35).
+
+Nachverfolgung und Soll-Abnahme: [DEC-V1-Matrix](ENTSCHEIDUNGSMATRIX.md).
+
 ### UC-09 — Noten, ECTS und Prüfungsleistungen erfassen
 
 | Merkmal | Festlegung |
@@ -603,6 +607,10 @@ flowchart LR
 
 **Abnahmebeispiel:** Ein nicht lesbarer Abschnitt wird als fehlend ausgewiesen, statt eine unbelegte Erklärung als Dokumentinhalt zu kennzeichnen.
 
+**DEC-V1-03 — Quellenpassage:** Von einer Ableitung zur tatsächlich verfügbaren Originalfassung und belegten PDF-Seite oder Audio-/Videozeit springen. Nur belegbare Präzision anzeigen; ohne Zeitanker Quelle/Abschnitt oder kenntliche Lücke anbieten, ohne zugängliches Original keine wörtliche Verifikation vortäuschen. Quellversion und heutige Inhaltsrechte gelten auch beim Sprung (DM-21/DM-23, DT-11).
+
+Nachverfolgung und Soll-Abnahme: [DEC-V1-Matrix](ENTSCHEIDUNGSMATRIX.md).
+
 ### UC-16 — Zulässige Audio- oder Videoinhalte aufbereiten
 
 | Merkmal | Festlegung |
@@ -732,7 +740,7 @@ flowchart LR
 | **Kennung** | UC-20 |
 | **Ziel** | Eine Diskussion in einer anderen unterstützten Kommunikationsform ohne Verlust ihres verfügbaren fachlichen Zusammenhangs fortsetzen. |
 | **Zugehöriger Geschäftsprozess** | GP-04, GP-10 in [F1](F1-geschaeftsprozesse.md) |
-| **Bestätigte Entscheidung** | Keine gesonderte FE-Entscheidung; allgemeine Vorgaben aus P1/P2/F1 gelten. |
+| **Bestätigte Entscheidung** | FE-20 für Eingabe/Sprachdialog; FE-21 für die getrennte Ausgabe-/Hörmodusvariante. |
 | **Primärakteur** | Nutzer/Lernender |
 | **Unterstützende Akteure** | Syllentra; Geräteumgebung und zugelassene Sprachdienste |
 | **Auslöser** | Der Nutzer wechselt zwischen Text, Sprachnachricht oder verfügbarem Sprachdialog. |
@@ -754,6 +762,10 @@ flowchart LR
 **Schutz- und Freigabegrenzen:** Aufnahme, Übermittlung und Aufbewahrung benötigen entsprechende Rechte und Zwecke. Zusatzkosten erfordern Freigabe; das Wechseln der Kommunikationsform erweitert keine Anbieterrechte.
 
 **Abnahmebeispiel:** Nach einer Textfrage zur Ableitung wird eine Sprachantwort derselben Diskussion zugeordnet. Bei verweigerter Mikrofonberechtigung lässt sich dort ohne neue Unterhaltung weiter schreiben.
+
+**Eigenständige Ausgabevariante FE-21 — Anhören und Hörmodus:** Dies ist keine Mikrofonaufnahme oder bloße Umschaltung der Eingabeform. Der Nutzer wählt an einer zulässigen Antwort „Anhören“; Syllentra prüft aktuelle Inhalts-/Anbieter-/Kostenrechte und tatsächliche TTS-Fähigkeit, bereitet nur den erlaubten Antworttext vor und zeigt Wiedergabestand sowie Fehler. Pause, Fortsetzung, erneutes Abspielen und unterstützte Geschwindigkeitsauswahl sind bedienbar. Ein ausdrücklich eingeschalteter Hörmodus liest neue dafür zulässige Antworten automatisch; automatische Ausgabe ist standardmäßig aus, abschaltbar und erfordert kein Mikrofonrecht. Gespeicherter Text und Gesprächskontext bleiben unverändert; Audiofehler sperren keine Texteingabe. Stimme, Sprache, Offline-/Hintergrundfähigkeit sind nur tatsächlich unterstützt auswählbar, keine Gerätegarantie.
+
+**Schutz/Abnahme FE-21:** Ohne Mikrofonerlaubnis ist berechtigtes Anhören möglich; ohne eigene Aktivierung keine automatische Ausgabe. Bei verweigertem Medienstart, Widerruf, fehlender Fähigkeit oder nicht freigegebenen Kosten zeigt die App den tatsächlichen Zustand und lässt Text verfügbar, statt fremden Dienst oder Mikrofon zu aktivieren. Eine pausierte Ausgabe lässt sich fortsetzen oder erneut abspielen, soweit unterstützt; private Antworten werden nicht aus gelöschten/entzogenen Quellen wiederhergestellt. DLG-26/DLG-50, AF-01/AF-16/AF-17/AF-18/AF-19/AF-25/AF-32, DM-02/DM-25/DM-26/DM-48 und DT-07/DT-61 tragen Kontext, Präferenz und Schutz. Keine neue UC-Kennung. [Matrix](ENTSCHEIDUNGSMATRIX.md#4-fe-21--getrennte-ausgabevariante-und-abnahme).
 
 ### UC-21 — Gespräch organisieren, zuordnen und archivieren
 
@@ -850,6 +862,10 @@ flowchart LR
 **Präzisierung L-08:** Zeitliche Wiederholungsregeln werden mit Zielen/Themen/Kapiteln, tatsächlichen Antworten/Hilfen, Schwierigkeiten, Prüfungsnähe, verfügbarer Zeit, abgeschlossenen/verpassten Wiederholungen und Evidenzqualität/-aktualität verbunden. Ohne tragfähige Evidenz bleibt die Einschätzung unsicher; Versäumnis ist keine nachgewiesene Wissenslücke. Automatische pädagogische Umordnung braucht ausdrücklich aktivierte persönliche Automatik, Begründung, Verlauf und konfliktgeprüftes Undo ohne Verlust jüngerer Fortschritte. Sie erzeugt keine Kalenderwirkung. Die konkrete Formel bleibt offen.
 
 **Präzisierung L-02:** Freiwilliger ablenkungsarmer Modus, jederzeitiges Beenden und optionale Zeitbegrenzung verändern keine gespeicherten Antworten/Entwürfe/Fortschritte. Nicht dringende Unterbrechungen werden zurückgestellt; dringende Hinweise respektieren Rechte, Priorität und Vertraulichkeit. Anzeige unterscheidet bearbeitet, Verständnis überprüft, Wissensstand geschätzt und Kompetenz nachgewiesen. Tastatur/Screenreader, reduzierte Bewegung und abschaltbare Motivation sind vorgesehen; keine Ranglistenpflicht, Serienzwänge oder künstlicher Zeitdruck.
+
+**DEC-V1-04/18/19 — Freiwillige Lernimpulse:** Übungen dürfen als geeignete nächste Schritte vorgeschlagen oder bewusst manuell gestartet werden; Vorschlag ist kein Start. Bei tatsächlich erkennbarer Schwierigkeit kann diskrete Hilfe angeboten werden, ohne daraus eine Diagnose oder gesicherte Schwäche abzuleiten. Eine vorsichtige Pause kann angeboten, abgelehnt oder die Impulsfunktion deaktiviert werden; weder Antwort noch Unterbrechung werden erzwungen. Manuelle Arbeitsweise und Entwürfe bleiben erhalten. Konkrete Häufigkeit/Schwellen sind offen; fehlende Nutzersignale werden nicht erfunden.
+
+Nachverfolgung und Soll-Abnahme: [DEC-V1-Matrix](ENTSCHEIDUNGSMATRIX.md).
 
 ### UC-24 — Adaptives Verständnis überprüfen
 
@@ -979,6 +995,10 @@ flowchart LR
 
 **Präzisierung L-08:** Zeitliche Wiederholungsregeln werden mit Zielen/Themen/Kapiteln, tatsächlichen Antworten/Hilfen, Schwierigkeiten, Prüfungsnähe, verfügbarer Zeit, abgeschlossenen/verpassten Wiederholungen und Evidenzqualität/-aktualität verbunden. Ohne tragfähige Evidenz bleibt die Einschätzung unsicher; Versäumnis ist keine nachgewiesene Wissenslücke. Automatische pädagogische Umordnung braucht ausdrücklich aktivierte persönliche Automatik, Begründung, Verlauf und konfliktgeprüftes Undo ohne Verlust jüngerer Fortschritte. Sie erzeugt keine Kalenderwirkung. Die konkrete Formel bleibt offen.
 
+**DEC-V1-05/06/08 — Rückmeldung und korrigierbares Lernprofil:** Eine freiwillige Rückmeldung nach einer Sitzung kann mit eigenem Inhalt abgegeben, übersprungen oder später korrigiert werden; Überspringen ist keine negative Selbsteinschätzung. Syllentra zeigt, welche vorhandenen Angaben/Beobachtungen die Anpassung begründen, bietet alternative Erklärungen an und lässt Präferenzen/zulässige Lernprofilannahmen einsehen, korrigieren, begrenzen oder zurücksetzen. Nutzerangabe, KI-Schätzung und amtlicher Nachweis bleiben getrennt. Ein Reset von Präferenzen ist keine automatische Löschung amtlicher Leistungen; gewählten Löschumfang gesondert behandeln. Keine starren Lernstilklassen, Gesundheitsdiagnose oder zusätzliche Profilpflicht.
+
+Nachverfolgung und Soll-Abnahme: [DEC-V1-Matrix](ENTSCHEIDUNGSMATRIX.md).
+
 ### UC-28 — Prüfungsnahe Übung oder Simulation durchführen
 
 | Merkmal | Festlegung |
@@ -1010,6 +1030,10 @@ flowchart LR
 **Abnahmebeispiel:** Von zwei gelösten Aufgaben wurde bei einer die vollständige Lösung angefordert. Die Auswertung unterscheidet ausdrücklich diese unterstützte Bearbeitung von der anderen selbstständigen Antwort.
 
 **Präzisierung L-08:** Zeitliche Wiederholungsregeln werden mit Zielen/Themen/Kapiteln, tatsächlichen Antworten/Hilfen, Schwierigkeiten, Prüfungsnähe, verfügbarer Zeit, abgeschlossenen/verpassten Wiederholungen und Evidenzqualität/-aktualität verbunden. Ohne tragfähige Evidenz bleibt die Einschätzung unsicher; Versäumnis ist keine nachgewiesene Wissenslücke. Automatische pädagogische Umordnung braucht ausdrücklich aktivierte persönliche Automatik, Begründung, Verlauf und konfliktgeprüftes Undo ohne Verlust jüngerer Fortschritte. Sie erzeugt keine Kalenderwirkung. Die konkrete Formel bleibt offen.
+
+**DEC-V1-22/23 — Freiwillige Probeprüfung und Modustrennung:** Nutzer wählt ausdrücklich Training mit kenntlichen Hilfen oder eine Prüfungssimulation mit zuvor sichtbaren Aufgaben-/Bewertungsbedingungen. Kein automatischer Start durch Planung, Restore oder bloßes Öffnen. Genutzte Hilfen und tatsächliche Antworten bleiben im Ergebnis erkennbar; Moduswechsel ist keine nachträglich unabhängige Prüfungsleistung. Bewertung vorläufig/quellenbezogen, keine amtliche Note oder behauptete Bestehensgarantie.
+
+Nachverfolgung und Soll-Abnahme: [DEC-V1-Matrix](ENTSCHEIDUNGSMATRIX.md).
 
 ### UC-29 — Lernfortschritt und Wissensstand unterscheiden
 
@@ -1045,6 +1069,10 @@ flowchart LR
 
 **Präzisierung L-02:** Freiwilliger ablenkungsarmer Modus, jederzeitiges Beenden und optionale Zeitbegrenzung verändern keine gespeicherten Antworten/Entwürfe/Fortschritte. Nicht dringende Unterbrechungen werden zurückgestellt; dringende Hinweise respektieren Rechte, Priorität und Vertraulichkeit. Anzeige unterscheidet bearbeitet, Verständnis überprüft, Wissensstand geschätzt und Kompetenz nachgewiesen. Tastatur/Screenreader, reduzierte Bewegung und abschaltbare Motivation sind vorgesehen; keine Ranglistenpflicht, Serienzwänge oder künstlicher Zeitdruck.
 
+**DEC-V1-07/17/21 — Aktuelle Einschätzung und optionale Sitzungsbilanz:** Nach Wunsch eine Bilanz aus den tatsächlich bearbeiteten Inhalten, Antworten, Hilfen, offenen Schwierigkeiten und belegbaren Fortschritten einer Sitzung anzeigen. Selbstbericht und tatsächliche Aktivitätsnachweise getrennt, fehlende Evidenz unbekannt. Tatsächlich benötigte Lerndauer nur mit bekannter Messgrundlage und Unterbrechungs-/Lückenhinweis ausweisen, gegenüber Schätzung klar unterscheiden; keine erfundene Nettozeit oder Erfolgsquote. Keine zusätzliche versteckte Telemetrie durch diese Anforderung. Bilanz ist eine Sicht auf DM-28/DM-32, keine amtliche Note und kein automatisch publizierter Bericht.
+
+Nachverfolgung und Soll-Abnahme: [DEC-V1-Matrix](ENTSCHEIDUNGSMATRIX.md).
+
 ### UC-30 — Prüfungsvorbereitung für mehrere Prüfungen planen
 
 | Merkmal | Festlegung |
@@ -1076,6 +1104,10 @@ flowchart LR
 **Abnahmebeispiel:** Zwei Prüfungen in derselben Woche erzeugen einen gemeinsamen Vorschlag mit beiden Terminen. Vor Bestätigung bleibt der interne Kalender unverändert, auch wenn der Vorschlag aus zwei Kursen erreichbar ist.
 
 **Präzisierung L-08:** Zeitliche Wiederholungsregeln werden mit Zielen/Themen/Kapiteln, tatsächlichen Antworten/Hilfen, Schwierigkeiten, Prüfungsnähe, verfügbarer Zeit, abgeschlossenen/verpassten Wiederholungen und Evidenzqualität/-aktualität verbunden. Ohne tragfähige Evidenz bleibt die Einschätzung unsicher; Versäumnis ist keine nachgewiesene Wissenslücke. Automatische pädagogische Umordnung braucht ausdrücklich aktivierte persönliche Automatik, Begründung, Verlauf und konfliktgeprüftes Undo ohne Verlust jüngerer Fortschritte. Sie erzeugt keine Kalenderwirkung. Die konkrete Formel bleibt offen.
+
+**DEC-V1-14/15/16/25 — Priorität und freiwilliges Wochenziel:** Manuelle, aktivierte automatische und hybride pädagogische Priorisierung unterscheiden; bewusste Fixierungen und jüngere Lernbelege erhalten. Bei Zeitmangel notwendige Auswahl, Konflikte, Quellen und Unsicherheit erklären, keine übervolle Planung als machbar ausgeben. Ein vorgeschlagenes Wochenziel kann angenommen, geändert, abgelehnt oder aufgeschoben werden; Zielwahl erzeugt noch keinen Kalendereintrag und keinen erzwungenen Lernstart. Gewähltes Ziel als eigener DM-10 mit nachvollziehbarem Wochenzeitraum, Fortschritt getrennt von Zielwert. Wiederholungsintervalle bleiben anpassbar und begründet; konkrete Formel und Parameter werden nicht neu festgelegt. Kalenderwirkung bleibt UC-35, automatische nichtterminierte Reihenfolge bleibt L-08/BAT-26.
+
+Nachverfolgung und Soll-Abnahme: [DEC-V1-Matrix](ENTSCHEIDUNGSMATRIX.md).
 
 ### UC-31 — Lernergebnis in Kompetenzportfolio überführen
 
@@ -1232,6 +1264,10 @@ flowchart LR
 **Abnahmebeispiel:** Derselbe Vorschlag wird im Kurs angenommen. In „Zu prüfen“ ist dieselbe Entscheidung erkennbar; erneutes Öffnen erzeugt keine zweite Annahme oder doppelte Lerntermine.
 
 **Präzisierung L-08:** Automatik im Lernheft ist keine Kalenderzustimmung. Manuell fixierte und bereits bestätigte Einträge dürfen ohne erforderliche Zustimmung weder verschoben noch gelöscht werden. Ein neuer Kalenderplan benötigt weiterhin die konkrete aktuelle Entscheidung nach FE-08/UC-35; unbestätigte Änderungen ändern auch keine Erinnerungsfristen. Konflikt-/Undo-Regeln stehen im abschließenden Abschnitt „Vier bestätigte Fachentscheidungen“.
+
+**DEC-V1-10/11/12/13:** Aktivierte pädagogische Reihenfolgeautomatik darf kurze Wiederholungen auf zulässiger Evidenzbasis priorisieren; sie startet weder eine Sitzung noch verschiebt sie einen manuell gesetzten/bestätigten Termin. Manuelle Sitzung nur nach konkreter Verschiebebestätigung ändern. Begrenztes Undo der Reihenfolge erhält zwischenzeitliche Fortschritte; bei Konflikt aktuelle Korrektur statt alter Komplettstand. Ein Datum im Vorschlag ist noch kein bestätigter Termin.
+
+Nachverfolgung und Soll-Abnahme: [DEC-V1-Matrix](ENTSCHEIDUNGSMATRIX.md).
 
 ### UC-36 — Änderung an autorisierter Studienquelle erkennen und anzeigen
 
@@ -1864,7 +1900,7 @@ Diese Punkte entscheiden FE-01 bis FE-09 nicht neu. Unklare Schnittstellen oder 
 ---
 
 **Ende von F2 — Anwendungsfälle.**\
-**Freigabestatus:** Zur Prüfung durch den Projektinhaber. Kennungen UC-01 bis UC-50 und die bestätigten Entscheidungen FE-01 bis FE-09 sind nachvollziehbar; die gesamte Dokumentfassung ist noch nicht freigegeben und beansprucht keine bereits implementierten Funktionen.
+**Freigabestatus:** Zur Prüfung durch den Projektinhaber. Kennungen UC-01 bis UC-66 und die bestätigten Entscheidungen der aktuellen Matrix sind nachvollziehbar; die gesamte Dokumentfassung ist noch nicht freigegeben und beansprucht keine bereits implementierten Funktionen.
 
 
 ## F2.14 Ergänzte Anwendungsfälle für Konten, Datenkontrolle und Integrationsgrenzen
@@ -2036,6 +2072,8 @@ Die neuen Kennungen ergänzen UC-01 bis UC-50 ohne Umnummerierung. Gemeinsame Vo
 **Alternativen, Fehler und Schutz:** Neuere Daten und endgültige Löschmarkierungen werden berücksichtigt. Fremde Konten sind ausgeschlossen. Endliche Retention und tatsächliche Restfristen werden ausgewiesen; kein Wiederherstellen gelöschter Secrets oder Widerrufe. Abbruch vor bestätigter Wirkung erhält den Ausgangsbestand; nach unklarem Ausgang wird zunächst die tatsächliche Wirkung geprüft.
 
 **Abnahmebeispiel:** Eine Sicherung vor der endgültigen Löschung eines Dokuments kann dieses Dokument nicht wiederbeleben.
+
+**Präzisierung DEC-49:** Der Sicherungsbestand liegt verschlüsselt und mit begrenzten Rechten unabhängig vom Primärhostinganbieter in der EU. Ein unabhängiger Sicherungszugang ersetzt keine privaten Dokumentenschlüssel oder heutigen Lösch-/Widerrufsnachweis. Regelmäßige Restore-Proben prüfen Integrität und tatsächliche Wiederherstellbarkeit auch bei Ausfall, versehentlicher Löschung, Korruption oder Kompromittierung der Primärumgebung. Anbieter, RPO/RTO, Frequenz und Retention sind offen; diese Spezifikation führt keine Probe aus. Abnahme: Sicherung ausschließlich beim Primäranbieter erfüllt DEC-49 nicht; nach Restore bleibt endgültig Gelöschtes gesperrt. [S2](S2-datenmigration.md), [ADR-0005](../ARCHITECTURE_DECISIONS.md#adr-0005--anbieterunabhängige-verschlüsselte-sicherung-dec-49).
 
 ### UC-61 — Papierkorb und KI-Löschaufträge kontrollieren
 

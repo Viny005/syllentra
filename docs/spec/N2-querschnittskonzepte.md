@@ -1,8 +1,8 @@
 # N2 — Querschnittskonzepte
 
 **Projekt:** Syllentra AI\
-**Version:** 0.4\
-**Stand:** 19.10.2026\
+**Version:** 0.5\
+**Stand:** 22.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber
 
 ## N2.1 Zweck und Ausarbeitungsgrenze
@@ -54,7 +54,7 @@ O-S1-06 bis O-S1-13 bleiben offen: Verifikations-/Sitzungsfristen und Ratenbegre
 
 **Schlüssel/Schutz:** Fehlende persönliche Dokumentenschlüssel können weder Betrieb noch Kontorecovery rekonstruieren. Geschütztes Paket und Quellschutz sind getrennte Ebenen; Übernahme ist keine Cloud-Klartextanalysefreigabe. FE-78 bleibt pro Vorgang gesondert. Integrations-/Support-/Geräte- und Adminrechte werden nicht aus Paketen aktiviert; historische private Logs enthalten keine Secrets. Eigene Altaccount-/Neukontoübernahme ist bis zum starken Verfahren O-S2-09 nicht automatisch erlaubt.
 
-**Planung:** Reimport erhält manuelle Herkunft/Terminbindung und jüngere Lernbelege. Restore oder Plan-Undo darf diese nicht still überschreiben. S2 führt keine neue automatische Lernheftordnung aus und ändert keine Kalenderbestätigungsgrenze. Die separate vollständige Post-S1-Harmonisierung der DEC-V1-Vorgaben bleibt offen.
+**Planung:** Reimport erhält manuelle Herkunft/Terminbindung und jüngere Lernbelege. Restore oder Plan-Undo darf diese nicht still überschreiben. S2 führt keine neue automatische Lernheftordnung aus und ändert keine Kalenderbestätigungsgrenze. Die dokumentarische Konsolidierung der 25 DEC-V1 steht jetzt in der [Entscheidungsmatrix](ENTSCHEIDUNGSMATRIX.md); offene fachliche Präzisierungen und technische Nachweise sind dort getrennt ausgewiesen. N2 wird dadurch nicht finalisiert.
 
 ## N2.9 Kontrollgrenzen der persönlichen Lern- und Hinweisfunktionen
 
@@ -74,3 +74,7 @@ Die vom Projektinhaber übernommenen zwei Listen werden im [40-Punkte-Freigabere
 **Technologieneutral:** RLS ist eine mögliche Umsetzung der Datenisolation, nicht vor Stackentscheidung zwingend. Öffentlich freigegebene Konfigurationsschlüssel sind nur dann clientseitig zulässig, wenn sie wirklich keine Secrets sind. CORS/Webhookmaßnahmen gelten nur bei entsprechenden technischen Schnittstellen. Ein generischer Anti-Enumeration-Fehler bei Authentisierung verhindert nicht verständliche, hilfreiche Fehlermeldungen bei anderen Aufgaben. Für Logs gilt Datenminimierung, nicht das grundlose Abschalten notwendiger Betriebsnachweise. Keine kostenpflichtige Sicherheits-, KI- oder Monitoringlösung wird durch die Prüfliste bestellt.
 
 **Release-Gate:** Anwendbare Sicherheitskontrollen sind vor Freigabe mit Negativtests und dokumentierten Ergebnissen zu belegen. Fehlgeschlagene Isolation, Autorisierung, Token-/Schlüsseloffenlegung, definitive Löschung oder Wiederherstellungsprüfungen sperren die entsprechende Freigabe. Die spätere S3-Inbetriebnahme enthält die formale Abnahme; bis dahin alle Nachweise offen. Die spätere Zahlungsfunktion (REL-Q10) und FE-56 werden dadurch nicht vorab freigegeben.
+
+## N2.11 Begrenzter Anschluss der unabhängigen Sicherung
+
+DEC-49 ergänzt SEC-08/09/14/15 und den heutigen Kontrollstand aus N2.8: sicher verwaltete Schlüssel, vom Primäranbieter unabhängiger EU-Speicher, begrenzte Sicherungs-/Abruf-/Restore-/Löschrechte und belegte Wiederherstellbarkeit auch bei Ausfall, Korruption, versehentlicher Löschung oder Kompromittierung. Backupunabhängigkeit hebt weder Benutzerlöschung noch Kontentrennung oder das Verbot privater Klartextschlüssel beim Backend/Admin auf. Periodische Restore-Proben und die Abstimmung endlicher Retention mit Nichtwiederbelebung bleiben nachzuweisen. [ADR-0005](../ARCHITECTURE_DECISIONS.md#adr-0005--anbieterunabhängige-verschlüsselte-sicherung-dec-49), [S2](S2-datenmigration.md), REL-S20/REL-Q20 und [Matrix](ENTSCHEIDUNGSMATRIX.md) konkretisieren Zuständigkeiten. Kein Anbieter, Kryptoverfahren oder Dienst wird gewählt; N2 bleibt ein begrenzter Prüfentwurf, S3 wird nicht begonnen.

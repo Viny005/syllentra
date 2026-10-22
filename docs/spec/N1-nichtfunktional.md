@@ -1,8 +1,8 @@
 # N1 — Nichtfunktionale Anforderungen
 
 **Projekt:** Syllentra AI\
-**Version:** 0.4\
-**Stand:** 19.10.2026\
+**Version:** 0.5\
+**Stand:** 22.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber
 
 ## N1.1 Zweck und begrenzter Ausarbeitungsstand
@@ -54,3 +54,7 @@ Der Projektinhaber hat zwei ergänzende Prüflisten mit zusammen **40 Einzelpunk
 **Nichtfunktionale Verantwortung von N1:** Raten-/API-/Rechenlimits, bewilligte Budgets, Antwort- und Abbruchverhalten, klare Lade-/Leer-/Fehlerzustände, deduplizierte Aktionen, Datenminimierung, Indizes, Paginierung, passende Kompression und Zwischenspeicherung, Datei-/Archivlast, Verfügbarkeitsüberwachung, aussagekräftige datensparsame Betriebslogs, parallele Nutzung, Restore-Proben und gemessene Wiederherstellungsziele. Die Security-Details stehen in [N2](N2-querschnittskonzepte.md). S2 bleibt für Daten-/Restoreverträge zuständig.
 
 **Freigabebedingung:** Vor Aktivierung bzw. Produktivstart sind die einschlägigen Tests tatsächlich durchzuführen und nachzuweisen. Technische Grenzwerte, Kapazitäten, Warnschwellen und RPO/RTO sind noch offen und dürfen nicht erfunden werden. Zahlungstransaktionen und Schutz vor Doppelzahlung (REL-Q10) sind ausdrücklich nur für eine später eigens genehmigte kommerzielle Funktion relevant. Die übrigen Punkte gelten für die V1 insoweit, wie die jeweils geprüften Funktionen/Techniken vorhanden sind. Produktprüfungen wurden durch diese Dokumentänderung nicht ausgeführt.
+
+## N1.7 Begrenzter Anschluss von DEC-48 und DEC-49
+
+NFR-04/05/11/12 werden durch DEC-48/49 präzisiert: Oracle zuerst bewerten, Alternativen offenhalten; EU, Kapazität, Speicher, Verfügbarkeit, Netz, Betrieb, tatsächliche Kosten/Gratislimits, Sicherheit und Lizenzen nachweisen. Verschlüsselte EU-Sicherung unabhängig vom Primäranbieter, periodische tatsächliche Restore-Proben und Portabilität sind Pflichtziele. Die 10 EUR brutto/Monat sind nur ein Vergleichslimit, keine Ausgabe. RPO/RTO, Frequenz, Retention und Messverfahren bleiben offen. [ADR](../ARCHITECTURE_DECISIONS.md), [S2](S2-datenmigration.md), [Matrix](ENTSCHEIDUNGSMATRIX.md) und REL-S20/REL-Q20 führen die Nachweise. Dieser Anschluss finalisiert N1 nicht und führt keine Produktprüfung aus.

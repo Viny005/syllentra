@@ -2,8 +2,8 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** D1 — Datenmodell\
-**Version:** 0.4\
-**Stand:** 19.10.2026\
+**Version:** 0.5\
+**Stand:** 22.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Spezifikationsmethode:** Bausteine nach Johannes Siedersleben\
 **Bezugsstand:** Vier bestätigte Entscheidungen vom 19.10.2026; Ausgangs-HEAD `53ef171be4783748b5c7e3a84bb0cc363d5b4194`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1; aktuelle Fassungen im [Index](README.md).
@@ -14,7 +14,7 @@
 
 D1 beschreibt fachlich eigenständig identifizierbare Informationen, ihre Beziehungen, Multiplizitäten, Besitz- und Herkunftsgrenzen und überprüfbare Integritätsregeln. Damit wird konkretisiert, **welche Informationen Syllentra für seine Use Cases benötigt**; nicht, in welcher Datenbank oder mit welchen ORM-Klassen sie gespeichert werden. Maßgeblich sind die bereits ausgearbeiteten Bausteine [P1](P1-ziele-rahmenbedingungen.md), [P2](P2-architekturueberblick.md), [F1](F1-geschaeftsprozesse.md), [F2](F2-anwendungsfaelle.md) und [F3](F3-anwendungsfunktionen.md). Die [D1-Referenz im Herold-Projekt](https://github.com/carstenlucke/herold/blob/main/docs/spec/D1-datenmodell.md) erläutert die methodische Grenze zwischen Informationsmodell, D2-Datentypen und Implementierung; Herold-spezifische Felder, Technologien und Authentisierungsentscheidungen werden nicht übernommen.
 
-Die Kennungen **DM-01 bis DM-52** bezeichnen **fachliche Entitätstypen** und sind keine existierenden Datenbanktabellen oder API-Endpunkte. Attribute sind logisch beschreibend; konkrete Datentypdefinitionen, Wertbereiche, Pflichtfelder im jeweiligen Status und Typprüfungen folgen in **D2**. `Kennung` bedeutet stabile Identifizierbarkeit innerhalb der fachlichen Eigentumsgrenze. `0..1`, `1`, `0..n`, `1..n` beschreiben Multiplizitäten. Die nachfolgend präzisierten Kardinalitäten sind konzeptuelle D1-Vorschläge zur Prüfung, soweit sie nicht unmittelbar aus FE-01 bis FE-14 folgen. Ein optionaler Bezug ist nicht automatisch eine öffentlich auflösbare URL. Statuswörter sind fachliche Begriffe; ihre abschließende Enumeration gehört nach D2.
+Die Kennungen **DM-01 bis DM-78** bezeichnen **fachliche Entitätstypen** und sind keine existierenden Datenbanktabellen oder API-Endpunkte. Attribute sind logisch beschreibend; konkrete Datentypdefinitionen, Wertbereiche, Pflichtfelder im jeweiligen Status und Typprüfungen folgen in **D2**. `Kennung` bedeutet stabile Identifizierbarkeit innerhalb der fachlichen Eigentumsgrenze. `0..1`, `1`, `0..n`, `1..n` beschreiben Multiplizitäten. Die nachfolgend präzisierten Kardinalitäten sind konzeptuelle D1-Vorschläge zur Prüfung, soweit sie nicht unmittelbar aus FE-01 bis FE-14 folgen. Ein optionaler Bezug ist nicht automatisch eine öffentlich auflösbare URL. Statuswörter sind fachliche Begriffe; ihre abschließende Enumeration gehört nach D2.
 
 **Fachliche Verantwortungsbereiche:** Persönliche, intern verwaltete Informationen gehören zu Syllentra; Hochschulen, KI-/Medienanbieter, GitHub, Onlinedienste und Geräteplattformen behalten ihre externe fachliche Autorität. Externe Daten werden nur als erlaubter Bezug, herkunftsbehafteter Ausschnitt oder zulässiger Verarbeitungsnachweis modelliert. Externe Kalenderereignisse selbst werden **nicht** als intern schreibbare Entitäten angelegt. Ein Nutzerkonto, persönliches Profil, mehrere Geräte und die Administratorrolle sind nicht identisch.
 
@@ -140,6 +140,32 @@ flowchart TB
 | DM-50 | Datenkontrollvorgang | Datenkontrolle | Abgegrenzte Einsicht, Korrektur, Export- oder Löschhandlung samt bestätigtem Wirkungsumfang. |
 | DM-51 | ExterneDatenübermittlung | Datenkontrolle | Nachvollziehbarer minimaler Beleg eines autorisierten Datentransfers mit Empfänger, Zweck und bekanntem Kontrollstatus. |
 | DM-52 | Änderungshinweis | Planung | Benutzerbezogener Hinweis über relevante neue oder widersprechende Informationen. |
+| DM-53 | EMailAdresse | Konten / Administration | Verifizierte persönliche Adressen und getrennte Rollen |
+| DM-54 | Verifikationsvorgang | Konten / Administration | Zweckgebundene Prüfung mit tatsächlichem Ergebnis |
+| DM-55 | Sitzung | Konten / Administration | Serversitzung getrennt von lokaler Sperre |
+| DM-56 | RollenZuweisung | Konten / Administration | Begrenzte aktuelle Rollenrechte |
+| DM-57 | Administrationsaudit | Konten / Administration | Geschützter Administrationsnachweis ohne Geheimnisse |
+| DM-58 | Supportfreigabe | Konten / Administration | Enger befristeter und widerrufbarer Supportumfang |
+| DM-59 | Nutzerquota | Konten / Administration | Grundquoten mit erlaubten Kontoausnahmen |
+| DM-60 | Funktionsfreigabe | Konten / Administration | Serverseitige Funktionssichtbarkeit und Wirkung |
+| DM-61 | Veröffentlichungsfassung | Konten / Administration | Geprüfte Konfigurations-/Funktionsveröffentlichung |
+| DM-62 | Integrationslauf | Integrationen | Konkreter Integrationslauf ohne fingierten Erfolg |
+| DM-63 | Synchronisationsregel | Integrationen | Manueller Standard und explizite Automatik je Verbindung |
+| DM-64 | Schutzkennzeichnung | Datenschutz | Vererbte Sensitivität und Sichtbarkeit |
+| DM-65 | DokumentSchlüsselbezug | Datenschutz | Opaque Schlüsselreferenz, kein Klartextschlüssel |
+| DM-66 | Verarbeitungsfreigabe | Datenschutz | Konkrete minimale Verarbeitungsfreigabe |
+| DM-67 | Papierkorbeintrag | Datenschutz | Privater begrenzter Papierkorb |
+| DM-68 | Löschmarkierung | Datenschutz | Inhaltsfreie Kontrolle gegen Wiederbelebung |
+| DM-69 | Sicherungspunkt | Sicherung / Materialien | Verschlüsselter unabhängiger Sicherungsstand |
+| DM-70 | Wiederherstellungsvorgang | Sicherung / Materialien | Kontrollierte tatsächliche Wiederherstellungswirkung |
+| DM-71 | Archivextraktionsbezug | Sicherung / Materialien | Herkunft von Archiv und getrennten Extrakten |
+| DM-72 | Portabilitätspaket | Portabilität | Eigener geschützter Export-/Importumfang |
+| DM-73 | Migrationslauf | Portabilität | Versionierter persönlicher oder administrativer Lauf |
+| DM-74 | MigrationsTeilwirkung | Portabilität | Einzelne belegte Migrationswirkung |
+| DM-75 | PädagogischeLernreihenfolge | Lernplanung / Hinweise | Persönliche nichtterminierte pädagogische Reihenfolge |
+| DM-76 | PädagogischePlanänderung | Lernplanung / Hinweise | Begründete Planrevision mit begrenztem Undo |
+| DM-77 | PersönlicheErinnerungsregel | Lernplanung / Hinweise | Persönliche Regelvererbung, keine Kanalberechtigung |
+| DM-78 | Benachrichtigungszustellung | Lernplanung / Hinweise | Externer Zustellnachweis getrennt vom Hinweis |
 
 ## D1.4 Fachliche Entitätstypen im Detail
 
@@ -172,6 +198,11 @@ Bearbeitbare persönliche Angaben, akademischer Kontext und Präferenzen mit erk
 | **Eigentum und Kardinalität** | Genau ein DM-01; je Profil 0..n Studienzugehörigkeiten. |
 | **Löschfolgen und Herkunftsgrenze** | Profilkorrektur oder Feldlöschung ist keine automatische Löschung von Leistungen, Gesprächen oder Erinnerungen; deren Umfang separat wählen. |
 
+**FE-21 / persönliche Präferenzen:** Erlaubte Ausgabe-/Audiosprache und unterstützte Stimme/Geschwindigkeit sind persönliche Präferenzen über DM-48/DM-49 und DT-07/DT-61, keine Mikrofon- oder Anbieterberechtigung. Eine Präferenz ist weder laufende Wiedergabe noch Nachweis, dass das Gerät sie ausführen kann.
+
+**Präzisierung DEC-V1-05/06/18/19:** Sichtbare persönliche Lernpräferenzen und zulässige Annahmen korrigierbar/begrenzbar/zurücksetzbar; diskrete Hilfe-/Pausenpräferenzen optional und deaktivierbar. Manuelle Präferenz ist keine feste Lernstilklasse und kein Gesundheitsurteil. Reset betrifft gewählten Umfang, nicht automatisch amtliche Leistungen.
+
+[Entscheidungsmatrix](ENTSCHEIDUNGSMATRIX.md).
 
 #### DM-03 — Gerätefreigabe
 
@@ -266,6 +297,9 @@ Ordnungspunkt für Themen, Kapitel und Unterkapitel mit optionaler Hierarchie.
 | **Eigentum und Kardinalität** | Genau ein DM-01; genau ein primärer Kontext aus DM-05, DM-06 oder DM-07; 0..1 Elternknoten desselben Kontexts, 0..n Kinder. |
 | **Löschfolgen und Herkunftsgrenze** | Kindknoten und Lernzielbezüge vor Entfernen offenlegen; kein stilles Umhängen oder Löschen von Materialien. |
 
+**Präzisierung DEC-V1-02/09:** 0..n zusätzliche fachliche Beziehungen zu eigenen Themen/Lernzielen anderer eigener Kurse mit Grund, Quellenbezug, Herkunft und Unsicherheit. Diese sekundären Beziehungen ändern weder den genau einen primären Kontext noch die azyklische Elternhierarchie. Karte ist eine Projektion bestehender Bezüge, keine neue Entität und keine kontoübergreifende Freigabe.
+
+[Entscheidungsmatrix](ENTSCHEIDUNGSMATRIX.md).
 
 #### DM-10 — Lernziel
 
@@ -279,6 +313,9 @@ Benennbares Verständnis-, Übungs- oder Anwendungsziel.
 | **Eigentum und Kardinalität** | Genau ein DM-01; 0..1 primärer Kontext aus DM-06, DM-07 oder DM-09; 0..n Lerneinheiten. |
 | **Löschfolgen und Herkunftsgrenze** | Erreichte oder geschätzte Lernstände nicht ohne Umfangswahl mitlöschen; verwaiste Zielbezüge kenntlich machen. |
 
+**Präzisierung DEC-V1-25:** Ein bewusst angenommenes/selbst gespeichertes Wochenziel bleibt ein eigenes Lernziel mit bekanntem Wochenzeitraum (DT-05) und gewähltem Inhalt. Zielwert, tatsächliche Erfüllungsbelege und Unsicherheit getrennt; Ablehnung/Aufschub legt kein Pflichtziel oder Termin an. Freiwillige Präferenz/Historie nur im zulässigen gewählten Umfang.
+
+[Entscheidungsmatrix](ENTSCHEIDUNGSMATRIX.md).
 
 #### DM-11 — Prüfung
 
@@ -481,6 +518,7 @@ Wiederauffindbare text- oder sprachgestützte Sitzung über Geräte und Zeiträu
 | **Eigentum und Kardinalität** | Genau ein DM-01; 0..n Nachrichten und Kontextbezüge, 0..n unabhängige Erinnerungsherkünfte. |
 | **Löschfolgen und Herkunftsgrenze** | Löschumfang umfasst gewählte Nachrichten und Bezüge; abgeleitete Erinnerungen separat auswählen, Herkunftsausfall dort kenntlich machen. |
 
+**FE-21-Ausgabekontext:** Anhören referenziert eigene zulässige Antworten DM-26 in ihrer tatsächlichen Fassung; es legt kein zweites Gespräch und keine neue Lernleistung an. Vorbereitetes Audio und Wiedergabeposition sind vorübergehender Ausgabestand mit geerbtem Schutz, keine automatische dauerhafte Originaldatei. Pausierte oder erneut abgespielte Inhalte bleiben unter aktuellen Rechten; Löschung/Widerruf sperrt weitere verbotene Ausgabe. Präferenzen DM-48 sind von Lauf-/Fehlerzustand und Aufnahmeberechtigung getrennt.
 
 #### DM-26 — Nachricht
 
@@ -522,6 +560,9 @@ Zeitlich oder thematisch abgegrenzte Bearbeitung eines Lernziels mit erlaubtem K
 | **Eigentum und Kardinalität** | Genau ein DM-01; jeweils 0..1 Lernziel und Unterhaltung; 0..n Aufgaben. Prüfungssimulation ist ein Lernmodus mit bekannten Kriterien. |
 | **Löschfolgen und Herkunftsgrenze** | Abbruch oder Löschung ist kein Erfolg; Folgen für Versuche und Nachweise getrennt ausweisen. |
 
+**Präzisierung DEC-V1-08/17/21:** Freiwilliges Sitzungsfeedback mit manueller Herkunft und Korrekturstand optional; ausgelassen ist keine negative Bewertung. Tatsächlich beobachtete Lerndauer mit Messgrundlage und Lücken/Unterbrechungen optional, geschätzte Zeit getrennt. Optionale Sitzungsbilanz ist eine aus eigenen DM-28/DM-30/DM-31/DM-32-Nachweisen abgeleitete Ansicht, kein zusätzliches Original oder amtlicher Leistungsnachweis.
+
+[Entscheidungsmatrix](ENTSCHEIDUNGSMATRIX.md).
 
 #### DM-29 — Übungsaufgabe
 
@@ -808,6 +849,7 @@ Verwaltbarer Satz unterstützter UI-, Lern-, Integrations-, Datenschutz- oder Ko
 | **Eigentum und Kardinalität** | Genau ein DM-01; 1..n DM-49, genau eine eigene gültige aktuelle Fassung. Entwürfe ändern sie nicht. |
 | **Löschfolgen und Herkunftsgrenze** | Entfernen zeigt Auswirkungen auf unterstützte Einstellungen; keine Wiederherstellung gelöschter Inhalte oder widerrufener Rechte durch Konfigurationsrollback. |
 
+**FE-21:** Unterstützte persönliche Sprache, Stimme, Tempo und freiwillige Hörmoduswahl werden als validierte Konfigurationswerte DT-61 referenziert; Ausgabe standardmäßig nicht automatisch aktiv. Laufende/pausierte Wiedergabe ist temporärer Zustand, keine Konfigurationsfassung und keine Rolle. Wiederaufnahme nach App-/Gerätewechsel und Hintergrundfähigkeit müssen technisch nachgewiesen werden, keine neue Plattformgarantie.
 
 #### DM-49 — Konfigurationsfassung
 
@@ -1024,7 +1066,11 @@ Diese Regeln gelten unabhängig von Datenbank, Synchronisationsmechanismus oder 
 | DK-11 | DM-08, DM-17, DM-22, DM-27, DM-39 bis DM-42 sowie Quellbezüge | Mehrfachrelationen und Herkunft explizit; FE-09. |
 | DK-12 | DM-35, DM-36, DM-37, DM-38, DM-52 | Interne Termine schreibbar nach Regeln; externe private Kalender ausschließlich lesbar. |
 
-## D1.9 Abdeckung der bestehenden Anwendungsfälle UC-01 bis UC-50
+<a id="d19-abdeckung-der-bestehenden-anwendungsfälle-uc-01-bis-uc-50"></a>
+
+## D1.9 Historische Ausgangsmatrix UC-01 bis UC-50
+
+Diese Tabelle bewahrt den ursprünglichen Bezugsumfang. Ergänzte Kennungen stehen im vollständigen Katalog und den jeweiligen Nachträgen; die [aktuelle Entscheidungsmatrix](ENTSCHEIDUNGSMATRIX.md) ergänzt die 25 DEC-V1. Kein alter Eintrag entfällt.
 
 Die folgenden UC-Kennungen stammen **unverändert** aus [F2](F2-anwendungsfaelle.md). Diese Matrix benennt zentrale fachliche Daten, nicht jede indirekte technische Abhängigkeit. Kein Use Case erhält hier eine neue Kennung.
 
@@ -1180,16 +1226,16 @@ Jeder Bereich wird über DM-48 und seine DM-49-Fassungen verwaltet. Feldwerte im
 
 | Block | Zuständigkeit / bewusst nicht in D1 festgelegt |
 |---|---|
-| `D2 — Datentypen` | Endgültige Wertebereiche, optionale Feld- und Statusstrukturen, Typen von Zeitzonen, Geldbeträgen, IDs, Dokumentreferenzen, Beleggraden, Quota- und Kenntnisständen. Datei noch geplant. |
-| `B1 — Dialogspezifikation` | Sichtbare Bedienung von Versionen, Beziehungsverwaltung, zentralem Posteingang „Zu prüfen“, Erinnerungshistorie, Kostenübersicht und Löschfolgen. Datei noch geplant. |
-| `B2 — Batch` | Geplante Quellenprüfungen, zulässige Archivvorschlagsläufe, Kontingentaktualisierung und regelbasierte Bereinigung entbehrlicher Zwischenstände. Datei noch geplant. |
-| `S1 — Nachbarsysteme` | Anbieter-, Kalender-, Hochschul-, GitHub- und Gerätezugangsverfahren samt offizieller Rechteprüfung. Datei noch geplant. |
+| `D2 — Datentypen` | Endgültige Wertebereiche, optionale Feld- und Statusstrukturen, Typen von Zeitzonen, Geldbeträgen, IDs, Dokumentreferenzen, Beleggraden, Quota- und Kenntnisständen. Als Prüfentwurf vorhanden; konkrete technische Umsetzung weiterhin offen. |
+| `B1 — Dialogspezifikation` | Sichtbare Bedienung von Versionen, Beziehungsverwaltung, zentralem Posteingang „Zu prüfen“, Erinnerungshistorie, Kostenübersicht und Löschfolgen. Als Prüfentwurf vorhanden; konkrete technische Umsetzung weiterhin offen. |
+| `B2 — Batch` | Geplante Quellenprüfungen, zulässige Archivvorschlagsläufe, Kontingentaktualisierung und regelbasierte Bereinigung entbehrlicher Zwischenstände. Als Prüfentwurf vorhanden; konkrete technische Umsetzung weiterhin offen. |
+| `S1 — Nachbarsysteme` | Anbieter-, Kalender-, Hochschul-, GitHub- und Gerätezugangsverfahren samt offizieller Rechteprüfung. Als Prüfentwurf vorhanden; konkrete technische Umsetzung weiterhin offen. |
 | [S2 — Datenmigration](S2-datenmigration.md) | Versionierter persönlicher Export/Reimport, Vorschau, Duplikat-/Revisionsabgleich, sichere Betriebsüberführung und Wiederherstellung; konkrete Formate/Verfahren weiterhin nachweispflichtig. |
-| `N1 — Nichtfunktional` | Messbare Qualitäts- und Verfügbarkeitsziele, Synchronisationsleistungsfähigkeit, Sicherheit und Datenschutzanforderungen. Datei noch geplant. |
-| `N2 — Querschnittskonzepte` | Durchsetzung von Zugriffsschutz, Verschlüsselung, Datenminimierung, Löschfristen, Konflikterkennung, Protokollierungsgrenzen. Datei noch geplant. |
+| `N1 — Nichtfunktional` | Messbare Qualitäts- und Verfügbarkeitsziele, Synchronisationsleistungsfähigkeit, Sicherheit und Datenschutzanforderungen. Als Prüfentwurf vorhanden; konkrete technische Umsetzung weiterhin offen. |
+| `N2 — Querschnittskonzepte` | Durchsetzung von Zugriffsschutz, Verschlüsselung, Datenminimierung, Löschfristen, Konflikterkennung, Protokollierungsgrenzen. Als Prüfentwurf vorhanden; konkrete technische Umsetzung weiterhin offen. |
 | Architektur / Implementierung | Datenbankprodukt, relationale Tabellenschemata, Dokument-/Objektspeicher, Indexe, API-Design, konkrete Authentifizierungsmechanismen, Versionierungsverfahren, Server und Deployment. |
 
-Die Folgedokumente werden hier **nur namentlich referenziert und nicht als bereits vorhanden ausgegeben**. Vor ihrer Erstellung werden absichtlich keine Links auf nicht existierende Dateien oder Detail-Anker gesetzt.
+Die genannten D2/B1/B2/S1/S2/N1/N2-Prüfentwürfe sind vorhanden und im [Index](README.md) verlinkt. Noch fehlende technische Ausarbeitung ist von fehlenden Dateien zu unterscheiden; S3 bleibt geplant.
 
 ## D1.12 Abnahmebeispiele und Gegenprüfungen
 
@@ -1228,7 +1274,7 @@ Die Folgedokumente werden hier **nur namentlich referenziert und nicht als berei
 | Mit der D1-Mission bestätigt | FE-12 Dokumentversionierung, FE-13 korrigierbare und löschbare Erinnerungshistorie, FE-14 inhaltsarme KI-Statistik | Fachliche Entscheidungen bestätigt; keine fertige Implementierung behauptet. |
 | Konzeptueller D1-Entwurf | 52 Entitätstypen, konkrete Kardinalitäten, Eigentumsableitung, Lösch- und Nachweisbeziehungen sowie Prüfbeispiele | Zur Prüfung; diese Modellpräzisierungen ersetzen keine gemeinsame Abnahme. |
 
-**Bestandsabgleich:** Der gelieferte Bezugsstand entspricht dem vor Bearbeitung geprüften Branch-/PR-Stand. P1, P2, F1 und F2 enthalten die später in F3 beziehungsweise dieser Mission bestätigten FE-10 bis FE-14 noch nicht vollständig; dies ist ein zeitlicher Dokumentstand, keine Erlaubnis zur nachträglichen Umnummerierung. Auch die älteren Indexstatus von P1/P2 werden in dieser D1-Mission nicht geändert.
+**Historischer Bestandsabgleich der ursprünglichen D1-Einzellieferung:** Der damalige Bezugsstand entspricht dem seinerzeit geprüften Branch-/PR-Stand. P1, P2, F1 und F2 enthalten die später in F3 beziehungsweise dieser Mission bestätigten FE-10 bis FE-14 noch nicht vollständig; dies ist ein zeitlicher Dokumentstand, keine Erlaubnis zur nachträglichen Umnummerierung. Auch die älteren Indexstatus von P1/P2 werden in dieser D1-Mission nicht geändert.
 
 **Im Entwurf beschrieben:**
 
@@ -1439,6 +1485,8 @@ Die nachfolgenden Entitäten sind ein fachlicher Modellnachtrag. Alte DM-Kennung
 
 **Prüfbeispiel:** Abgelaufene Sicherung darf nicht als garantiert wiederherstellbar erscheinen.
 
+**DEC-49:** Sicherungsmetadaten weisen Primäranbieter und unabhängigen Sicherungsspeicher, EU-Standort, Integritäts-/Verschlüsselungs-/geschützten Schlüsselbezug, Zugriffsschutz und tatsächlichen Restore-Prüfstand nach. Anbieteridentität ist kein Geheimniswert oder privater Klartextschlüssel. Fehlende Unabhängigkeits-/Wiederherstellbarkeitsnachweise bleiben unbekannt, nicht bestanden. DM-70 führt die tatsächliche Restorewirkung unter aktuellem Kontrollstand; Retention-/Löschgrenzen bleiben erhalten.
+
 ### DM-70 — Wiederherstellungsvorgang
 
 **Attribute:** `kennung`, sicherung, auswahl, differenzen, konfliktentscheidung, bestaetigung, ausfuehrungsstand; Herkunft, Revision und Zeit soweit fachlich erforderlich.
@@ -1527,6 +1575,10 @@ Die folgenden Ergänzungen schließen die L-08-/L-04-Lücken. Sie trennen nichtt
 **Integrität/Lebenszyklus:** Hybrid aus zeitlichen Wiederholungsregeln und aktueller Evidenz, Formel offen. Ohne ausdrücklich aktivierte Automatik keine selbsttätige Umordnung; manuelle Reihenfolgepflege bleibt möglich. Eine Empfehlung/Fälligkeit ist weder Kalenderbuchung noch Lernerfolg. Deaktivierung beendet künftige automatische Änderungen; Entfernen der Reihenfolge löscht keine unabhängigen Lernnachweise, Termine oder Originale.
 
 **Abnahme:** Lernziel B wird begründet vor A priorisiert, während bestätigter Termin A unverändert bleibt. Bei fehlender Evidenz keine behauptete Beherrschung oder Diagnose.
+
+**Präzisierung DEC-V1-14/15/16:** Gewählten manuellen/automatischen/hybriden Modus, bewusste Fixierungen und verfügbare Evidenz-/Zeitgrundlage getrennt führen. Automatik erfordert bestehenden ausdrücklichen Aktivierungsnachweis; Moduswahl importiert keine Kalenderzustimmung. Keine zusätzliche Wiederholungsformel oder Gewichtung festgelegt.
+
+[Entscheidungsmatrix](ENTSCHEIDUNGSMATRIX.md).
 
 ### DM-76 — PädagogischePlanänderung
 
