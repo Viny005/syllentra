@@ -1,6 +1,8 @@
 # Reproduzierbarer technischer Prüfplan T01–T09
 
-**Version:** 0.1 · **Stand:** 22.10.2026 · **Status:** Empfohlen / Zur Entscheidung
+**Version:** 0.2 · **Stand:** 22.10.2026 · **Status:** Empfohlen / Zur Entscheidung
+
+> **Fortschreibung Mission 7:** Für künftige Vergleiche gilt jetzt bis zu **20 EUR brutto/Monat**, keine Ausgabe genehmigt. Die nachfolgenden 10-EUR-Aussagen/Rechnungen dokumentieren den früheren Untersuchungsstand aus Mission 5/6; sie sind keine aktuelle Obergrenze. Auch unter 20 EUR ist vollständige V1-Leistung nicht nachgewiesen. [Bestätigter Rahmen](../ARCHITECTURE_DECISIONS.md#adr-0006--persönlicher-qualitätsfokus-und-vergleichsrahmen-aus-mission-7).
 
 
 ## 1. Ausführungsgrenze und gemeinsame Voraussetzungen
@@ -139,7 +141,7 @@ Rohdaten: Run-ID, Input-ID, Start/Ende, erste Ausgabe, Ausgabelänge/Tokenizerz�
 | Indikatoren | Verbrauch je Komponente und Konto/global, Monatsprojektion mit Unsicherheit, gültige Freimengen, Brutto, unbepreiste Posten und Budgetreserve. |
 | Erfolgskriterien | Alle Pflichtposten enthalten, Quelle/Datum/Steuer nachvollziehbar, kein automatischer kostenpflichtiger Weg; tatsächlicher Umfang innerhalb genehmigter Grenze. Unlesbarer Preis bleibt blockierte Kostenabnahme. |
 | Risiken | Falsche Währung, doppelte VAT, versteckte IPv4/Backup-/Egress-/Requestpreise, ungebremste Skalierung. |
-| Mögliche Kosten | Kein kostenpflichtiger Belegabruf; reale Kosten nur im separat genehmigten Budgetauftrag, Untersuchungsgrenze 10 EUR ist keine Freigabe. |
+| Mögliche Kosten | Kein kostenpflichtiger Belegabruf; reale Kosten nur im separat genehmigten Budgetauftrag, Vergleichsrahmen seit Mission 7 bis zu 20 EUR brutto/Monat ist keine Freigabe. |
 | Bereinigung | Genehmigte Tests stoppen und ggf. ausdrücklich erlaubte Ressourcen schließen; Restkosten/Retention prüfen, Rechnungsbelege geschützt und endlich. |
 | Erforderliche Autorisierung | Öffentliche Recherche/Rechnung getrennt von späterer Kontoeinsicht, Ressourcen-/Kostenexperiment und Kündigungsrechten genehmigen. |
 

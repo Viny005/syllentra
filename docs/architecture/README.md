@@ -1,6 +1,8 @@
 # Technische Architekturstudie — Vergleich und Empfehlung
 
-**Version:** 0.2 · **Stand:** 22.10.2026 · **Status:** Empfohlen / Zur Entscheidung
+**Version:** 0.3 · **Stand:** 22.10.2026 · **Status:** Empfohlen / Zur Entscheidung
+
+> **Fortschreibung Mission 7:** Für künftige Vergleiche gilt jetzt bis zu **20 EUR brutto/Monat**, keine Ausgabe genehmigt. Die nachfolgenden 10-EUR-Aussagen/Rechnungen dokumentieren den früheren Untersuchungsstand aus Mission 5/6; sie sind keine aktuelle Obergrenze. Auch unter 20 EUR ist vollständige V1-Leistung nicht nachgewiesen. [Bestätigter Rahmen](../ARCHITECTURE_DECISIONS.md#adr-0006--persönlicher-qualitätsfokus-und-vergleichsrahmen-aus-mission-7).
 
 ## 1. Auftrag, Status und Leitentscheidung zur Prüfung
 
@@ -184,3 +186,8 @@ Die robuste Empfehlung betrifft **die Architekturform**, nicht endgültig den Pr
 ## 8. Machbarkeitsnachtrag aus Mission 6
 
 [Machbarkeitsprüfung](MACHBARKEITSPRUEFUNG.md) ergänzt neue öffentliche Quellen zu Auth/Recovery, R2-Locks, restic und Modellmetadaten; Hostpreise/-garantien und konkrete Modellartefakte teils weiter nicht verifiziert. [Ressourcenbedarf](RESSOURCENBEDARF.md) trennt vier Szenarien A–D und theoretische Reserven von Messwerten. [Benchmarkplan](BENCHMARKPLAN.md) beschreibt T01–T09 reproduzierbar mit DE/FR/EN-Startkorpus, aber ohne Ausführung. [Entscheidungsvorlage](ENTSCHEIDUNGSVORLAGE.md) klassifiziert alle 14 TECH-O neu, keine Entscheidung genehmigt. Die obige Mission-5-Matrix bleibt unveränderte Hypothese; neue Beobachtungen ersetzen keinen Cloud-/Modellbenchmark. Empfehlungen weiter Empfohlen / Zur Entscheidung.
+
+
+## 9. Ergänzende Vorbereitung aus Mission 7
+
+[Design System](../design/DESIGN_SYSTEM.md), [UIvergleich](../design/COMPONENT_LIBRARY.md), [UX-/Frontendplan](../design/UX_AND_FRONTEND_PLAN.md), [Codex-/Claude-Arbeitsrahmen](../ai-tooling/CODEX_CLAUDE_WORKFLOW.md), [APIvergleich](../integrations/LLM_API_COMPARISON.md), [Adapter](../integrations/AI_PROVIDER_ADAPTERS.md), [RAG/Evaluation](../integrations/RAG_COMPONENTS.md), [Patternabwägung](../development/ARCHITECTURAL_PATTERNS.md), [Lizenzen/Tools](../development/DEPENDENCY_SELECTION.md), [Integrationsfolge](../development/INTEGRATION_ROADMAP.md), [offene Punkte](../development/OPEN_DECISIONS.md) und [Quellen](../development/SOURCES.md) vertiefen die vorhandenen Studien. Drei lokale deklarative Skills, keine Aktivierung von MCP/Hooks/Apps, keine Änderung der 14 TECH-O. Empfehlungen zur Entscheidung; Client-/UI-/API-/Produktprüfungen nicht durchgeführt.

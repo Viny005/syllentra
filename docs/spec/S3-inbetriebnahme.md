@@ -1,7 +1,7 @@
 # S3 — Inbetriebnahme, Rollout und Betriebsaufnahme
 
 **Projekt:** Syllentra AI\
-**Version:** 0.1\
+**Version:** 0.2\
 **Stand:** 22.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Ausgangsbasis:** `1885a9c76ed549367097ac15d3960399a8651b88`, bestehender Spezifikationsbranch und [PR #1](https://github.com/Viny005/syllentra/pull/1).
@@ -45,7 +45,7 @@ Umgebungskennung in Konfiguration und Nachweisen führen. Gemeinsame Hardware is
 
 ## S3.4 Infrastrukturvorprüfung ohne Anbieterfestlegung
 
-DEC-48 verlangt **Oracle Cloud Infrastructure zuerst bewerten**, nicht auswählen. Bei fehlender Eignung Alternativen vergleichen; [ADR-0004/0005](../ARCHITECTURE_DECISIONS.md) bleiben maßgeblich. Kein notwendiger privater Dauer-PC, keine verpflichtende kostenpflichtige KI-API. Das Untersuchungslimit von 10 EUR brutto/Monat ist **keine Ausgabe- oder Kontoanlagefreigabe**.
+DEC-48 verlangt **Oracle Cloud Infrastructure zuerst bewerten**, nicht auswählen. Bei fehlender Eignung Alternativen vergleichen; [ADR-0004/0005](../ARCHITECTURE_DECISIONS.md) bleiben maßgeblich. Kein notwendiger privater Dauer-PC, keine verpflichtende kostenpflichtige KI-API. Der seit Mission 7 geltende Vergleichsrahmen bis zu 20 EUR brutto/Monat (ersetzt die frühere 10-EUR-Hypothese) ist **keine Ausgabe- oder Kontoanlagefreigabe**.
 
 | Prüfbereich | Voraussetzung vor tatsächlicher Einrichtung / Freigabe | Beleg und Stopgrund |
 |---|---|---|

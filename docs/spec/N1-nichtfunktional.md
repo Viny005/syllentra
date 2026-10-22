@@ -1,7 +1,7 @@
 # N1 — Nichtfunktionale Anforderungen
 
 **Projekt:** Syllentra AI\
-**Version:** 0.7\
+**Version:** 0.8\
 **Stand:** 22.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber
 
@@ -59,7 +59,7 @@ Der Projektinhaber hat zwei ergänzende Prüflisten mit zusammen **40 Einzelpunk
 
 ## N1.7 Begrenzter Anschluss von DEC-48 und DEC-49
 
-NFR-04/05/11/12 werden durch DEC-48/49 präzisiert: Oracle zuerst bewerten, Alternativen offenhalten; EU, Kapazität, Speicher, Verfügbarkeit, Netz, Betrieb, tatsächliche Kosten/Gratislimits, Sicherheit und Lizenzen nachweisen. Verschlüsselte EU-Sicherung unabhängig vom Primäranbieter, periodische tatsächliche Restore-Proben und Portabilität sind Pflichtziele. Die 10 EUR brutto/Monat sind nur ein Vergleichslimit, keine Ausgabe. RPO/RTO, Frequenz, Retention und Messverfahren bleiben offen. [ADR](../ARCHITECTURE_DECISIONS.md), [S2](S2-datenmigration.md), [Matrix](ENTSCHEIDUNGSMATRIX.md) und REL-S20/REL-Q20 führen die Nachweise. Dieser historische Anschluss aus Mission 2 wird durch N1.8–N1.10 fachlich vervollständigt; eine Produktprüfung oder technische Freigabe erfolgt weiterhin nicht.
+NFR-04/05/11/12 werden durch DEC-48/49 präzisiert: Oracle zuerst bewerten, Alternativen offenhalten; EU, Kapazität, Speicher, Verfügbarkeit, Netz, Betrieb, tatsächliche Kosten/Gratislimits, Sicherheit und Lizenzen nachweisen. Verschlüsselte EU-Sicherung unabhängig vom Primäranbieter, periodische tatsächliche Restore-Proben und Portabilität sind Pflichtziele. Der frühere Vergleichsrahmen von 10 EUR gilt seit Mission 7 für künftige Studien mit bis zu 20 EUR brutto/Monat; keine Ausgabe. RPO/RTO, Frequenz, Retention und Messverfahren bleiben offen. [ADR](../ARCHITECTURE_DECISIONS.md), [S2](S2-datenmigration.md), [Matrix](ENTSCHEIDUNGSMATRIX.md) und REL-S20/REL-Q20 führen die Nachweise. Dieser historische Anschluss aus Mission 2 wird durch N1.8–N1.10 fachlich vervollständigt; eine Produktprüfung oder technische Freigabe erfolgt weiterhin nicht.
 
 ## N1.8 Ergänzendes Anforderungsregister
 
@@ -143,7 +143,7 @@ Für jedes Profil gelten zusätzlich die Beleg- und Freigaberegeln aus [Freigabe
 | Abnahmekriterium | Keine unvereinbare oder ungeklärte notwendige Lizenz; keine automatische kostenpflichtige Ausweichlösung; reales Ressourcenangebot belegt. |
 | Erforderlicher Beleg | Lizenzquellen, Einschränkungen, Verbrauchs-/Kostenrechnung, Freigaben; REL-S18/Q03. |
 | Technische Abhängigkeiten | Auswahlprüfung von Software, Modellen und Anbietern. |
-| Offene Parameter | Lizenzauslegung, konkrete Angebote und Kapazität; 10 EUR brutto/Monat nur Untersuchungslimit, keine Ausgabe. |
+| Offene Parameter | Lizenzauslegung, konkrete Angebote und Kapazität; seit Mission 7 bis zu 20 EUR brutto/Monat nur Untersuchungsrahmen (zuvor 10 EUR), keine Ausgabe. |
 
 ### NFR-06 — Widerruf und kontrollierter Ausfall
 

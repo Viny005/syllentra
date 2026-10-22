@@ -2,7 +2,7 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** P1 — Ziele und Rahmenbedingungen\
-**Version:** 0.9\
+**Version:** 0.10\
 **Stand:** 22.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Spezifikationsmethode:** Bausteine nach Johannes Siedersleben\
@@ -861,6 +861,11 @@ L-09 konkretisiert G-15/CON-15 mit UC-66; L-02 konkretisiert G-26 bis G-28 und S
 
 ### P1.10.4 Bestätigter Bewertungs- und Sicherungsrahmen (DEC-48 / DEC-49)
 
-DEC-48 priorisiert Oracle Cloud Infrastructure für die spätere Hostingbewertung, ohne endgültige Auswahl oder Betriebsfreigabe. EU-Residenz, zentraler Betrieb ohne privaten Dauer-PC, Kapazität, Speicher, Verfügbarkeit, Netz, operative Grenzen, reale Kosten und Gratislimits, Abrechnungsrisiken, Sicherheit, Lizenzen und Entwicklungsmöglichkeiten sind nachzuweisen. Erfüllt Oracle die Anforderungen nicht, werden Alternativen geprüft. Die 10 EUR brutto/Monat begrenzen nur den Vergleich; keine Ausgabe, Kontoanlage oder externer Infrastrukturtest ist freigegeben.
+DEC-48 priorisiert Oracle Cloud Infrastructure für die spätere Hostingbewertung, ohne endgültige Auswahl oder Betriebsfreigabe. EU-Residenz, zentraler Betrieb ohne privaten Dauer-PC, Kapazität, Speicher, Verfügbarkeit, Netz, operative Grenzen, reale Kosten und Gratislimits, Abrechnungsrisiken, Sicherheit, Lizenzen und Entwicklungsmöglichkeiten sind nachzuweisen. Erfüllt Oracle die Anforderungen nicht, werden Alternativen geprüft. Seit Mission 7 begrenzen bis zu 20 EUR brutto/Monat nur künftige Vergleiche (zuvor 10 EUR); keine Ausgabe, Kontoanlage oder externer Infrastrukturtest ist freigegeben.
 
 DEC-49 konkretisiert G-45, CON-36/40/42 und SC-60/61: Verschlüsselte EU-Sicherungen müssen unabhängig vom Primäranbieter gespeichert werden, mit sicherer Schlüssel-/Zugriffsverwaltung, Schutz gegen versehentliche Löschung, Korruption und Kompromittierung sowie nachprüfbarer Portabilität und periodischen Restore-Proben. Endliche Retention bleibt mit Benutzerlöschung und Nichtwiederbelebung vereinbar. Anbieter, RPO/RTO, Frequenzen und Fristen bleiben offen; kein kostenpflichtiger Dienst wird vorausgesetzt. [ADR-0004/0005](../ARCHITECTURE_DECISIONS.md), [S2](S2-datenmigration.md) und [Entscheidungsmatrix](ENTSCHEIDUNGSMATRIX.md) trennen Vorgabe, technische Bewertung und künftigen Betriebsnachweis.
+
+
+### P1.10.5 Präzisierung des Eigentümers aus Mission 7
+
+Priorität ist zunächst eine hochwertige persönliche Lernassistenz mit guter Bedienbarkeit, pädagogischem Nutzen und zufriedenstellender Leistung. Das bestätigt keine Kürzung der V1-Ziele: Registrierung/Multiuser, strikte Kontoisolation, getrennte Administration, serverseitige Rechte und progressive Funktionsaktivierung bleiben erhalten. Bis zu 20 EUR brutto/Monat sind ausschließlich ein neuer Rahmen für künftige Vergleiche; frühere 10-EUR-Hypothese ersetzt, keine Ausgabe genehmigt. Mögliche finanzielle Beiträge späterer Nutzer sind nur eine spätere Untersuchungsoption, kein genehmigtes V1-Zahlungssystem. Quelle/Abgrenzung: [ADR-0006](../ARCHITECTURE_DECISIONS.md#adr-0006--persönlicher-qualitätsfokus-und-vergleichsrahmen-aus-mission-7). Keine G-/CON-/SC-/AS-/R-Kennung oder Abnahme entfällt.

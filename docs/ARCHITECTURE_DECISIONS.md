@@ -53,7 +53,7 @@ Quelle: Nutzerauftrag „Syllentra AI — Mission 2: Consolidation documentaire 
 
 **Bewertungskriterien:** Tatsächliche EU-Regionen und Unterauftragnehmer; Sicherheits-/Rechte- und Schlüsselgrenzen; real verfügbare CPU-/Modellkapazität, Speicher, Netz, Kontingente und Parallelbetrieb; Verfügbarkeit und operative Einschränkungen einschließlich Ausfall-/Accountverlust; vollständige Speicher-, Transfer-, Backup- und Betriebskosten, Gratislimits und Abrechnungsrisiken; kommerziell geeignete Software-/Modelllizenzen, Skalierbarkeit und Portabilität. Der Vergleich berücksichtigt DEC-49 und keine verpflichtende kostenpflichtige KI-API. Ein Gratisetikett ersetzt keine aktuellen Bedingungen oder Kapazitätsbelege.
 
-**Kosten-/Ausführungsgrenze:** Maximal 10 EUR brutto/Monat ist ausschließlich eine Grenze der vergleichenden Untersuchung. **Keine Ausgabe genehmigt**; keine Buchung, Provisionierung oder automatische kostenpflichtige Ausweichlösung. Erfordert ein späterer Test Ressourcen oder Kontozugang, ist der konkrete Test vor Ausführung gesondert zu autorisieren.
+**Kosten-/Ausführungsgrenze:** Seit Mission 7 bis zu **20 EUR brutto/Monat** ausschließlich für künftige Vergleiche; ersetzt die frühere 10-EUR-Hypothese aus PACE/Mission 2–6. **Keine Ausgabe genehmigt**; keine Buchung, Provisionierung oder automatische kostenpflichtige Ausweichlösung. Erfordert ein späterer Test Ressourcen oder Kontozugang, ist der konkrete Test vor Ausführung gesondert zu autorisieren.
 
 **Alternativen und Folgen:** Andere geeignete EU-konforme Hostingmöglichkeiten bleiben prüfbar; konkrete Kandidaten und Messwerte sind noch zu ermitteln. Provider-, Framework-, Datenbank- und Modellentscheidung werden nicht vorweggenommen. Ein negatives Oracle-Ergebnis führt zu dokumentiertem Vergleich statt Abschwächung von Datenschutz oder Sicherheit.
 
@@ -81,3 +81,14 @@ Quelle: Nutzerauftrag „Syllentra AI — Mission 2: Consolidation documentaire 
 Mission 5 dokumentiert [Architekturvergleich](architecture/README.md), [offene technische Entscheidungen](architecture/OFFENE_ENTSCHEIDUNGEN.md) und [Quellen/Abrufgrenzen](architecture/QUELLEN.md) im Status **Empfohlen / Zur Entscheidung**. Modularer Monolith, PostgreSQL, Vite/FastAPI, begrenzte CPU-Worker, konkrete KI-/Authkandidaten und drei Hostingkonzepte sind Untersuchungsempfehlungen, keine beschlossenen ADRs. Bestehende ADR-0004/0005 und DEC-48/49 unverändert: Oracle zuerst bewerten, unabhängiges verschlüsseltes EU-Backup erforderlich. Keine neue ADR-Kennung, kein Anbieter/Stack ausgewählt, kein Ausgaben-/Implementierungs-/Deploymentauftrag.
 
 Vor einer technischen Entscheidung aktuelle Angebote, individuelle Gewichts-/Stimmenlizenzen, Support-/ARM64-Nachweise und geeignete Leistungs-/Sicherheitsmessungen nach eigenem Auftrag schließen. Erst die ausdrückliche Eigentümerentscheidung darf einen entsprechenden ADRstatus ändern. Ein hypothesenbasierter Punktwert oder zugängliches README ist keine Sicherheits-/Verfügbarkeits-/Budgetgarantie.
+
+
+### ADR-0006 — Persönlicher Qualitätsfokus und Vergleichsrahmen aus Mission 7
+
+**Status:** Bestätigter Untersuchungsrahmen des Eigentümers; technische Empfehlungen weiter **Empfohlen / Zur Entscheidung**, Fachentwürfe Zur Prüfung.
+
+**Quelle / Datum:** Vollständiger Nutzerauftrag „SYLLENTRA AI — MISSION 7“, Abschnitt 1, 22.10.2026; Ausgangscommit `f3e3aa647cd96171e300056379063d5761f16e70`.
+
+**Bestätigt:** Zuerst hochwertige persönliche Lernassistenz mit guter UX, nützlicher Pädagogik und zufriedenstellender Leistung. Künftige Vergleiche dürfen bis zu **20 EUR brutto/Monat** untersuchen; frühere 10-EUR-Hypothese ersetzt, historische Rechnungen bleiben datierte Nachweise. **Keine Ausgabe genehmigt.** V1-Registrierung/Multiuser mit strikter Isolation, getrennten Adminaccounts, Serverrechten und progressiver Aktivierung bleibt unverändert. Mögliche spätere Nutzerbeiträge nur untersuchen; kein V1-Zahlungssystem genehmigt.
+
+**Folgen / Grenzen:** Neue [Design-/Entwicklungsstudie](development/INTEGRATION_ROADMAP.md) ergänzt die bisherigen Alternativen, wählt keinen Anbieter/Stack/Modell und genehmigt keine Installation, API, Cloud oder Inbetriebnahme. DEC-48/49 und alle TECH-O bleiben bestehen. Persönlicher Prototyp ersetzt keine vollständige Multiuser-V1-Abnahme; Sicherheit wird nicht später nachgerüstet. Budgetplausibilität und Leistung benötigen aktuelle Angebote und gesondert erlaubte Tests.

@@ -1,7 +1,7 @@
 # E3 — Änderungs- und Prüfnachweis
 
 **Projekt:** Syllentra AI\
-**Version:** 0.10\
+**Version:** 0.11\
 **Stand:** 22.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber
 
@@ -403,3 +403,31 @@ Diese Prüfungen belegen Dokumentationskonsistenz und Bestandserhalt. Keine Prod
 **Prüfgrenze:** Bestands-/Struktur-/Hashvergleich, arithmetische Prüfung, tatsächliche öffentliche Quellenabrufe und Mermaidrendering. Kein eigener Ressourcen-/Inferenz-/Didaktik-/Audio-/Auth-/Backup-/Kosten-/Isolationstest durchgeführt. Geheimnismuster und redaktionelle Sichtung sind kein vollständiger Sicherheits-/Datenschutznachweis; offene externe Quellen bleiben nicht verifiziert.
 
 **Offen und nicht durchgeführt:** Alle T01–T09, Anbieter-/Steuer-/Vertragslücken, exakte Artefaktlizenzen/-hashes, Auth-/Recoveryverfahren und N1-Zielwerte vor späterem autorisiertem Experiment schließen. Grund-V1 bleibt vollständig spezifiziert, progressive Aktivierung keine Löschung bestätigter Funktionen. Keine Software installiert, Gewichte geladen, Modelle/Cloud/Last/Restore/Authprototypen ausgeführt, Accounts/Ressourcen erstellt, Ausgaben, Code, Merge oder Deployment. Empfehlungen Empfohlen / Zur Entscheidung, Fachentwürfe Zur Prüfung; FE-56 offen. Finalen Commit/Remote-/PR-Stand nach normalem Push im Abschlussbericht nennen.
+
+
+## E3.24 Mission 7 — Entwicklungsökosystem und Designvorbereitung
+
+**Quelle / Ausgang:** Vollständiger Nutzerauftrag Mission 7, Abschnitte 1–26; am 22.10.2026 verifizierter lokaler/Remote-/PR-HEAD `f3e3aa647cd96171e300056379063d5761f16e70`, sauberer bestehender Spezifikationsbranch, PR #1 OPEN, `main` `beb66e1cd399f4a0fab55d3fd476a77d7804c5a7` unverändert. Keine App/Manifeste/Projekt-Skills vorhanden.
+
+**Wesentliche Änderungen:** [ADR-0006](../ARCHITECTURE_DECISIONS.md#adr-0006--persönlicher-qualitätsfokus-und-vergleichsrahmen-aus-mission-7) hält den ausdrücklich bestätigten persönlichen Qualitätsfokus, unveränderte Multiuser-V1 und künftigen Vergleichsrahmen bis 20 EUR brutto/Monat fest. Die alte 10-EUR-Hypothese wird als aktueller Rahmen abgelöst, historische Rechnungen/Prüfungen bleiben erhalten. Keine Ausgabe und keine V1-Zahlung genehmigt. AGENTS, P1/N1/S3/Matrix, Index und PACE gezielt fortgeschrieben, keine FE-/UC-/REL-Änderung.
+
+**Neue Unterlagen:** [Design System](../design/DESIGN_SYSTEM.md), [UIkomponenten](../design/COMPONENT_LIBRARY.md), [UX-/Frontendplan](../design/UX_AND_FRONTEND_PLAN.md); [Codex-/Claude-Verfahren](../ai-tooling/CODEX_CLAUDE_WORKFLOW.md), [Rollen](../ai-tooling/AGENT_ROLES.md), [Skillskatalog](../ai-tooling/SKILLS_CATALOG.md), [MCPschutz](../ai-tooling/MCP_SECURITY.md), [Verfahren/Hooks](../ai-tooling/COMMANDS_AND_HOOKS.md); [APIvergleich](../integrations/LLM_API_COMPARISON.md), [Adapter](../integrations/AI_PROVIDER_ADAPTERS.md), [RAG/Evaluation](../integrations/RAG_COMPONENTS.md); [Patternabwägung](../development/ARCHITECTURAL_PATTERNS.md), [Lizenz-/Toolauswahl](../development/DEPENDENCY_SELECTION.md), [Integrationsfolge](../development/INTEGRATION_ROADMAP.md), [offene Entscheidungen](../development/OPEN_DECISIONS.md), [Quellen](../development/SOURCES.md). Drei rein deklarative lokale SKILLdateien und kurzer CLAUDE-Einstieg, keine Scripts/Plugins/MCP-/Hookaktivierung. Alle Technik-/Designempfehlungen Empfohlen / Zur Entscheidung, Fachentwürfe Zur Prüfung.
+
+**Belegte Quellenkorrekturen:** `openai/skills` jetzt deprecated mit Verweis auf Plugins; tatsächlicher Codex-Projektpfad dennoch im offiziellen Quelltext bestätigt. HF-Inference-Providers-Free ohne Credits laut aktuellem offiziellen Dokumentationsquelltext. Cloudflare/OpenRouter dokumentieren begrenzte Gratisquoten, keine kostenlose Produktionsgarantie. 60 offizielle Branchrevisionen geprüft, 56 Lizenzdateien an konkreten Commits gelesen; u. a. Lucide ISC plus MIT-Anteile, aktuelles Ragas/DeepEval Apache-2.0, MCP-Referenzen in Lizenzübergang und PostgreSQLreferenz archiviert, Claude-Code-Lizenz proprietär. Keine automatische Lizenzübertragung auf Transitive/Gewichte/Daten/Hostedangebote.
+
+**Tatsächlich ausgeführte Dokumentationsprüfungen (22.10.2026):**
+
+| Prüfung | Ergebnis / Grenze |
+|---|---|
+| Markdown / lokale Links / Tabellen | Bestehender Markdown-it-Parser 14.1.0: 68 Markdown-Dateien, 883 lokale Links und 659 Tabellen ohne Fehler nach Ergänzung dieses Nachweises; UTF-8 geprüft. Externe Quellabrufe im Quellenregister, gesperrte Seiten ausdrücklich nicht als funktionierende Links bestätigt. |
+| Historische Anker und Diagramme | 1.263 bisherige Anker erhalten; alle 14 Mermaid-Quellblöcke unverändert. Keine neue Diagrammausführung behauptet; früherer Parse-/Renderbeleg bleibt historisch erhalten. |
+| Inhaltserhaltung / Kennungen | 89 FE und FE-56 offen, 66 UC, 25 DEC-V1, DEC-48/49, 46 REL, 28 AT-L, 20 AT-S3 und 14 TECH-O erhalten. Kanonische Kataloge inhaltlich verglichen, unberührte Primärdateien bytegleich; P1/N1/S3/Matrix nur um bestätigten Rahmen ergänzt bzw. gezielt geändert. Alle neun T-Protokolle samt Inhalt erhalten, nur Kostenrahmen fortgeschrieben. |
+| Skillformat / Instruktionsgrenzen | Drei SKILLdateien mit vorhandenem PyYAML 6.0.3 geparst: ausschließlich name/description, gültige Namen/Längen und passende Verzeichnisse; keine Tools-/Scriptfreigaben, Symlinks oder ausführbaren neuen Dateien. Invocation/Discovery nicht getestet. |
+| Quellen / Lizenzen | 60 offizielle Branchrevisionen lesend geprüft; 56 Lizenzdateien mit konkretem Commit und SHA-256, gelesene Antwortbytes gegen Quellenregister geprüft. Kein vollständiger Transitiv-/Paket-/Advisoryaudit. |
+| Designfarben | 22 definierte sRGB-Kontrastpaare rechnerisch geprüft; kleinster geprüfter Wert 4,76:1. Nur Tokenprüfung, keine gerenderte Oberfläche oder WCAG-Abnahme. |
+| Öffentliche Inhalte / Scope | Diff und neue Dateien geprüft: 18 bestehende Markdown-Dateien geändert, 20 neue Markdown-Dateien (16 Studien, drei Skills, CLAUDE-Einstieg). Keine Muster für private Schlüssel/API-/GitHub-/Cloudcredentials; keine temporären lokalen Pfade oder privaten Echtdaten in neuen Unterlagen. Mustersuche ist kein garantierter vollständiger Secretscanner. |
+| Git / Ausführungsgrenzen | git diff --check erfolgreich; ausschließlich Markdown, keine App-/Manifest-/Lock-/CI-/Hook-/MCPkonfigänderung. Keine Installation, Modelle oder neuen Verbindungen; kein Produkt-/APItest. Normaler Commit/Push autorisiert, Merge/Deployment nicht. |
+
+Alle technischen Empfehlungen bleiben zur Entscheidung und Fachentwürfe Zur Prüfung. Prüfungen beziehen sich auf den dokumentierten Diff, nicht auf ein getestetes Produkt.
+
+**Offen / nicht durchgeführt:** Codex-/Claude-Discovery und Skillinvokation nicht funktional getestet, keine neuen Agenten oder MCPserver gestartet, keine UI/Anwendung erstellt, keine echten Browser-/A11y-/Modell-/API-/Auth-/Restore-/Lasttests. T01–T09 weiterhin geplant. Groq/Gemini/Mistral/Cerebras-Tarife/-Quoten/-Verträge und andere gesperrte Primärseiten nicht aktuell verifiziert; Software-/Quelllizenzprüfung ersetzt weder vollständige Transitiv-/Gewichtsprüfung noch Herstellervertrag. 14 TECH-O offen; FE-56 offen. Eignung vollständiger V1 auch bis 20 EUR brutto unbewiesen. Endcommit/Push-/PRstatus erst nach tatsächlicher Gitaktion im Abschlussbericht.

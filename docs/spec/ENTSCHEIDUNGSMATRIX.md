@@ -1,7 +1,7 @@
 # Entscheidungsabdeckung — konsolidierter Fachstand
 
 **Projekt:** Syllentra AI\
-**Version:** 0.3\
+**Version:** 0.4\
 **Stand:** 22.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber
 
@@ -133,7 +133,7 @@ FE-20 betrifft Eingabe/Sprachdialog; FE-21 betrifft gewählte Einzelwiedergabe u
 | Entscheidung | Bestätigter Rahmen | Spezifikation / Architektur / künftiger Betrieb | Lokale Soll-Abnahme |
 |---|---|---|---|
 | DEC-48 | Oracle Cloud Infrastructure zuerst bewerten, Alternativen bei unzureichender Eignung; keine endgültige Auswahl | P1.10.4, P2.9.7, NFR-04/05; ADR-0004 definiert Kriterien; [S3](S3-inbetriebnahme.md) beschreibt jetzt die künftige Betriebsaufnahme, ohne technische Ausführung | AT-DEC48-01: Dokumentierter Vergleich deckt EU, PC-Unabhängigkeit, Kapazität, Speicher, Verfügbarkeit, Netz, Betrieb, Kosten/Gratislimits, Abrechnungsrisiken, Sicherheit, Lizenzen und Skalierung ab. Fehlender Nachweis ist offen, keine kostenfreie Eignung oder Auswahl behaupten. |
-| DEC-48 | 10 EUR brutto/Monat nur Vergleichslimit, keine Ausgabe/Konto-/Infrastrukturfreigabe | ADR-0004, PACE-Projektkontext; kein Test dieses Auftrags | AT-DEC48-02: Auftrag zur Dokumentation erzeugt keinen Account, keine Ressource, Rechnung oder externe Probe. |
+| DEC-48 | Seit Mission 7 bis zu 20 EUR brutto/Monat für künftige Vergleiche (zuvor 10 EUR), keine Ausgabe/Konto-/Infrastrukturfreigabe | ADR-0004, PACE-Projektkontext; kein Test dieses Auftrags | AT-DEC48-02: Auftrag zur Dokumentation erzeugt keinen Account, keine Ressource, Rechnung oder externe Probe. |
 | DEC-49 | Verschlüsselte EU-Sicherung unabhängig vom Primäranbieter; sichere Schlüssel und begrenzte Rechte | P1.10.4, P2.9.7; UC-60, DM-69/70, DT-81, DLG-61, BAT-23, S2.19; NFR-04/11/12, SEC-08/09/14/15; ADR-0005 | AT-DEC49-01: Nur zweite Region/Konto beim Primäranbieter reicht nicht; unabhängiger Speicher/Schlüsselzugang und Integrität sind belegbar, kein Admin-Klartextschlüssel. |
 | DEC-49 | Portabilität und periodische verifizierbare Wiederherstellung mit Lösch-/Retentiongrenzen | S2/N2, REL-S20/REL-Q20; künftige Betriebsverfahren in S3 | AT-DEC49-02: Restore-Proben berücksichtigen Ausfall, versehentliche Löschung, Korruption, Kompromittierung, heutigen Entzug/Löschstand und Kontentrennung. Ohne tatsächlichen Beleg nicht bestanden; RPO/RTO, Frequenz/Testintervall/Retention offen, kein Backupanbieter gewählt. |
 

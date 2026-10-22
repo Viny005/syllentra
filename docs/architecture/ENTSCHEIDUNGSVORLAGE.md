@@ -1,6 +1,8 @@
 # Entscheidungsvorlage — TECH-O-01 bis TECH-O-14
 
-**Version:** 0.1 · **Stand:** 22.10.2026 · **Status:** Empfohlen / Zur Entscheidung
+**Version:** 0.2 · **Stand:** 22.10.2026 · **Status:** Empfohlen / Zur Entscheidung
+
+> **Fortschreibung Mission 7:** Für künftige Vergleiche gilt jetzt bis zu **20 EUR brutto/Monat**, keine Ausgabe genehmigt. Die nachfolgenden 10-EUR-Aussagen/Rechnungen dokumentieren den früheren Untersuchungsstand aus Mission 5/6; sie sind keine aktuelle Obergrenze. Auch unter 20 EUR ist vollständige V1-Leistung nicht nachgewiesen. [Bestätigter Rahmen](../ARCHITECTURE_DECISIONS.md#adr-0006--persönlicher-qualitätsfokus-und-vergleichsrahmen-aus-mission-7).
 
 ## 1. Kategorien und Entscheidungsgrenze
 
@@ -40,7 +42,7 @@ Alle Kennungen referenzieren das bestehende [TECH-O-Register](OFFENE_ENTSCHEIDUN
 | TECH-O-09 | Medien-/IO-/Reviewaufwand, keine freien Kapazitätszusagen. | T04/T05 und T03-Sprachfälle, SEC-27. | Genaue Artefakte/Sprachrechte beschaffen, danach begrenzte Medienproben separat erlauben. | Offen — Empfohlen / Zur Entscheidung |
 | TECH-O-10 | Speicher/Requests/Restore/Transfer und Scratchspace; keine Gesamtquote. | T07/T08, DEC-49, O-S3-02/06/07/11. | Kein Backupanbieter gewählt; Vertrag und Rechtearchitektur vor realem Restoreversuch schließen. | Offen — Empfohlen / Zur Entscheidung |
 | TECH-O-11 | Mail/Domain/DNS nicht als Null buchen. | T06/T08, NB-05/09, TECH-O-02/05. | Öffentliche aktuelle Bedingungen prüfen; keine Konten/Domains anlegen. | Offen — Empfohlen / Zur Entscheidung |
-| TECH-O-12 | 10 EUR brutto nur Untersuchungsgrenze, keine Ausgabe. | T01..T08 je Zweck, N1.10, S3.14. | Eigentümer bestätigt Ziele/Schwellen vor Test; keine Kosten-/V1-Kürzung durch Agent. | Offen — Empfohlen / Zur Entscheidung |
+| TECH-O-12 | Seit Mission 7 bis zu 20 EUR brutto/Monat nur Vergleichsrahmen, keine Ausgabe. | T01..T08 je Zweck, N1.10, S3.14. | Eigentümer bestätigt Ziele/Schwellen vor Test; keine Kosten-/V1-Kürzung durch Agent. | Offen — Empfohlen / Zur Entscheidung |
 | TECH-O-13 | Prüfaufwand und Lizenzbedingungen in Gesamtvergleich. | Alle Tests vor relevanter Artefakt-/Datenverwendung, SEC-24/26. | Gezielte Quellen-/Vertragslücken schließen; keine Konformität behaupten. | Offen — Empfohlen / Zur Entscheidung |
 | TECH-O-14 | Kein aktuelles finanzielles Engagement; später konkretes Budget. | T01..T09, PACE, S3.7/13. | Konkreten einzelnen Prüfauftrag zur Genehmigung vorlegen, nicht alle Tests automatisch starten. | Offen — Empfohlen / Zur Entscheidung |
 

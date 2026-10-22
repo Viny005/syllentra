@@ -46,3 +46,8 @@ Syllentra AI is intentionally not claiming finished features at this stage. The 
 ## AI development workflow
 
 Start with [AGENTS.md](AGENTS.md), the [PACE workflow](docs/ai/WORKFLOW.md), and the [verified project context](docs/ai/PROJECT_CONTEXT.md).
+
+
+## Vorbereitung von Gestaltung und Entwicklung
+
+[Design System](docs/design/DESIGN_SYSTEM.md), [Integration und offene Entscheidungen](docs/development/INTEGRATION_ROADMAP.md), [Codex-/Claude-Verfahren](docs/ai-tooling/CODEX_CLAUDE_WORKFLOW.md) sowie [Quellen und Lizenzen](docs/development/SOURCES.md) sind Vorschläge **Empfohlen / Zur Entscheidung**. Drei deklarative lokale Skills, keine Anwendung oder neue Toolaktivierung. Persönliche Qualitätspriorität und künftiger Vergleichsrahmen bis 20 EUR brutto/Monat sind bestätigt; **keine Ausgabe genehmigt**, V1-Multiuser-/Schutzanforderungen unverändert.

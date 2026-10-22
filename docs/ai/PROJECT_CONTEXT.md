@@ -1,12 +1,12 @@
 # Syllentra AI — überprüfter Projektkontext
 
-**Version:** 0.8 · **Stand:** 22.10.2026 · **Status:** Zur Prüfung durch den Projektinhaber
+**Version:** 0.9 · **Stand:** 22.10.2026 · **Status:** Zur Prüfung durch den Projektinhaber
 
 ## Git-Snapshot und Geltung
 
 Repository: `Viny005/syllentra` — <https://github.com/Viny005/syllentra>.
 Aktueller Arbeitsbranch: `docs/spec/p1-p2-mobile-workspaces`, zugeordnet zu [PR #1](https://github.com/Viny005/syllentra/pull/1).
-Am 22.10.2026 lokal, per entferntem Branch und PR-Git-Ref überprüfter Ausgangscommit der Mission 6: `9eb07f3fdc7c3b7c73b762af7fbfe761e9341807`. Arbeitsbaum vor Bearbeitung sauber, PR #1 auf der öffentlichen GitHub-Seite als offen geprüft. PACE ist durch PR #2 seit `39261a5816a99f7c10c79344e5a1adc03b685d49` integriert. Der Snapshot ist eine datierte Ausgangsbasis, kein dauerhaft aktueller HEAD; bei jeder Aufgabe erneut prüfen. Endcommit/Push werden im Abschlussbericht nachgewiesen.
+Am 22.10.2026 lokal, per entferntem Branch und PR-Git-Ref überprüfter Ausgangscommit der Mission 7: `f3e3aa647cd96171e300056379063d5761f16e70`. Arbeitsbaum vor Bearbeitung sauber, PR #1 auf der öffentlichen GitHub-Seite als offen geprüft. PACE ist durch PR #2 seit `39261a5816a99f7c10c79344e5a1adc03b685d49` integriert. Der Snapshot ist eine datierte Ausgangsbasis, kein dauerhaft aktueller HEAD; bei jeder Aufgabe erneut prüfen. Endcommit/Push werden im Abschlussbericht nachgewiesen.
 
 ## Ziel und Aufbau
 
@@ -22,7 +22,7 @@ Adaptiver Lernbegleiter für Studierende: Materialien, Audio und Gespräche mit 
 | [D1](../spec/D1-datenmodell.md), [D2](../spec/D2-datentypen.md) | Fachliche Daten, Beziehungen, Invarianten und Datentypen. |
 | [B1](../spec/B1-dialogspezifikation.md), [B2](../spec/B2-batch.md), [B3](../spec/B3-druckausgaben.md) | Dialoge, Hintergrundverarbeitung und Ausgaben. |
 | [S1](../spec/S1-nachbarsysteme.md), [S2](../spec/S2-datenmigration.md) | Nachbarverträge, kanonische 89 FE in S1.18.1, Migration/Export/Wiederherstellung. |
-| [S3](../spec/S3-inbetriebnahme.md) | Version 0.1: zukünftige Betriebsaufnahme, Super-Admin-Grenzen, unabhängiger Restore, 46 Kontrollverweise und menschliche Freigabe; keine technische Umsetzung. |
+| [S3](../spec/S3-inbetriebnahme.md) | Version 0.2: zukünftige Betriebsaufnahme, Super-Admin-Grenzen, unabhängiger Restore, 46 Kontrollverweise und menschliche Freigabe; keine technische Umsetzung. |
 | [N1](../spec/N1-nichtfunktional.md), [N2](../spec/N2-querschnittskonzepte.md) | Fachlich vervollständigte V1-Prüfentwürfe: 25 NFR- und 27 SEC-Profile; Zielwerte, Verfahren und Produktnachweise offen. |
 | [40-Punkte-Release-Checkliste](../quality/RELEASE_READINESS_40.md) | Zwei vom Projektinhaber am 22.10.2026 bestätigte Quellenlisten mit je 20 Prüfpunkten (REL-S01..20, REL-Q01..20); V1-Freigabekriterien, REL-Q10 Zahlung nur spätere Option. Ohne Produktnachweise. |
 | [Qualitäts-/Freigabeergänzungen](../quality/RELEASE_KONTROLLMATRIX.md) | 20 Kandidaten konsolidiert: sechs neue Kontrollen, 46 insgesamt. Verlinkter Referenzrahmen und Freigabevoraussetzungen liegen dem S3-Prüfentwurf zugrunde; keine Produktprüfung. |
@@ -56,11 +56,11 @@ Die Zusammenfassung ersetzt keine Primärquelle: S1.18.1 enthält **89 FE, davon
 
 Keine Geheimnisse, privaten Lernmaterialien oder personenbezogenen Echtdaten ins öffentliche Repository. Nachvollziehbare Nutzerentscheidungen, Rechte-/Kontentrennung und geschützte Dokumente sind verbindlicher Rahmen. Externe Datenverarbeitung erfordert passende ausdrückliche Freigabe. Kein verpflichtender kostenpflichtiger KI-API-Zugang; kostenlose kommerziell geeignete Software-/Modelllizenzen bevorzugen, Sicherheit erhalten.
 
-**Untersuchungslimit für Infrastruktur: maximal 10 EUR brutto pro Monat. Keine Ausgabe genehmigt.** Dies ist ausschließlich eine Grenze für Untersuchung/Vergleich aus dem PACE-Auftrag vom 19.10.2026, keine Buchungs-, Kontoeröffnungs- oder Betriebsfreigabe. Keine kostenpflichtigen Dienste oder Infrastruktur aktivieren.
+**Künftiger Vergleichsrahmen: bis zu 20 EUR brutto pro Monat. Keine Ausgabe genehmigt.** Mission 7 ersetzt ausdrücklich die frühere 10-EUR-Hypothese aus PACE/Mission 2–6; historische Rechnungen bleiben als solche erhalten. [ADR-0006](../ARCHITECTURE_DECISIONS.md#adr-0006--persönlicher-qualitätsfokus-und-vergleichsrahmen-aus-mission-7) dokumentiert persönliche Qualitätspriorität bei unverändertem V1-Multiuserziel, keine Buchungs-, Kontoeröffnungs- oder Betriebsfreigabe. Keine kostenpflichtigen Dienste oder Infrastruktur aktivieren.
 
 ## Auftragsumfang und nächste Schritte
 
-Mission 6 autorisiert ausschließlich dokumentarische Machbarkeitsprüfung, neue öffentliche Quellenrecherche, Ressourcenrechnung, künftige T01–T09-Planung und Neubewertung der 14 TECH-O sowie nötige Referenz-/PACE-/E3-Pflege mit Commit/normalem Push auf der bestehenden Spezifikationsbranch zur Aktualisierung von PR #1. Der zunächst abgeschnittene Auftrag wurde durch Abschnitte 12–16 vervollständigt. Kein Merge, `main` unverändert, keine Installation, Gewichtsdownloads/Modellausführung, technische Tests, Appentwicklung, Cloudressource, Account oder Ausgabe. Fachentwürfe Zur Prüfung; Studien Empfohlen / Zur Entscheidung.
+Mission 7 autorisiert Quellen-/Lizenz-/Tool-/APIstudie, Design-/Entwicklungskonzepte, wenige sichere lokale deklarative Skills nach Formatnachweis, optionale CLAUDE-Einstiegsdatei und gezielte Referenz-/PACE-/E3-Pflege mit Commit/normalem Push auf derselben Spezifikationsbranch zur Aktualisierung von PR #1. Der vollständige Auftrag umfasst 26 Abschnitte. Kein Merge, `main` unverändert, keine Installation, Gewichtsdownloads/Modellausführung, technische Tests, Appentwicklung, Cloudressource, Account oder Ausgabe. Fachentwürfe Zur Prüfung; Studien Empfohlen / Zur Entscheidung.
 
 **Aktueller Untersuchungsstand:** Modularer Kern mit PostgreSQL, begrenzten separaten Workern und austauschbaren KI-Adaptern empfohlen; Vite/React + FastAPI, llama.cpp/kleine Qwen3-Kandidaten und selbst gehostete Identitätsoptionen zu prüfen. OCI zuerst bewerten; Hetzner/Scaleway echte Vergleichsoptionen. Keine komplette kostenlose Multiuser-KI nachgewiesen. Primärcloudpreise/-quoten und viele konkrete Gewichtslizenzen bleiben nicht verifiziert (Netzwerk-403); offizielle GitHub-Quellen belegen u. a. Softwarelizenzen, Releaseweiterleitungen und R2-Standardpreise/EU-Jurisdiktion. Gesamte R2-Vertrags-/Datenschutzlage noch offen. Gewichtete Scores sind transparente Hypothesen, keine Auswahl; Quellen-, Angebots-, Lizenz- und Benchmarklücken vor Entscheidung schließen.
 
@@ -72,4 +72,11 @@ Arbeitsregeln: [AGENTS.md](../../AGENTS.md), [Workflow](WORKFLOW.md). Übergaben
 
 ## Aktuelle Machbarkeitspräzisierungen Mission 6
 
-[Neue Quellen/Prüfung](../architecture/MACHBARKEITSPRUEFUNG.md): Keycloak Link/Generator-OTP nicht mit E-Mail-OTP gleichsetzen; authentik-Recoveryreaktivierung und Anti-Enumeration gezielt prüfen. R2 dokumentiert entfernbare Bucketlocks; restic-Prune/Retention/Schutz gegen kompromittierte Credentials abstimmen. Host-/Modellhost-/Vertragsseiten trotz neuer offizieller API-/Repositorywege teils unlesbar. Keine Preise, garantierte Zuteilung oder Gewichtsrechte erfinden. [Ressourcenrechnungen](../architecture/RESSOURCENBEDARF.md) sind keine Messung; [T01–T09](../architecture/BENCHMARKPLAN.md) nicht ausgeführt. [14 TECH-O](../architecture/ENTSCHEIDUNGSVORLAGE.md) in A/B/C/D gegliedert, keine genehmigt. Ein persönlicher begrenzter Prototyp theoretisch prüfbar; vollständige Multiuser-V1 auf Always Free oder unter 10 EUR weiter unbewiesen. 89 FE, FE-56 offen, 66 UC, 25 DEC-V1, DEC-48/49 und 46 REL unverändert.
+[Neue Quellen/Prüfung](../architecture/MACHBARKEITSPRUEFUNG.md): Keycloak Link/Generator-OTP nicht mit E-Mail-OTP gleichsetzen; authentik-Recoveryreaktivierung und Anti-Enumeration gezielt prüfen. R2 dokumentiert entfernbare Bucketlocks; restic-Prune/Retention/Schutz gegen kompromittierte Credentials abstimmen. Host-/Modellhost-/Vertragsseiten trotz neuer offizieller API-/Repositorywege teils unlesbar. Keine Preise, garantierte Zuteilung oder Gewichtsrechte erfinden. [Ressourcenrechnungen](../architecture/RESSOURCENBEDARF.md) sind keine Messung; [T01–T09](../architecture/BENCHMARKPLAN.md) nicht ausgeführt. [14 TECH-O](../architecture/ENTSCHEIDUNGSVORLAGE.md) in A/B/C/D gegliedert, keine genehmigt. Historischer Befund aus Mission 6: persönlicher begrenzter Prototyp theoretisch prüfbar, vollständige Multiuser-V1 auf Always Free oder unter damaligen 10 EUR unbewiesen; auch der neue 20-EUR-Vergleichsrahmen erbringt keinen Leistungsnachweis. 89 FE, FE-56 offen, 66 UC, 25 DEC-V1, DEC-48/49 und 46 REL unverändert.
+
+
+## Vorbereitung aus Mission 7
+
+[Neue Übersicht](../development/INTEGRATION_ROADMAP.md): hochwertige persönliche Lernassistenz zuerst, V1-Registrierung/Isolation/Admin/Serverflags unverändert, keine Zahlung genehmigt. [Design](../design/DESIGN_SYSTEM.md) mit Token/Themes/Responsive; kleine UIauswahl, keine Installation. [Codex/Claude](../ai-tooling/CODEX_CLAUDE_WORKFLOW.md) trennt Formate; drei lokale Markdown-Skills strukturell vorbereitet, tatsächliche Invocation/Discovery nicht getestet. Keine aktiven Hooks/MCP-/Agentenkonfigurationen.
+
+[APIvergleich](../integrations/LLM_API_COMPARISON.md): Cloudflare-/OpenRouter-Dokumente belegen begrenzte Freeangebote, HF-Free ohne Credits laut neuer offizieller Quelle; Groq/Gemini/Mistral/Cerebras kommerziell/vertraglich weiter nicht verifiziert. Keine Liveinferenz. [Lizenzen](../development/DEPENDENCY_SELECTION.md) an konkreten Quellrevisionen gelesen, vollständige Paket-/Transitiv-/Modellrechte vor Einführung offen. Kleinere Adapter/PG-Volltext und menschliche pädagogische Evaluation empfohlen, keine Stack-/Hosting-/APIwahl. Bestehende T01–T09 nicht ausgeführt; 14 TECH-O weiter offen. Finanzielle Tragfähigkeit auch unter neuem 20-EUR-Rahmen nicht nachgewiesen.
