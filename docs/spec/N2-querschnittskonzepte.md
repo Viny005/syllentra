@@ -1,7 +1,7 @@
 # N2 — Querschnittskonzepte
 
 **Projekt:** Syllentra AI\
-**Version:** 0.3\
+**Version:** 0.4\
 **Stand:** 19.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber
 
@@ -63,3 +63,14 @@ L-08-Aktivierung gilt nur für die persönliche pädagogische Reihenfolge DM-75,
 L-04/UC-65-Regeln DM-77 erteilen kein OS-/Push-/E-Mail-Recht. Ruhe-/Fokuszurückstellung und Dringlichkeit sind keine Datenschutzumgehung. DM-52-Hinweisinhalt, DM-78-Zustellnachweis und pädagogische Langzeiterinnerung bleiben getrennt. Löschung des Verlaufs entfernt keine Termine/Belege, verhindert aber Wiederzustellung durch veraltete Jobs; minimale endliche Deduplizierungs-/Löschinformationen enthalten keine privaten Textkopien. Konkretes Retentions-/Wiederholungsprotokoll bleibt offen und muss Nichtwiederbelebung nachweisen. Sicherheitspost behält ihren gesonderten Kontozweck; FE-56 weiter offen.
 
 L-09/UC-66-Geltungsprüfung lässt Quellenautorität und persönlichen Regelumfang nachprüfbar. Nutzerbestätigung legitimiert keine falsche amtliche Anerkennung oder private Datenkorrektur außerhalb des gewählten Umfangs. L-02 reduziert Anzeigeunterbrechungen, niemals notwendige Rechte-/Sicherheitsprüfung oder Fortschrittssicherung. SEC-01 bis SEC-16 und sämtliche Konten-/Schlüssel-/Supportgrenzen werden weder umnummeriert noch erweitert. [F2](F2-anwendungsfaelle.md), [S1](S1-nachbarsysteme.md) und [S2](S2-datenmigration.md) bleiben zusammen verbindliche Grenzen der Sollfassung.
+
+
+## N2.10 Sicherheits- und Release-Checklisten: Schutzmatrix (22.10.2026)
+
+Die vom Projektinhaber übernommenen zwei Listen werden im [40-Punkte-Freigaberegister](../quality/RELEASE_READINESS_40.md) vollständig und einzeln unter **REL-S01..REL-S20** und **REL-Q01..REL-Q20** geführt. N2 ist die fachliche Heimat der Sicherheitsgrenzen; N1 definiert die messbaren Qualitätsziele, S2 die Wiederherstellungs-/Migrationsregeln. Die Liste ist noch kein Implementierungs- oder Testbeleg.
+
+**Schutzfelder:** Geheimniskonfiguration/Repository-Schutz (REL-S01/02/07), authentifizierte Sitzungen und E-Mail-Verifikation (S03/05/09/19), serverseitige Rechte und Isolation (S04/06), Transport-/API-/CORS-/CSRF-/Webhook-Schutz (S08/10/13/17), Datei- und Archivgrenzen (S11/12, Q15), Schutz öffentlicher Fehlermeldungen und vertraulicher Logs (S14/15/16, Q18), Abhängigkeits-/Lizenzprüfung (S18), Backupverschlüsselung und Löschschutz (S20, Q20), Last- und Kostenmissbrauch (Q01/02/03), Datenminimierung und Cache-Isolation (Q11/16), Idempotenz/Retries/Timeout (Q07/08/09) sowie belastbare Mehrbenutzer-/Negativtests (Q19).
+
+**Technologieneutral:** RLS ist eine mögliche Umsetzung der Datenisolation, nicht vor Stackentscheidung zwingend. Öffentlich freigegebene Konfigurationsschlüssel sind nur dann clientseitig zulässig, wenn sie wirklich keine Secrets sind. CORS/Webhookmaßnahmen gelten nur bei entsprechenden technischen Schnittstellen. Ein generischer Anti-Enumeration-Fehler bei Authentisierung verhindert nicht verständliche, hilfreiche Fehlermeldungen bei anderen Aufgaben. Für Logs gilt Datenminimierung, nicht das grundlose Abschalten notwendiger Betriebsnachweise. Keine kostenpflichtige Sicherheits-, KI- oder Monitoringlösung wird durch die Prüfliste bestellt.
+
+**Release-Gate:** Anwendbare Sicherheitskontrollen sind vor Freigabe mit Negativtests und dokumentierten Ergebnissen zu belegen. Fehlgeschlagene Isolation, Autorisierung, Token-/Schlüsseloffenlegung, definitive Löschung oder Wiederherstellungsprüfungen sperren die entsprechende Freigabe. Die spätere S3-Inbetriebnahme enthält die formale Abnahme; bis dahin alle Nachweise offen. Die spätere Zahlungsfunktion (REL-Q10) und FE-56 werden dadurch nicht vorab freigegeben.
