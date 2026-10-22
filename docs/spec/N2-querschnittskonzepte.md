@@ -1,7 +1,7 @@
 # N2 — Querschnittskonzepte
 
 **Projekt:** Syllentra AI\
-**Version:** 0.6\
+**Version:** 0.7\
 **Stand:** 22.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber
 
@@ -77,7 +77,7 @@ Die vom Projektinhaber übernommenen zwei Listen werden im [40-Punkte-Freigabere
 
 ## N2.11 Begrenzter Anschluss der unabhängigen Sicherung
 
-DEC-49 ergänzt SEC-08/09/14/15 und den heutigen Kontrollstand aus N2.8: sicher verwaltete Schlüssel, vom Primäranbieter unabhängiger EU-Speicher, begrenzte Sicherungs-/Abruf-/Restore-/Löschrechte und belegte Wiederherstellbarkeit auch bei Ausfall, Korruption, versehentlicher Löschung oder Kompromittierung. Backupunabhängigkeit hebt weder Benutzerlöschung noch Kontentrennung oder das Verbot privater Klartextschlüssel beim Backend/Admin auf. Periodische Restore-Proben und die Abstimmung endlicher Retention mit Nichtwiederbelebung bleiben nachzuweisen. [ADR-0005](../ARCHITECTURE_DECISIONS.md#adr-0005--anbieterunabhängige-verschlüsselte-sicherung-dec-49), [S2](S2-datenmigration.md), REL-S20/REL-Q20 und [Matrix](ENTSCHEIDUNGSMATRIX.md) konkretisieren Zuständigkeiten. Kein Anbieter, Kryptoverfahren oder Dienst wird gewählt; N2 bleibt ein fachlicher Prüfentwurf mit offenen technischen Nachweisen; S3 wird nicht begonnen.
+DEC-49 ergänzt SEC-08/09/14/15 und den heutigen Kontrollstand aus N2.8: sicher verwaltete Schlüssel, vom Primäranbieter unabhängiger EU-Speicher, begrenzte Sicherungs-/Abruf-/Restore-/Löschrechte und belegte Wiederherstellbarkeit auch bei Ausfall, Korruption, versehentlicher Löschung oder Kompromittierung. Backupunabhängigkeit hebt weder Benutzerlöschung noch Kontentrennung oder das Verbot privater Klartextschlüssel beim Backend/Admin auf. Periodische Restore-Proben und die Abstimmung endlicher Retention mit Nichtwiederbelebung bleiben nachzuweisen. [ADR-0005](../ARCHITECTURE_DECISIONS.md#adr-0005--anbieterunabhängige-verschlüsselte-sicherung-dec-49), [S2](S2-datenmigration.md), REL-S20/REL-Q20 und [Matrix](ENTSCHEIDUNGSMATRIX.md) konkretisieren Zuständigkeiten. Kein Anbieter, Kryptoverfahren oder Dienst wird gewählt; N2 bleibt ein fachlicher Prüfentwurf mit offenen technischen Nachweisen; [S3](S3-inbetriebnahme.md) liegt inzwischen als fachlicher Betriebsprüfentwurf vor.
 
 ## N2.12 Ergänzendes Schutzregister
 
@@ -458,4 +458,4 @@ Die Auflistung ist eine auf Syllentra bezogene fachliche Bedrohungsanalyse, kein
 
 Vor betroffener Aktivierung sind Identitäts-/Session-/Schlüsselverfahren, Recovery und einziger Super-Admin-Bootstrap, Datenschutzrollen/-grundlagen, zulässige Providerbedingungen, Secret-/CI-Konzept, Ressourcen-/Retentionsgrenzen und die unabhängige Restorefähigkeit zu bestätigen und technisch nachzuweisen. WCAG-Ziel und pädagogische Bewertungsrubriken brauchen die in N1 genannten Entscheidungen. FE-56 bleibt offen; keine Inboxfunktion wird freigegeben. DEC-48 ist eine Bewertungspriorität, DEC-49 eine Sicherungsanforderung, keine Infrastrukturfreigabe.
 
-Die [Freigabevoraussetzungen](../quality/FREIGABEVORAUSSETZUNGEN.md) ordnen Erstveröffentlichung, Funktionsaktivierung, Regression und periodische Nachweise zu. Sie beschreiben Eingaben für die spätere S3-Ausarbeitung, keine ausgeführten Betriebsverfahren. Kein Kryptoverfahren, Anbieter, Framework, Modell, kostenpflichtiger Dienst oder neues Nutzungsrecht wird durch N2 gewählt.
+Die [Freigabevoraussetzungen](../quality/FREIGABEVORAUSSETZUNGEN.md) ordnen Erstveröffentlichung, Funktionsaktivierung, Regression und periodische Nachweise zu. Sie liefern die Gates für [S3](S3-inbetriebnahme.md); dessen Bootstrap-, Recovery-, Freigabe- und Incidentabläufe sind spezifiziert, aber keine ausgeführten Betriebsverfahren. Kein Kryptoverfahren, Anbieter, Framework, Modell, kostenpflichtiger Dienst oder neues Nutzungsrecht wird durch N2 gewählt.

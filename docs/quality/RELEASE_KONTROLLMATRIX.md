@@ -1,6 +1,6 @@
 # Syllentra AI — konsolidierte Release-Kontrollmatrix
 
-**Version:** 0.1 · **Stand:** 22.10.2026 · **Status:** Zur Prüfung durch den Projektinhaber
+**Version:** 0.2 · **Stand:** 22.10.2026 · **Status:** Zur Prüfung durch den Projektinhaber
 
 ## 1. Bestand, Zählung und Abgrenzung
 
@@ -734,3 +734,7 @@ Die Profile konkretisieren das Original, ohne es zu ersetzen. Ein Beleg umfasst 
 Jeder neue NFR-/SEC-Aspekt ist über sein Prüfprofil an mindestens eine Kontrolle angeschlossen. Mehrfachbezüge bezeichnen unterschiedliche Nachweisanteile, keine mehrfachen Kontrollnummern. Quellenqualität (REL-A05), pädagogische Bewertung (REL-A18) und sichere Modell-/Agentenwirkung (REL-A01/S06) sind getrennte Nachweise: eine korrekte Antwort beweist keine Autorisierung und eine sichere Toolausführung keine fachliche Güte.
 
 REL-A16 führt WCAG 2.2 AA ausdrücklich als **zu bestätigendes Ziel**. Bestehende Zugänglichkeitsanforderungen gelten bereits; es wird keine zusätzliche formal genehmigte Standardbindung behauptet. REL-A20 erhält kein neues Profil, seine Incident-/Rollbackfälle sind vor Produktion unter REL-Q17/18/20 nachzuweisen. REL-Q10 bleibt spätere Option ohne V1-Zahlungsumfang. FE-56 bleibt offen. Dokumentstatus und erfolgte Dokumentprüfungen sind in [E3](../spec/E3-pruefnachweis.md) getrennt von der ausstehenden Produktabnahme nachgewiesen.
+
+## 5. Betriebszuordnung aus S3
+
+[S3.8](../spec/S3-inbetriebnahme.md#s38-einbindung-aller-46-release-kontrollen) referenziert alle 46 bestehenden Profile mit Pflichtzeitpunkt, Ergebnisprüfung, Sperrwirkung und Neubewertung. Erwartetes Ergebnis, Anwendbarkeit und Beleg bleiben hier maßgeblich, ohne neue REL-Kennungen. S3 beschreibt zukünftige Verfahren; alle Kontrollen bleiben nicht implementiert/nicht produktgetestet. S3.7/13 verlangen zusätzlich die konkrete menschliche Veröffentlichungsgenehmigung; die hier dokumentierten Prüfziele sind keine Genehmigung.

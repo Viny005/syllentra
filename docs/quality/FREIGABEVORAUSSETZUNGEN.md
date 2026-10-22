@@ -1,10 +1,10 @@
 # Syllentra AI — fachliche Voraussetzungen für spätere Freigaben
 
-**Version:** 0.1 · **Stand:** 22.10.2026 · **Status:** Zur Prüfung durch den Projektinhaber
+**Version:** 0.2 · **Stand:** 22.10.2026 · **Status:** Zur Prüfung durch den Projektinhaber
 
 ## 1. Zweck und Grenze gegenüber S3
 
-Dieses Dokument bündelt Anforderungen an Nachweise und Entscheidungen für die spätere Ausarbeitung von S3. Es beschreibt **keine Inbetriebnahmeprozedur**, keinen eingerichteten Betrieb und keine Freigabe eines Deployments. Ausgangspunkt sind [N1](../spec/N1-nichtfunktional.md), [N2](../spec/N2-querschnittskonzepte.md), [S2](../spec/S2-datenmigration.md), die [40 Originalkontrollen](RELEASE_READINESS_40.md) und [alle 46 Prüfprofile](RELEASE_KONTROLLMATRIX.md). Gegenwärtig fehlen Anwendung, technische Umsetzung und Produktprüfungen; keine Produktveröffentlichung ist abnahmefähig. Die Dokumente bleiben Zur Prüfung.
+Dieses Dokument bündelt Anforderungen an Nachweise und Entscheidungen als Grundlage des inzwischen ausgearbeiteten fachlichen [S3-Prüfentwurfs](../spec/S3-inbetriebnahme.md). Es beschreibt **keine Inbetriebnahmeprozedur**, keinen eingerichteten Betrieb und keine Freigabe eines Deployments. Ausgangspunkt sind [N1](../spec/N1-nichtfunktional.md), [N2](../spec/N2-querschnittskonzepte.md), [S2](../spec/S2-datenmigration.md), die [40 Originalkontrollen](RELEASE_READINESS_40.md) und [alle 46 Prüfprofile](RELEASE_KONTROLLMATRIX.md). Gegenwärtig fehlen Anwendung, technische Umsetzung und Produktprüfungen; keine Produktveröffentlichung ist abnahmefähig. Die Dokumente bleiben Zur Prüfung.
 
 ## 2. Vor erster Produktveröffentlichung
 
@@ -63,4 +63,4 @@ Für periodische Aufgaben sind verantwortliche Person, risikobegründeter Rhythm
 
 **Menschlich offen:** technischer Stack und geprüfte Anbieter/Modelle; Oracle-Bewertung ohne vorweggenommene Auswahl; Untersuchungslimit ist keine Ausgabe; Auth-/Schlüssel-/Recovery-/Bootstrapverfahren; Datenschutzrollen und zulässige Verarbeitungen; Last-/Kapazitäts-/SLO-/RPO-/RTO-/Retentionswerte; Lizenzbeurteilung; WCAG-AA-Ziel; pädagogische Korpora/Rubriken; Release-/Incidentverantwortliche und Prüfintervalle. Nicht abrufbare offizielle Normfassungen aus dem [Referenzrahmen](REFERENZRAHMEN.md) nachprüfen.
 
-Diese Eingaben ermöglichen später S3 und einen getrennt autorisierten Implementierungsplan. Sie sind keine Anweisung, jetzt Infrastruktur anzulegen, Accounts zu eröffnen, einen Anbieter zu verbinden oder eine Veröffentlichung auszulösen. Aktueller Prüfstand: ausschließlich Dokumentation; **keine Produktfreigabe**.
+Diese Eingaben liegen [S3](../spec/S3-inbetriebnahme.md) zugrunde; ein Implementierungsplan und jede technische Ausführung benötigen einen getrennten Auftrag. Sie sind keine Anweisung, jetzt Infrastruktur anzulegen, Accounts zu eröffnen, einen Anbieter zu verbinden oder eine Veröffentlichung auszulösen. Aktueller Prüfstand: ausschließlich Dokumentation; **keine Produktfreigabe**.

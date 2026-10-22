@@ -1,7 +1,7 @@
 # N1 — Nichtfunktionale Anforderungen
 
 **Projekt:** Syllentra AI\
-**Version:** 0.6\
+**Version:** 0.7\
 **Stand:** 22.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber
 
@@ -393,4 +393,4 @@ Für jedes Profil gelten zusätzlich die Beleg- und Freigaberegeln aus [Freigabe
 4. Aus Baseline, realer Kapazität, Nutzerbedarf und Ausfallfolgen Vorschläge für Latenz, Last, Quoten, Verfügbarkeit, Index-/Cachealter und Wiederherstellung ableiten. Ziele und Messfenster **vor dem Abnahmelauf** menschlich bestätigen; nicht nachträglich an schlechte Ergebnisse anpassen. Keine Zahl wird durch diese Methode bereits beschlossen.
 5. Gegen bestätigte Ziele prüfen; bestanden, fehlgeschlagen, blockiert und nicht durchgeführt getrennt führen. Änderungen an Modellen, Prompts, Datenformaten, Geräten oder Kapazitäten lösen relevante Regressionen aus. Pädagogische Qualität erhält separat fachlich bestätigte Korpora und Rubriken; schnelle Antwort ist kein Gütenachweis.
 
-Offen bleiben insbesondere Last-/Gerätematrix, Schwellen und Reserven, SLO samt Wartungsdefinition, Fristen/RPO/RTO sowie pädagogische Rubriken. Der [Referenzrahmen](../quality/REFERENZRAHMEN.md) trennt belegte Ausgaben und nicht abrufbare normative Quellen. Die [Kontrollmatrix](../quality/RELEASE_KONTROLLMATRIX.md) ordnet alle 46 eigenständigen Kontrollen zu. Der verlinkte Freigabekatalog bereitet nur Eingaben für S3 vor; S3 wird hier nicht begonnen.
+Offen bleiben insbesondere Last-/Gerätematrix, Schwellen und Reserven, SLO samt Wartungsdefinition, Fristen/RPO/RTO sowie pädagogische Rubriken. Der [Referenzrahmen](../quality/REFERENZRAHMEN.md) trennt belegte Ausgaben und nicht abrufbare normative Quellen. Die [Kontrollmatrix](../quality/RELEASE_KONTROLLMATRIX.md) ordnet alle 46 eigenständigen Kontrollen zu. Der verlinkte Freigabekatalog bleibt die Grundlage der Gates. [S3](S3-inbetriebnahme.md) ordnet sie inzwischen zukünftigen Abläufen, Verantwortungen und Belegen zu; Qualitätsziele und reale Betriebsnachweise bleiben offen.

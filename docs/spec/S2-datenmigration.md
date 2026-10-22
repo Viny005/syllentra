@@ -2,7 +2,7 @@
 
 **Projekt:** Syllentra AI\
 **Baustein:** S2 — Datenmigration (fachliche Soll-Spezifikation)\
-**Version:** 0.3\
+**Version:** 0.4\
 **Stand:** 22.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Bezugsstand:** `Viny005/syllentra`, PR #1, Branch `docs/spec/p1-p2-mobile-workspaces`, verifizierter HEAD `723af7fa1692f8dbaf888b694fa63806d7d5fc5f` (vor Erstellung dieses Entwurfs).\
@@ -492,10 +492,10 @@ Vollständig gelesen wurden `PROMPT_CODEX_SYLLENTRA_S2_MIGRATION_COMPLETE_2026-1
 
 ### S2.18.3 Verweise und Übergabe
 
-[Projektvision](../PROJECT_VISION.md), „Design principles“, [Anforderungen](../REQUIREMENTS.md), Abschnitte 1/3/4, [Architekturentscheidungen](../ARCHITECTURE_DECISIONS.md), „Current position“, und [Roadmap](../ROADMAP.md), Phasen 2/3/5, begründen Datenhoheit, nachvollziehbare Verarbeitung und noch ausstehende Implementierungsvalidierung. Der S2-Umfang ist im aktuellen [Index](README.md) verzeichnet; tatsächliche Änderungen und Dokumentprüfungen stehen in [E3](E3-pruefnachweis.md). S3 bleibt geplant für Bootstrap, Betriebsrollen und konkrete Inbetriebnahme; technische Architektur bleibt separat.
+[Projektvision](../PROJECT_VISION.md), „Design principles“, [Anforderungen](../REQUIREMENTS.md), Abschnitte 1/3/4, [Architekturentscheidungen](../ARCHITECTURE_DECISIONS.md), „Current position“, und [Roadmap](../ROADMAP.md), Phasen 2/3/5, begründen Datenhoheit, nachvollziehbare Verarbeitung und noch ausstehende Implementierungsvalidierung. Der S2-Umfang ist im aktuellen [Index](README.md) verzeichnet; tatsächliche Änderungen und Dokumentprüfungen stehen in [E3](E3-pruefnachweis.md). [S3](S3-inbetriebnahme.md) beschreibt jetzt Bootstrap, Betriebsverantwortung, unabhängigen Restore, Rollout und Rückweg als zukünftige Sollverfahren; technische Architektur bleibt separat.
 
 ## S2.19 Unabhängige Sicherung nach DEC-49
 
 DEC-49 konkretisiert MIG-15/MIG-16/MIG-17/MIG-22/MIG-23 und UC-60/BAT-23, ohne die 36 bestehenden MIG-Definitionen oder 40 AT-S2-Fälle umzuschreiben. Verschlüsselte Sicherungen liegen in der EU bei einem vom primären Hostinganbieter unabhängigen Anbieter; eine zweite Primäranbieterregion/-konto reicht nicht. DM-69/DT-81 führen den tatsächlichen Unabhängigkeits-, Integritäts- und Restoreprüfstand, DM-70 den Wiederherstellungsvorgang. Sichere Schlüsselverwaltung und getrennte begrenzte Sicherungs-/Restore-/Löschrechte schützen gegen Ausfall, versehentliche Löschung, Korruption und Kompromittierung. Kein Admin erhält dadurch private Klartextschlüssel.
 
-Periodische Restore-Proben weisen Portabilität, Integrität, Kontentrennung und Nichtwiederbelebung unter heutigem Lösch-/Widerrufsstand nach. Retention, Marker, Schlüssel und rechtliche Restpflichten müssen zusammenpassen. O-S2-02/03/06/08/11/12 bleiben technische Nachweispflichten; RPO/RTO, Frequenz, Testintervalle und Retention werden nicht erfunden. Kein Backupanbieter oder kostenpflichtiger Dienst wird festgelegt. DEC-48 priorisiert Oracle nur als Hostingbewertungskandidaten; bei späterer Oracle-Auswahl liegt die unabhängige Sicherung außerhalb von Oracle. [ADR-0004/0005](../ARCHITECTURE_DECISIONS.md) und die [Matrix](ENTSCHEIDUNGSMATRIX.md) trennen bestätigte Ziele von offenen Verfahren; keine externe Probe oder S3-Erstellung in dieser Lieferung.
+Periodische Restore-Proben weisen Portabilität, Integrität, Kontentrennung und Nichtwiederbelebung unter heutigem Lösch-/Widerrufsstand nach. Retention, Marker, Schlüssel und rechtliche Restpflichten müssen zusammenpassen. O-S2-02/03/06/08/11/12 bleiben technische Nachweispflichten; RPO/RTO, Frequenz, Testintervalle und Retention werden nicht erfunden. Kein Backupanbieter oder kostenpflichtiger Dienst wird festgelegt. DEC-48 priorisiert Oracle nur als Hostingbewertungskandidaten; bei späterer Oracle-Auswahl liegt die unabhängige Sicherung außerhalb von Oracle. [ADR-0004/0005](../ARCHITECTURE_DECISIONS.md) und die [Matrix](ENTSCHEIDUNGSMATRIX.md) trennen bestätigte Ziele von offenen Verfahren; der damalige Entscheidungsanschluss führte keine externe Probe oder S3-Erstellung aus. Der aktuelle fachliche Betriebsentwurf steht inzwischen in [S3](S3-inbetriebnahme.md); keine Betriebsprobe ist damit durchgeführt.

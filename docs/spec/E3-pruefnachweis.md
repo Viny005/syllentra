@@ -1,7 +1,7 @@
 # E3 — Änderungs- und Prüfnachweis
 
 **Projekt:** Syllentra AI\
-**Version:** 0.7\
+**Version:** 0.8\
 **Stand:** 22.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber
 
@@ -341,3 +341,23 @@ Diese Prüfungen belegen Dokumentationskonsistenz und Bestandserhalt. Keine Prod
 **Prüfmittel und Reichweite:** Lokale, auf die Markdown-Basis und kanonischen Register angewandte Prüfskripte außerhalb des Repositorys; Struktur-/Querverweisprüfung, Sollfeld-/Bestandvergleich, historische Ankerprüfung und Browserrendering. Keine CI-/Apppipeline angelegt. Musterprüfungen und redaktionelle Sichtung sind kein Beweis für die Geheimnisfreiheit aller denkbaren Formate oder eine Sicherheitszertifizierung.
 
 **Weiter offen:** Technische Verfahren, Anbieter-/Lizenz-/Kapazitätsnachweise, unterstützte Geräte, Last-/Zeit-/Quota-/Retentionswerte, RPO/RTO, Datenschutzrollen/-grundlagen, Super-Admin-Bootstrap und Recovery, WCAG-AA-Zielbestätigung, pädagogische Bewertungsrubriken sowie sämtliche Produktprüfungen. FE-56 bleibt offen, REL-Q10 außerhalb V1. Alle Entwürfe **Zur Prüfung durch den Projektinhaber**. Eine komplette fachliche Sollfassung ist weder implementiert noch sicherheits-/pädagogik-/last-/restoregetestet; endgültigen Commit/Remote-/PR-Stand erst im Abschlussbericht nach normalem Push nennen.
+
+## E3.21 Mission 4 — Fachliche Inbetriebnahmespezifikation
+
+**Quelle und Ausgangsstand:** Vollständig gelesener Auftrag „SYLLENTRA AI — MISSION 4“, Abschnitte 1–16, `1885a9c76ed549367097ac15d3960399a8651b88`; lokaler/entfernter Spezifikationsbranch und PR-Head identisch, Arbeitsbaum sauber, PR #1 offen. Keine zwischenzeitliche Ersetzung bestätigter Register. Historische E3-Lieferungen bleiben unverändert; insbesondere „S3 nicht begonnen“ in E3.20 bezeichnet Mission 3, nicht den aktuellen Bestand.
+
+**Tatsächliche Änderungen:** S3 0.1 mit 16 Hauptabschnitten, zukünftigen Zuständigkeiten/Umgebungsgrenzen, sicherem erstem Super Admin und Kontinuitätsgrenzen, Infrastrukturvoraussetzungen, unabhängiger DEC-49-Sicherung, selektivem/vollständigem Restore, 18 Veröffentlichungsschritten, allen 46 bestehenden Kontrollprofilen über stabile Anker, gestuftem Rollout, sicherem Rückweg, Betrieb/Incidents und Ablehnungs-/Genehmigungskriterien. 14 O-S3-Arbeiten halten technische/menschliche Entscheidungen offen; 20 AT-S3-Fälle sind Soll-Abnahmen, keine ausgeführten Tests. Kein neues Produktrecht, REL-Kontrollpunkt, Anbieter oder Kryptoverfahren.
+
+**Notwendige Folgepflege:** S1 0.6, S2 0.4, N1/N2 0.7, Entscheidungsmatrix 0.3, Index, Qualitätsmatrix/Freigabevoraussetzungen 0.2 sowie Projektkontext 0.6 und Kontextprotokoll verweisen auf den tatsächlichen S3-Prüfentwurf. Ursprüngliches 40-Punkte-Register nur um einen aktuellen Verweis ergänzt, nicht gekürzt oder umnummeriert. Keine fachliche Entscheidung geändert; Anforderungen und Profile bleiben erhalten. Keine erneute externe Normverifikation behauptet; offene Quellen-/Zielprüfungen aus Mission 3 gelten weiter.
+
+**Tatsächlich ausgeführte Dokumentationsprüfungen:**
+
+- Markdown mit markdown-it 14.1.0 geprüft: **35 Markdown-Dateien, 677 lokale Links/Anker, 590 Tabellen**, keine Fehler. **1.139 frühere Abschnitts-/HTML-Anker** zur Ausgangsbasis erhalten. Alle 46 S3-Profilverweise auf vorhandene stabile Registeranker aufgelöst.
+- Alle **elf bestehenden Mermaid-Diagramme** mit Mermaid 11.15.0 im lokalen Chromium erfolgreich geparst und als SVG gerendert; Quellen wortgleich. S3 enthält keinen neuen Diagrammcode, keine Projektabhängigkeit angelegt.
+- Gegen Ausgangsbasis geprüft: **89 FE einschließlich FE-56 offen, 66 UC, 25 DEC-V1, DEC-48/49, 28 AT-L, 36 MIG und 40 AT-S2** erhalten. Beide DEC-V1-Zuordnungstabellen, 25 lokale DEC-Sollfälle und sechs FE-21-Sollfälle wortgleich. Bei den vier DEC-48/49-Zeilen bleiben Entscheidungs- und Abnahmespalten unverändert; ausschließlich ein veralteter S3-Verweis aktualisiert. ADRs und Teilmeilensteine unverändert.
+- **25 NFR-/27 SEC-Profile und alle 46 REL-Profile** samt Kandidatenbewertung und Soll-/Beleg-/Statusfeldern unverändert. Das bisherige 40-Punkte-Dokument vollständig als unveränderter Anfang erhalten. Keine neue REL-Kennung. **16 eindeutige S3-Hauptabschnitte, 18 Veröffentlichungsschritte, 46 eindeutige Zuordnungen, 14 neue nicht kollidierende O-S3- und 20 AT-S3-Kennungen** lückenlos geprüft; bekannte Kennungsbereiche/Querverweise ohne Befund.
+- Ausschließlich **13 Markdown-Dateien**, davon S3 als einzige neue Datei; alle übrigen versionierten Dateien bytegleich. Aktuelle Versionen/Index/Prüfstatus und öffentliche Inhalte kontrolliert; Geheimnis-/Tokenmuster, temporäre Dateipfade, deutsche KI-Bezeichnung und unzulässige Änderungen ohne Befund. Keine privaten Echtdaten in den neuen Sollszenarien. `git diff --check` erfolgreich; gestagten Umfang vor Commit gesondert prüfen.
+
+**Prüfmittel und Grenzen:** Lokale Bestands-/Kennungs-/Strukturprüfungen, markdown-it-Link-/Tabellenprüfung, historischer Ankervergleich und tatsächliches Mermaid-Browserrendering; Hilfsmittel außerhalb des Repositorys. Keine App-/CI-/Cloudprüfung. Musterprüfung und redaktionelle Sichtung sind kein umfassender Secret- oder Sicherheitsnachweis; externe Normverifikation und sämtliche Produkt-/Betriebsprüfungen bleiben offen.
+
+**Abgrenzung und verbleibende Risiken:** Ausschließlich Dokumentation, keine Umsetzung, Apppipeline, Cloudressource, Kontoeinrichtung, Ausgabe, Datenmigration, Betriebs-/Restore-/Bootstrapprobe oder Veröffentlichung. Architektur, konkrete Verfahren, Personen, technische Zielwerte und tatsächliche Betriebsnachweise fehlen weiterhin. Die fachlich formulierten Abläufe sind keine einsatzfertigen technischen Runbooks. 89 FE, 66 UC, 25 DEC-V1, DEC-48/49, 28 AT-L und 46 REL bleiben erhalten; FE-56 offen. Alle Entwürfe Zur Prüfung durch den Projektinhaber; spätere Veröffentlichung benötigt ausdrückliche konkrete menschliche Genehmigung. Endcommit und Remote-/PR-Stand nach normalem Push im Abschlussbericht.

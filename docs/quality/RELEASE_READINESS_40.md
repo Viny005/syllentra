@@ -102,3 +102,7 @@ Pro REL-ID später in einem testbaren Prüfprotokoll führen: **ID, geprüfte Fu
 ## 8. Ergänzung aus Mission 3 ohne Änderung der ursprünglichen 40 Punkte
 
 Die [konsolidierte Kontrollmatrix](RELEASE_KONTROLLMATRIX.md) enthält die Bewertung von 20 Ergänzungskandidaten, vertiefte Prüfprofile für alle ursprünglichen Kontrollen und sechs eigenständige zusätzliche Kontrollen (REL-A01/05/07/13/16/18): insgesamt 46. Die Originalfassung oben bleibt vollständig erhalten. [Referenzrahmen](REFERENZRAHMEN.md) und [Freigabevoraussetzungen](FREIGABEVORAUSSETZUNGEN.md) begründen Zuordnung und spätere Nachweise; keine Kontrolle ist technisch bestanden, keine S3-Inbetriebnahme erfolgt.
+
+## 9. Aktueller S3-Verweis
+
+Der historische Planungsstand „S3 noch zu erstellen“ in Abschnitt 6 ist durch den fachlichen [S3-Prüfentwurf](../spec/S3-inbetriebnahme.md) abgelöst. Die ursprünglichen 40 Kontrollen bleiben vollständig unverändert; [S3.8](../spec/S3-inbetriebnahme.md#s38-einbindung-aller-46-release-kontrollen) ordnet alle inzwischen 46 Kontrollen der künftigen Ausführung zu. Kein produktiver Betrieb oder bestandener Produkttest wird dadurch behauptet.

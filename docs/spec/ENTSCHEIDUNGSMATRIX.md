@@ -1,7 +1,7 @@
 # Entscheidungsabdeckung — konsolidierter Fachstand
 
 **Projekt:** Syllentra AI\
-**Version:** 0.2\
+**Version:** 0.3\
 **Stand:** 22.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber
 
@@ -132,7 +132,7 @@ FE-20 betrifft Eingabe/Sprachdialog; FE-21 betrifft gewählte Einzelwiedergabe u
 
 | Entscheidung | Bestätigter Rahmen | Spezifikation / Architektur / künftiger Betrieb | Lokale Soll-Abnahme |
 |---|---|---|---|
-| DEC-48 | Oracle Cloud Infrastructure zuerst bewerten, Alternativen bei unzureichender Eignung; keine endgültige Auswahl | P1.10.4, P2.9.7, NFR-04/05; ADR-0004 definiert Kriterien; S3 später, hier nicht begonnen | AT-DEC48-01: Dokumentierter Vergleich deckt EU, PC-Unabhängigkeit, Kapazität, Speicher, Verfügbarkeit, Netz, Betrieb, Kosten/Gratislimits, Abrechnungsrisiken, Sicherheit, Lizenzen und Skalierung ab. Fehlender Nachweis ist offen, keine kostenfreie Eignung oder Auswahl behaupten. |
+| DEC-48 | Oracle Cloud Infrastructure zuerst bewerten, Alternativen bei unzureichender Eignung; keine endgültige Auswahl | P1.10.4, P2.9.7, NFR-04/05; ADR-0004 definiert Kriterien; [S3](S3-inbetriebnahme.md) beschreibt jetzt die künftige Betriebsaufnahme, ohne technische Ausführung | AT-DEC48-01: Dokumentierter Vergleich deckt EU, PC-Unabhängigkeit, Kapazität, Speicher, Verfügbarkeit, Netz, Betrieb, Kosten/Gratislimits, Abrechnungsrisiken, Sicherheit, Lizenzen und Skalierung ab. Fehlender Nachweis ist offen, keine kostenfreie Eignung oder Auswahl behaupten. |
 | DEC-48 | 10 EUR brutto/Monat nur Vergleichslimit, keine Ausgabe/Konto-/Infrastrukturfreigabe | ADR-0004, PACE-Projektkontext; kein Test dieses Auftrags | AT-DEC48-02: Auftrag zur Dokumentation erzeugt keinen Account, keine Ressource, Rechnung oder externe Probe. |
 | DEC-49 | Verschlüsselte EU-Sicherung unabhängig vom Primäranbieter; sichere Schlüssel und begrenzte Rechte | P1.10.4, P2.9.7; UC-60, DM-69/70, DT-81, DLG-61, BAT-23, S2.19; NFR-04/11/12, SEC-08/09/14/15; ADR-0005 | AT-DEC49-01: Nur zweite Region/Konto beim Primäranbieter reicht nicht; unabhängiger Speicher/Schlüsselzugang und Integrität sind belegbar, kein Admin-Klartextschlüssel. |
 | DEC-49 | Portabilität und periodische verifizierbare Wiederherstellung mit Lösch-/Retentiongrenzen | S2/N2, REL-S20/REL-Q20; künftige Betriebsverfahren in S3 | AT-DEC49-02: Restore-Proben berücksichtigen Ausfall, versehentliche Löschung, Korruption, Kompromittierung, heutigen Entzug/Löschstand und Kontentrennung. Ohne tatsächlichen Beleg nicht bestanden; RPO/RTO, Frequenz/Testintervall/Retention offen, kein Backupanbieter gewählt. |
@@ -143,7 +143,7 @@ FE-20 betrifft Eingabe/Sprachdialog; FE-21 betrifft gewählte Einzelwiedergabe u
 - **Weitere fachliche Präzisierung mit Projektinhaber:** Unterstützter Umfang einer einfachen Wissenskarte/Relationssemantik und zitierfähiger Quellenformate, konkrete messbare Lern-/Bewertungskriterien, Häufigkeit/Deaktivierung von Hilfe-/Pausenangeboten und zulässige Zeitmessbasis/Datensparsamkeit. Keine neue Schwelle, Gesundheitsinferenz, versteckte Erhebung, Pflicht oder feste Formel wurde beschlossen. Wo eine neue Produktwirkung nötig wäre, vor Änderung eine explizite Entscheidung einholen.
 - **Technische Auswahl/Nachweise später:** Oracle-/Alternativvergleich, unabhängiger Backupanbieter und Rechte-/Schlüsselverfahren, tatsächliche PWA-/TTS-/OCR-/Modellfähigkeiten, Kosten und kommerziell passende Lizenzkette; Quoten, RPO/RTO, Frequenzen und Retention bleiben die vorhandenen O-S1/O-S2-Arbeiten. Keine externe Infrastrukturprobe in dieser Mission.
 - **Planung:** Bestehende M2b/M5/M8-Zuordnungen bleiben unverändert. Für übrige DEC-V1 und technische Abhängigkeiten ist ein vollständiger Meilensteinplan separat zu erarbeiten; keine neuen Termine/Meilensteinnummern.
-- **Abnahme:** Die Spezifikation insgesamt, konkrete Darstellungen, Typausprägungen und alle Produktnachweise bleiben zur Prüfung beziehungsweise noch auszuführen. S3 bleibt Folgeaufgabe. N1/N2 sind jetzt fachlich vervollständigt; technische Konkretisierung, Zielwertbestätigung und tatsächliche Produktprüfungen bleiben offen. FE-56 bleibt offen. REL-Q10 bleibt außerhalb V1.
+- **Abnahme:** Die Spezifikation insgesamt, konkrete Darstellungen, Typausprägungen und alle Produktnachweise bleiben zur Prüfung beziehungsweise noch auszuführen. [S3](S3-inbetriebnahme.md) liegt als fachlicher Prüfentwurf vor; konkrete Architektur, Ausführung und Freigaben bleiben Folgearbeiten. N1/N2 sind jetzt fachlich vervollständigt; technische Konkretisierung, Zielwertbestätigung und tatsächliche Produktprüfungen bleiben offen. FE-56 bleibt offen. REL-Q10 bleibt außerhalb V1.
 
 ## 7. Verweise
 
