@@ -37,12 +37,16 @@ Hinweis: Diese Leseanleitung ist im README.md des Spezifikationsverzeichnisses i
 | [B3](B3-druckausgaben.md) | 0.4 | OUT-01 bis OUT-08; kontoisolierte Berichte und geschützte Exporte. Zur Prüfung. |
 | [S1](S1-nachbarsysteme.md) | 0.3 | NB-01 bis NB-12, vollständige FE-01..FE-89-Matrix und Schnittstellen-Abnahmeszenarien. Zur Prüfung. |
 | [S2](S2-datenmigration.md) | 0.2 | MIG-01 bis MIG-36, AT-S2-01 bis AT-S2-40; eigene Pakete, sichere Migration und Wiederherstellung. Zur Prüfung. |
-| [N1](N1-nichtfunktional.md) | 0.3 | Begrenzter Folgeentwurf: Qualitätsanforderungen und offene Mess-/Nachweisaufgaben. Zur Prüfung. |
-| [N2](N2-querschnittskonzepte.md) | 0.3 | Begrenzter Konzeptentwurf: Konten, Rechte, Schutz, Schlüssel, Audit, Löschung. Zur Prüfung. |
+| [N1](N1-nichtfunktional.md) | 0.4 | Begrenzter Folgeentwurf: Qualitätsanforderungen und offene Mess-/Nachweisaufgaben. Zur Prüfung. |
+| [N2](N2-querschnittskonzepte.md) | 0.4 | Begrenzter Konzeptentwurf: Konten, Rechte, Schutz, Schlüssel, Audit, Löschung. Zur Prüfung. |
 | [E2](E2-glossar.md) | 0.3 | Glossar mit fachlichen Begriffsgrenzen. Zur Prüfung. |
-| [E3](E3-pruefnachweis.md) | 0.4 | Änderungsmatrix, Kennungsbestand und tatsächliche Dokumentationsprüfungen. Zur Prüfung. |
+| [E3](E3-pruefnachweis.md) | 0.5 | Änderungsmatrix, Kennungsbestand und tatsächliche Dokumentationsprüfungen. Zur Prüfung. |
 
 E1 ist als Leseanleitung in diesem README enthalten und bleibt mit dem Index zur Prüfung. [S2 — Datenmigration](S2-datenmigration.md) ist zur Prüfung ausgearbeitet. **S3 — Inbetriebnahme** bleibt geplant, ohne Link auf eine fehlende Datei; S3 übernimmt sicheren Betriebsstart und den Bootstrap des einzigen Super Admin. Die vollständige Harmonisierung von DEC-V1-01 bis DEC-V1-25 bleibt ein gesonderter Vorgang; S2 berücksichtigt ihre Daten-/Schutzgrenzen, ohne neue Lernalgorithmen oder UI-Funktionen vollständig einzuführen. Die technische Architektur wird separat erarbeitet.
+
+## Zusätzliche verbindliche Prüfgrundlage für spätere Releases
+
+Die [Release-Readiness-Checkliste mit 40 Einzelprüfungen](../quality/RELEASE_READINESS_40.md) vom 22.10.2026 enthält die vollständig erhaltenen zwei Nutzerlisten (REL-S01..REL-S20 und REL-Q01..REL-Q20). Sie ist **kein neuer Siedersleben-Baustein**, sondern ein bereichsübergreifendes Freigaberegister: [N1](N1-nichtfunktional.md) verantwortet Qualität/Leistung, [N2](N2-querschnittskonzepte.md) Sicherheit/Datenschutz, [S2](S2-datenmigration.md) Backup/Restore und die später auszuarbeitende S3 den Produktivstart. Produktprüfungen sind noch nicht durchgeführt; kein Eintrag ist deshalb technisch bestanden. REL-Q10 (Doppelzahlungen) ist ausschließlich spätere Option und kein V1-Zahlungsumfang.
 
 ## Statuskonventionen
 
