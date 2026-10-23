@@ -1,6 +1,6 @@
 # Syllentra AI — überprüfter Projektkontext
 
-**Version:** 0.13 · **Stand:** 23.10.2026 · **Status:** Zur Prüfung durch den Projektinhaber
+**Version:** 0.14 · **Stand:** 23.10.2026 · **Status:** Zur Prüfung durch den Projektinhaber
 
 ## Git-Snapshot und Geltung
 
@@ -106,3 +106,16 @@ Eigener React-Identitätsbereich in DE/FR/EN und Themes; acht Lernräume bleiben
 Ausgangscommit `cc4db0f4ffd46ea8e24c5c5023e0caff3f9be0ee` auf `docs/spec/p1-p2-mobile-workspaces`, PR #1 OPEN. Mission 11 lieferte einen unabhängigen Read-Only-Sicherheitsaudit (Risiken R1–R15). Mission 12 isoliert die PostgreSQL-Testdatenbanken pro `pytest`-Prozess über [scripts/test_db.py](../../prototypes/backend/scripts/test_db.py) (`syllentra_t_<12 Hex>`, `TEMPLATE template0`, Eigentumskommentar `COMMENT ON DATABASE`, `assert_owned` vor `DELETE`/`DROP`, `sweep`-Bereinigung) und trennt sie strikt von `syllentra_test` (reserviert für Browser-E2E).
 
 [Validierungsbericht](../development/IDENTITY_PROTOTYPE_REVIEW.md) und [E3.28](../spec/E3-pruefnachweis.md#e328-mission-11--12--sicherheitsreview-postgresql-testisolation-und-erweiterte-abdeckung): 92 Backendtests gegen PostgreSQL 17.11 bestanden (darunter paralleler Zwei-Prozess-Pytestlauf, Reproduktion des externen Wipe-Mechanismus für `401` bei `GET /session`, 25 Zyklen `Login -> /session`, Charakterisierungstests `en attente de correctif` für R1–R5 sowie Grenz-/Parallelitätstests für >50 Sessions, exakte Geräteablaufgrenze, konkurrierende Recovery/Login/Freigabe/Widerruf und Umgebungsgrenzen). Strict Mypy (14 Quelldateien), Ruff/Format (21 Pythondateien), `pip-audit` (0 bekannte Schwachstellen) sowie Frontend-Build/Lint/Format/Vitest (7/7) und `npm audit` (0 bekannte Schwachstellen) bestanden. Fachliche Authentifizierungsregeln, Fristen und Administrationssperren unverändert; 89 FE (`FE-56` offen), 66 UC, 25 DEC-V1, DEC-48/49, 46 REL und 14 TECH-O erhalten, alle Spezifikationen weiterhin Zur Prüfung.
+
+
+## Gezielte Sicherheitskorrekturen und Entscheidungsvorlagen nach Mission 13
+
+Ausgangscommit `39f2e0646de9241684cfed254cf04cba34b2e6da` auf `docs/spec/p1-p2-mobile-workspaces`, PR #1 OPEN. Mission 13 setzt die vier freigegebenen Sicherheitskorrekturen im lokalen Identitätsbackend um ([api.py](../../prototypes/backend/src/syllentra_backend/api.py), [identity.py](../../prototypes/backend/src/syllentra_backend/identity.py), [identity_routes.py](../../prototypes/backend/src/syllentra_backend/identity_routes.py), [openapi.json](../../prototypes/backend/openapi.json)):
+
+- **R2 behoben:** `network_budget` (`100/min` auf `POST /auth/*`, ohne `/auth/logout`) ist pro `host:path:context` (`DEVICE`- bzw. `CSRF`-Cookie) isoliert und verhindert kollektive Sperren hinter gemeinsamem Loopback/Proxy.
+- **R3 behoben:** `GET /sessions` und `GET /devices` sortieren die aktuelle Sitzung/das aktuelle Gerät und aktive Einträge zuerst, berechnen effektives `revoked`/`authorized` anhand von `clock()` und unterstützen `offset`/`limit`-Paginierung.
+- **R5 behoben:** Pro-Versuch-Budgets (`register` 10/min, `login` 10/min, `recovery` 3/min) sind pro Aufruferkontext (`email:host:csrf`) isoliert und durch höhere globale Adressdeckel (`register-address` 30/min, `recovery-address` 15/min, `login-untrusted` 30/min nur ohne gültigen Gerätenachweis) ergänzt; `POST /auth/recover` entwertet nur noch frühere Recovery-Challenges desselben `PREAUTH`-Bindings.
+- **R12 behoben:** `approve_device` prüft Kontostatus/Verifikation/MFA-Freiheit und sperrt/verifiziert Sitzung und freigebendes Gerät gemeinsam (`FOR UPDATE OF s, d`) vor dem Challenge-Update (`AND NOT approved`).
+- **R1 & R4 zur Entscheidung vorbereitet:** Entscheidungsoptionen R1-A/B/C (Entkopplung der 7d-Offline-Recovery-Frist von der 7d-Gerätefrist) und R4-A/B/C (24h-Bereinigung abgelaufener unverifizierter `pending`-Konten) sind in [OPEN_DECISIONS.md](../development/OPEN_DECISIONS.md) Abschnitt 4 dokumentiert; unbestätigte Fristen und Aufbewahrungsregeln wurden im Code nicht geändert.
+
+[Validierungsbericht](../development/IDENTITY_PROTOTYPE_REVIEW.md) (Version 0.3) und [E3.29](../spec/E3-pruefnachweis.md#e329-mission-13--gezielte-sicherheitskorrekturen-der-identität-r2-r3-r5-r12-und-entscheidungsvorlagen-r1-r4): **96 Backendtests** gegen PostgreSQL 17.11 bestanden (92 bestehende + 4 neue Regressions-/Grenztests), `sweep 0` ohne verwaiste Datenbanken, Strict Mypy (14 Quelldateien), Ruff/Format (21 Pythondateien), `pip-audit` (0 bekannte Schwachstellen) sowie Frontend-Build/Lint/Format/Vitest (7/7) und `npm audit` (0 bekannte Schwachstellen) bestanden. 89 FE (`FE-56` offen), 66 UC, 25 DEC-V1, DEC-48/49, 46 REL und 14 TECH-O erhalten; alle Spezifikationen weiterhin Zur Prüfung.

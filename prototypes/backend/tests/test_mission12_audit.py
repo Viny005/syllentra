@@ -1,8 +1,8 @@
-"""Prioritäre Sicherheits-, Grenz-, Parallelitäts- und Charakterisierungstests (Mission 12).
+"""Prioritäre Sicherheits-, Grenz-, Parallelitäts- und Regressionsprüfungen (Mission 12 & 13).
 
-Tests, die ein bekanntes Risiko (R1–R5) im aktuellen Prototypstand dokumentieren, ohne dass eine
-Produkt-/Regeländerung in Mission 12 autorisiert ist, sind ausdrücklich als Charakterisierung
-(„en attente de correctif“) gekennzeichnet und tarnen den Befund nicht als Soll-Verhalten.
+R2, R3, R5 und R12 sind ab Mission 13 als Regressionsprüfungen abgesichert; R1 (>7 Tage
+Inaktivität) und R4 (nicht ablaufende pending-Konten) bleiben bis zur Freigabe der offenen
+Entscheidungen ausdrücklich als Charakterisierung („en attente de décision“) dokumentiert.
 """
 
 import secrets
@@ -23,14 +23,16 @@ from syllentra_backend.security import digest
 
 
 def test_more_than_50_sessions_listing_truncation_and_revocation(env: Any) -> None:
-    """Charakterisierung R3 (en attente de correctif): ORDER BY id LIMIT 50 blendet UUIDs aus."""
+    """Regressionsprüfung R3: aktive Sitzungen zuerst, Widerrufsstatus und Paginierung."""
     c = env["browser"]()
     account(env, c)
     aid = UUID(c.get("/session").json()["account_id"])
     device_id = UUID(c.get("/devices").json()[0]["id"])
+    current_session_id = UUID(c.get("/sessions").json()[0]["id"])
     now = env["now"][0]
     low_ids = [UUID(f"00000000-0000-4000-8000-{i:012x}") for i in range(1, 51)]
     high_active_id = UUID("ffffffff-ffff-4fff-8fff-ffffffffffff")
+    expired_unrevoked_id = UUID("eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee")
     high_token = secrets.token_urlsafe(32)
     with psycopg.connect(env["admin"]) as db:
         for sid in low_ids:
@@ -44,16 +46,36 @@ def test_more_than_50_sessions_listing_truncation_and_revocation(env: Any) -> No
             "revoked, security_epoch) VALUES (%s,%s,%s,%s,%s,false,0)",
             (high_active_id, digest(high_token), aid, device_id, now + timedelta(minutes=15)),
         )
+        db.execute(
+            "INSERT INTO sessions (id, token_hash, account_id, device_id, expires_at, "
+            "revoked, security_epoch) VALUES (%s,%s,%s,%s,%s,false,0)",
+            (
+                expired_unrevoked_id,
+                digest(secrets.token_urlsafe(32)),
+                aid,
+                device_id,
+                now - timedelta(minutes=1),
+            ),
+        )
     listed = c.get("/sessions").json()
     assert len(listed) == 50
-    listed_ids = {row["id"] for row in listed}
-    # Charakterisierung R3: Die 50 kleinsten UUIDs (alle bereits widerrufen/abgelaufen) verdrängen
-    # die aktive Sitzung mit großer UUID aus der GET-/sessions-Antwort.
-    assert str(high_active_id) not in listed_ids
+    # R3 behoben: aktuelle Sitzung und weitere aktive Sitzung stehen ganz oben (trotz großer UUID):
+    assert UUID(listed[0]["id"]) == current_session_id
+    assert listed[0]["revoked"] is False
+    assert UUID(listed[1]["id"]) == high_active_id
+    assert listed[1]["revoked"] is False
+    # Abgelaufene Sitzung mit revoked=false in DB wird effektiv als revoked=True ausgewiesen:
+    by_id = {UUID(row["id"]): row for row in listed}
+    assert by_id[expired_unrevoked_id]["revoked"] is True
+    # Paginierung über offset/limit liefert die restlichen Einträge deterministisch:
+    page2 = c.get("/sessions?offset=50&limit=50").json()
+    assert len(page2) == 3
+    assert {UUID(r["id"]) for r in listed} | {UUID(r["id"]) for r in page2} == (
+        {current_session_id, high_active_id, expired_unrevoked_id} | set(low_ids)
+    )
     other = env["browser"]()
     other.headers.update({"Authorization": f"Bearer {high_token}"})
     assert other.get("/session").status_code == 200
-    # Direkter Widerruf über bekannte Sitzungs-ID funktioniert dennoch deterministisch:
     assert c.post(f"/sessions/{high_active_id}/revoke").status_code == 200
     assert other.get("/session").status_code == 401
 
@@ -186,38 +208,38 @@ def test_old_pending_account_blocks_different_password_and_allows_same_password_
 
 
 def test_network_budget_shared_client_host_ignores_forwarded_headers(env: Any) -> None:
-    """Charakterisierung R2 (en attente de correctif): globales 100/min Budget pro client.host."""
+    """Regressionsprüfung R2: 100/min Budget ist pro Client-Kontext/Pfad isoliert."""
     legit = env["browser"]()
     account(env, legit, "legit@example.test")
     assert legit.post("/auth/logout").status_code == 204
     noisy = env["browser"]()
-    # 98 weitere POST-/auth/*-Aufrufe (zusammen mit register + verify + login + logout = 101 > 100):
-    for i in range(98):
+    # noisy schöpft sein eigenes 100/min Budget auf /auth/recover vollständig aus (101 Aufrufe):
+    statuses = []
+    for i in range(101):
         res = noisy.post(
             "/auth/recover",
             json={"email": f"noise{i}@example.test"},
             headers={"X-Forwarded-For": f"198.51.100.{i % 250 + 1}"},
         )
-        assert res.status_code in {202, 429}
-    blocked = legit.post(
+        statuses.append(res.status_code)
+    assert statuses[:100] == [202] * 100
+    assert statuses[100] == 429
+    # R2 behoben: legit auf demselben Loopback-Host wird durch noisy NICHT kollektiv gesperrt:
+    ok_login = legit.post(
         "/auth/login",
         json={"login": "legit@example.test", "password": PASSWORD},
         headers={"X-Forwarded-For": "203.0.113.99"},
     )
-    assert blocked.status_code == 429
-    assert blocked.json() == {"detail": "try_later"}
-    # Nach Ablauf des 1-Minuten-Fensters ist die Anmeldung wieder möglich:
+    assert ok_login.status_code == 200
+    # /auth/logout ist zusätzlich vom Eingangs-Netzwerkbudget ausgenommen:
+    assert legit.post("/auth/logout").status_code == 204
+    # Nach Ablauf des 1-Minuten-Fensters ist auch noisy wieder entsperrt:
     env["now"][0] += timedelta(seconds=61)
-    assert (
-        legit.post(
-            "/auth/login", json={"login": "legit@example.test", "password": PASSWORD}
-        ).status_code
-        == 200
-    )
+    assert noisy.post("/auth/recover", json={"email": "noise0@example.test"}).status_code == 202
 
 
 def test_per_address_budgets_and_enumeration_resistance(env: Any) -> None:
-    """Charakterisierung R5 & Anti-Enumeration: Adressbudgets und identische Antwortformen."""
+    """Regressionsprüfung R5 & Anti-Enumeration: Aufrufer-isolierte Budgets und Antwortformen."""
     alice, bob, probe = env["browser"](), env["browser"](), env["browser"]()
     account(env, alice, "alice@example.test")
     account(env, bob, "bob@example.test")
@@ -229,11 +251,12 @@ def test_per_address_budgets_and_enumeration_resistance(env: Any) -> None:
         reg_shapes.append((r.status_code, set(r.json()), r.json()["status"]))
     expected_shape = (202, {"status", "challenge_id"}, "accepted")
     assert reg_shapes[0] == reg_shapes[1] == reg_shapes[2] == expected_shape
-    # 2. Recovery-Budget (3/min pro E-Mail): Dritter kann alice@example.test gezielt in 429 treiben,
-    # während bob@example.test unberührt bleibt (Charakterisierung R5):
+    # 2. Recovery-Budget (3/min pro E-Mail + Aufrufer): probe läuft für alice@example.test in 429,
+    # aber alice selbst bleibt handlungsfähig (R5 behoben) und bob@example.test ist unberührt:
     for i in range(4):
         r = probe.post("/auth/recover", json={"email": "alice@example.test"})
         assert r.status_code == (202 if i < 3 else 429)
+    assert alice.post("/auth/recover", json={"email": "alice@example.test"}).status_code == 202
     assert probe.post("/auth/recover", json={"email": "bob@example.test"}).status_code == 202
     # 3. Konto-Budget für Gerätewiderruf (10/min pro account_id):
     device_id = alice.get("/devices").json()[0]["id"]
@@ -476,3 +499,196 @@ def test_environment_boundaries_between_test_and_normal_runtime(
         )
     with pytest.raises(ValueError, match="Identitätsprobe"):
         LocalIdentity(b"short-pepper", MemoryChannel(), MemoryChannel()).validate(env["runtime"])
+
+
+def test_devices_sorting_effective_authorization_and_pagination(env: Any) -> None:
+    """Regressionsprüfung R3 für GET /devices: Sortierung, Autorisierung und Paginierung."""
+    c = env["browser"]()
+    account(env, c)
+    aid = UUID(c.get("/session").json()["account_id"])
+    current_device_id = UUID(c.get("/devices").json()[0]["id"])
+    now = env["now"][0]
+    low_ids = [UUID(f"00000000-0000-4000-8000-{i:012x}") for i in range(1, 51)]
+    high_active_id = UUID("ffffffff-ffff-4fff-8fff-ffffffffffff")
+    expired_flag_true_id = UUID("dddddddd-dddd-4ddd-8ddd-dddddddddddd")
+    with psycopg.connect(env["admin"]) as db:
+        for did in low_ids:
+            db.execute(
+                "INSERT INTO devices (id, account_id, proof_hash, authorized, expires_at, "
+                "security_epoch) VALUES (%s,%s,%s,false,%s,0)",
+                (did, aid, digest(secrets.token_urlsafe(32)), now - timedelta(days=1)),
+            )
+        db.execute(
+            "INSERT INTO devices (id, account_id, proof_hash, authorized, expires_at, "
+            "security_epoch) VALUES (%s,%s,%s,true,%s,0)",
+            (high_active_id, aid, digest(secrets.token_urlsafe(32)), now + timedelta(days=7)),
+        )
+        db.execute(
+            "INSERT INTO devices (id, account_id, proof_hash, authorized, expires_at, "
+            "security_epoch) VALUES (%s,%s,%s,true,%s,0)",
+            (
+                expired_flag_true_id,
+                aid,
+                digest(secrets.token_urlsafe(32)),
+                now - timedelta(seconds=1),
+            ),
+        )
+    page1 = c.get("/devices").json()
+    assert len(page1) == 50
+    assert UUID(page1[0]["id"]) == current_device_id and page1[0]["authorized"] is True
+    assert UUID(page1[1]["id"]) == high_active_id and page1[1]["authorized"] is True
+    by_id = {UUID(r["id"]): r for r in page1}
+    assert by_id[expired_flag_true_id]["authorized"] is False
+    page2 = c.get("/devices?offset=50&limit=50").json()
+    assert len(page2) == 3
+    assert {UUID(r["id"]) for r in page1} | {UUID(r["id"]) for r in page2} == (
+        {current_device_id, high_active_id, expired_flag_true_id} | set(low_ids)
+    )
+
+
+def test_targeted_login_and_register_caller_isolation_and_recovery_challenge_preservation(
+    env: Any,
+) -> None:
+    """Regressionsprüfung R5: fremde Fehlversuche sperren Besitzer nicht; Recovery bleibt gültig."""
+    alice, probe, pending_owner = env["browser"](), env["browser"](), env["browser"]()
+    account(env, alice, "alice@example.test")
+    aid = alice.get("/session").json()["account_id"]
+    personal = env["offline"].take(aid)
+    assert alice.post("/auth/logout").status_code == 204
+    # 1. Fremder Aufrufer schöpft sein Login-Budget (10/min) für alice@example.test aus:
+    for i in range(11):
+        r = probe.post(
+            "/auth/login", json={"login": "alice@example.test", "password": NEW_PASSWORD}
+        )
+        assert r.status_code == (401 if i < 10 else 429)
+    # Alice kann sich auf ihrem autorisierten Gerät trotzdem anmelden:
+    assert (
+        alice.post(
+            "/auth/login", json={"login": "alice@example.test", "password": PASSWORD}
+        ).status_code
+        == 200
+    )
+    # 2. Fremder Aufrufer schöpft sein Register-Budget (10/min) für pending@example.test aus:
+    first_ref = registration(env, pending_owner, "pending@example.test")
+    _ = env["mail"].take(first_ref)
+    for i in range(11):
+        r = probe.post(
+            "/auth/register", json={"email": "pending@example.test", "password": NEW_PASSWORD}
+        )
+        assert r.status_code == (202 if i < 10 else 429)
+    # Besitzer kann mit korrektem Passwort weiterhin seine Verifikation erneuern:
+    retry = pending_owner.post(
+        "/auth/register", json={"email": "pending@example.test", "password": PASSWORD}
+    )
+    assert retry.status_code == 202
+    verify(env, pending_owner, retry.json()["challenge_id"])
+    # 3. Laufende Kontowiederherstellung wird durch fremdes POST /auth/recover nicht entwertet:
+    rec_browser = env["browser"]()
+    ref = rec_browser.post("/auth/recover", json={"email": "alice@example.test"}).json()[
+        "challenge_id"
+    ]
+    otp = env["mail"].take(ref)
+    # Unauthentifizierter Dritter stößt parallel /auth/recover für dieselbe Adresse an:
+    interfere = probe.post("/auth/recover", json={"email": "alice@example.test"})
+    assert interfere.status_code == 202
+    _ = env["mail"].take(interfere.json()["challenge_id"])
+    # Ursprüngliche Challenge von rec_browser bleibt einlösbar:
+    complete = rec_browser.post(
+        "/auth/recover/complete",
+        json={
+            "challenge_id": ref,
+            "code": otp,
+            "recovery_code": personal,
+            "new_password": NEW_PASSWORD,
+        },
+    )
+    assert complete.status_code == 200
+
+
+def test_approve_device_verifies_session_and_device_state_and_rejects_duplicate_approval(
+    env: Any,
+) -> None:
+    """Regressionsprüfung R12: approve_device prüft Sitzung/Gerät und sperrt Doppelfreigabe."""
+    from psycopg.rows import dict_row
+
+    from syllentra_backend.identity import IdentityService
+
+    trusted, candidate = env["browser"](), env["browser"]()
+    account(env, trusted)
+    aid = UUID(trusted.get("/session").json()["account_id"])
+    device_id = UUID(trusted.get("/devices").json()[0]["id"])
+    session_token = trusted.cookies.get(SESSION)
+    assert session_token
+    session_hash = digest(session_token)
+    req = candidate.post("/auth/login", json={"login": "alice@example.test", "password": PASSWORD})
+    assert req.status_code == 202
+    ref = UUID(req.json()["challenge_id"])
+    service = IdentityService(
+        LocalIdentity(secrets.token_bytes(32), env["mail"], env["offline"]),
+        lambda: env["now"][0],
+    )
+    # 1. Direktaufruf mit widerrufener Sitzung darf Challenge NICHT freigeben:
+    with psycopg.connect(env["admin"], row_factory=dict_row) as db:
+        db.execute("UPDATE sessions SET revoked = true WHERE token_hash = %s", (session_hash,))
+        res_revoked = service.approve_device(db, aid, session_hash, ref, PASSWORD, device_id)
+        assert res_revoked.status_code == 400
+        chk = db.execute(
+            "SELECT approved FROM identity_challenges WHERE id = %s", (ref,)
+        ).fetchone()
+        assert chk and chk["approved"] is False
+        # Sitzung wiederherstellen, aber freigebendes Gerät widerrufen -> ebenfalls 400:
+        db.execute("UPDATE sessions SET revoked = false WHERE token_hash = %s", (session_hash,))
+        db.execute("UPDATE devices SET authorized = false WHERE id = %s", (device_id,))
+        res_dev_revoked = service.approve_device(db, aid, session_hash, ref, PASSWORD, device_id)
+        assert res_dev_revoked.status_code == 400
+        chk2 = db.execute(
+            "SELECT approved FROM identity_challenges WHERE id = %s", (ref,)
+        ).fetchone()
+        assert chk2 and chk2["approved"] is False
+        db.execute("UPDATE devices SET authorized = true WHERE id = %s", (device_id,))
+    # 2. Reguläre Freigabe über HTTP gelingt einmalig (200), Zweitversuch liefert 404:
+    first_approve = trusted.post(f"/devices/requests/{ref}/approve", json={"password": PASSWORD})
+    assert first_approve.status_code == 200
+    second_approve = trusted.post(f"/devices/requests/{ref}/approve", json={"password": PASSWORD})
+    assert second_approve.status_code == 404
+    assert (
+        candidate.post("/auth/device/complete", json={"challenge_id": str(ref)}).status_code == 200
+    )
+
+
+def test_r1_and_r4_boundary_and_decision_readiness(env: Any) -> None:
+    """Grenz- und Entscheidungsbereitschaftstest für R1 (knapp vor 7d) und R4 (Challenges)."""
+    c, recovering, pending_client = env["browser"](), env["browser"](), env["browser"]()
+    account(env, c)
+    aid = c.get("/session").json()["account_id"]
+    personal = env["offline"].take(aid)
+    p_ref = registration(env, pending_client, "stale-pending@example.test")
+    _ = env["mail"].take(p_ref)
+    # 1 Sekunde vor Ablauf der 7-Tage-Frist ist die Kontowiederherstellung noch möglich und rotiert
+    # sowohl Gerätebindung als auch Offline-Wiederherstellungscode um weitere 7 Tage:
+    env["now"][0] += timedelta(days=7) - timedelta(seconds=1)
+    ref = recovering.post("/auth/recover", json={"email": "alice@example.test"}).json()[
+        "challenge_id"
+    ]
+    otp = env["mail"].take(ref)
+    rec = recovering.post(
+        "/auth/recover/complete",
+        json={
+            "challenge_id": ref,
+            "code": otp,
+            "recovery_code": personal,
+            "new_password": NEW_PASSWORD,
+        },
+    )
+    assert rec.status_code == 200
+    new_personal = env["offline"].take(aid)
+    assert new_personal and new_personal != personal
+    # Abgelaufene Challenge von stale-pending (>1h überfällig) wurde durch clean() entfernt,
+    # während das pending-Konto bis zur Entscheidung über R4 in accounts erhalten bleibt:
+    with psycopg.connect(env["admin"]) as db:
+        ch_row = db.execute("SELECT id FROM identity_challenges WHERE id = %s", (p_ref,)).fetchone()
+        assert ch_row is None
+        acc_row = db.execute(
+            "SELECT verification, status FROM accounts WHERE login = 'stale-pending@example.test'"
+        ).fetchone()
+        assert acc_row == ("pending", "active")

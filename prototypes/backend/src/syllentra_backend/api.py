@@ -19,7 +19,7 @@ from pydantic import BaseModel, ConfigDict, Field
 from starlette.concurrency import run_in_threadpool
 from starlette.middleware.trustedhost import TrustedHostMiddleware
 
-from .identity import CSRF, SESSION, IdentityService, LocalIdentity, cookie
+from .identity import CSRF, DEVICE, SESSION, IdentityService, LocalIdentity, cookie
 from .identity_routes import install as install_identity
 from .limits import BodyLimit
 from .security import digest
@@ -30,6 +30,7 @@ class Principal:
     account_id: UUID
     kind: str
     token_hash: str
+    device_id: UUID | None = None
 
 
 class NoteChange(BaseModel):
@@ -84,7 +85,14 @@ def create_app(
             response = JSONResponse({"detail": denied}, status_code=403)
         else:
             try:
-                if service and request.method == "POST" and request.url.path.startswith("/auth/"):
+                if (
+                    service
+                    and request.method == "POST"
+                    and request.url.path.startswith("/auth/")
+                    and request.url.path != "/auth/logout"
+                ):
+                    host = request.client.host if request.client else "local"
+                    context = request.cookies.get(DEVICE) or request.cookies.get(CSRF, "")
 
                     def network_budget() -> bool:
                         with psycopg.connect(
@@ -93,7 +101,7 @@ def create_app(
                             return service.budget(
                                 db,
                                 "network",
-                                request.client.host if request.client else "local",
+                                f"{host}:{request.url.path}:{context}",
                                 100,
                             )
 
@@ -148,7 +156,8 @@ def create_app(
         if len(token) != 43:
             raise HTTPException(401, "unauthorized")
         row = db.execute(
-            "SELECT a.id, a.kind FROM sessions s JOIN accounts a ON a.id = s.account_id "
+            "SELECT a.id, a.kind, s.device_id FROM sessions s "
+            "JOIN accounts a ON a.id = s.account_id "
             "JOIN devices d ON d.id = s.device_id AND d.account_id = a.id "
             "WHERE s.token_hash = %s AND s.expires_at > %s AND NOT s.revoked "
             "AND a.status = 'active' AND a.verification = 'verified' AND d.authorized "
@@ -159,7 +168,7 @@ def create_app(
         ).fetchone()
         if not row:
             raise HTTPException(401, "unauthorized")
-        return Principal(row["id"], row["kind"], digest(token))
+        return Principal(row["id"], row["kind"], digest(token), row["device_id"])
 
     Actor = Annotated[Principal, Depends(principal)]
 

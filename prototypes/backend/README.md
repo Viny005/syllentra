@@ -1,8 +1,8 @@
 # Lokale experimentelle Backendgrundlage
 
-**Version:** 0.3 · **Stand:** 23.10.2026 · **Status:** Experimentell / Zur Prüfung
+**Version:** 0.4 · **Stand:** 23.10.2026 · **Status:** Experimentell / Zur Prüfung
 
-Mission 10 erweitert die lokale Sicherheitsprobe aus Mission 9 um tatsächlich testbare synthetische Identität; Mission 12 isoliert PostgreSQL-Testläufe pro Prozess und ergänzt Sicherheits-/Charakterisierungsprüfungen. Keine öffentliche Registrierung, produktive Authentifizierung, echte Mailzustellung oder endgültige Stackwahl. [Identitätsarchitektur](../../docs/development/IDENTITY_ARCHITECTURE.md), [aktueller Prüfbericht](../../docs/development/IDENTITY_PROTOTYPE_REVIEW.md), [historische Mission 9](../../docs/development/BACKEND_PROTOTYPE_REVIEW.md), [Lizenzen](LICENSES.md).
+Mission 10 erweitert die lokale Sicherheitsprobe aus Mission 9 um tatsächlich testbare synthetische Identität; Mission 12 isoliert PostgreSQL-Testläufe pro Prozess; Mission 13 behebt R2 (Netzwerkbudget-Isolierung), R3 (Sortierung, effektiver Status und `offset`/`limit`-Paginierung bei `GET /sessions` und `GET /devices`), R5 (Aufrufer-isolierte Adressbudgets und Erhalt laufender Recovery-Challenges) sowie R12 (vollständige Sitzungs-/Geräteprüfung bei `approve_device`). Keine öffentliche Registrierung, produktive Authentifizierung, echte Mailzustellung oder endgültige Stackwahl. [Identitätsarchitektur](../../docs/development/IDENTITY_ARCHITECTURE.md), [aktueller Prüfbericht](../../docs/development/IDENTITY_PROTOTYPE_REVIEW.md), [historische Mission 9](../../docs/development/BACKEND_PROTOTYPE_REVIEW.md), [Lizenzen](LICENSES.md).
 
 ## Aufbau und Grenzen
 
@@ -73,8 +73,8 @@ Runtime hat kein DDL, keine Rollen-/Flagänderung und kein Notizeigentümer-/Ger
 | POST /auth/device/complete | Vorherige Freigabe vom berechtigten Gerät plus gebundener Antragsteller; danach neu anmelden |
 | POST /auth/recover, /auth/recover/complete | Generische Anfrage; E-Mail-OTP **plus** persönlicher Einmalcode, Entzug alten Vertrauens; keine Dokumentenschlüsselrecovery |
 | GET /session; POST /auth/logout | Eigene aktuelle Identität; aktuelle Session widerrufen und Cookie löschen |
-| GET /devices, /devices/requests; POST /devices/requests/{id}/approve, /devices/{id}/revoke | Nur eigenes Gerät/Anfrage, aktuelle Rechte und Passwortbestätigung bei Geräteaktionen |
-| GET /sessions; POST /sessions/{id}/revoke | Nur eigene nicht geheime Verwaltungsreferenzen; niemals Token/Hashausgabe |
+| GET /devices, /devices/requests; POST /devices/requests/{id}/approve, /devices/{id}/revoke | Nur eigenes Gerät/Anfrage, effektives `authorized` (`authorized AND expires_at > clock()`), aktives Gerät zuerst, Paginierung (`offset`/`limit`), Sitzungs-/Gerätesperre und Passwortbestätigung bei Geräteaktionen |
+| GET /sessions; POST /sessions/{id}/revoke | Nur eigene nicht geheime Verwaltungsreferenzen, effektives `revoked` (`revoked OR expires_at <= clock()`), aktive Sitzungen zuerst, Paginierung (`offset`/`limit`); niemals Token/Hashausgabe |
 | GET /capabilities; GET/PATCH/DELETE /notes/{id}; GET /notes | Bestehende aktuelle Rollen-/Flag-/Eigentumsprüfung und endliche Liste |
 | GET /administration | Immer gesperrt; kein funktionsfähiger Adminhandler, keine öffentliche Erstbesetzung |
 

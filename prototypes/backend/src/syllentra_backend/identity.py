@@ -101,15 +101,23 @@ class IdentityService:
             (self.clock() - timedelta(hours=1),),
         )
 
-    def challenge(self, db: Db, account: dict[str, Any], purpose: str) -> JSONResponse:
+    def challenge(
+        self,
+        db: Db,
+        account: dict[str, Any],
+        purpose: str,
+        *,
+        consume_existing: bool = True,
+    ) -> JSONResponse:
         self.clean(db)
         now, reference, binding = self.clock(), uuid4(), secrets.token_urlsafe(32)
         code = f"{secrets.randbelow(100000000):08d}" if purpose != "device" else ""
-        db.execute(
-            "UPDATE identity_challenges SET consumed = true WHERE account_id = %s "
-            "AND purpose = %s AND NOT consumed",
-            (account["id"], purpose),
-        )
+        if consume_existing:
+            db.execute(
+                "UPDATE identity_challenges SET consumed = true WHERE account_id = %s "
+                "AND purpose = %s AND NOT consumed",
+                (account["id"], purpose),
+            )
         db.execute(
             "INSERT INTO identity_challenges "
             "(id, account_id, purpose, verifier, binding_hash, expires_at, created_at, "
@@ -141,8 +149,10 @@ class IdentityService:
         cookie(response, PREAUTH, secrets.token_urlsafe(32), 300)
         return response
 
-    def register(self, db: Db, email: str, password: str) -> JSONResponse:
-        if not self.budget(db, "register", email):
+    def register(self, db: Db, email: str, password: str, caller: str = "local") -> JSONResponse:
+        if not self.budget(db, "register", f"{email}:{caller}", 10) or not self.budget(
+            db, "register-address", email, 30
+        ):
             return result(429, "try_later")
         encoded = PASSWORDS.hash(password)  # Auch im Duplikatpfad keine billige Existenzantwort.
         row = db.execute(
@@ -286,12 +296,30 @@ class IdentityService:
         self.audit(db, "otp_resent", account["id"])
         return result(202, "accepted")
 
-    def login(self, db: Db, email: str, password: str, proof: str | None) -> JSONResponse:
-        if not self.budget(db, "login", email):
+    def login(
+        self,
+        db: Db,
+        email: str,
+        password: str,
+        proof: str | None,
+        caller: str = "local",
+    ) -> JSONResponse:
+        if not self.budget(db, "login", f"{email}:{caller}", 10):
             return result(429, "try_later")
         account = db.execute(
             "SELECT * FROM accounts WHERE login = %s FOR UPDATE", (email,)
         ).fetchone()
+        device = (
+            db.execute(
+                "SELECT id FROM devices WHERE account_id = %s AND proof_hash = %s "
+                "AND authorized AND expires_at > %s AND security_epoch = %s",
+                (account["id"], digest(proof or ""), self.clock(), account["security_epoch"]),
+            ).fetchone()
+            if account
+            else None
+        )
+        if not device and not self.budget(db, "login-untrusted", email, 30):
+            return result(429, "try_later")
         valid = verify_password(account["password_hash"] if account else DUMMY_HASH, password)
         if (
             not valid
@@ -303,11 +331,6 @@ class IdentityService:
         ):
             self.audit(db, "login_denied", account["id"] if account else None)
             return JSONResponse({"detail": "unauthorized"}, status_code=401)
-        device = db.execute(
-            "SELECT id FROM devices WHERE account_id = %s AND proof_hash = %s "
-            "AND authorized AND expires_at > %s AND security_epoch = %s",
-            (account["id"], digest(proof or ""), self.clock(), account["security_epoch"]),
-        ).fetchone()
         if not device:
             self.audit(db, "device_requested", account["id"])
             return self.challenge(db, account, "device")
@@ -341,8 +364,16 @@ class IdentityService:
         )
         cookie(response, SESSION, token)
 
-    def request_recovery(self, db: Db, email: str) -> JSONResponse:
-        if not self.budget(db, "recovery", email, 3):
+    def request_recovery(
+        self,
+        db: Db,
+        email: str,
+        caller: str = "local",
+        binding: str | None = None,
+    ) -> JSONResponse:
+        if not self.budget(db, "recovery", f"{email}:{caller}", 3) or not self.budget(
+            db, "recovery-address", email, 15
+        ):
             return result(429, "try_later")
         account = db.execute(
             "SELECT * FROM accounts WHERE login = %s FOR UPDATE", (email,)
@@ -355,8 +386,15 @@ class IdentityService:
             or account["mfa_required"]
         ):
             return self.fake_challenge()
+        if binding:
+            db.execute(
+                "UPDATE identity_challenges SET consumed = true "
+                "WHERE account_id = %s AND purpose = 'recovery' "
+                "AND binding_hash = %s AND NOT consumed",
+                (account["id"], digest(binding)),
+            )
         self.audit(db, "recovery_requested", account["id"])
-        return self.challenge(db, account, "recovery")
+        return self.challenge(db, account, "recovery", consume_existing=False)
 
     def recover(
         self,
@@ -407,31 +445,61 @@ class IdentityService:
         return response
 
     def approve_device(
-        self, db: Db, account_id: UUID, session_hash: str, reference: UUID, password: str
+        self,
+        db: Db,
+        account_id: UUID,
+        session_hash: str,
+        reference: UUID,
+        password: str,
+        actor_device_id: UUID | None = None,
     ) -> JSONResponse:
         if not self.budget(db, "approve", str(account_id)):
             return result(429, "try_later")
         account = db.execute(
             "SELECT * FROM accounts WHERE id = %s FOR UPDATE", (account_id,)
         ).fetchone()
-        if not account or not verify_password(account["password_hash"], password):
+        if (
+            not account
+            or account["verification"] != "verified"
+            or account["status"] != "active"
+            or account["kind"] != "user"
+            or account["mfa_required"]
+            or not verify_password(account["password_hash"], password)
+        ):
             return result(400, "verification_failed")
+        now = self.clock()
         session = db.execute(
-            "SELECT device_id FROM sessions WHERE token_hash = %s", (session_hash,)
-        ).fetchone()
-        row = db.execute(
-            "UPDATE identity_challenges SET approved = true, approved_by_device = %s "
-            "WHERE id = %s AND account_id = %s AND purpose = 'device' "
-            "AND NOT consumed AND expires_at > %s AND security_epoch = %s RETURNING id",
+            "SELECT s.device_id FROM sessions s "
+            "JOIN devices d ON d.id = s.device_id AND d.account_id = s.account_id "
+            "WHERE s.token_hash = %s AND s.account_id = %s AND NOT s.revoked "
+            "AND s.expires_at > %s AND s.security_epoch = %s "
+            "AND d.authorized AND d.expires_at > %s AND d.security_epoch = %s "
+            "FOR UPDATE OF s, d",
             (
-                session["device_id"] if session else None,
-                reference,
+                session_hash,
                 account_id,
-                self.clock(),
+                now,
+                account["security_epoch"],
+                now,
                 account["security_epoch"],
             ),
         ).fetchone()
-        if not row or not session:
+        if not session or (actor_device_id is not None and session["device_id"] != actor_device_id):
+            return result(400, "verification_failed")
+        row = db.execute(
+            "UPDATE identity_challenges SET approved = true, approved_by_device = %s "
+            "WHERE id = %s AND account_id = %s AND purpose = 'device' "
+            "AND NOT approved AND NOT consumed AND expires_at > %s "
+            "AND security_epoch = %s RETURNING id",
+            (
+                session["device_id"],
+                reference,
+                account_id,
+                now,
+                account["security_epoch"],
+            ),
+        ).fetchone()
+        if not row:
             return result(404, "not_found")
         self.audit(db, "device_approved", account_id)
         return result(200, "approved")

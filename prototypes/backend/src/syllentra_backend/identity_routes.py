@@ -1,14 +1,24 @@
 """Identitätsrouten: keine Rohgeheimnisse in HTTP-Antworten oder Logs."""
 
 import re
+from datetime import UTC, datetime
 from typing import Annotated, Any
 from uuid import UUID
 
-from fastapi import Depends, FastAPI, Request
+from fastapi import Depends, FastAPI, Query, Request
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, ConfigDict, Field, SecretStr, field_validator
 
-from .identity import DEVICE, PREAUTH, SESSION, Db, IdentityService, normalize_email, result
+from .identity import (
+    CSRF,
+    DEVICE,
+    PREAUTH,
+    SESSION,
+    Db,
+    IdentityService,
+    normalize_email,
+    result,
+)
 
 
 class Input(BaseModel):
@@ -65,10 +75,14 @@ def install(app: FastAPI, service: IdentityService | None, connection: Any, prin
     def unavailable() -> JSONResponse:
         return JSONResponse({"detail": "identity_flow_unavailable"}, status_code=503)
 
+    def caller(request: Request) -> str:
+        host = request.client.host if request.client else "local"
+        return f"{host}:{request.cookies.get(CSRF, '')}"
+
     @app.post("/auth/register")
-    def register(body: Registration, db: Database) -> JSONResponse:
+    def register(body: Registration, request: Request, db: Database) -> JSONResponse:
         return (
-            service.register(db, body.email, body.password.get_secret_value())
+            service.register(db, body.email, body.password.get_secret_value(), caller(request))
             if service
             else unavailable()
         )
@@ -106,11 +120,16 @@ def install(app: FastAPI, service: IdentityService | None, connection: Any, prin
             body.device_proof.get_secret_value()
             if body.device_proof
             else request.cookies.get(DEVICE),
+            caller(request),
         )
 
     @app.post("/auth/recover")
-    def recover_request(body: Email, db: Database) -> JSONResponse:
-        return service.request_recovery(db, body.email) if service else unavailable()
+    def recover_request(body: Email, request: Request, db: Database) -> JSONResponse:
+        return (
+            service.request_recovery(db, body.email, caller(request), request.cookies.get(PREAUTH))
+            if service
+            else unavailable()
+        )
 
     @app.post("/auth/recover/complete")
     def recover(body: Recover, request: Request, db: Database) -> JSONResponse:
@@ -148,18 +167,31 @@ def install(app: FastAPI, service: IdentityService | None, connection: Any, prin
     def approve(reference: UUID, body: Password, db: Database, actor: Actor) -> JSONResponse:
         return (
             service.approve_device(
-                db, actor.account_id, actor.token_hash, reference, body.password.get_secret_value()
+                db,
+                actor.account_id,
+                actor.token_hash,
+                reference,
+                body.password.get_secret_value(),
+                actor.device_id,
             )
             if service
             else unavailable()
         )
 
     @app.get("/devices")
-    def devices(db: Database, actor: Actor) -> list[dict[str, Any]]:
+    def devices(
+        db: Database,
+        actor: Actor,
+        offset: Annotated[int, Query(ge=0, le=5000)] = 0,
+        limit: Annotated[int, Query(ge=1, le=50)] = 50,
+    ) -> list[dict[str, Any]]:
+        now = service.clock() if service else datetime.now(UTC)
         return db.execute(
-            "SELECT id, authorized, expires_at FROM devices WHERE account_id = %s "
-            "ORDER BY id LIMIT 50",
-            (actor.account_id,),
+            "SELECT id, (authorized AND expires_at > %s) AS authorized, expires_at "
+            "FROM devices WHERE account_id = %s "
+            "ORDER BY (id = %s) DESC, (authorized AND expires_at > %s) DESC, "
+            "expires_at DESC, id ASC LIMIT %s OFFSET %s",
+            (now, actor.account_id, actor.device_id, now, limit, offset),
         ).fetchall()
 
     @app.post("/devices/{device_id}/revoke")
@@ -171,11 +203,19 @@ def install(app: FastAPI, service: IdentityService | None, connection: Any, prin
         )
 
     @app.get("/sessions")
-    def sessions(db: Database, actor: Actor) -> list[dict[str, Any]]:
+    def sessions(
+        db: Database,
+        actor: Actor,
+        offset: Annotated[int, Query(ge=0, le=5000)] = 0,
+        limit: Annotated[int, Query(ge=1, le=50)] = 50,
+    ) -> list[dict[str, Any]]:
+        now = service.clock() if service else datetime.now(UTC)
         return db.execute(
-            "SELECT id, expires_at, revoked FROM sessions WHERE account_id = %s "
-            "ORDER BY id LIMIT 50",
-            (actor.account_id,),
+            "SELECT id, expires_at, (revoked OR expires_at <= %s) AS revoked "
+            "FROM sessions WHERE account_id = %s "
+            "ORDER BY (token_hash = %s) DESC, (NOT revoked AND expires_at > %s) DESC, "
+            "expires_at DESC, id ASC LIMIT %s OFFSET %s",
+            (now, actor.account_id, actor.token_hash, now, limit, offset),
         ).fetchall()
 
     @app.post("/sessions/{session_id}/revoke")
