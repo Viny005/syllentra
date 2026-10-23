@@ -2,8 +2,8 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** B1 — Dialogspezifikation\
-**Version:** 0.5\
-**Stand:** 22.10.2026\
+**Version:** 0.6\
+**Stand:** 23.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Methode:** Spezifikationsbaustein nach Johannes Siedersleben (GUI-Statik und GUI-Dynamik), nach der [methodischen Herold-B1-Referenz](https://github.com/carstenlucke/herold/blob/main/docs/spec/B1-dialogspezifikation.md), ohne Übernahme ihrer Authentifizierungs- oder Produktentscheidungen\
 **Historischer Quellstand der B1-Einzellieferung:** `docs/spec/p1-p2-mobile-workspaces` in `Viny005/syllentra`, PR #1; P1 v0.6, P2 v0.7, F1 v0.3, F2 v0.2, F3 v0.2, D1 v0.2, D2 v0.2; unveränderter Ausgangsstand `459787027ab941456d61d61da040649fb87709c3`.\
@@ -120,7 +120,7 @@ flowchart TB
 | DLG-47 | Modellwahl, Kontingent und Berechtigung | Integrationen und Administration | UC-45, UC-46, UC-47 |
 | DLG-48 | Verwaltung und Oberflächenkonfiguration | Integrationen und Administration | UC-48 |
 | DLG-49 | Dateneinsicht, Export und gezielte Löschung | Integrationen und Administration | UC-22, UC-49, UC-50 |
-| DLG-50 | Sprach-, Ausgabe- und Hörmodus-Einstellungen | Integrationen und Administration | UC-20, UC-46, UC-48 |
+| DLG-50 | Sprach-, Ausgabe- und Hörmodus-Einstellungen | Integrationen und Administration | UC-20, UC-46, UC-48, UC-65 |
 | DLG-51 | Registrierung und E-Mail-Bestätigung | Konten / Datenkontrolle | UC-51 |
 | DLG-52 | Sitzungssperre und Wiederherstellung | Konten / Datenkontrolle | UC-52 |
 | DLG-53 | Rollenverwaltung und Administrationszugang | Konten / Datenkontrolle | UC-53 |
@@ -941,7 +941,7 @@ Jeder Dialog hat eine **fachliche Zielbeschreibung**, **Einstieg**, **GUI Statik
 | Wiedergabezustand | Anzeige | — | bereit / vorbereitet / läuft / pausiert / gestoppt / blockiert / fehlerhaft; temporäre B1-Anzeige, keine neue DT-Enumeration |
 | Antwortbindung und Position/Geschwindigkeit | Eingabe/Auswahl und Anzeige | DM-26 als Inhaltsquelle; temporäre Ausgabe | konkrete berechtigte Antwort und Inhaltsstand, Position nur soweit bekannt; verfügbare Tempi, keine neue persistente Audiokopie |
 | Stimmen-/Sprachoption | Eingabe/Auswahl und Anzeige | DT-07 | nur verfügbare |
-| Hörmodus und Ausgabeziel | Eingabe/Auswahl und Anzeige | DM-48 nur als bestehender Konfigurationsrahmen; Typnachtrag offen | standardmäßig aus; aktuelles Gerät, aktive Sitzung und gewählte Ausgabe erkennbar |
+| Hörmodus und Ausgabeziel | Eingabe/Auswahl und Anzeige | DM-48/DM-49, DT-61; aktiver Laufzustand getrennt | standardmäßig aus; aktuelles Gerät, aktive Sitzung und gewählte Ausgabe erkennbar |
 
 **GUI Dynamik — Bedienhandlungen und Zielreaktionen**
 
@@ -1677,9 +1677,9 @@ Jeder Dialog hat eine **fachliche Zielbeschreibung**, **Einstieg**, **GUI Statik
 
 #### DLG-50 — Sprach-, Ausgabe- und Hörmodus-Einstellungen
 
-**Ziel und Einstieg:** Einstellungen > Sprache & Audio; aus DLG-26.
+**Ziel und Einstieg:** Einstellungen > „Töne und Stimmen“; aus DLG-26 und DLG-66. Die übrigen allgemeinen Spracheinstellungen bleiben getrennt erreichbar; bestehende Sprach-, Ausgabe- und Hörmodusfunktionen gehören weiterhin zu DLG-50.
 
-**F2-Bezug:** UC-20, UC-46, UC-48.
+**F2-Bezug:** UC-20, UC-46, UC-48, UC-65.
 
 **GUI Statik — angezeigte oder editierbare Elemente**
 
@@ -1687,7 +1687,12 @@ Jeder Dialog hat eine **fachliche Zielbeschreibung**, **Einstieg**, **GUI Statik
 |---|---|---|---|
 | Standard-Ausgabesprache | Eingabe/Auswahl und Anzeige | DT-07 | Profil oder manuell |
 | Einzelwiedergabe und Hörmodus | Eingabe/Auswahl und Anzeige | — | manuelles Anhören bei zulässiger verfügbarer Fähigkeit; automatische Ausgabe standardmäßig aus |
-| Stimme/Tempo | Eingabe/Auswahl und Anzeige | — | sofern verfügbar |
+| Optionale Benachrichtigungstöne | Auswahl und Lautlos | DM-48/DM-49, DT-61 | mehrere freigegebene In-App-Töne; Lautlos erhält visuelle Hinweise; OS-/Push-Fähigkeit separat erklären |
+| Tonvorschau | Bewusste Aktion | zulässiger Tonkatalog | nur bei tatsächlicher Fähigkeit; kein automatisches Probehören beim Seitenaufruf |
+| Stimme je Audiosprache | Auswahl | DT-07/DT-61 | Deutsch, Französisch, Englisch als initiale Zielsprachen; mehrere Stimmen soweit Motor verfügbar; unabhängig von UI-Sprache |
+| Tempo und Lautstärke | Eingabe/Auswahl und Anzeige | DT-61 | nur tatsächlich unterstützte Bereiche; nicht steuerbare Lautstärke verständlich kennzeichnen |
+| Geltung / wirksame Auswahl | Anzeige/Auswahl | DM-02/DM-48/DM-49 | allgemein, je Sprache und vorhandener Kurs-/Gesprächskontext samt Herkunft; keine neue widersprüchliche Konfiguration |
+| Verfügbarkeit und Reset | Anzeige/Aktion | DT-61 | fehlende Fähigkeit, gesperrter Anbieter oder „In Entwicklung“ mit Grund; gewählten Präferenzbereich auf angezeigte zulässige Standards zurücksetzen |
 | Vorleseanbieter und Kosten | Anzeige | DM-43, DM-46 | explizit |
 | Mikrofonfreigabe | Anzeige | — | separat |
 
@@ -1695,8 +1700,10 @@ Jeder Dialog hat eine **fachliche Zielbeschreibung**, **Einstieg**, **GUI Statik
 
 | Aktion | Beobachtbare Wirkung / Navigation |
 |---|---|
-| Hörmodus aktivieren | nur auf bewusstem Nutzerwunsch |
-| Stimme/Tempo testen | nur mit autorisierter Verarbeitung |
+| Hörmodus aktivieren | nur auf bewusstem Nutzerwunsch für aktuelles berechtigtes Gerät/Gespräch/Sitzung; Standard aus; Reconnect/Gerätewechsel aktiviert nicht allein aufgrund gespeicherter Wahl |
+| Stimme/Tempo testen | bewusst starten, nur mit neutralem Text, z. B. „Willkommen. Dies ist eine Stimmvorschau.“ und entsprechender neutraler FR-/EN-Fassung; nie private Antwort vorladen; passende Verarbeitungserlaubnis und Kostenrechte erforderlich |
+| Ton wählen / Lautlos speichern | gültige persönliche Einstellung persistiert; visueller Hinweis und Verlauf bleiben; kein zusätzlicher Zustellversuch |
+| Präferenzen zurücksetzen | Bereich und gültige Standards vorher zeigen; keine automatische Ausgabe, neue Datenweitergabe oder Aufhebung von Datenschutzentscheidungen |
 | Mikrofon erlauben | separat für Diktat/Gespräch |
 | Audiomodus deaktivieren | laufende Wiedergabe und wartende Ausgabe beenden; keine weitere automatische Audioerzeugung |
 
@@ -2205,6 +2212,7 @@ Alle neuen Dialoge sind mit Tastatur und auf schmalen Geräten bedienbar. Sie ze
 | Erinnerungspunkte | J−5/J−1 zeigen; eigene Punkte speichern, Stundenpunkte ohne belegte Ereignisuhrzeit erklären und nicht aktivieren |
 | Ruhezeit und Zone | Initial 22:00–08:00, konfigurierbar; Wirkung über Mitternacht und erforderliche Zeit-/DST-Klärung sichtbar |
 | Kanäle und Geräte | In-App unabhängig; OS-Push nur mit tatsächlichem Recht, Haupt-/weitere Geräte bewusst, Erinnerungsmail ausdrücklich opt-in; fehlende Fähigkeit erklären |
+| Töne und Stimmen öffnen | DLG-50 mit derselben eigenen Tonpräferenz öffnen; Lautlos lässt visuelle Hinweise bestehen, OS-/Push-Ton ist nicht garantiert anpassbar |
 | Dringlichkeit / Tagesdigest | Nur unterstützte Optionen; keine implizite Ruhezeit-/Datenschutzausnahme, keinen neuen Digest allein durch Historienänderung |
 | Geschützter Verlauf | Logischer Hinweis, unbekannte/belegte Zustellung und Lesen getrennt; aktuelle Auslassungen/Fehler ohne Secrets |
 | Verlauf gezielt löschen | Folgen bestätigen soweit destruktiv; keine Quell-/Termin-/Lernstandslöschung, keine Wiederzustellung durch alte Jobs |
@@ -2229,3 +2237,22 @@ Alle neuen Dialoge sind mit Tastatur und auf schmalen Geräten bedienbar. Sie ze
 **Schutz/Zustände:** Unlesbare/fehlende/widersprüchliche Quelle liefert Fehler-/Teilstand, keinen scheinbar vollständigen Anerkennungsstatus. Geschützte Noten nur im ausdrücklich geöffneten autorisierten Detailpfad, nie Dashboard/Push. Tastatur-/Screenreader-/DE-FR-EN-Bedienung, textliche Konfliktbeschreibung statt Farbe allein. Quelle/-kohorte zwischen Vorschau und Übernahme geändert: aktuelle Neubewertung.
 
 **Abnahme:** Ältere belegte Übergangsordnung bleibt für die zugehörige Kohorte maßgeblich, obwohl neues Handbuch vorliegt. Unbekannter Prüfungsversuch wird nicht als nicht bestanden ausgegeben; ohne Konnektor ist manueller Abgleich nutzbar.
+
+## B1.13 Abnahmeszenarien für Töne und Stimmen
+
+Quelle: bestätigte AUDIO-01 bis AUDIO-03 aus Mission 15 vom 23.10.2026, keine neuen FE/UC/DEC-V1. DLG-26/50/66 und die getrennte Administration nach UC-48 verwenden dieselben validierten Konfigurationswerte. Status **Zur Prüfung**. Die folgenden zehn Sollfälle sind **nicht ausgeführte Produkttests**; kein Funktionsnachweis des Prototyps.
+
+| Sollfall | Voraussetzung / Aktion | Beobachtbares Abnahmekriterium |
+|---|---|---|
+| AT-AUDIO-01 | Konto A sieht mindestens zwei freigegebene In-App-Töne, wählt den zweiten und speichert; B öffnet seine Einstellungen | A behält Auswahl nach erneutem Öffnen; B unverändert. Bewusste Vorschau spielt nur bei erlaubter Fähigkeit, sonst begründeter Hinweis. Keine OS-Hintergrundton-Garantie. |
+| AT-AUDIO-02 | A wählt Lautlos; ein weiterhin zulässiger Hinweis wird fällig | Kein optionaler In-App-Ton, visuelle Meldung und geschützter Verlauf bleiben. Ruhe-/Kanalregeln unverändert; keine zweite Zustellung. OS-Steuerungsgrenzen sind sichtbar. |
+| AT-AUDIO-03 | Französische Oberfläche, deutsche Audiosprache; A setzt getrennte verfügbare DE-/FR-/EN-Stimmen | Deutsche Antwort nutzt die gewählte zulässige deutsche Stimme; UI-Wechsel überschreibt weder sie noch andere Sprachpräferenzen. Fehlende Stimme erklärt, keine identische Qualität behauptet. |
+| AT-AUDIO-04 | A fordert Ton-/Stimmenvorschau bei geöffnetem privaten Gespräch an | Nur gezielter Ton bzw. neutraler Vorschautext; kein Gesprächs-/Notiztext im Vorschauauftrag. Entfernte TTS-Route ohne passende Freigabe bleibt ohne Übermittlung. |
+| AT-AUDIO-05 | Neue Sitzung ohne aktivierten Hörmodus, neue Antwort; danach ausdrückliches Einschalten, später Reconnect/Gerätewechsel | Zunächst keine automatische Ausgabe, manuelles Anhören bleibt möglich. Nur Opt-in liest neue zulässige Antworten; Wiederanmeldung/anderes Gerät reaktiviert nicht ungeprüft. |
+| AT-AUDIO-06 | Zulässige Antwort läuft, A pausiert, setzt fort und stoppt | Tatsächlicher Zustand sichtbar, Text erreichbar; Stop beendet Ausgabe und wartende automatische Wiedergabe ohne Neustart. Tempo/Volumen nur innerhalb belegter Fähigkeit. |
+| AT-AUDIO-07 | Während Wiedergabe/Warteschlange werden Sitzung, Inhalt oder Anbieterrecht entzogen | Nach erkannter Änderung sofort stoppen, keine weitere verbotene Erzeugung/Übertragung/Fortsetzung. Erkennungslatenz und unerreichbares Gerät gesondert nach N2.16 prüfen; keine sofortige Fernwirkung erfinden. |
+| AT-AUDIO-08 | Mikrofon verweigert; A versucht erlaubtes TTS, danach TTS ohne externen Grant bzw. Zugriff auf Bs Präferenz/Audio | Erlaubtes TTS ohne Mikrofon möglich; unzulässige Weitergabe und Fremdzugriff gesperrt. Keine Dritttrainingsfreigabe aus Play-Klick, keine privaten Texte in Meldungen/Logs. |
+| AT-AUDIO-09 | Gewählte Stimme entfernt, Motor/Tempo/Volumen oder OS-Tonwahl fehlt; A setzt Präferenzen zurück | Grund und Grenzen sichtbar, Text bleibt; kein stiller Ersatzanbieter. Reset wirkt nur auf gewählten gültigen Bereich, startet keinen Hörmodus und umgeht keine Datenschutzpräferenz. |
+| AT-AUDIO-10 | Berechtigter Admin sperrt Motor; normaler Nutzer ruft dieselbe Verwaltung direkt auf; Admin versucht persönliches Opt-in zu setzen | Servergrenze sperrt neue betroffene Aufträge und unzulässige Ausgabe; unberechtigte Änderung wirkungslos. Admin kann Kataloge/Flags/Rollenrestriktionen/Quoten/Kosten und Verfügbarkeitstexte verwalten, aber weder Hörmodus erzwingen noch private Gespräche frei lesen. |
+
+**Prüfanschlüsse:** [P1.10.6](P1-ziele-rahmenbedingungen.md#p1106-bestätigte-audioentscheidungen-aus-mission-15), UC-20/48/65 in [F2](F2-anwendungsfaelle.md), F3.14.1, DM-48/49/77, DT-61, [S1.23](S1-nachbarsysteme.md#s123-audioverträge-fähigkeitsgrenzen-und-offene-alternativen), N1.11 und N2.16. Serverseitige Rechte-/Flagprüfungen sind zusätzlich zur UI zu testen; keine Administrationsoberfläche wird hier implementiert.

@@ -2,8 +2,8 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** D1 — Datenmodell\
-**Version:** 0.5\
-**Stand:** 22.10.2026\
+**Version:** 0.6\
+**Stand:** 23.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Spezifikationsmethode:** Bausteine nach Johannes Siedersleben\
 **Bezugsstand:** Vier bestätigte Entscheidungen vom 19.10.2026; Ausgangs-HEAD `53ef171be4783748b5c7e3a84bb0cc363d5b4194`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1; aktuelle Fassungen im [Index](README.md).
@@ -851,6 +851,10 @@ Verwaltbarer Satz unterstützter UI-, Lern-, Integrations-, Datenschutz- oder Ko
 
 **FE-21:** Unterstützte persönliche Sprache, Stimme, Tempo und freiwillige Hörmoduswahl werden als validierte Konfigurationswerte DT-61 referenziert; Ausgabe standardmäßig nicht automatisch aktiv. Laufende/pausierte Wiedergabe ist temporärer Zustand, keine Konfigurationsfassung und keine Rolle. Wiederaufnahme nach App-/Gerätewechsel und Hintergrundfähigkeit müssen technisch nachgewiesen werden, keine neue Plattformgarantie.
 
+**AUDIO-01/02/03 — Konfigurationsbeziehungen:** Persönliche Ton-/Stimmenwerte gehören genau einem DM-01 und werden über DM-02 referenziert, versioniert in DM-48/DM-49 mit DT-61. Tonreferenz plus Lautloswahl betreffen In-App-Hinweise; OS-/Push-Fähigkeit bleibt eine Geräte-/Kanalinformation, kein zugesagter gemeinsamer Tonwert. Stimmenreferenz ist an Audiosprache, zulässigen Motor und Katalogfassung gebunden. Globale, sprachbezogene und bestehende Kurs-/Gesprächsausnahmen haben expliziten Geltungsbereich/Herkunft; keine neue automatische Vorrangregel zwischen Kurs und Gespräch wird erfunden. Ein ausdrückliches Aus bleibt ein Wert.
+
+Gespeicherte persönliche Auswahl und administrativer Katalog/Verfügbarkeit sind verschiedene Konfigurationsbereiche mit unterschiedlichen Rechten. Keine Inhaltskopie, Zugangsdaten oder Mikrofonfreigabe als Ton-/Stimmenwert. Unverfügbare Referenzen bleiben erklärbar und gesperrt, statt still auf einen fremden Motor zu wechseln. Zulässiger Geräteabgleich persönlicher Präferenzen ist keine Übertragung einer aktiven Hörsitzung. Reset/Export/Löschung folgt Eigentum und Bereich; kein Reset hebt Widerruf auf. Temporäre Audiopuffer und Vorschauen erben Quellschutz und endliche Löschregeln; neutrale Vorschau benötigt keine private Nachricht.
+
 #### DM-49 — Konfigurationsfassung
 
 Geprüfter gültiger oder vorgeschlagener Stand einer Konfiguration.
@@ -1599,6 +1603,8 @@ Die folgenden Ergänzungen schließen die L-08-/L-04-Lücken. Sie trennen nichtt
 **Integrität/Lebenszyklus:** Nur ausdrücklich gesetzte Merkmale überschreiben geerbte Werte; Aus ist ein Wert, kein Zurückfallen auf Standard. Ereignis vor Kategorie vor persönlicher globaler Regel vor Standard. Ausgang J−5/J−1 und Ruhezeit 22:00–08:00 konfigurierbar; Stundenpunkte nur bei belegter Uhrzeit/Zone. Kanalpräferenz ist kein OS-/Dienstrecht. Löschen/Ändern weist Folgen für noch offene Kandidaten aus, löscht keine Ereignisse oder Lernstände und wiederholt keine alten Zustellungen.
 
 **Abnahme:** Ereignis A mit ausgeschalteten Erinnerungen erbt keine trotzdem aktiven globalen Erinnerungen; Ereignis B behält seine bisher gültige Regel.
+
+**Tonbezug AUDIO-01:** DM-77 behält Erinnerungspunkte, Kanäle und deren Vererbung. Der optionale Ton verweist auf die aktuelle eigene DM-48-/DT-61-Auswahl, ohne diese zu duplizieren. Lautlos löscht weder DM-52-Hinweise noch DM-78-Nachweise und ändert keine Ereignisfälligkeit. Ein Ton ist kein vertraulicher gesprochener Hinweistext.
 
 ### DM-78 — Benachrichtigungszustellung
 

@@ -2,8 +2,8 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** D2 — Datentypen\
-**Version:** 0.5\
-**Stand:** 22.10.2026\
+**Version:** 0.6\
+**Stand:** 23.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Bezugsstand:** Vier bestätigte Entscheidungen vom 19.10.2026; Ausgangs-HEAD `53ef171be4783748b5c7e3a84bb0cc363d5b4194`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1; aktuelle Fassungen im [Index](README.md).\
 **Methode:** Spezifikationsbaustein nach Johannes Siedersleben, fachlich vergleichbar mit der [Herold-D2-Referenz](https://github.com/carstenlucke/herold/blob/main/docs/spec/D2-datentypen.md).
@@ -1059,6 +1059,19 @@ Die nachfolgenden Typen sind als fachliche Kontrakte zu lesen: `Werte/Felder` is
 **Prüfbeispiel:** Menütitel geändert; Zugriffsrechte unverändert.
 
 **FE-21-Parameter im vorhandenen Typ:** Unterstützte Schlüssel für Ausgabesprache (DT-07), Stimme (nur tatsächlich verfügbare Auswahl), Geschwindigkeit (nur belegter unterstützter Bereich) und ausdrückliche Hörmoduswahl (ein/aus, Standard aus). Kein beliebiger Servicecode und kein implizites Mikrofon-/Anbieterrecht. DM-02 referenziert persönliche Werte; DM-48/DM-49 führen gültige Fassungen. Unbekannte Fähigkeit ist nicht aktivierbar, fehlender Tempobereich wird nicht durch erfundene Zahlen ersetzt.
+
+**AUDIO-01/02/03 — unterstützte Parameter im selben Typ:**
+
+| Parametergruppe | Fachlicher Wertebereich / Validierung |
+|---|---|
+| Geltung und Herkunft | Genau eigenes Konto; global, je Audiosprache (DT-07) und vorhandene Kurs-/Gesprächsgeltung mit berechtigtem Bezug und Revision. Explizites Aus, geerbt, unbekannt und nicht verfügbar bleiben verschieden. FE-74 bleibt maßgeblich; Konflikte zeigen, keine neue Prioritätsregel erfinden. |
+| Optionale Benachrichtigungstöne | Aktivierung/Lautlos und Referenz auf einen tatsächlich freigegebenen In-App-Tonkatalogeintrag samt Fassung; OS-/Push-Tonwahl getrennt und nur bei nachgewiesener Plattformfähigkeit. Keine freie URL oder ausführbare Konfiguration. |
+| Stimme je Audiosprache | Zuordnung Sprache → Motor-/Stimmenreferenz und Katalogfassung; FR/DE/EN initialer Zielumfang. Nur tatsächlich verfügbare erlaubte Stimmen auswählbar; entfernte/unklare Referenz wird unverfügbar, keine andere Sprache still einsetzen. |
+| Tempo und Lautstärke | Nur belegter Wertebereich und Einheit des erlaubten Motors/Geräts; unbekannt ist kein erfundener Zahlenwert. Lautstärke nur soweit kontrollierbar, keine OS-Lautstärkegarantie. |
+| Hörmodus | Ausdrückliche persönliche Wahl ein/aus, Standard aus; aktiver Laufzustand separat und an Sitzung/Gerät/Gespräch gebunden. Persistenz/Sync eines Werts erteilt keine automatische Wiedergabefreigabe nach Wiederanmeldung/Gerätewechsel. |
+| Verwaltungswerte | Zulässige Kataloge, Audioverfügbarkeit, Rollen-/Serverflags, Quoten-/Kostenobergrenzen und Verfügbarkeitstexte nur unter passendem Verwaltungsrecht; keine persönlichen Inhalte oder neue Anbieterberechtigung. |
+
+Fachliche Zuordnung innerhalb vorhandener CFG-09/10/11/14/15; keine CFG-18. Vorschau ist eine bewusste Aktion mit neutralem Text, kein persistierter Privattext. Reset setzt nur gewählte unterstützte Präferenzen auf angezeigte zulässige Standards, startet keine Ausgabe und hebt keine Datenschutz-/Anbieterentscheidung auf. [B1.13](B1-dialogspezifikation.md#b113-abnahmeszenarien-für-töne-und-stimmen) prüft unter anderem entfernte Stimme, Lautlos und Rechteentzug.
 
 **Präzisierung DEC-V1-06/18/19/25:** Ausschließlich unterstützte persönliche Präferenzen für Lernprofil-/Hilfe-/Pausen-/Zielangebote mit Aktivierung/Deaktivierung; manuelle Rückmeldung, Korrektur und Ablehnung/Aufschub getrennt von KI-Schätzung. Keine neue Gesundheitskategorie, Pflichtprofilierung oder automatische Kosten-/Kalenderfreigabe.
 

@@ -2,8 +2,8 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** F3 — Anwendungsfunktionen\
-**Version:** 0.5\
-**Stand:** 22.10.2026\
+**Version:** 0.6\
+**Stand:** 23.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Spezifikationsmethode:** Bausteine nach Johannes Siedersleben\
 **Bezugsstand:** Vier bestätigte Entscheidungen vom 19.10.2026; Ausgangs-HEAD `53ef171be4783748b5c7e3a84bb0cc363d5b4194`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1; aktuelle Fassungen im [Index](README.md).\
@@ -1185,3 +1185,16 @@ Die FE-21-Ausgabevariante in UC-20 ist von FE-20-Spracherkennung/Live-Eingabe ge
 **Fachliches Ergebnis:** Zulässiger Ausgabetext, tatsächlich unterstützte Sprache/Stimme/Geschwindigkeit und Freigabeumfang oder nachvollziehbare Ablehnung. Laufende Wiedergabe, Pause, Fortsetzung, Replay und ein ausdrücklich aktivierter Hörmodus werden von UC-20/DLG-26 gesteuert, nicht durch periodische Analysejobs. Hören benötigt kein Mikrofonrecht, nimmt keine neue Lernleistung an und erzeugt keine dauerhafte pädagogische Erinnerung allein durch Abspielen.
 
 **Negative Abnahme:** Verbraucherabo ohne API-Recht, unbekannte TTS-Kosten, widerrufene Inhaltsfreigabe oder nicht verfügbare Stimme ergeben keine automatische andere Verbindung. Text bleibt zugänglich. Automatische Ausgabe ohne Aktivierung bleibt aus. [D1](D1-datenmodell.md), [D2](D2-datentypen.md), [B1](B1-dialogspezifikation.md), [S1](S1-nachbarsysteme.md) und die [FE-21-Matrix](ENTSCHEIDUNGSMATRIX.md#4-fe-21--getrennte-ausgabevariante-und-abnahme) führen die Nachweise.
+
+### F3.14.1 Audioauswahl und Konfigurationsprüfung (Mission 15)
+
+AUDIO-01/02/03 vertiefen bestehende AF-01/AF-17/AF-18/AF-19/AF-25/AF-28/AF-32; keine neue AF oder Motorimplementierung. Eingaben sind aktuelles Konto, Sprach-/Geltungsbereich, persönliche Auswahlfassung, Gerätefähigkeit, zulässiger Ton-/Stimmenkatalog, Anbieterfreigaben, aktuelle Serverflags und Quoten. UC-65 nutzt dieselbe validierte Tonpräferenz wie DLG-50, keine konkurrierende zweite Einstellung.
+
+1. Zwingende Konto-/Inhalts-/Geräte-/Anbieterrechte und administrative Verfügbarkeit schneiden; Nutzerpräferenz kann keine Grenze erweitern, Adminstandard kein ausdrückliches Aus überschreiben.
+2. Für Benachrichtigung den In-App-Ton oder Lautlos unabhängig vom visuellen Hinweis bestimmen; OS-/Push-Fähigkeit separat bewerten. Bestehende Ruhe-/Ereignis-/Kanalregeln bleiben vorgeschaltet.
+3. Für Sprachausgabe Audiosprache unabhängig von der Oberfläche und dort gewünschte verfügbare Stimme prüfen; je Sprache mehrere erlaubte Stimmen nur bei tatsächlicher Motorfähigkeit anbieten. Unbekannte/entfernte Stimme als unverfügbar erklären, keine unbemerkte Ersatzroute.
+4. Vorschau nur nach ausdrücklicher Aktion auf neutralem Text/Ton und innerhalb der Anbieter-/Kostenrechte zulassen. Unterstütztes Tempo/Volumen validieren; fehlende Fähigkeiten nicht als erfolgreiche Änderung ausgeben.
+5. Aktive Hörsitzung getrennt von gespeicherter Präferenz prüfen. Standard aus; Wiederanmeldung/Gerätewechsel reaktiviert sie ohne bestätigte geprüfte Regel nicht. Entzug beendet betroffene Ausgabe/Warteschlange; Fortsetzen prüft heutige Rechte erneut.
+6. Rücksetzen zeigt den konkreten Bereich und wirksame Standards, wahrt persönliche Datenschutzentscheidungen und Rechte; es startet weder Vorschau noch Hörmodus und löscht keine Nachrichten oder Erinnerungen.
+
+**Ergebnis/Abnahme:** Gültige effektive Auswahl samt Herkunft/Fähigkeitsgrenze oder begründete Ablehnung; bei Lautlos bleibt visueller Hinweis, bei Mikrofonverweigerung bleibt zulässiges TTS. Administration kann einen Motor sperren, aber weder Kosten ohne Freigabe auslösen noch ein persönliches Opt-in ersetzen. [B1.13](B1-dialogspezifikation.md#b113-abnahmeszenarien-für-töne-und-stimmen) enthält die Sollfälle.

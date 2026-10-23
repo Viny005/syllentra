@@ -21,25 +21,25 @@ Hinweis: Diese Leseanleitung ist im README.md des Spezifikationsverzeichnisses i
 
 ## Index der Spezifikationsblöcke
 
-**Stand: 22.10.2026. Alle ausgearbeiteten Dokumente: Zur Prüfung durch den Projektinhaber.** S1.18.1 enthält sämtliche 89 FE-Einträge; FE-56 bleibt offen. Keine Dokumenterstellung oder Git-Aktion bedeutet fachliche Abnahme oder implementierte Funktion.
+**Stand: 23.10.2026. Alle ausgearbeiteten Dokumente: Zur Prüfung durch den Projektinhaber.** S1.18.1 enthält sämtliche 89 FE-Einträge; FE-56 bleibt offen. Keine Dokumenterstellung oder Git-Aktion bedeutet fachliche Abnahme oder implementierte Funktion.
 
 | Baustein | Version | Inhalt / Stand |
 |---|---|---|
-| [P1](P1-ziele-rahmenbedingungen.md) | 0.10 | Ziele, Rahmen, Mehrbenutzer-V1 und überprüfbare Erfolgskriterien. Zur Prüfung. |
+| [P1](P1-ziele-rahmenbedingungen.md) | 0.11 | Ziele, Rahmen, Mehrbenutzer-V1 und überprüfbare Erfolgskriterien. Zur Prüfung. |
 | [P2](P2-architekturueberblick.md) | 0.10 | Kontext, interne/externe Grenzen, zwölf Nachbarn und Informationsklassen. Zur Prüfung. |
 | [F1](F1-geschaeftsprozesse.md) | 0.6 | GP-01 bis GP-15 mit ergänzten Konten-, Import-, Integrations- und Datenkontrollabläufen. Zur Prüfung. |
-| [F2](F2-anwendungsfaelle.md) | 0.5 | UC-01 bis UC-66 mit Vorbedingungen, Szenarien, Schutz und Abnahme. Zur Prüfung. |
-| [F3](F3-anwendungsfunktionen.md) | 0.5 | AF-01 bis AF-37 als fachliche Prüf- und Auswahlfunktionen. Zur Prüfung. |
-| [D1](D1-datenmodell.md) | 0.5 | DM-01 bis DM-78 und INV-01 bis INV-31; Eigentum, Beziehungen und Lebenszyklen. Zur Prüfung. |
-| [D2](D2-datentypen.md) | 0.5 | DT-01 bis DT-95, Werte, Strukturfelder und Validierung. Zur Prüfung. |
-| [B1](B1-dialogspezifikation.md) | 0.5 | DLG-01 bis DLG-67; persönliche und getrennte administrative Bedienung. Zur Prüfung. |
+| [F2](F2-anwendungsfaelle.md) | 0.6 | UC-01 bis UC-66 mit Vorbedingungen, Szenarien, Schutz und Abnahme. Zur Prüfung. |
+| [F3](F3-anwendungsfunktionen.md) | 0.6 | AF-01 bis AF-37 als fachliche Prüf- und Auswahlfunktionen. Zur Prüfung. |
+| [D1](D1-datenmodell.md) | 0.6 | DM-01 bis DM-78 und INV-01 bis INV-31; Eigentum, Beziehungen und Lebenszyklen. Zur Prüfung. |
+| [D2](D2-datentypen.md) | 0.6 | DT-01 bis DT-95, Werte, Strukturfelder und Validierung. Zur Prüfung. |
+| [B1](B1-dialogspezifikation.md) | 0.6 | DLG-01 bis DLG-67; persönliche und getrennte administrative Bedienung. Zur Prüfung. |
 | [B2](B2-batch.md) | 0.5 | BAT-01 bis BAT-26; autorisierte Hintergrundverarbeitung, Wiederanlauf und Löschfolgen. Zur Prüfung. |
 | [B3](B3-druckausgaben.md) | 0.5 | OUT-01 bis OUT-08; kontoisolierte Berichte und geschützte Exporte. Zur Prüfung. |
-| [S1](S1-nachbarsysteme.md) | 0.6 | NB-01 bis NB-12, vollständige FE-01..FE-89-Matrix und Schnittstellen-Abnahmeszenarien. Zur Prüfung. |
+| [S1](S1-nachbarsysteme.md) | 0.7 | NB-01 bis NB-12, vollständige FE-01..FE-89-Matrix und Schnittstellen-Abnahmeszenarien. Zur Prüfung. |
 | [S2](S2-datenmigration.md) | 0.4 | MIG-01 bis MIG-36, AT-S2-01 bis AT-S2-40; eigene Pakete, sichere Migration und Wiederherstellung. Zur Prüfung. |
 | [S3](S3-inbetriebnahme.md) | 0.2 | Vollständiger fachlicher Betriebsentwurf: Umgebungen, Bootstrap, unabhängiger Restore, 18 Veröffentlichungsschritte, Rollout, Rückweg, Betrieb und 46 Kontrollverweise. Zur Prüfung. |
-| [N1](N1-nichtfunktional.md) | 0.8 | Vollständiger fachlicher V1-Qualitätsentwurf: 25 Prüfprofile, Messverfahren und offene Zielwerte. Zur Prüfung. |
-| [N2](N2-querschnittskonzepte.md) | 0.7 | Fachlicher V1-Sicherheitsentwurf: 27 Prüfprofile, Vertrauensgrenzen und offene technische Verfahren. Zur Prüfung. |
+| [N1](N1-nichtfunktional.md) | 0.9 | Vollständiger fachlicher V1-Qualitätsentwurf: 25 Prüfprofile, Messverfahren und offene Zielwerte. Zur Prüfung. |
+| [N2](N2-querschnittskonzepte.md) | 0.8 | Fachlicher V1-Sicherheitsentwurf: 27 Prüfprofile, Vertrauensgrenzen und offene technische Verfahren. Zur Prüfung. |
 | [E2](E2-glossar.md) | 0.4 | Glossar mit fachlichen Begriffsgrenzen. Zur Prüfung. |
 | [E3](E3-pruefnachweis.md) | 0.16 | Änderungs-/Kennungsnachweis sowie tatsächliche Dokument- und lokale Prototypprüfungen. Zur Prüfung. |
 
@@ -123,6 +123,10 @@ Die [Machbarkeitsprüfung](../architecture/MACHBARKEITSPRUEFUNG.md), [Ressourcen
 
 [Design System](../design/DESIGN_SYSTEM.md), [UI-/UXplan](../design/UX_AND_FRONTEND_PLAN.md), [Entwicklungs-/Integrationsfolge](../development/INTEGRATION_ROADMAP.md), [Codex-/Claude-Arbeitsrahmen](../ai-tooling/CODEX_CLAUDE_WORKFLOW.md) und [API-/Lizenzquellen](../development/SOURCES.md) ergänzen die Studie im Status Empfohlen / Zur Entscheidung. [ADR-0006](../ARCHITECTURE_DECISIONS.md#adr-0006--persönlicher-qualitätsfokus-und-vergleichsrahmen-aus-mission-7) hält den bestätigten persönlichen Qualitätsfokus und neuen künftigen Vergleichsrahmen bis 20 EUR brutto/Monat fest, keine Ausgabe. Keine neue FE/UC, Zahlungs-/Provider-/Stackentscheidung, Implementierung oder Produktprüfung. Fachentwürfe weiterhin Zur Prüfung; 14 TECH-O offen.
 
+
+## Audioentscheidungen aus Mission 15
+
+[P1.10.6](P1-ziele-rahmenbedingungen.md#p1106-bestätigte-audioentscheidungen-aus-mission-15) dokumentiert die bestätigten Arbeitsreferenzen AUDIO-01 bis AUDIO-03: Benachrichtigungstöne, Stimmen je Audiosprache und freiwilliger Hörmodus. Die vorhandenen UC-20/48/65, AF-/Daten-/Dialog-/Nachbar- und Qualitäts-/Schutzbausteine sind gezielt ergänzt; keine neuen FE/UC/DEC-V1 oder Implementierung. [B1.13](B1-dialogspezifikation.md#b113-abnahmeszenarien-für-töne-und-stimmen) enthält zehn zukünftige AT-AUDIO-Sollfälle, [S1.23](S1-nachbarsysteme.md#s123-audioverträge-fähigkeitsgrenzen-und-offene-alternativen) Alternativen, fixierte Quellen und offene Belege. Weiterhin **Zur Prüfung**; FE-56 offen, keine Motor-/Stimmen-/Anbieterwahl oder Ausgabe freigegeben. Die parallelen Identitäts-/PACE-/E3-Dateien werden nach Koordination synchronisiert, nicht durch diese isolierte Dokumentlieferung überschrieben.
 
 ## Lokale Frontendprobe aus Mission 8
 

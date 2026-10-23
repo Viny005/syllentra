@@ -1,8 +1,8 @@
 # N1 — Nichtfunktionale Anforderungen
 
 **Projekt:** Syllentra AI\
-**Version:** 0.8\
-**Stand:** 22.10.2026\
+**Version:** 0.9\
+**Stand:** 23.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber
 
 <a id="n11-zweck-und-begrenzter-ausarbeitungsstand"></a>
@@ -394,3 +394,18 @@ Für jedes Profil gelten zusätzlich die Beleg- und Freigaberegeln aus [Freigabe
 5. Gegen bestätigte Ziele prüfen; bestanden, fehlgeschlagen, blockiert und nicht durchgeführt getrennt führen. Änderungen an Modellen, Prompts, Datenformaten, Geräten oder Kapazitäten lösen relevante Regressionen aus. Pädagogische Qualität erhält separat fachlich bestätigte Korpora und Rubriken; schnelle Antwort ist kein Gütenachweis.
 
 Offen bleiben insbesondere Last-/Gerätematrix, Schwellen und Reserven, SLO samt Wartungsdefinition, Fristen/RPO/RTO sowie pädagogische Rubriken. Der [Referenzrahmen](../quality/REFERENZRAHMEN.md) trennt belegte Ausgaben und nicht abrufbare normative Quellen. Die [Kontrollmatrix](../quality/RELEASE_KONTROLLMATRIX.md) ordnet alle 46 eigenständigen Kontrollen zu. Der verlinkte Freigabekatalog bleibt die Grundlage der Gates. [S3](S3-inbetriebnahme.md) ordnet sie inzwischen zukünftigen Abläufen, Verantwortungen und Belegen zu; Qualitätsziele und reale Betriebsnachweise bleiben offen.
+
+## N1.11 Qualitätsnachweise für AUDIO-01 bis AUDIO-03
+
+Mission 15 präzisiert NFR-02/05/06/08/25 und bestehende Qualitätsprofile, ohne neue NFR oder neue Zielwerte. [B1.13](B1-dialogspezifikation.md#b113-abnahmeszenarien-für-töne-und-stimmen) enthält zehn zukünftige Abnahmefälle; keine Audio-/Geräteprüfung wurde durch diese Dokumentation ausgeführt.
+
+| Prüfdimension | Reproduzierbarer künftiger Nachweis / Grenze |
+|---|---|
+| Fähigkeiten je Plattform | Fixierte Android-/iOS-/Desktop-Browser-/PWA-Versionen und erlaubte Motoren erfassen; In-App-/OS-Push-Töne, Stimmkatalog, Sprache, Pause/Fortsetzen/Stop, Tempo/Volumen, Hintergrund/Sperrbildschirm und Offline getrennt prüfen. Unverfügbar mit Textalternative statt Universalversprechen. |
+| Sprachen und Verständlichkeit | Neutraler identischer DE-/FR-/EN-Referenzsatz mit Zahlen, Abkürzungen und Fachbegriffen; pro zulässiger Stimme Aussprache, Verständlichkeit und Artefakte menschlich bewerten. Mehrere Stimmen nur bei realer Motorfähigkeit, keine garantierte gleiche Sprachqualität. Rubrik/Schwellen vor Lauf bestätigen. |
+| Bedienbarkeit und Barrierefreiheit | Tastatur/Screenreader/Fokus, textlich erkennbare Zustände; Lautlos erhält visuelle Hinweise, Wiedergabe lässt Text zugänglich. Keine Vorschau beim Öffnen, kein Hörmodus ohne Opt-in, Mikrofonverweigerung sperrt erlaubtes TTS nicht. |
+| Latenz und Ressourcen | Kalt/warm, Textlänge und gleichzeitige Wiedergaben variieren; Zeit bis Erstton, Unterbrechungsreaktion, Echtzeitfaktor (Synthesezeit/Audiodauer), CPU, RAM-Spitze, Speicher und Transfer messen. Client, eigener Server und externer Dienst getrennt. Keine Messung oder CPU-/RAM-Mindestzahl liegt hier vor. |
+| Entzug und Ausfall | Während laufender/pausierter Ausgabe und Warteschlange Rechte/Flag/Provider entziehen, Netz trennen und wiederverbinden. Verbotene Fortsetzung sperren; Erkennungs- und Stopzeiten einschließlich nicht erreichbarer Geräte offenlegen. Schwellen vor Abnahme bestätigen, kein sofortiger Fernabbruch behauptet. |
+| Kosten, Lizenz und Regression | Software, Stimmengewichte, Audiodateien und Dienstbedingungen getrennt inventarisieren; pro Zeichen/Minute/Request sowie Speicher/Transfer und Infrastruktur rechnen. Tarife/Versionen datieren, unbekannte Werte nicht null setzen. Katalog-/Motor-/Browserwechsel löst betroffene AT-AUDIO-Regressionsfälle aus. |
+
+Technische Alternativen und belegte Abrufgrenzen stehen in [S1.23](S1-nachbarsysteme.md#s123-audioverträge-fähigkeitsgrenzen-und-offene-alternativen). Keine Installationen, Browser-/Audiobenchmarks oder neuen Produktabnahmen; 46 Releasekontrollen und alle bisherigen Qualitätsziele gelten weiter. Das Untersuchungslimit bis 20 EUR brutto/Monat ist keine Ausgabenfreigabe.
