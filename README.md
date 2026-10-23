@@ -42,3 +42,27 @@ This project follows a disciplined, incremental approach: research and document 
 ## Note
 
 Syllentra AI is intentionally not claiming finished features at this stage. The project is being structured for future, evidence-based development using GitHub Issues and Pull Requests.
+
+## AI development workflow
+
+Start with [AGENTS.md](AGENTS.md), the [PACE workflow](docs/ai/WORKFLOW.md), and the [verified project context](docs/ai/PROJECT_CONTEXT.md).
+
+
+## Vorbereitung von Gestaltung und Entwicklung
+
+[Design System](docs/design/DESIGN_SYSTEM.md), [Integration und offene Entscheidungen](docs/development/INTEGRATION_ROADMAP.md), [Codex-/Claude-Verfahren](docs/ai-tooling/CODEX_CLAUDE_WORKFLOW.md) sowie [Quellen und Lizenzen](docs/development/SOURCES.md) sind Vorschläge **Empfohlen / Zur Entscheidung**. Drei deklarative lokale Skills, keine Anwendung oder neue Toolaktivierung. Persönliche Qualitätspriorität und künftiger Vergleichsrahmen bis 20 EUR brutto/Monat sind bestätigt; **keine Ausgabe genehmigt**, V1-Multiuser-/Schutzanforderungen unverändert.
+
+
+## Lokaler interaktiver Prototyp aus Mission 8
+
+Der [Frontend-Prototyp](prototypes/frontend/README.md) enthält acht navigierbare Bereiche, DE/FR/EN, Hell/Dunkel/System und ausschließlich fiktive lokale Daten. Start mit Node 24.x: im Verzeichnis `prototypes/frontend` zuerst `npm ci --ignore-scripts`, dann `npm run dev`. Keine operative V1, echte KI, Anmeldung, Synchronisierung oder Kontoisolation. [Prüfungen und Screenshots](docs/design/PROTOTYPE_REVIEW.md), [installierte Lizenzen](prototypes/frontend/LICENSES.md). Experimenteller Stack, TECH-O-03 offen; keine Ausgabe oder Veröffentlichung.
+
+
+## Lokale experimentelle Backendgrundlage aus Mission 9
+
+[Backendanleitung](prototypes/backend/README.md) und [Prüfbericht](docs/development/BACKEND_PROTOTYPE_REVIEW.md): FastAPI-/PostgreSQL-Probe mit synthetischen Sicherheitsprüfungen, Sessions, Kontofilterung und Serverflags. Normale Anmeldung bleibt blockiert; keine produktive Identität, Administration, KI oder Cloud. Frontend bleibt getrennte Demo, technische Auswahl offen. Keine Veröffentlichung oder Ausgabe.
+
+
+## Lokale Identitätsprobe aus Mission 10
+
+[Startanleitung](prototypes/backend/README.md), [Architektur](docs/development/IDENTITY_ARCHITECTURE.md) und [Tests/Grenzen](docs/development/IDENTITY_PROTOTYPE_REVIEW.md): expliziter lokaler TLS-Modus für ausschließlich synthetische Registrierung, OTP, Geräte, Sessions und Zweikanal-Recovery. Eigener Reactbereich, acht Demo-Lernräume weiterhin getrennt. Kein öffentlicher Benutzerzugang, echte Mailzustellung, Admin-MFA/Bootstrap oder Produktfreigabe; Standardbackend bleibt geschlossen.

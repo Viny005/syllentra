@@ -1,0 +1,316 @@
+# Validierung — lokale Identitätsprobe Mission 10, Mission 12, Mission 13 & Mission 14
+
+**Version:** 0.5 · **Stand:** 23.10.2026 · **Status:** Experimentell / Zur Prüfung durch den Projektinhaber
+
+**Redaktioneller Nachtrag Mission 19:** Der Bericht erhält die historischen Mission-10..14-Nachweise. Die damaligen FE-56-offen-Angaben sind seit der Eigentümerentscheidung aus Mission 19 für V1 durch den Postfachausschluss überholt; maßgeblich ist [S1](../spec/S1-nachbarsysteme.md). Nur der unklare Browser-E2E-Status der Mission 14 wird unten als nicht ausgeführt/nicht nachgewiesen präzisiert; kein neuer Produkttest.
+
+## Ausgang, Auftrag und Reviewgrenze
+
+Vollständiger Nutzerauftrag Mission 10, Abschnitte 1–18; bestehender Branch `docs/spec/p1-p2-mobile-workspaces`, lokaler/Remote-/PR-Ref `cd971cd57ff7c968d6439375aaf1c1798cf16a81`, main `beb66e1cd399f4a0fab55d3fd476a77d7804c5a7`, Arbeitsbaum sauber und PR #1 öffentlich OPEN geprüft. Bereits 130 Dateien / +29.649 / −217 gegen main. [ADR-0009](../ARCHITECTURE_DECISIONS.md#adr-0009--lokale-identitätsprobe-aus-mission-10) begründet separaten Reviewcommit auf erlaubter Branch; keine neue Branch/PR, keine Umschreibung, kein Merge oder Deployment. Eine spätere gestapelte Aufteilung braucht Zustimmung und eine Reviewbasis gegen die Spezifikationsbranch, um vorhandene Änderungen nicht zu duplizieren.
+
+[Architektur](IDENTITY_ARCHITECTURE.md) und [Startanleitung](../../prototypes/backend/README.md) beschreiben tatsächlichen Umfang: synthetische Registrierung, gebundener E-Mail-OTP über privaten lokalen Adapter, bekannte/neue Geräte, Hashsitzungen, Widerruf, Zweikanal-Recovery und eigene Reactansicht. Standardbackend bleibt geschlossen, alte Testharness-Anmeldeverzweigung entfernt. Keine tatsächliche E-Mailzustellung, öffentliche Identität oder operative Administration; keine reale Offlinecodeausgabe und keine endgültige TECH-O-05/06-Entscheidung.
+
+## Tatsächliche Prüfungen und Grenzen
+
+Python 3.12.14, FastAPI 0.161.0, PostgreSQL 17.11 im vorhandenen digestfixierten lokalen Dockercontainer, strikt getrennte Datenbanken `syllentra_test`/`syllentra_prototype`, keine SQLite-Ersatztests. Node 24.19.0, vorhandener Chromium 154.0.8037.57 und OpenSSL 3.5.7. Keine neue Abhängigkeit installiert; Python-/npm-Lockfiles und alle Paketfassungen unverändert.
+
+| Prüfung / Befehl | Tatsächlicher Befund |
+|---|---|
+| .venv/bin/pytest -q | 66 Tests bestanden, keine übersprungenen Tests. Bisherige 44 Testfälle erhalten und an den echten lokalen Weg angepasst, 22 weitere Identitäts-/Privatkanal-/Parallelfälle. |
+| Registrierung / Wiederholung | Pending sperrt Daten, ASCII-/Adressnormalisierung, eindeutiges Konto, Argon2id, keine Adminfelder, Duplikat überschreibt Passwort nicht; korrekte Pending-Anmeldung kann neuen gebundenen Lauf starten. |
+| OTP / Zustellung | Richtiger/falscher/abgelaufener/wiederverwendeter Code, fremder Preauth-Cookie, fünf verbrauchte Fehlversuche, Neuversandgrenzen und unveränderter Ablauf; parallele korrekte Einlösung genau einmal erfolgreich. Codes nur aus internem Kanal, nicht aus APIantwort. |
+| Geräte | Neue Anfrage ohne Session; fremde Freigabe verweigert; bereits autorisiertes Gerät plus Passwort und passende Referenz nötig; Antragstellerbinding, Replay, Revocation und Ablauf geprüft. |
+| Recovery | E-Mail-OTP allein unzureichend; persönlicher Offlinecode zusätzlich, dessen Ablauf/Rotation und Challengereplay geprüft. Alte Sessions/Geräte entzogen, neues Passwort funktioniert, altes nicht. Keine Dokumentenschlüsseloperation implementiert. |
+| Sessions / Isolation | Bisherige A/B-, Eigentums-, Rollen-/Flag-, Ablauf-/Widerrufs-/Administrationsnegative erhalten; zusätzlich tatsächlich registrierte/verifizierte A/B-Konten und parallele Lesezugriffe mit anschließender Revocation. |
+| Browsergrenzen / Audit | HTTPSpflicht, falscher Origin/CSRF/Fetch-Site gesperrt; Cookies Secure/HttpOnly/SameSite Strict, Sessionfixation verworfen, kein Rohgeheimnis in DB/Audit/Antwort-JSON; Runtime kann keine Adminrolle anlegen. |
+| Migrations-/Privatkanalprüfung | Wiederholbarkeit, historische Prüfsumme, FK/Constraints und frühere Eigentumsgrenzen erhalten; neue Zustände additiv. Lokale Kanaldateien 0600, Verzeichnis 0700, überbreite Dateirechte verweigert und explizites Expiry-Prune geprüft. |
+| mypy src scripts | Strict erfolgreich, 13 Quelldateien. |
+| Ruff check / format --check | Erfolgreich; 16 Pythondateien einschließlich Tests/Fixturehilfe. |
+| pip-audit mit explizitem lokalem Cache | 58 Distributionen, null bekannte Schwachstellen am Prüftag; keine native/Image-/unbekannte Schwachstellenfreiheit bewiesen. |
+| npm run build, lint, format:check, test | Strict-TypeScriptbuild, ESLint/Prettier und bisherige sieben Vitestfälle bestanden. Keine Prüfung deaktiviert. |
+| npm run test:e2e | Bisherige neun Demobrowserfälle bestanden, darin 17 axeanalysen ohne gemeldeten Verstoß; acht Bereiche und Sprache/Theme/Navigation erhalten. |
+| npm run test:identity | Vier weitere tatsächliche TLS-/Proxy-/PostgreSQL-Browserfälle bestanden: Registrierung/OTP/Login/Sessionwiderruf/Logout, neues Browsergerät, Zweikanal-Recovery und sechs Sprach-/Theme-Kombinationen mobil. Neun axeanalysen ohne gemeldeten Verstoß. |
+| Identitätsartefakte | Zwei leere mobile Formularbilder Hell/Dunkel erzeugt und visuell geprüft; weder Passwörter/OTP noch Tokens sichtbar. Lokal/ignoriert, keine neuen öffentlichen Bilder. Auth-Traces/Videos/automatische Fehlerscreenshots deaktiviert. |
+| npm audit --json | Null bekannte Schwachstellen aller Schweregrade am Prüftag. |
+| OpenAPI | Snapshot mit tatsächlich registrierter Anwendung identisch; Cookie-/Bearernachweise enthalten, keine Verifikations-/Recoverysecrets als Antwortfelder. Keine Swagger-/Redoc-HTTPansicht. |
+
+## Korrigierte Befunde und offene Beobachtung
+
+Geräte-/Sessionsicht und Beschriftung als eigener lokaler Kontotest von der Demo abgegrenzt. Eigener Sessionwiderruf schließt die Kontosicht statt einen falschen generischen Aktionsfehler zu zeigen. Ein Theme-Test setzte seine Startpräferenzen bei derselben Hashnavigation nicht erneut; echte Neuladung im Test korrigiert, kein Themefall abgeschaltet. Serverzähler und ursprüngliche Fristen bleiben trotz Fehler/Neuversand erhalten; frühere OTPwerte werden nicht wieder ausgegeben.
+
+Ein fehlgeschlagener Test zeigte, dass die Standardrepräsentation des Fixturekontexts lokale DBcredentials in die lokale Testdiagnose übernehmen konnte. Fixture-Repräsentation redigiert, lokale synthetische Credentials rotiert, keine solchen Diagnosen versioniert. API-/Auditausgaben enthalten keine Rohsecrets. Das ist eine tatsächlich behobene Testartefaktgrenze, keine Behauptung einer vollständigen Secretprüfung aller Historien.
+
+**Offene Beobachtung:** Ein einzelner Sitzungsleseaufruf unmittelbar nach erfolgreicher Anmeldung schlug in einer Zwischenprüfung fehl. Ursache nicht abschließend nachgewiesen. Die abschließende vollständige 66er-Passprüfung, ein zusätzlicher Parallel-/Revocationtest und drei separate Wiederholungen genau des betroffenen Recoveryfalls bestanden ohne Wiederauftreten. Nicht als bewiesene Fehlerbehebung ausgeben; vor Produktfreigabe reproduzierbar untersuchen und unabhängig reviewen. Sichere Fehlerantworten bleiben geschlossen, keine Konto-/Privilegienumgehung beobachtet. HTTPX-Testclient-Deprecation bleibt ebenfalls sichtbar und als Wartungsbedarf offen.
+
+## Vollständiger Abgleich der 46 Kontrollen
+
+Referenz ist die unveränderte [kanonische Kontrollmatrix](../quality/RELEASE_KONTROLLMATRIX.md). Jede Zeile aktualisiert die begrenzte Prototypevidenz gegenüber dem [historischen Mission-9-Abgleich](BACKEND_PROTOTYPE_REVIEW.md). **Keine Gesamtproduktkontrolle als bestanden freigeben.** MFA, öffentliche Zustellung, Offlinecodeausgabe, Restore, Last, Datenschutz und menschliche Produktfreigabe stehen aus.
+
+| Kontrolle | Tatsächliches Delta / verbleibender Nachweis |
+|---|---|
+| REL-S01 | Teilbeleg erweitert: getrenntes HMAC-Servergeheimnis und TLS-/Kanaldateien mit lokalen Rechten; kein produktives Secretmanagement. |
+| REL-S02 | Teilbeleg: private Dateien/Caches ignoriert, Fixture-Diagnose redigiert und lokale Testcredentials rotiert; kein gesamter Historienbeweis. |
+| REL-S03 | Lokale persistente Adress-/Netz-/Recoverybudgets, OTPversuche und Neuversandgrenzen getestet; verteilte/echte Missbrauchslast offen. |
+| REL-S04 | A/B-Testdaten und echte lokale Registrierungs-/Verifikationswege geprüft; keine RLS-/Gesamtproduktisolation behauptet. |
+| REL-S05 | Argon2id und lokaler Zweinachweis-Reset geprüft; reale sichere Ausgabe/Schlüsselrecovery offen. |
+| REL-S06 | Aktuelle Rollen/Flags/Konto-/Geräte-/Sicherheitsrevision geprüft; kein Adminhandler oder echte MFA/Delegation. |
+| REL-S07 | Keine Authsecrets in JSstorage/Bundle; Browser erhält nur notwendige geschützte Cookies, keine öffentlich ausführbare Konfiguration. |
+| REL-S08 | Lokales TLS Browser -> Proxy -> Backend tatsächlich ausgeführt, Backend-CA im Proxy geprüft; Browser-Testzertifikat selbst signiert, Produktions-PKI offen. |
+| REL-S09 | Ablauf/Widerruf, mehrere Sessions, Gerätesperre, eigene Revocation, Recoveryentzug und Fixationsnegative geprüft; lange V1-/Offlineziele offen. |
+| REL-S10 | Strikte lokale Adress-/Passwort-/OTP-/UUID-/Extra-Feldvalidierung, endliche Bodies und SQLparameter; spätere Importformate unverändert offen. |
+| REL-S11 | Unverändert gegenüber Mission 9: Nicht in dieser Tranche: keine Datei-/Medienuploads; spätere Prüfung bleibt nötig. |
+| REL-S12 | Unverändert gegenüber Mission 9: Nicht in dieser Tranche: keine Archive/Parser; spätere Prüfung bleibt nötig. |
+| REL-S13 | Lokale Host-Cookies, exakter Origin, CSRFvergleich und Fetch-Site-Negativfälle geprüft; keine externe CORSfreigabe oder Produktionsintegration. |
+| REL-S14 | Generische APIfehler, keine Eingabewerte/SQL/Stacktraces; interne Diagnose nur Ausnahme-Klassenname, produktive Korrelation offen. |
+| REL-S15 | Geheimnisfreies DBaudit geprüft, private synthetische Zustellkanäle getrennt; tatsächliche autonome Bereinigung/Monitoring noch offen. |
+| REL-S16 | Status-/Antwortform bei falschem Login und Recovery/Registrierungsduplikat gegen Enumeration geprüft; Timing-/Lastbeweis fehlt. |
+| REL-S17 | Unverändert gegenüber Mission 9: Nicht in dieser Tranche: keine Webhooks/externe Verbindungen; öffentliche API noch nicht freigegeben. |
+| REL-S18 | Unveränderte Paketfassungen/Lockfiles, aktuelle Python-/npm-Audits null bekannte Befunde; OpenSSL-Kernlizenz geprüft, vollständige native/Imagefreigabe fehlt. |
+| REL-S19 | Lokaler gebundener Einmalcode vor Datenzugriff implementiert und getestet; Adapter simuliert Zustellung, keine tatsächliche E-Mailkontrolle belegt. |
+| REL-S20 | Unverändert gegenüber Mission 9: Offen: keine verschlüsselte unabhängige Sicherung oder Restore; tmpfs ist kein Backup. |
+| REL-Q01 | Persistente lokale Budgets erweitert; realer Mehrinstanz-/Client-IP-/Quota-Missbrauchsschutz weiter offen. |
+| REL-Q02 | Unverändert gegenüber Mission 9: Teilbeleg: begrenzte Requestgröße und Liste, Containerressourcen; keine V1-Quota-/Lastmessung. |
+| REL-Q03 | Unverändert gegenüber Mission 9: Nicht in dieser Tranche: keine KI-/kostenpflichtigen Aufrufe; spätere Kostenbegrenzung offen. |
+| REL-Q04 | DE/FR/EN-Identitätsfehler und Verfügbarkeit in UI ergänzt; kein vollständiger Screenreader-/Produktnachweis. |
+| REL-Q05 | Lokale Requests mit Busy-Zustand und Timeout; keine Worker-/Langjobfortschrittsimplementierung. |
+| REL-Q06 | Eigener Kontotest/Standard-Demo und fehlender Modus getrennt; OTP-/Geräte-/Recovery-/Sitzungszustände getestet, öffentliche Releasewege fehlen. |
+| REL-Q07 | Unverändert gegenüber Mission 9: Offen: keine Worker/Jobwiederaufnahme; APItransaktion vor Antwort abgeschlossen. |
+| REL-Q08 | Lokaler Browser-/DBconnect-Timeout; keine allgemeine verteilte Kompensation/Idempotenzschicht. |
+| REL-Q09 | Duplikatregistrierung und paralleler OTPverbrauch geprüft; keine allgemeine Doppelabgabe-/Import-/Jobschicht. |
+| REL-Q10 | Unverändert gegenüber Mission 9: Nicht anwendbar auf V1-Tranche: Zahlung bleibt spätere Option, nicht aktiviert. |
+| REL-Q11 | Nur synthetische Adressen und minimale eigene Identitäts-/Session-/Gerätemetadaten; keine Schlüssel oder Rohgeheimnisse in APIs/Audit. |
+| REL-Q12 | Unverändert gegenüber Mission 9: Teilbeleg: Eigentumsindex und begrenzte eigene Liste; keine Suche-/Last-/Queryplanmessung. |
+| REL-Q13 | Teilbeleg in Mission 13 erweitert: `GET /sessions` und `GET /devices` sortieren eigene aktive Einträge zuerst und unterstützen `offset`/`limit`-Paginierung; allgemeine Produktlisten-/Suchpaginierung weiterhin offen. |
+| REL-Q14 | Unverändert gegenüber Mission 9: Nicht durchgeführt: keine Übertragungs-/Kompressions-/Seitenkanalmessung. |
+| REL-Q15 | Unverändert gegenüber Mission 9: Nicht in dieser Tranche: keine Uploads/Parser; Ressourcenstress nicht getestet. |
+| REL-Q16 | Keine Authsecrets im JSstorage, no-store und Kontosicht bei 401 verworfen; PWA-/Offline-/Restorekontrollstand fehlt. |
+| REL-Q17 | Unverändert gegenüber Mission 9: Offen: kein Monitoring/Alarm-/Verfügbarkeitsnachweis; health keine DBbereitschaftsgarantie. |
+| REL-Q18 | Begrenztes lokales Sicherheitsereignisschema und geheimnisfreie Fehlerklasse; kein produktives Audit-/Alarm-/Retentionssystem. |
+| REL-Q19 | Lokale A/B-Registrierung und parallele OTP-/Sessionfälle getestet; einmalige nicht reproduzierte Sitzungsbeobachtung offen, keine Last-/Racegesamtabnahme. |
+| REL-Q20 | Unverändert gegenüber Mission 9: Offen: keine unabhängige verschlüsselte Wiederherstellung oder Nichtwiederbelebungsprüfung. |
+| REL-A01 | Unverändert gegenüber Mission 9: Nicht in dieser Tranche: keine KI/Agenten; Prompt-Injection-Test ausstehend. |
+| REL-A05 | Unverändert gegenüber Mission 9: Nicht in dieser Tranche: keine KI-Quellenantworten; pädagogische Abnahme ausstehend. |
+| REL-A07 | Unverändert gegenüber Mission 9: Nicht in dieser Tranche: keine Parser-/URLabrufe; SSRF-/Archivkorpus ausstehend. |
+| REL-A13 | Unverändert gegenüber Mission 9: Offen: keine Releasepipeline/Artefaktfreigabe; Lockfile ist nur Teilbeleg. |
+| REL-A16 | Neun Identitäts- plus 17 Demoseiten-axeanalysen ohne gemeldeten Verstoß; Sprache/Theme/Reflow und maskierte Eingaben, keine WCAG-Konformitätsabnahme. |
+| REL-A18 | Unverändert gegenüber Mission 9: Nicht in dieser Tranche: keine Bewertungen/Quiz/Adaptivität; alle 28 AT-L bleiben Sollfälle. |
+
+## Nicht implementiert, Entscheidungen und nächste Abhängigkeit
+
+Echte Registrierung/Zustellung außerhalb example.test, reale vertrauenswürdige Offlinecodeübergabe, TOTP/WebAuthn/Passkeys, lokale PIN-/OSbiometriesperre, Admin-MFA/Bootstrap/Delegation, Dokumentenschlüsselrecovery, langlebige Datenspeicherung, unabhängiger verschlüsselter Restore, vollständige physische Löschung, produktive Last-/Timing-/Pentest-/Datenschutz-/Betriebsfreigabe nicht durchgeführt. Codes im privaten Zustellkanal sind keine echten E-Mail-/Unabhängigkeitsnachweise; Expirybereinigung beim Schreiben/Prune, kein autonomer Scheduler. Kein öffentlicher Nutzerzugang. Alle 14 TECH-O und FE-56 bleiben offen.
+
+Empfohlen: Eigentümerreview und unabhängige Sicherheits-/Sitzungsprüfung dieses lokalen Deltas; offene Beobachtung klären. Danach gezielte technische Entscheidung/Probe für echte Faktorbindung, Offlinecodeübergabe, MFA/Recovery und einmaligen Super-Admin-Bootstrap. Erst anschließend eine eigene kontogebundene Lernfunktion im Browser anschließen; keine Demoressourcen importieren. Kein Folgeauftrag, kein Cloud- oder Ausgabenrecht durch Empfehlung.
+
+
+## Dateiumfang
+
+38 Dateien: 23 bestehende angepasst, 15 neu; 15 Backend-, 13 Frontend- und zehn Dokumentations-/Kontextdateien. Private Zustell-/TLS-/DBdateien und Testartefakte sind ignoriert und nicht enthalten.
+
+| Datei | Änderung |
+|---|---|
+| [AGENTS.md](../../AGENTS.md) | Geändert |
+| [README.md](../../README.md) | Geändert |
+| [docs/ARCHITECTURE_DECISIONS.md](../ARCHITECTURE_DECISIONS.md) | Geändert |
+| [docs/ai/CONTEXT_CHANGELOG.md](../ai/CONTEXT_CHANGELOG.md) | Geändert |
+| [docs/ai/PROJECT_CONTEXT.md](../ai/PROJECT_CONTEXT.md) | Geändert |
+| [docs/development/IDENTITY_ARCHITECTURE.md](IDENTITY_ARCHITECTURE.md) | Neu |
+| [docs/development/IDENTITY_PROTOTYPE_REVIEW.md](IDENTITY_PROTOTYPE_REVIEW.md) | Neu |
+| [docs/development/INTEGRATION_ROADMAP.md](INTEGRATION_ROADMAP.md) | Geändert |
+| [docs/spec/E3-pruefnachweis.md](../spec/E3-pruefnachweis.md) | Geändert |
+| [docs/spec/README.md](../spec/README.md) | Geändert |
+| [prototypes/backend/LICENSES.md](../../prototypes/backend/LICENSES.md) | Geändert |
+| [prototypes/backend/README.md](../../prototypes/backend/README.md) | Geändert |
+| [prototypes/backend/migrations/002_local_identity.sql](../../prototypes/backend/migrations/002_local_identity.sql) | Neu |
+| [prototypes/backend/migrations/003_proof_lifetimes.sql](../../prototypes/backend/migrations/003_proof_lifetimes.sql) | Neu |
+| [prototypes/backend/openapi.json](../../prototypes/backend/openapi.json) | Geändert |
+| [prototypes/backend/scripts/identity_server.py](../../prototypes/backend/scripts/identity_server.py) | Neu |
+| [prototypes/backend/scripts/migrate.py](../../prototypes/backend/scripts/migrate.py) | Geändert |
+| [prototypes/backend/scripts/prepare_identity.py](../../prototypes/backend/scripts/prepare_identity.py) | Neu |
+| [prototypes/backend/src/syllentra_backend/api.py](../../prototypes/backend/src/syllentra_backend/api.py) | Geändert |
+| [prototypes/backend/src/syllentra_backend/delivery.py](../../prototypes/backend/src/syllentra_backend/delivery.py) | Neu |
+| [prototypes/backend/src/syllentra_backend/identity.py](../../prototypes/backend/src/syllentra_backend/identity.py) | Neu |
+| [prototypes/backend/src/syllentra_backend/identity_routes.py](../../prototypes/backend/src/syllentra_backend/identity_routes.py) | Neu |
+| [prototypes/backend/tests/private_fixtures.py](../../prototypes/backend/tests/private_fixtures.py) | Neu |
+| [prototypes/backend/tests/test_identity.py](../../prototypes/backend/tests/test_identity.py) | Neu |
+| [prototypes/backend/tests/test_security.py](../../prototypes/backend/tests/test_security.py) | Geändert |
+| [prototypes/frontend/README.md](../../prototypes/frontend/README.md) | Geändert |
+| [prototypes/frontend/package.json](../../prototypes/frontend/package.json) | Geändert |
+| [prototypes/frontend/playwright.identity.config.ts](../../prototypes/frontend/playwright.identity.config.ts) | Neu |
+| [prototypes/frontend/src/App.tsx](../../prototypes/frontend/src/App.tsx) | Geändert |
+| [prototypes/frontend/src/layouts/Shell.tsx](../../prototypes/frontend/src/layouts/Shell.tsx) | Geändert |
+| [prototypes/frontend/src/locales/de.json](../../prototypes/frontend/src/locales/de.json) | Geändert |
+| [prototypes/frontend/src/locales/en.json](../../prototypes/frontend/src/locales/en.json) | Geändert |
+| [prototypes/frontend/src/locales/fr.json](../../prototypes/frontend/src/locales/fr.json) | Geändert |
+| [prototypes/frontend/src/pages/Identity.tsx](../../prototypes/frontend/src/pages/Identity.tsx) | Neu |
+| [prototypes/frontend/src/pages/Settings.tsx](../../prototypes/frontend/src/pages/Settings.tsx) | Geändert |
+| [prototypes/frontend/src/styles/app.css](../../prototypes/frontend/src/styles/app.css) | Geändert |
+| [prototypes/frontend/tests/identity/identity.spec.ts](../../prototypes/frontend/tests/identity/identity.spec.ts) | Neu |
+| [prototypes/frontend/vite.identity.config.ts](../../prototypes/frontend/vite.identity.config.ts) | Neu |
+
+
+## Dokumentintegrität und öffentliche Inhalte
+
+76 Markdown-Dateien, 1.043 lokale Links und 674 Tabellen geprüft, keine Struktur-/Linkfehler; 1.397 historische Anker erhalten und 14 Mermaid-Quellblöcke unverändert. 89 FE, 66 UC, 25 DEC-V1, DEC-48/49, 46 REL, 28 AT-L, 20 AT-S3 und 14 TECH-O inhaltlich erhalten; FE-56 offen. Bestehende Fachprimärquellen unverändert, E3 additiv/versioniert und Index fortgeschrieben. Migration 001, beide Lockfiles/Paketfassungen sowie die ursprünglichen UItestdateien bytegleich. Alle 18 bisherigen Backendtestfunktionen/44 Fälle erhalten, kein Skip/Xfail ergänzt. 38 autorisierte Dateien, keine privaten Kanal-/TLS-/DBdateien oder Diagnoseartefakte versioniert. Bekannte aktuelle lokale DB-/HMAC-/Zustellgeheimnisse und Secretmuster gegen öffentliche Änderungen verglichen, keine Treffer; keine Garantie für unbekannte Geheimnisse oder vollständige Historie. git diff --check erfolgreich; abschließende vollständige PostgreSQLsuite erneut 66/66 mit ignoriertem lokalem JUnitbeleg.
+
+## Mission 12 — PostgreSQL-Testisolation, Untersuchung der Sitzungsbeobachtung und R1–R15-Nachverfolgung
+
+**Ausgang und Autorisierung:** Commit `cc4db0f4ffd46ea8e24c5c5023e0caff3f9be0ee` auf `docs/spec/p1-p2-mobile-workspaces`, PR #1 OPEN. Mission 12 erlaubt gezielte Änderungen der lokalen Testinfrastruktur/Fixtures, neue Regressions- und Charakterisierungstests, Ausführung mit synthetischen Daten in PostgreSQL (Docker) sowie Aktualisierung der Validierungsdokumentation. Fachliche Authentifizierungsregeln, Sitzungs-/Geräte-/Recoveryfristen und Administrationssperren bleiben unverändert.
+
+### 1. Pro-Lauf-Isolation der PostgreSQL-Tests
+
+Vor Mission 12 leerten `test_security.py`, `test_identity.py` und `identity_server.py --test` dieselbe gemeinsame Datenbank `syllentra_test` (`DELETE FROM ...`). Zwei gleichzeitige Testprozesse löschten damit wechselseitig aktive Konten, Geräte und Sitzungen.
+
+Mission 12 führt [scripts/test_db.py](../../prototypes/backend/scripts/test_db.py) und [tests/conftest.py](../../prototypes/backend/tests/conftest.py) ein:
+
+- Jeder `pytest`-Prozess erzeugt eine eigene Datenbank `syllentra_t_<12 Hex>` (`CREATE DATABASE ... TEMPLATE template0`) und versieht sie mit einem Eigentumsvermerk (`COMMENT ON DATABASE ... IS 'syllentra-test-run:v1:<run_id>:<timestamp>:<token>'`).
+- `assert_owned()` prüft Namen, Datenbankkommentar und `current_database()`, bevor `wipe()` (`DELETE`) oder `drop_run_database()` (`DROP DATABASE ... WITH (FORCE)`) ausgeführt werden.
+- `syllentra_test` bleibt ausschließlich für Browser-E2E (`identity_server.py --test`) reserviert und wird von `pytest` nie berührt (`test_backend_tests_never_touch_shared_browser_database`).
+- `python -m scripts.test_db sweep <Stunden> [--apply]` listet nur markierte verwaiste Laufdatenbanken auf und rührt unmarkierte Datenbanken nie an (`test_sweep_lists_only_marked_old_databases`).
+
+### 2. Untersuchung des intermittierenden Sitzungslesefehlers aus Mission 10
+
+- **Bewiesener Mechanismus (Datenbank-Interferenz):** `test_external_wipe_makes_session_reads_fail_mechanism` und `test_two_pytest_processes_run_in_parallel_without_interference` ([test_isolation.py](../../prototypes/backend/tests/test_isolation.py)) weisen nach, dass ein fremdes `DELETE` auf einer geteilten Testdatenbank unmittelbar nach `POST /auth/login` zu `401` bei `GET /session` führt, während das Client-Cookie `__Host-syllentra-session` erhalten bleibt. Mit Pro-Lauf-Datenbanken bestehen zwei parallel gestartete `pytest`-Subprozesse fehlerfrei (`[0, 0]`).
+- **Geprüfte und widerlegte interne Hypothesen:** Transaktionsreihenfolge und Commit vor HTTP-Antwort (`with psycopg.connect(...) as db:` in `connection()`), Cookie-Rotation sowie `FOR UPDATE`-Serialisierung wurden über 25 aufeinanderfolgende Zyklen `POST /auth/login -> GET /session` (`test_repeated_login_then_session_read_transaction_and_cookie_coherence`) sowie parallele Threads für Login + Gerätewiderruf (`test_simultaneous_login_and_device_revocation`) und Gerätefreigabe + Widerruf (`test_simultaneous_device_approval_and_authority_revocation`) geprüft — ohne internen Race-Befund.
+- **Abgrenzung:** Da vom einmaligen Zwischenlauf aus Mission 10 kein damaliges Prozessprotokoll vorliegt, bleibt das historische Einzelereignis rückwirkend nicht absolut beweisbar; die nachgewiesene Interferenzursache über eine gemeinsame Testdatenbank ist für `pytest` technisch beseitigt.
+
+### 3. Verfolgungstabelle der Risiken R1 bis R15 (Mission 11 / Mission 12 / Mission 13 / Mission 14)
+
+| Risiko | Kritikalität | Nachweis / Code-Stelle | Test | Vorgeschlagene / umgesetzte Korrektur | Aktueller Stand (Mission 14) | Erforderliche Entscheidung |
+|---|---|---|---|---|---|---|
+| **R1** — Gleichzeitiger 7-Tage-Ablauf von Gerät und persönlichem Offline-Recoverycode sperrt inaktive Konten dauerhaft aus | Hoch | [004_r1_r4_lifetimes.sql](../../prototypes/backend/migrations/004_r1_r4_lifetimes.sql), [identity.py](../../prototypes/backend/src/syllentra_backend/identity.py) (`issue_offline_code`, `revoke_offline_code`, `recover`) | `test_inactivity_over_7_days_characterizes_r1_recovery_and_device_lockout`, `test_r1_and_r4_boundary_and_decision_readiness`, `test_r1_migration_004_revokes_expired_legacy_codes_and_preserves_active_codes` ([test_mission12_audit.py](../../prototypes/backend/tests/test_mission12_audit.py)) | Persönlicher Einmal-Recoverycode von 7d-Gerätefrist entkoppelt (`expires_at = NULL`, `revoked`, `issued_at`); gültig bis Verbrauch, explizitem Widerruf, Rotation oder Sicherheitsinvalidierung; bereits abgelaufene Altcodes in Migration 004 widerrufen | **Behoben in Mission 14** (vom Projektinhaber am 23.10.2026 freigegeben) | Sichere reale Offlinecode-Ausgabe für Produktivbetrieb (TECH-O-05/06) |
+| **R2** — Globales Netzwerkbudget (`100/min` auf `POST /auth/*`) nutzt nur `request.client.host` und sperrt hinter gemeinsamem Proxy/Loopback unbeteiligte Nutzer (`429`) | Mittel–Hoch | [api.py](../../prototypes/backend/src/syllentra_backend/api.py) (`boundaries` / `network_budget`) | `test_network_budget_shared_client_host_ignores_forwarded_headers` ([test_mission12_audit.py](../../prototypes/backend/tests/test_mission12_audit.py)) | Netzwerkbudget nach `host:path:context` (`DEVICE`- bzw. `CSRF`-Cookie) isoliert und `/auth/logout` ausgenommen | **Behoben in Mission 13** (lokaler Proxy/Loopback); Produktions-Proxy-Topologie bleibt S3-Aufgabe | Produktions-Proxy-Konfiguration bei späterem S3-Rollout |
+| **R3** — `GET /sessions` und `GET /devices` sortieren nach zufälliger v4-UUID (`ORDER BY id LIMIT 50`) und blenden bei >50 Einträgen aktive/jüngste Sitzungen aus | Mittel | [identity_routes.py](../../prototypes/backend/src/syllentra_backend/identity_routes.py) (`sessions`, `devices`), [api.py](../../prototypes/backend/src/syllentra_backend/api.py) (`Principal.device_id`) | `test_more_than_50_sessions_listing_truncation_and_revocation`, `test_devices_sorting_effective_authorization_and_pagination` ([test_mission12_audit.py](../../prototypes/backend/tests/test_mission12_audit.py)) | Aktuelle Sitzung/Gerät und aktive Einträge zuerst sortiert, effektives `revoked`/`authorized` berechnet und `offset`/`limit`-Paginierung ergänzt | **Behoben in Mission 13** | Keine weitere Entscheidung für den Prototyp nötig |
+| **R4** — Nicht verifizierte `pending`-Konten laufen nie ab und blockieren Registrierung derselben Adresse mit neuem Passwort dauerhaft (Fake-Challenge) | Mittel | [004_r1_r4_lifetimes.sql](../../prototypes/backend/migrations/004_r1_r4_lifetimes.sql), [identity.py](../../prototypes/backend/src/syllentra_backend/identity.py) (`register`, `has_unexpected_pending_state`) | `test_old_pending_account_blocks_different_password_and_allows_same_password_restart`, `test_r4_unexpected_associated_data_blocks_pending_reset`, `test_r4_concurrent_registrations_and_verify_vs_reset_at_24h` ([test_mission12_audit.py](../../prototypes/backend/tests/test_mission12_audit.py)) | Kontrollierter Reset unverifizierter `pending`-Konten ab 24h (`clock() >= pending_since + 24h`) unter `FOR UPDATE` mit neuem Argon2id-Passwort, neuem `pending_since`, `security_epoch + 1`, Invalidierung alter Challenges, neuem E-Mail-OTP und Anomaliesperre bei unerwarteten Daten (`pending_reset_blocked`); verifizierte Konten niemals berührt | **Behoben in Mission 14** (vom Projektinhaber am 23.10.2026 freigegeben) | Keine weitere Entscheidung für den Prototyp nötig |
+| **R5** — Adressbezogene Budgets (`login` 10/min, `recovery` 3/min, `register` 10/min) erlauben gezieltes `429`-Lockout oder Entwertung laufender Recovery durch Dritte | Mittel | [identity.py](../../prototypes/backend/src/syllentra_backend/identity.py) (`register`, `login`, `request_recovery`, `challenge`), [identity_routes.py](../../prototypes/backend/src/syllentra_backend/identity_routes.py) (`caller`) | `test_per_address_budgets_and_enumeration_resistance`, `test_targeted_login_and_register_caller_isolation_and_recovery_challenge_preservation` ([test_mission12_audit.py](../../prototypes/backend/tests/test_mission12_audit.py)) | Zweistufige Budgets (`email:caller` + höhere globale Adressdeckel; vertrauenswürdiges Gerät vom `login-untrusted`-Deckel befreit) und Preauth-gebundene Recovery-Challenge-Invalidierung | **Behoben in Mission 13** | Verteilte Rate-Limiting-Architektur vor Produktivbetrieb (REL-S03 / REL-Q01) |
+| **R6** — Gemeinsame Nutzung von `syllentra_test` durch parallele `pytest`-Läufe und `identity_server.py --test` zerstört laufende Sitzungen/Daten | Hoch (Testinfrastruktur) | [scripts/test_db.py](../../prototypes/backend/scripts/test_db.py), [tests/conftest.py](../../prototypes/backend/tests/conftest.py) | `test_two_runs_do_not_share_data_and_wipe_only_hits_its_own_database`, `test_two_pytest_processes_run_in_parallel_without_interference` ([test_isolation.py](../../prototypes/backend/tests/test_isolation.py)) | Eigene Datenbank `syllentra_t_<12 Hex>` pro `pytest`-Lauf mit Eigentumsvermerk (`COMMENT ON DATABASE`) und strikter `assert_owned`-Prüfung | **Behoben in Mission 12** | Keine weitere Entscheidung nötig |
+| **R7** — Jede Anfrage öffnet eine neue `psycopg.connect()`-Verbindung ohne Connection-Pool (Verbindungserschöpfung unter Last) | Mittel (Architektur/Betrieb) | [api.py](../../prototypes/backend/src/syllentra_backend/api.py) (`connection`, `network_budget`) | Durch bestehende Paralleltests (`ThreadPoolExecutor`) funktional geprüft; Lasttest T01–T09 offen | `psycopg_pool.ConnectionPool` mit begrenzter Poolgröße im App-Lifespan einführen | Dokumentiert (Prototypgrenze) | Architekturentscheidung vor Mehrbenutzer-/Lastbetrieb |
+| **R8** — Unbegrenztes Tabellenwachstum in `sessions`, `devices` und `notes` (Soft-Delete) ohne Prune abgelaufener/widerrufener Zeilen | Niedrig–Mittel | [identity.py](../../prototypes/backend/src/syllentra_backend/identity.py), [api.py](../../prototypes/backend/src/syllentra_backend/api.py) | `test_more_than_50_sessions_listing_truncation_and_revocation` ([test_mission12_audit.py](../../prototypes/backend/tests/test_mission12_audit.py)) | Gezieltes Pruning abgelaufener/widerrufener `sessions` und `devices` analog zu `security_events`/`identity_challenges` | Sichtbarkeit durch R3-Sortierung/Paginierung entschärft; Aufbewahrungs-Pruning offen | Festlegung der Aufbewahrungsfristen (N1/N2/S2) |
+| **R9** — Synchrones `DELETE`-Pruning auf `security_events` und `identity_budgets` bei jedem Schreibzugriff | Niedrig | [identity.py](../../prototypes/backend/src/syllentra_backend/identity.py) (`audit`, `budget`) | Durch Budget-/Auditprüfungen in [test_identity.py](../../prototypes/backend/tests/test_identity.py) und [test_mission12_audit.py](../../prototypes/backend/tests/test_mission12_audit.py) abgedeckt | Intervallbasiertes oder Hintergrund-Pruning plus Index auf `occurred_at`/`expires_at` | Dokumentiert | Erst bei produktiver Last relevant |
+| **R10** — Timing-Seitenkanal bei `POST /auth/recover` und `POST /auth/register` (unterschiedliche DB-/Argon2-Arbeit für reale vs. unbekannte/bereits verifizierte Konten) | Niedrig–Mittel | [identity.py](../../prototypes/backend/src/syllentra_backend/identity.py) (`register`, `request_recovery`) | Antwortform-Gleichheit geprüft in `test_enumeration` und `test_per_address_budgets_and_enumeration_resistance` | Konstante Dummy-Operationen / einheitliche Verarbeitungspfade auch im Fake-Challenge-Zweig | Antwortgleichheit geprüft; Timing-Nachweis offen (REL-S16) | Sicherheitsabnahme vor öffentlicher Freigabe |
+| **R11** — `POST /auth/login` berechnet Argon2id (`verify_password`) vor Prüfung auf Kontostatus/Sperre (CPU-Last bei gesperrten Konten, allerdings nach 10/min-Budget) | Niedrig | [identity.py](../../prototypes/backend/src/syllentra_backend/identity.py) (`login`) | `test_unverified_admin_unknown_login_denied`, `test_mfa_required_suspension_and_admin_remain_blocked` | Beibehalten für Timing-Gleichheit gegen Enumeration; nur globales Argon2-Concurrency-Limit ergänzen | Bewusste Anti-Enumerations-Abwägung dokumentiert | Begrenzung paralleler Argon2-Hashes vor Produktivbetrieb |
+| **R12** — `approve_device` liest `sessions` über `token_hash` ohne erneute Prüfung auf `revoked`/`expires_at`/Geräteautorisierung und erlaubt Mehrfachfreigabe | Niedrig (Verteidigungstiefe) | [identity.py](../../prototypes/backend/src/syllentra_backend/identity.py) (`approve_device`), [api.py](../../prototypes/backend/src/syllentra_backend/api.py) (`principal`) | `test_simultaneous_device_approval_and_authority_revocation`, `test_approve_device_verifies_session_and_device_state_and_rejects_duplicate_approval` ([test_mission12_audit.py](../../prototypes/backend/tests/test_mission12_audit.py)) | `device_id` im `Principal` mitgeführt; `approve_device` sperrt und prüft Konto, Sitzung und Gerät (`FOR UPDATE OF s, d`) vor Challenge-Update und verlangt `AND NOT approved` | **Behoben in Mission 13** | Keine weitere Entscheidung nötig |
+| **R13** — Kein separater CSRF-Rotationszwang beim Übergang von anonym zu authentifiziert (`__Host-syllentra-csrf` bleibt gültig) | Niedrig | [api.py](../../prototypes/backend/src/syllentra_backend/api.py) (`csrf`, `boundaries`), [identity.py](../../prototypes/backend/src/syllentra_backend/identity.py) (`login`) | `test_secure_cookies_csrf_https_and_session_fixation` ([test_identity.py](../../prototypes/backend/tests/test_identity.py)) | CSRF-Cookie bei `login`/`recover` rotieren oder kryptographisch an Sitzung/Preauth binden | Durch `__Host-` + `SameSite=Strict` + `Origin` + `Sec-Fetch-Site` entschärft | Optionales Hardening für Produktiv-Auth |
+| **R14** — `LocalFileChannel` und `identity_server.py` setzen POSIX-APIs (`os.getuid()`, `os.O_NOFOLLOW`, `0600`/`0700`) voraus; auf Windows ohne Linux-Dateisystem nicht direkt ausführbar | Mittel (Portabilität/DX) | [delivery.py](../../prototypes/backend/src/syllentra_backend/delivery.py), [identity_server.py](../../prototypes/backend/scripts/identity_server.py), [README.md](../../prototypes/backend/README.md) | `test_private_file_channel_cleanup_and_permissions` im Linux-Container ausgeführt | Reproduzierbare Ausführung über Linux-Container/WSL2 dokumentiert ([prototypes/backend/README.md](../../prototypes/backend/README.md)) | **Dokumentiert und reproduzierbar verifiziert in Mission 12 & 13** | Keine Änderung der POSIX-Sicherheitsprüfung auf Linux |
+| **R15** — Bedingte Assertion `if old != latest:` in `test_resend_replaces_code_and_limits_sends` und `StarletteDeprecationWarning` (`httpx` in `TestClient`) | Niedrig (Testqualität) | [test_identity.py](../../prototypes/backend/tests/test_identity.py) | `test_resend_replaces_code_and_limits_sends` ([test_identity.py](../../prototypes/backend/tests/test_identity.py)) | Bedingung `if old != latest:` durch unbedingtes `assert old != latest` ersetzt; `httpx`-Warnung bis Lockfile-Update dokumentiert | **Assertion in Mission 12 behoben**; Lockfile unverändert | Lockfile-Aktualisierung erst bei freigegebenem Dependency-Update |
+
+### 4. Tatsächliche Prüfergebnisse Mission 12
+
+| Prüfung / Befehl | Tatsächlicher Befund |
+|---|---|
+| `.venv/bin/pytest -q` (Linux-Container gegen isolierten PostgreSQL 17.11) | **92 Tests bestanden**, 0 fehlgeschlagen, 0 übersprungen (66 bestehende Tests + 9 Isolationstests in `test_isolation.py` + 17 Sicherheits-/Grenz-/Parallelitäts-/Charakterisierungstests in `test_mission12_audit.py`, inkl. parallelem Zwei-Prozess-Pytestlauf). |
+| `.venv/bin/python -m scripts.test_db sweep 0` | `keine verwaisten Lauf-Datenbanken` — sämtliche während der Läufe angelegten `syllentra_t_<12 Hex>`-Datenbanken wurden sauber abgeräumt; `syllentra_test` und `syllentra_prototype` blieben unberührt. |
+| `.venv/bin/mypy src scripts` | `Success: no issues found in 14 source files` (strict). |
+| `.venv/bin/ruff check src tests scripts` & `ruff format --check src tests scripts` | `All checks passed!`, `21 files already formatted` (einschließlich aller neuen Test-/Skriptdateien). |
+| `.venv/bin/pip-audit --cache-dir /tmp/syllentra-pip-audit` | `No known vulnerabilities found` (58 gepinnte Pakete). |
+| `npm run build`, `npm run lint`, `npm run format:check`, `npm test`, `npm audit --json` (`prototypes/frontend`) | TypeScript-Strictbuild + Vite-Build erfolgreich, ESLint 0 Fehler, Prettier 41/41 Dateien konform, Vitest 7/7 Unit-Tests bestanden, `npm audit` 0 bekannte Schwachstellen. |
+| Browser-E2E (`npm run test:e2e`, `npm run test:identity`) | In Mission 12 nicht erneut ausgeführt (Frontend-Code unverändert; Windows-Host ohne lokale Python-/OpenSSL-Laufzeit außerhalb des Linux-Containers). Status ehrlich als nicht in Mission 12 neu ausgeführt ausgewiesen. |
+
+### 5. Dateiumfang Mission 12
+
+| Datei | Änderung |
+|---|---|
+| [prototypes/backend/scripts/test_db.py](../../prototypes/backend/scripts/test_db.py) | Neu — Pro-Lauf-Datenbankerzeugung (`syllentra_t_<12 Hex>`), Eigentumsvermerk, `assert_owned`, `wipe`, `drop_run_database`, `sweep` |
+| [prototypes/backend/scripts/migrate.py](../../prototypes/backend/scripts/migrate.py) | Geändert — Optionale Zieldatenbank mit strikter Allowlist (`syllentra_prototype`, `syllentra_test`, `syllentra_t_[0-9a-f]{12}`) |
+| [prototypes/backend/src/syllentra_backend/identity.py](../../prototypes/backend/src/syllentra_backend/identity.py) | Geändert — `LocalIdentity.validate()` akzeptiert isolierte Laufdatenbanken `/syllentra_t_[0-9a-f]{12}` auf Loopback:55439 |
+| [prototypes/backend/tests/conftest.py](../../prototypes/backend/tests/conftest.py) | Neu — Session-Fixture `run_db` und Funktions-Fixture `env` auf eigener Laufdatenbank |
+| [prototypes/backend/tests/helpers.py](../../prototypes/backend/tests/helpers.py) | Neu — Gemeinsame synthetische Testhilfen (`registration`, `verify`, `account`) |
+| [prototypes/backend/tests/test_identity.py](../../prototypes/backend/tests/test_identity.py) | Geändert — Nutzung der isolierten Fixture aus `conftest.py`, unbedingtes `assert old != latest` beim OTP-Resend |
+| [prototypes/backend/tests/test_security.py](../../prototypes/backend/tests/test_security.py) | Geändert — Nutzung von `run_db` statt globalem `urls(test=True)` |
+| [prototypes/backend/tests/test_isolation.py](../../prototypes/backend/tests/test_isolation.py) | Neu — 9 Tests zu Eigentumsprüfung, parallelen Läufen, Allowlist, Sweep und Reproduktion des externen Wipe-Mechanismus |
+| [prototypes/backend/tests/test_mission12_audit.py](../../prototypes/backend/tests/test_mission12_audit.py) | Neu — 17 Tests (Charakterisierung R1–R5, >50 Sessions, exakte Geräteablaufgrenze, konkurrierende Recovery/Login/Freigabe/Widerruf, 25x Login->Session, Umgebungsgrenzen) |
+| [prototypes/backend/README.md](../../prototypes/backend/README.md) | Geändert — Dokumentation der Pro-Lauf-Testisolation, `sweep` und Windows/WSL/Container-Ausführung |
+| [docs/development/IDENTITY_PROTOTYPE_REVIEW.md](IDENTITY_PROTOTYPE_REVIEW.md) | Geändert — Mission-12-Validierung und R1–R15-Tabelle ergänzt |
+| [docs/spec/E3-pruefnachweis.md](../spec/E3-pruefnachweis.md) | Geändert — Abschnitt E3.28 ergänzt (Version 0.15) |
+| [docs/spec/README.md](../spec/README.md) | Geändert — E3-Version 0.15 und Mission-12-Hinweis fortgeschrieben |
+| [docs/ai/PROJECT_CONTEXT.md](../ai/PROJECT_CONTEXT.md) | Geändert — Mission-12-Kontextstand ergänzt (Version 0.13) |
+| [docs/ai/CONTEXT_CHANGELOG.md](../ai/CONTEXT_CHANGELOG.md) | Geändert — Protokolleintrag Mission 11/12 ergänzt |
+
+## Mission 13 — Gezielte Sicherheitskorrekturen (R2, R3, R5, R12) und Entscheidungsvorlagen (R1, R4)
+
+**Ausgang und Autorisierung:** Commit `39f2e0646de9241684cfed254cf04cba34b2e6da` auf `docs/spec/p1-p2-mobile-workspaces`, PR #1 OPEN. Mission 13 autorisiert gezielte Sicherheitskorrekturen für R2, R3, R5 und R12, die Vorbereitung der Entscheidungen und Tests für R1 und R4 (ohne Änderung der noch nicht freigegebenen Recovery- oder Aufbewahrungsfristen), den Erhalt aller 92 bestehenden Tests plus neuer Regressionsprüfungen sowie einen normalen Commit/Push nach erfolgreichen Prüfungen.
+
+### 1. Umgesetzte Korrekturen (R2, R3, R5, R12) und vorbereitete Entscheidungen (R1, R4)
+
+- **R2 (Netzwerkbudget-Isolierung hinter gemeinsamem Loopback/Proxy):** In [api.py](../../prototypes/backend/src/syllentra_backend/api.py) (`boundaries`) ist `/auth/logout` vom Eingangs-Netzwerkbudget ausgenommen, und der Schlüssel des `100/min`-Budgets wird nach `f"{host}:{request.url.path}:{context}"` (`context = request.cookies.get(DEVICE) or request.cookies.get(CSRF, "")`) getrennt. Ein lauter Client schöpft nur sein eigenes Kontext-/Pfadbudget aus (`429`), ohne andere Clients auf demselben Loopback-/Proxy-Host kollektiv zu sperren.
+- **R3 (Sortierung, effektiver Status und Paginierung bei `GET /sessions` und `GET /devices`):** [api.py](../../prototypes/backend/src/syllentra_backend/api.py) führt `device_id` im `Principal` mit; [identity_routes.py](../../prototypes/backend/src/syllentra_backend/identity_routes.py) ergänzt `offset` (`0..5000`) und `limit` (`1..50`, Standard `50`), berechnet den effektiven Status `(revoked OR expires_at <= now) AS revoked` bzw. `(authorized AND expires_at > now) AS authorized` und sortiert die aktuelle Sitzung/das aktuelle Gerät sowie alle aktiven Einträge deterministisch vor abgelaufenen/widerrufenen Einträgen (`ORDER BY (token_hash = actor.token_hash) DESC, (NOT revoked AND expires_at > now) DESC, expires_at DESC, id ASC` bzw. analog für Geräte). Der OpenAPI-Snapshot ([openapi.json](../../prototypes/backend/openapi.json)) wurde synchronisiert.
+- **R5 (Reduktion gezielter E-Mail-Sperren und Schutz laufender Recovery-Challenges):** In [identity.py](../../prototypes/backend/src/syllentra_backend/identity.py) und [identity_routes.py](../../prototypes/backend/src/syllentra_backend/identity_routes.py) werden die engen Pro-Versuch-Budgets (`register` 10/min, `login` 10/min, `recovery` 3/min) pro Aufruferkontext (`f"{email}:{host}:{csrf}"`) gezählt, ergänzt um höhere globale Adressdeckel (`register-address` 30/min, `recovery-address` 15/min sowie `login-untrusted` 30/min nur für Aufrufe ohne bereits gültigen Gerätenachweis). Zudem entwertet `POST /auth/recover` (`request_recovery`) nur noch frühere ungenutzte Recovery-Challenges desselben `PREAUTH`-Bindings (`consume_existing=False`), sodass unauthentifizierte Dritte eine laufende Kontowiederherstellung des Kontoinhabers nicht abbrechen können.
+- **R12 (Verteidigungstiefe bei `approve_device`):** In [identity.py](../../prototypes/backend/src/syllentra_backend/identity.py) prüft `approve_device` auf der gesperrten Kontenzeile (`FOR UPDATE`) auch `verification = 'verified'`, `status = 'active'`, `kind = 'user'` und `NOT mfa_required`, sperrt und verifiziert anschließend gemeinsam die freigebende Sitzung und das freigebende Gerät (`FOR UPDATE OF s, d`, aktiv, nicht widerrufen, nicht abgelaufen, passende `security_epoch` und `actor_device_id`) **vor** dem Challenge-Update und verlangt `AND NOT approved`, um Doppelfreigaben auszuschließen.
+- **R1 & R4 (Entscheidungsvorlagen und Grenztests ohne Änderung unbestätigter Fristen):** Die 7-Tage-Fristen für Geräte und persönliche Offline-Recoverycodes (R1) sowie die Aufbewahrung unverifizierter `pending`-Konten (R4) bleiben im Code unverändert. Die Entscheidungsoptionen R1-A/B/C und R4-A/B/C sind in [OPEN_DECISIONS.md](OPEN_DECISIONS.md) Abschnitt 4 dokumentiert und durch Grenz- und Charakterisierungstests in [test_mission12_audit.py](../../prototypes/backend/tests/test_mission12_audit.py) abgesichert.
+
+### 2. Tatsächliche Prüfergebnisse Mission 13
+
+| Prüfung / Befehl | Tatsächlicher Befund |
+|---|---|
+| `.venv/bin/pytest -q` (Linux-Container gegen isolierten PostgreSQL 17.11) | **96 Tests bestanden**, 0 fehlgeschlagen, 0 übersprungen (alle 92 bisherigen Tests erhalten + 4 neue Regressions- und Grenztests in `test_mission12_audit.py`: `test_devices_sorting_effective_authorization_and_pagination`, `test_targeted_login_and_register_caller_isolation_and_recovery_challenge_preservation`, `test_approve_device_verifies_session_and_device_state_and_rejects_duplicate_approval`, `test_r1_and_r4_boundary_and_decision_readiness`). |
+| `.venv/bin/python -m scripts.test_db sweep 0` | `keine verwaisten Lauf-Datenbanken` — sämtliche Laufdatenbanken `syllentra_t_<12 Hex>` wurden nach Testende vollständig entfernt. |
+| `.venv/bin/mypy src scripts` | `Success: no issues found in 14 source files` (strict). |
+| `.venv/bin/ruff check src tests scripts` & `ruff format --check src tests scripts` | `All checks passed!`, `21 files already formatted`. |
+| `.venv/bin/pip-audit --cache-dir /tmp/syllentra-pip-audit` | `No known vulnerabilities found` (58 gepinnte Pakete). |
+| `npm run build`, `npm run lint`, `npm run format:check`, `npm test`, `npm audit --json` (`prototypes/frontend`) | TypeScript-Strictbuild + Vite-Build erfolgreich, ESLint 0 Fehler, Prettier 41/41 Dateien konform, Vitest 7/7 Unit-Tests bestanden, `npm audit` 0 bekannte Schwachstellen. |
+| Browser-E2E (`npm run test:e2e`, `npm run test:identity`) | In Mission 13 nicht erneut ausgeführt (Frontend-Code unverändert; Windows-Host ohne native Linux-WSL-Distribution außerhalb des Containers). |
+
+### 3. Dateiumfang Mission 13
+
+| Datei | Änderung |
+|---|---|
+| [prototypes/backend/src/syllentra_backend/api.py](../../prototypes/backend/src/syllentra_backend/api.py) | Geändert — `Principal.device_id` ergänzt; `network_budget` nach `host:path:context` isoliert und `/auth/logout` ausgenommen (R2, R3, R12) |
+| [prototypes/backend/src/syllentra_backend/identity.py](../../prototypes/backend/src/syllentra_backend/identity.py) | Geändert — Aufrufer-isolierte Budgets mit globalen Adressdeckeln, Preauth-gebundene Recovery-Challenge-Invalidierung und verschärfte Sitzungs-/Geräteprüfung in `approve_device` (R5, R12) |
+| [prototypes/backend/src/syllentra_backend/identity_routes.py](../../prototypes/backend/src/syllentra_backend/identity_routes.py) | Geändert — Aufruferkontext-Übergabe, `actor.device_id` bei Gerätefreigabe sowie Sortierung, effektiver Status und `offset`/`limit`-Paginierung für `GET /devices` und `GET /sessions` (R3, R5, R12) |
+| [prototypes/backend/openapi.json](../../prototypes/backend/openapi.json) | Geändert — `offset`/`limit`-Abfrageparameter für `GET /devices` und `GET /sessions` im OpenAPI-Snapshot aktualisiert |
+| [prototypes/backend/tests/test_mission12_audit.py](../../prototypes/backend/tests/test_mission12_audit.py) | Geändert — R2/R3/R5-Tests auf Regressionsprüfungen umgestellt und 4 neue Tests für R3 (`GET /devices`), R5 (Login/Register/Recovery-Erhalt), R12 (`approve_device`) sowie R1/R4-Grenzen ergänzt (96 Tests gesamt) |
+| [prototypes/backend/README.md](../../prototypes/backend/README.md) | Geändert — Version 0.4, APIvertrag und Mission-13-Stand aktualisiert |
+| [docs/development/IDENTITY_ARCHITECTURE.md](IDENTITY_ARCHITECTURE.md) | Geändert — Version 0.2, Budget-, Recovery-, Gerätefreigabe- und Listen-Architektur fortgeschrieben |
+| [docs/development/IDENTITY_PROTOTYPE_REVIEW.md](IDENTITY_PROTOTYPE_REVIEW.md) | Geändert — Version 0.3, R1–R15-Tabelle, REL-Q13 und Mission-13-Prüfbericht aktualisiert |
+| [docs/development/OPEN_DECISIONS.md](OPEN_DECISIONS.md) | Geändert — Version 0.2, Abschnitt 4 mit Entscheidungsvorlagen R1-A/B/C und R4-A/B/C ergänzt |
+| [docs/spec/E3-pruefnachweis.md](../spec/E3-pruefnachweis.md) | Geändert — Version 0.16, Abschnitt E3.29 ergänzt |
+| [docs/spec/README.md](../spec/README.md) | Geändert — E3-Version 0.16 und Mission-13-Stand fortgeschrieben |
+| [docs/ai/PROJECT_CONTEXT.md](../ai/PROJECT_CONTEXT.md) | Geändert — Version 0.14, Mission-13-Kontextstand ergänzt |
+| [docs/ai/CONTEXT_CHANGELOG.md](../ai/CONTEXT_CHANGELOG.md) | Geändert — Protokolleintrag Mission 13 ergänzt |
+
+## Mission 14 — Umsetzung der vom Projektinhaber freigegebenen Entscheidungen R1 und R4
+
+**Ausgang und Autorisierung:** Commit `d8123b7f84aad028202106f17eecdc6789e73118` auf `docs/spec/p1-p2-mobile-workspaces`, PR #1 OPEN. Der Projektinhaber hat am 23.10.2026 die beiden Entscheidungen **R1** (persönlicher Einmal-Recoverycode ohne automatischen 7-Tage-Ablauf) und **R4** (kontrollierte Rücksetzung unverifizierter `pending`-Konten ab 24 Stunden) ausdrücklich freigegeben. Mission 14 autorisiert die gezielte Umsetzung im Backend, die zugehörige Vorwärtsmigration, die Umwandlung und Erweiterung der Regressions-/Grenz-/Parallelitätstests sowie Commit und normalen Push nach erfolgreichen Prüfungen (`MERGE_DEPLOY` verboten).
+
+### 1. Umgesetzte Änderungen für R1 und R4
+
+- **R1 (Entkopplung des persönlichen Einmal-Recoverycodes von der 7-Tage-Gerätefrist):**
+  - Additive Migration [004_r1_r4_lifetimes.sql](../../prototypes/backend/migrations/004_r1_r4_lifetimes.sql) ergänzt `revoked boolean NOT NULL DEFAULT false` und `issued_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP` auf `recovery_codes`, hebt die `NOT NULL`-Pflicht auf `expires_at` auf und überführt bestehende Zeilen sicher: bereits abgelaufene Altcodes (`expires_at <= CURRENT_TIMESTAMP`) werden auf `revoked = true` gesetzt (niemals still reaktiviert), während noch gültige unverbrauchte Codes `expires_at = NULL` erhalten.
+  - `issue_offline_code` in [identity.py](../../prototypes/backend/src/syllentra_backend/identity.py) stellt neue persönliche Recoverycodes mit `expires_at = NULL`, `used = false`, `revoked = false` und aktuellem `issued_at` aus; jede Neuausgabe (bei `verify_email` oder `recover`) ersetzt den vorherigen Verifikator atomar.
+  - `revoke_offline_code` erlaubt den expliziten Widerruf (`revoked = true`, Audit-Ereignis `recovery_code_revoked`).
+  - `recover` prüft unter `FOR UPDATE` den gebundenen E-Mail-OTP **und** `not personal["used"] and not personal["revoked"] and (personal["expires_at"] is None or personal["expires_at"] > now)`, markiert den eingelösten Code als `used = true, revoked = true`, erhöht `security_epoch`, widerruft sämtliche bisherigen Sitzungen/Geräte/Challenges, autorisiert das aktuelle Gerät für 7 Tage und gibt einen neuen persönlichen Recoverycode aus. Private Dokumentenschlüssel werden niemals offengelegt.
+- **R4 (Kontrollierter Reset unverifizierter `pending`-Konten ab 24 Stunden):**
+  - [004_r1_r4_lifetimes.sql](../../prototypes/backend/migrations/004_r1_r4_lifetimes.sql) ergänzt `accounts.pending_since timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP`; [scripts/migrate.py](../../prototypes/backend/scripts/migrate.py) gewährt `syllentra_runtime` die Spaltenrechte `INSERT`/`UPDATE` auf `pending_since`.
+  - Vor Ablauf von 24 Stunden (`clock() < pending_since + 24h`) erlaubt `register` nur mit dem ursprünglichen Passwort das Ausstellen einer neuen E-Mail-OTP-Challenge, ohne `pending_since` zu verschieben; auch `POST /auth/resend` verändert `pending_since` nicht. Ein abweichendes Passwort vor 24h erhält `fake_challenge()` (kein OTP).
+  - Ab exakt 24 Stunden (`clock() >= pending_since + 24h`) prüft `register` unter `SELECT * FROM accounts WHERE login = %s FOR UPDATE`, dass das Konto weiterhin `verification = 'pending'`, `status = 'active'`, `kind = 'user'` und `NOT mfa_required` ist. Ein bereits verifiziertes Konto (`verified`) wird niemals zurückgesetzt.
+  - Sicherheitswächter `has_unexpected_pending_state`: Besitzt ein `pending`-Konto unerwartet Datensätze in `notes`, `devices`, `sessions` oder `recovery_codes`, wird jeder destruktive Reset verweigert, `pending_reset_blocked` protokolliert und `fake_challenge()` geliefert.
+  - Andernfalls aktualisiert `register` atomar `password_hash` (Argon2id) und `pending_since = clock()`, erhöht `security_epoch = security_epoch + 1`, setzt alle bisherigen Challenges des Kontos auf `consumed = true`, protokolliert `pending_reset` und gibt eine neue gebundene E-Mail-OTP-Challenge aus.
+
+### 2. Tatsächliche Prüfergebnisse Mission 14
+
+| Prüfung / Befehl | Tatsächlicher Befund |
+|---|---|
+| `.venv/bin/pytest -q` (Linux-Container gegen isolierten PostgreSQL 17.11) | **99 Tests bestanden**, 0 fehlgeschlagen, 0 übersprungen (alle bisherigen Tests erhalten + R1/R4-Charakterisierungstests in Regressionsprüfungen überführt + 3 neue Tests für R4-Anomaliesperre, R4-Parallelität bei 24h und Migration-004-Übergang in [test_mission12_audit.py](../../prototypes/backend/tests/test_mission12_audit.py)). |
+| `.venv/bin/python -m scripts.test_db sweep 0` | `keine verwaisten Lauf-Datenbanken` — sämtliche Laufdatenbanken `syllentra_t_<12 Hex>` wurden nach Testende vollständig entfernt. |
+| `.venv/bin/mypy src scripts` | `Success: no issues found in 14 source files` (strict). |
+| `.venv/bin/ruff check src tests scripts` & `ruff format --check src tests scripts` | `All checks passed!`, `21 files already formatted`. |
+| `.venv/bin/pip-audit --cache-dir /tmp/syllentra-pip-audit` | `No known vulnerabilities found` (58 gepinnte Pakete). |
+| `npm run build`, `npm run lint`, `npm run format:check`, `npm test`, `npm audit --json` (`prototypes/frontend`) | TypeScript-Strictbuild + Vite-Build erfolgreich, ESLint 0 Fehler, Prettier 41/41 Dateien konform, Vitest 7/7 Unit-Tests bestanden, `npm audit` 0 bekannte Schwachstellen. |
+| Browser-E2E (`npm run test:e2e`, `npm run test:identity`) | Für Mission 14 liegt kein konkreter Ausführungsbeleg für diese Browser-Suiten vor; daher als **nicht ausgeführt / nicht nachgewiesen** geführt, kein neuer Browser-E2E-Erfolg behauptet. Frühere belegte Mission-10-Läufe bleiben historische Nachweise. Mission 19 korrigiert nur diesen Dokumentationsstatus und führt keine Browser- oder Backendtests aus. |
+
+### 3. Dateiumfang Mission 14
+
+| Datei | Änderung |
+|---|---|
+| [prototypes/backend/migrations/004_r1_r4_lifetimes.sql](../../prototypes/backend/migrations/004_r1_r4_lifetimes.sql) | Neu — Vorwärtsmigration für R1 (`revoked`, `issued_at`, optionales `expires_at`, Widerruf abgelaufener Altcodes) und R4 (`accounts.pending_since`, erweiterte `security_events`-Prüfung) |
+| [prototypes/backend/scripts/migrate.py](../../prototypes/backend/scripts/migrate.py) | Geändert — Spaltenrechte `INSERT`/`UPDATE` für `pending_since` auf `accounts` für `syllentra_runtime` |
+| [prototypes/backend/src/syllentra_backend/identity.py](../../prototypes/backend/src/syllentra_backend/identity.py) | Geändert — R1 (`issue_offline_code` ohne 7d-Ablauf, `revoke_offline_code`, `recover`-Prüfung) und R4 (`register` mit 24h-Reset ab `pending_since`, `has_unexpected_pending_state`, `security_epoch`-Erhöhung und Challenge-Invalidierung) |
+| [prototypes/backend/tests/test_mission12_audit.py](../../prototypes/backend/tests/test_mission12_audit.py) | Geändert — R1/R4-Tests in Regressionsprüfungen umgewandelt (8/30/90 Tage, Rotation, Widerruf, abgelaufener OTP, A/B-Isolation, <24h/24h/>24h, Anomaliesperre, Parallelität Verify vs. Reset, Migration 004; 99 Tests gesamt) |
+| [prototypes/backend/README.md](../../prototypes/backend/README.md) | Geändert — Version 0.5, Migration 004 und R1/R4-Verhalten dokumentiert |
+| [docs/development/OPEN_DECISIONS.md](OPEN_DECISIONS.md) | Geändert — Version 0.3, Abschnitt 4 auf vom Projektinhaber am 23.10.2026 freigegebene und in Mission 14 umgesetzte Entscheidungen R1 und R4 aktualisiert |
+| [docs/development/IDENTITY_ARCHITECTURE.md](IDENTITY_ARCHITECTURE.md) | Geändert — Version 0.3, Zustandsübergänge und Datenmodell für R1 und R4 aktualisiert |
+| [docs/development/IDENTITY_PROTOTYPE_REVIEW.md](IDENTITY_PROTOTYPE_REVIEW.md) | Geändert — Version 0.4, R1–R15-Tabelle und Mission-14-Validierungsbericht ergänzt |
+| [docs/spec/N2-querschnittskonzepte.md](../spec/N2-querschnittskonzepte.md) | Geändert — Version 0.8, bestätigte Eckpunkte R1 (Einmal-Recoverycode ohne 7d-Autoablauf) und R4 (24h-Reset für unverifizierte `pending`-Konten) in SEC-01/SEC-03 verankert |
+| [docs/spec/E3-pruefnachweis.md](../spec/E3-pruefnachweis.md) | Geändert — Version 0.17, Abschnitt E3.30 ergänzt |
+| [docs/spec/README.md](../spec/README.md) | Geändert — N2-Version 0.8, E3-Version 0.17 und Mission-14-Stand fortgeschrieben |
+| [docs/ai/PROJECT_CONTEXT.md](../ai/PROJECT_CONTEXT.md) | Geändert — Version 0.15, Mission-14-Kontextstand ergänzt |
+| [docs/ai/CONTEXT_CHANGELOG.md](../ai/CONTEXT_CHANGELOG.md) | Geändert — Protokolleintrag Mission 14 ergänzt |
