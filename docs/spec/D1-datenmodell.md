@@ -2,7 +2,7 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** D1 — Datenmodell\
-**Version:** 0.6\
+**Version:** 0.7\
 **Stand:** 23.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Spezifikationsmethode:** Bausteine nach Johannes Siedersleben\
@@ -1315,7 +1315,7 @@ Die genannten D2/B1/B2/S1/S2/N1/N2-Prüfentwürfe sind vorhanden und im [Index](
 
 ## D1.14 Fachlicher Modellnachtrag zu Konten, Schutz und Lebenszyklus
 
-Die Entscheidungen FE-27 bis FE-89 ergänzen den Bestand; mit Ausnahme von **FE-56 (offen)** sind ihre fachlichen Vorgaben bestätigt. Die vollständige deutsche Entscheidungsmatrix und die zwölf Nachbarverträge stehen in [S1](S1-nachbarsysteme.md). Eine fachliche Entscheidung ist keine Aussage über implementierte Funktionen oder aktuell erteilte Anbieterrechte. Alle Bausteine bleiben **Zur Prüfung**. Historische Prüfstände, frühere FE-Teilmengen und alte Versionsbezüge bezeichnen ausschließlich ihre damalige Grundlage; maßgeblich ist der aktuelle Index mit [Änderungs- und Prüfnachweis](E3-pruefnachweis.md).
+Die Entscheidungen FE-27 bis FE-89 ergänzen den Bestand. FE-56 war beim historischen Abgleich noch offen; seit der Eigentümerentscheidung aus Mission 19 vom 23.10.2026 sind Postfachlektüre, -synchronisation und -überwachung in V1 ausgeschlossen. Ausgehende OTP-/Sicherheitsmails, autorisierte Benachrichtigungen und manueller Import ausgewählter Inhalte bleiben möglich; eine spätere Integration ist unverbindlich. Die übrigen bestätigten Vorgaben bleiben erhalten. Die vollständige deutsche Entscheidungsmatrix und die zwölf Nachbarverträge stehen in [S1](S1-nachbarsysteme.md). Eine fachliche Entscheidung ist keine Aussage über implementierte Funktionen oder aktuell erteilte Anbieterrechte. Alle Bausteine bleiben **Zur Prüfung**. Historische Prüfstände, frühere FE-Teilmengen und alte Versionsbezüge bezeichnen ausschließlich ihre damalige Grundlage; maßgeblich ist der aktuelle Index mit [Änderungs- und Prüfnachweis](E3-pruefnachweis.md).
 
 Die nachfolgenden Entitäten sind ein fachlicher Modellnachtrag. Alte DM-Kennungen behalten ihre Bedeutung. Besitz ist je persönlichem Objekt eindeutig; globale Konfiguration und Audit erhalten gesonderte Rechte statt eines fiktiven Lernkontoeigentums.
 
@@ -1331,13 +1331,13 @@ Die nachfolgenden Entitäten sind ein fachlicher Modellnachtrag. Alte DM-Kennung
 
 ### DM-54 — Verifikationsvorgang
 
-**Attribute:** `kennung`, zweck, empfaengerbezug, ausgabezeit, ablauf, verbrauchsstatus, geschuetzter_nachweis; Herkunft, Revision und Zeit soweit fachlich erforderlich.
+**Attribute:** `kennung`, zweck, empfaengerbezug, ausgabezeit, nachweisart, ablauf [abhängig von Nachweisart], verbrauchsstatus, widerrufs-/ersetzungs-/invalidierungsstand, geschuetzter_nachweis; Herkunft, Revision und Zeit soweit fachlich erforderlich.
 
 **Beziehungen und Kardinalität:** DM-01 1 : 0..n DM-54; E-Mail-Bezug DM-53 0..1; Gerät DM-03 0..1.
 
-**Integrität und Lebenszyklus:** OTP und persönliche Einmal-Recoverycodes zweckgebunden, kurzlebig und niemals in sichtbaren Logs; Werte und technische Nachweise N2. Entzug/Verifikation/Sperre sind keine Löschung. Tatsächliche Löschfolgen und notwendige Restfristen werden im kontoeigenen Löschauftrag DM-50 ausgewiesen; gelöschte Inhalte bleiben nicht in Metadaten rekonstruierbar.
+**Integrität und Lebenszyklus:** OTP und temporäre Verifikations-/Recoveryanfragen sind zweckgebunden und besitzen eigene begrenzte Gültigkeitsfristen. Der persönliche Einmal-Recoverycode besitzt gemäß R1 in N2.2/SEC-03 kein automatisches Sieben-Tage-Verfallsdatum; seine Gültigkeit endet durch Verbrauch, expliziten Widerruf, kontrollierten Ersatz/Rotation oder Sicherheitsinvalidierung. Ein fehlender automatischer Ablauf dieses persönlichen Codes bedeutet weder unbegrenzte OTP-Gültigkeit noch eine offene Recoveryanfrage. Kein Geheimniswert in sichtbaren Logs; geschützte Nachweise und sichere Ausgabe bleiben N2-Themen. Entzug/Verifikation/Sperre sind keine Löschung. Tatsächliche Löschfolgen und notwendige Restfristen werden im kontoeigenen Löschauftrag DM-50 ausgewiesen; gelöschte Inhalte bleiben nicht in Metadaten rekonstruierbar.
 
-**Prüfbeispiel:** Verbrauchter Einmalcode kann keine zweite Verifikation autorisieren.
+**Prüfbeispiel:** Verbrauchter, widerrufener, ersetzter oder sicherheitsbedingt invalidierter persönlicher Code kann keine zweite Recovery autorisieren. Ein ansonsten gültiger persönlicher Code wird nicht allein wegen Überschreitung von sieben Tagen ungültig; ein abgelaufener Recovery-OTP oder Vorgang bleibt trotzdem gesperrt. R1 ist bestätigt, konkrete produktive Schutz-/Übergabeverfahren bleiben offen.
 
 ### DM-55 — Sitzung
 

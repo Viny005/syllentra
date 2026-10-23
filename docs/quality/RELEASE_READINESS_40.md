@@ -1,9 +1,10 @@
 # Syllentra AI — 40 Prüfungen für Sicherheit, Betriebsfähigkeit und Produktfreigabe
 
-**Stand:** 22.10.2026  
-**Status:** Zur Prüfung durch den Projektinhaber  
-**Geltung:** V1-Soll und spätere Versionsfreigaben; keine Behauptung einer Implementierung oder bestandener Produkttests.  
-**Herkunft:** Zwei vom Projektinhaber am 22.10.2026 übernommene Checklisten mit je 20 Punkten (Sicherheit und Betrieb/Performance). Die Originalzählung bleibt vollständig erhalten.  
+**Version:** 0.1\
+**Stand:** 23.10.2026\
+**Status:** Zur Prüfung durch den Projektinhaber\
+**Geltung:** V1-Soll und spätere Versionsfreigaben; keine Behauptung einer Implementierung oder bestandener Produkttests.\
+**Herkunft:** Zwei vom Projektinhaber am 22.10.2026 übernommene Checklisten mit je 20 Punkten (Sicherheit und Betrieb/Performance). Die Originalzählung bleibt vollständig erhalten.\
 **Einordnung:** Nichtfunktionale Ziele unter [N1](../spec/N1-nichtfunktional.md), Schutzkonzepte unter [N2](../spec/N2-querschnittskonzepte.md), externe Schnittstellen unter [S1](../spec/S1-nachbarsysteme.md), Migration/Backup unter [S2](../spec/S2-datenmigration.md), Nachweisführung unter [E3](../spec/E3-pruefnachweis.md). Die spätere produktive Inbetriebnahme gehört in S3.
 
 ## 1. Verbindliche Verwendung und Statusregeln
@@ -87,7 +88,7 @@ Pro REL-ID später in einem testbaren Prüfprotokoll führen: **ID, geprüfte Fu
 - **N1** übernimmt Qualitätsanforderungen, messbare Leistungsziele und Laufzeit-/Last-/UX-Nachweise; **N2** übernimmt Bedrohungs- und Schutzkontrollen; **B1/B2** konkretisieren Nutzerzustände und sichere Hintergrundverarbeitung erst bei entsprechendem fachlichem Auftrag.
 - **S1** bleibt die Spezifikation von Nachbarsystemen und Integrationsverträgen, nicht ein globales Performancehandbuch. **S2** bleibt zuständig für Sicherungen, Restore, Datenmigration und Nichtwiederbelebung.
 - **S3 (noch zu erstellen)** wird später den Freigabeprozess, Bootstrap und Betriebsstart inklusive dieser Nachweise und Alarmierungsverfahren regeln. Die Checkliste ersetzt S3 nicht.
-- **FE-56** (optionale Postfachlesefunktion) bleibt offen. **Syllentra Games** ist ein zukünftiger Konzeptvorschlag, keine aktivierte oder genehmigte V1-Funktion. Keine neuen FE-, Zahlungs- oder Anbieterentscheidungen werden durch diese Liste geschaffen.
+- **FE-56:** Postfachlektüre, -synchronisation und -überwachung sind seit Mission 19 in V1 ausdrücklich ausgeschlossen. Eine spätere Integration ist unverbindlich; ausgehender autorisierter Versand und manueller Import ausgewählter Inhalte bleiben getrennt möglich. **Syllentra Games** ist ein zukünftiger Konzeptvorschlag, keine aktivierte oder genehmigte V1-Funktion. Keine neuen FE-, Zahlungs- oder Anbieterentscheidungen werden durch diese Liste geschaffen.
 
 ## 7. Verweise
 

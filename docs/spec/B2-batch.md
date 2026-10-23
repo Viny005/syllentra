@@ -2,8 +2,8 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** B2 — Batch-Prozesse\
-**Version:** 0.5\
-**Stand:** 22.10.2026\
+**Version:** 0.6\
+**Stand:** 23.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Methode:** Bausteinspezifikation nach Johannes Siedersleben; periodische und zeitversetzte Fachabläufe\
 **Bezugsstand:** Vier bestätigte Entscheidungen vom 19.10.2026; Ausgangs-HEAD `53ef171be4783748b5c7e3a84bb0cc363d5b4194`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1; aktuelle Fassungen im [Index](README.md).\
@@ -170,12 +170,12 @@ Alle tatsächlich erkannten, noch zulässig aufbewahrten Hinweise bleiben im ges
 | Ergebnis / Nachbedingung | Quellenbezogener Änderungskandidat ohne ungefragte Kalenderübernahme |
 | Wiederholungs-/Duplikatschlüssel | Eigentümer, nachweisbare Nachrichten-/Dateiidentität, Quellrevision und Sachverhalt |
 | Fehler / Wiederaufnahme | Unlesbare/unsichere Datei kenntlich machen; begrenzte sichere Wiederaufnahme nach FE-88 |
-| Schutz- und Freigabegrenzen | FE-27: manuell zuerst; FE-56: Postfachlesen offen und nicht als V1 aktiviert. OTP-/Sicherheitsversand über NB-05 ist davon unabhängig. |
+| Schutz- und Freigabegrenzen | FE-27: manuell zuerst; FE-56: Keine Postfachlektüre, -synchronisation oder -überwachung in V1, auch nicht nach Opt-in. OTP-/Sicherheitsversand über NB-05 ist davon unabhängig. |
 | Rückverweise | UC-36, UC-45, UC-47, UC-59; GP-03, GP-07, GP-13; AF-14, AF-31; FE-27, FE-56, FE-85; S1 NB-05 |
 
 **Hauptablauf:** 1. Bereitstellung, Eigentum und Verarbeitungsrecht prüfen. 2. Nur notwendige Inhalte der bereitgestellten Datei auswerten. 3. Nachweisbare Dubletten erkennen; Unsicherheit nicht als Identität ausgeben. 4. Amtliche und informelle Quelle unterscheiden. 5. Kandidat an BAT-04 weitergeben, keine Antwort und keinen Postfachabruf auslösen.
 
-**Abnahmebeispiel:** Zweifacher manueller Import derselben belegbar identischen Meldung erzeugt keinen doppelten Hinweis. Eine hinterlegte Hochschuladresse startet keinerlei Inboxzugriff. Ein späterer Postfachzweig bedarf erst einer Entscheidung zu FE-56 und einer ergänzten S1-Freigabe.
+**Abnahmebeispiel:** Zweifacher manueller Import derselben belegbar identischen Meldung erzeugt keinen doppelten Hinweis. Eine hinterlegte Hochschuladresse startet keinerlei Inboxzugriff. Eine spätere Postfachintegration nach V1 bleibt unverbindlich; sie benötigt einen neuen Fachauftrag und ergänzte S1-Verträge, keine bloße Aktivierung durch Konfiguration.
 
 ### BAT-03 — Externe Kalenderverfügbarkeit lesend aktualisieren
 
@@ -851,9 +851,9 @@ Die folgenden Punkte bleiben **bewusst offen**. Ihre noch fehlende technische Pr
 - **S1:** Nur offiziell unterstützte Hochschul-, E-Mail-, Kalender-, GitHub- und KI-Verbindungen samt Authentisierungsformen, Ratenlimits, Vertrags-/Nutzungsrechten, Quelländerungsmerkmalen und Webhook-Möglichkeiten festlegen.
 - **N1:** messbare Qualitäts- und Sicherheitsziele: zulässige Prüflatenz, maximale Warnverzögerung unter definierten Betriebsbedingungen, Ausfallmeldung, Datenschutzanforderung, Zugänglichkeit und Lastgrenzen — keine erfundenen globalen Garantien.
 - **N2:** Jobzustand, persistente Trigger, technische Sperren, Deduplizierung, Retry- und Backoff-Strategie, Gerätehintergrundbedingungen, Betriebsüberwachung, Audit-Minimierung und Widerrufsfälle.
-- **D1/D2:** fachliche Träger für Lauf-/Erinnerungskandidaten, konkrete Zeitfenster, Kanalzustände und Digestzustellungen **nur falls** wirklich als eigene persistente Entitäten nötig; vorhandene DM-/DT-IDs nicht heimlich neu belegen.
-- **F2/F3/D1/D2:** FE-18..FE-24 und DLG-26, DLG-50 mit vorhandenen UCs/AFs und Typen harmonisieren, ohne Umnummerierung oder rückwirkende Freigabe zu behaupten.
-- **B1:** Nutzerbedienung zur Quellenfrequenz, Digest-Zeit, Ruhezeit, Kanalberechtigung, Fristregel pro Ereignis und Fehlerstand vervollständigen, sobald fachlich geprüft.
+- **D1/D2:** Lauf-/Hinweisträger und Zustellregeln sind inzwischen fachlich modelliert, insbesondere DM-52/DM-77/DM-78 und DT-93/DT-94. Offen bleiben technische Persistenz, endliche Fristen und tatsächliche Ausführung; keine neuen Identitäten für bereits vorhandene Konzepte.
+- **F2/F3/D1/D2:** FE-18..FE-24 einschließlich FE-21 sind dokumentarisch angeschlossen; UC-20, F3.14, DM-48/49 und DT-61 sowie AUDIO-01..03 konkretisieren die Ausgabe. Offen bleiben technische Fähigkeiten, Qualitätsparameter und Produktabnahmen, keine erneute fachliche Grundsatzentscheidung.
+- **B1:** DLG-50/57/66 beschreiben Ausgabe, Quellen-/Syncwahl und persönliche Erinnerungen bereits fachlich. Unterstützte Plattform-/Zeitparameter, Darstellungsevaluation und reale Bedien-/Produktprüfungen bleiben offen.
 - **Bestätigter Produktumfang GitHub V1 (FE-43):** freiwillige offizielle Kontoverbindung, ausgewählte oder alle eigenen öffentlichen Repositories nur lesend; rechtliche/technische Unterstützung gesondert verifizieren, kein automatischer Zugang zu privaten Konten oder garantierte periodische Analyse.
 - **Datenschutz:** konkrete Aufbewahrungsfristen und zulässige Backup-/Provider-Löschfolgen nach gesonderter Entscheidung; FE-13 wird nicht durch unveränderliche Erinnerungs-Vollkopien verletzt.
 - **Betrieb:** ob Hintergrundprüfungen bei geschlossener App per zulässigem Serverbetrieb ausführbar sind, ist offen; keine Architektur- oder Anbieterfestlegung im B2-Fachentwurf.
@@ -888,7 +888,7 @@ Die folgenden Punkte bleiben **bewusst offen**. Ihre noch fehlende technische Pr
 
 ## B2.16 Ergänzte Hintergrundverarbeitung und globale Ausführungsgrenzen
 
-Die Entscheidungen FE-27 bis FE-89 ergänzen den Bestand; mit Ausnahme von **FE-56 (offen)** sind ihre fachlichen Vorgaben bestätigt. Die vollständige deutsche Entscheidungsmatrix und die zwölf Nachbarverträge stehen in [S1](S1-nachbarsysteme.md). Eine fachliche Entscheidung ist keine Aussage über implementierte Funktionen oder aktuell erteilte Anbieterrechte. Alle Bausteine bleiben **Zur Prüfung**. Historische Prüfstände, frühere FE-Teilmengen und alte Versionsbezüge bezeichnen ausschließlich ihre damalige Grundlage; maßgeblich ist der aktuelle Index mit [Änderungs- und Prüfnachweis](E3-pruefnachweis.md).
+Die Entscheidungen FE-27 bis FE-89 ergänzen den Bestand. FE-56 war beim historischen Abgleich noch offen; seit der Eigentümerentscheidung aus Mission 19 vom 23.10.2026 sind Postfachlektüre, -synchronisation und -überwachung in V1 ausgeschlossen. Ausgehende OTP-/Sicherheitsmails, autorisierte Benachrichtigungen und manueller Import ausgewählter Inhalte bleiben möglich; eine spätere Integration ist unverbindlich. Die übrigen bestätigten Vorgaben bleiben erhalten. Die vollständige deutsche Entscheidungsmatrix und die zwölf Nachbarverträge stehen in [S1](S1-nachbarsysteme.md). Eine fachliche Entscheidung ist keine Aussage über implementierte Funktionen oder aktuell erteilte Anbieterrechte. Alle Bausteine bleiben **Zur Prüfung**. Historische Prüfstände, frühere FE-Teilmengen und alte Versionsbezüge bezeichnen ausschließlich ihre damalige Grundlage; maßgeblich ist der aktuelle Index mit [Änderungs- und Prüfnachweis](E3-pruefnachweis.md).
 
 Jeder externe Konnektor startet standardmäßig manuell. FE-22 ist ein Ziel für autorisierte allgemeine Quellenchecks und schaltet keine Hochschul-, Postfach-, GitHub-, Drive- oder Kalenderverbindung automatisch ein. Interne Gerätesynchronisation und interne Erinnerungen sind davon getrennt. Alle Wiederaufnahmen sind begrenzt konfigurierbar, prüfen Rechte/Einwilligung/Kosten erneut und gleichen unbekannte Wirkung vor einem erneuten Aufruf ab (FE-88).
 

@@ -1,8 +1,8 @@
 # E2 — Glossar
 
 **Projekt:** Syllentra AI\
-**Version:** 0.4\
-**Stand:** 22.10.2026\
+**Version:** 0.5\
+**Stand:** 23.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber
 
 ## E2.1 Verbindliche Begriffsabgrenzung
@@ -40,7 +40,7 @@ Dieses Glossar erläutert die Verwendung in [P1](P1-ziele-rahmenbedingungen.md),
 | Funktionsfreigabe | Serverseitig geprüfte Verfügbarkeit für Zielgruppen; verborgen, bald, Test und öffentlich sind keine frei umgehbaren UI-Zustände. |
 | Veröffentlichungsfassung | Geprüfter Entwurfs-/Test-/Termin-/Releasezustand einer unterstützten Funktion oder Konfiguration; Ankündigung erst bei tatsächlicher Verfügbarkeit. |
 | Idempotenz / Deduplizierung | Wiederholung derselben fachlichen Wirkung erzeugt keine zusätzliche Wirkung; unbekanntes Ergebnis zuerst prüfen. Keine pauschale physische Genau-einmal-Garantie fremder Zusteller. |
-| FE-56 | Weiterhin offene Entscheidung zur optionalen Inboxlektüre; ausgehende OTP-/Sicherheitsmails erlauben keine automatische Hochschulpostlektüre. |
+| FE-56 | Vom Projektinhaber in Mission 19 bestätigter V1-Ausschluss jeder Postfachlektüre, -synchronisation und -überwachung. Ausgehende OTP-/Sicherheitsmails, autorisierte Benachrichtigungen und manueller Import ausgewählter Inhalte bleiben möglich. Eine spätere Integration ist unverbindlich und nicht zugesagt. |
 
 ## E2.2 Ergänzende Migrationsbegriffe
 

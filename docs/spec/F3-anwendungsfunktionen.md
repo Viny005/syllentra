@@ -2,7 +2,7 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** F3 — Anwendungsfunktionen\
-**Version:** 0.6\
+**Version:** 0.7\
 **Stand:** 23.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Spezifikationsmethode:** Bausteine nach Johannes Siedersleben\
@@ -15,7 +15,7 @@ F3 beschreibt wiederverwendbare **fachliche Verarbeitungsvorschriften** für die
 
 Ein **Ausführungsvorschlag** ist eine prüfbare, noch nicht zwingend angenommene Änderung. Eine **Vorschlagsfassung** ist die konkrete, auf bestimmte Eingaben, Quelle und Zielzustand bezogene Version eines Vorschlags. Eine **Entscheidungsaktion** (annehmen, ablehnen, bearbeiten oder später prüfen) ist vom daraus resultierenden fachlichen **Entscheidungsstand** und von der tatsächlichen **Ausführung** getrennt. „Später“ lässt die Fassung offen; Bearbeiten verlangt Prüfung der aktualisierten Fassung. Es entstehen dadurch keine zusätzlichen Endentscheidungen. **Original** ist ein bewusst aufbewahrtes Dokument; **Zuordnung** ist dessen Beziehung zu einem oder mehreren Arbeitsbereichen. **Gesprächsverlauf** und **pädagogische Erinnerung** sind unterschiedliche Datensorten. Eine **vorläufige Erinnerung** ist eine zweckgebundene, kenntlich nicht abschließend bestätigte Einschätzung, keine amtliche Tatsache.
 
-Die 27 Funktionen `AF-01` bis `AF-27` sind zunächst **fachliche Entwurfskennungen**. Ihre Identität und fachliche Zuordnung bleiben über Überarbeitungen hinweg erhalten; begründete Präzisierungen werden im Änderungsnachweis festgehalten. Referenzen auf `UC-01` bis `UC-50`, `GP-01` bis `GP-15`, `FE-01` bis `FE-11` gelten als feste Quellkennungen. Verfügbare Anbieter, Tarife und Grenzen sind zum Nutzungszeitpunkt erneut zu prüfen und nicht als dauerhafte Produkteigenschaften anzunehmen. Die hier benannten Statusbegriffe sind fachliche Aussagen, keine abschließenden technischen Zustandsmodelle; die maßgeblichen F2-Regeln werden nicht durch neue Synonyme ersetzt.
+Die ursprünglichen 27 Funktionen `AF-01` bis `AF-27` sind zunächst **fachliche Entwurfskennungen**. Ihre Identität und fachliche Zuordnung bleiben über Überarbeitungen hinweg erhalten; begründete Präzisierungen werden im Änderungsnachweis festgehalten. Referenzen auf `UC-01` bis `UC-50`, `GP-01` bis `GP-15`, `FE-01` bis `FE-11` gelten als feste Quellkennungen. Verfügbare Anbieter, Tarife und Grenzen sind zum Nutzungszeitpunkt erneut zu prüfen und nicht als dauerhafte Produkteigenschaften anzunehmen. Die hier benannten Statusbegriffe sind fachliche Aussagen, keine abschließenden technischen Zustandsmodelle; die maßgeblichen F2-Regeln werden nicht durch neue Synonyme ersetzt.
 
 ### F3.1.1 Übergreifende Regeln
 
@@ -1025,7 +1025,7 @@ Die zusätzlichen Grenzfälle prüfen die jeweilige fachliche Regel und ersetzen
 
 ## F3.10 Prüfstand und offene Detaillierung
 
-Diese überarbeitete Fassung enthält 27 algorithmisch begründete Anwendungsfunktionen und eine vollständige UC-01–50-Verwendungsmatrix; `UC-01` benötigt aus methodischen Gründen keine künstliche Anwendungsfunktion. Die bestätigten Entscheidungen FE-01 bis FE-09 bleiben unberührt; FE-10 und FE-11 ergänzen die ausdrücklich bestätigten Anforderungen. Kostenloser Consumer-Chat ist ausdrücklich nicht mit kostenloser API gleichzusetzen. Es wird **kein bereits vorhandener API-Zugang, keine konkrete kostenlose API, keine verfügbare Abonnementintegration und keine Implementierung** behauptet.
+Die aktuelle Fassung enthält 37 algorithmisch begründete Anwendungsfunktionen (AF-01..37). F3.6 bewahrt die vollständige Ausgangsmatrix UC-01..50; die späteren UC-/DEC-V1-/FE-21-Anschlüsse stehen in F3.11–F3.14 und der [Entscheidungsmatrix](ENTSCHEIDUNGSMATRIX.md); `UC-01` benötigt aus methodischen Gründen keine künstliche Anwendungsfunktion. Die bestätigten Entscheidungen FE-01 bis FE-09 bleiben unberührt; FE-10 und FE-11 ergänzen die ausdrücklich bestätigten Anforderungen. Kostenloser Consumer-Chat ist ausdrücklich nicht mit kostenloser API gleichzusetzen. Es wird **kein bereits vorhandener API-Zugang, keine konkrete kostenlose API, keine verfügbare Abonnementintegration und keine Implementierung** behauptet.
 
 Zur späteren Detaillierung in D1/D2, N1/N2, S1, B1 und Architektur bleiben insbesondere offen: konkrete erlaubte Anbieteranbindungen und ihr jeweiliger Gratis-/Abo-Status; überprüfbare Qualitätskriterien und Mindestleistung; Gebühren- und Quotalimits einschließlich unbekannter Provider-Verbrauchszustände; genaue Speicher-, Export- und Aufbewahrungsformate; Löschfristen und Backupprozesse; fachliche Kardinalitäten; Synchronisationskonfliktregeln und Authentisierungsdetails. Diese offenen Punkte berechtigen **nicht**, FE-01 bis FE-11 still umzudeuten oder Ereignisse in persönlichen externen Kalendern anzulegen, zu ändern oder zu löschen.
 
@@ -1034,7 +1034,7 @@ Zur späteren Detaillierung in D1/D2, N1/N2, S1, B1 und Architektur bleiben insb
 
 ## F3.11 Ergänzte fachliche Prüf- und Auswahlfunktionen
 
-Die Entscheidungen FE-27 bis FE-89 ergänzen den Bestand; mit Ausnahme von **FE-56 (offen)** sind ihre fachlichen Vorgaben bestätigt. Die vollständige deutsche Entscheidungsmatrix und die zwölf Nachbarverträge stehen in [S1](S1-nachbarsysteme.md). Eine fachliche Entscheidung ist keine Aussage über implementierte Funktionen oder aktuell erteilte Anbieterrechte. Alle Bausteine bleiben **Zur Prüfung**. Historische Prüfstände, frühere FE-Teilmengen und alte Versionsbezüge bezeichnen ausschließlich ihre damalige Grundlage; maßgeblich ist der aktuelle Index mit [Änderungs- und Prüfnachweis](E3-pruefnachweis.md).
+Die Entscheidungen FE-27 bis FE-89 ergänzen den Bestand. FE-56 war beim historischen Abgleich noch offen; seit der Eigentümerentscheidung aus Mission 19 vom 23.10.2026 sind Postfachlektüre, -synchronisation und -überwachung in V1 ausgeschlossen. Ausgehende OTP-/Sicherheitsmails, autorisierte Benachrichtigungen und manueller Import ausgewählter Inhalte bleiben möglich; eine spätere Integration ist unverbindlich. Die übrigen bestätigten Vorgaben bleiben erhalten. Die vollständige deutsche Entscheidungsmatrix und die zwölf Nachbarverträge stehen in [S1](S1-nachbarsysteme.md). Eine fachliche Entscheidung ist keine Aussage über implementierte Funktionen oder aktuell erteilte Anbieterrechte. Alle Bausteine bleiben **Zur Prüfung**. Historische Prüfstände, frühere FE-Teilmengen und alte Versionsbezüge bezeichnen ausschließlich ihre damalige Grundlage; maßgeblich ist der aktuelle Index mit [Änderungs- und Prüfnachweis](E3-pruefnachweis.md).
 
 Diese Funktionen beschreiben fachliche Entscheidungen, keine Kryptographie, Middleware oder technische Authentifizierungsimplementierung.
 

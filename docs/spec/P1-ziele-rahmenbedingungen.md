@@ -2,7 +2,7 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** P1 — Ziele und Rahmenbedingungen\
-**Version:** 0.11\
+**Version:** 0.12\
 **Stand:** 23.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Spezifikationsmethode:** Bausteine nach Johannes Siedersleben\
@@ -512,7 +512,7 @@ Rahmenbedingungen definieren Vorgaben, innerhalb derer die spätere Lösung entw
 | CON-36 | Hauptdaten und Sicherungen liegen in der EU; eigene zentrale Cloud arbeitet unabhängig vom persönlichen PC; Anbieter und konkrete Infrastruktur bleiben offen (FE-42, FE-75). |
 | CON-37 | Vor Anwendungsdatenzugriff E-Mail-OTP; Admin-MFA obligatorisch; Gerät, Sitzung, lokale Sperre und Dokumentenschlüssel sind getrennte Grenzen (FE-36 bis FE-39, FE-60 bis FE-62, FE-70). |
 | CON-38 | Externe Konnektoren starten standardmäßig manuell; Automatik benötigt pro Verbindung widerrufbares Opt-in und Frequenz. Nach Entzug keine weiteren Abrufe oder Retries (FE-84, FE-85). |
-| CON-39 | FE-56 ist offen: automatische Postfachlektüre ist nicht V1-freigegeben. Hochschulmaterial wird V1 manuell bereitgestellt; offizielle optionale Konnektoren benötigen Nachweis und Opt-in (FE-27). |
+| CON-39 | FE-56: Keine Postfachlektüre, -synchronisation oder -überwachung in V1. Angeforderter OTP-/Sicherheitsversand, autorisierte Benachrichtigungen und manueller Import ausgewählter Inhalte bleiben möglich. Spätere Postfachintegration unverbindlich; andere zulässige Hochschulkonnektoren nach FE-27 nur bei Nachweis und Opt-in. |
 | CON-40 | Sensible Dokumente haben geräteseitigen Zusatzschutz; keine privaten Klartextschlüssel bei Backend/Admin. Eigene Cloudanalyse braucht pro Vorgang freigegebene minimale temporäre Klartextausschnitte; Ableitungen erben Schutz (FE-76 bis FE-79). |
 | CON-41 | Quoten, Fristen, Grenzwerte und Retryzahlen werden konfigurierbar spezifiziert, aber nicht ohne Entscheidung beziffert. Funktionsschalter und Rollen werden serverseitig geprüft; neue Funktionen benötigen Entwicklung (FE-58, FE-64 bis FE-69, FE-88). |
 | CON-42 | Endgültige Löschungen gelten auch für Offlineabgleich, Restore und Historien; Konto-Pause, administrative Sperre, Papierkorb und endgültige Löschung sind verschieden. Notwendige Restaufbewahrung bleibt transparent (FE-80 bis FE-83). |
@@ -843,7 +843,7 @@ Erforderliche Änderungen des fachlichen Zielumfangs werden ausdrücklich mit de
 
 ### P1.10.1 Harmonisierung vom 16.10.2026
 
-Die Entscheidungen FE-27 bis FE-89 ergänzen den Bestand; mit Ausnahme von **FE-56 (offen)** sind ihre fachlichen Vorgaben bestätigt. Die vollständige deutsche Entscheidungsmatrix und die zwölf Nachbarverträge stehen in [S1](S1-nachbarsysteme.md). Eine fachliche Entscheidung ist keine Aussage über implementierte Funktionen oder aktuell erteilte Anbieterrechte. Alle Bausteine bleiben **Zur Prüfung**. Historische Prüfstände, frühere FE-Teilmengen und alte Versionsbezüge bezeichnen ausschließlich ihre damalige Grundlage; maßgeblich ist der aktuelle Index mit [Änderungs- und Prüfnachweis](E3-pruefnachweis.md).
+Die Entscheidungen FE-27 bis FE-89 ergänzen den Bestand. FE-56 war beim historischen Abgleich noch offen; seit der Eigentümerentscheidung aus Mission 19 vom 23.10.2026 sind Postfachlektüre, -synchronisation und -überwachung in V1 ausgeschlossen. Ausgehende OTP-/Sicherheitsmails, autorisierte Benachrichtigungen und manueller Import ausgewählter Inhalte bleiben möglich; eine spätere Integration ist unverbindlich. Die übrigen bestätigten Vorgaben bleiben erhalten. Die vollständige deutsche Entscheidungsmatrix und die zwölf Nachbarverträge stehen in [S1](S1-nachbarsysteme.md). Eine fachliche Entscheidung ist keine Aussage über implementierte Funktionen oder aktuell erteilte Anbieterrechte. Alle Bausteine bleiben **Zur Prüfung**. Historische Prüfstände, frühere FE-Teilmengen und alte Versionsbezüge bezeichnen ausschließlich ihre damalige Grundlage; maßgeblich ist der aktuelle Index mit [Änderungs- und Prüfnachweis](E3-pruefnachweis.md).
 
 Neue Kennungen: G-40 bis G-45, CON-36 bis CON-42, SC-51 bis SC-61 und R-34 bis R-40. NG-01 bleibt als ausdrücklich durch FE-59 aufgehobenes Nichtziel dokumentiert; es wurde nicht still gelöscht. PWA-V1 präzisiert G-29/CON-03/SC-30 gemäß FE-55. Die bisherigen persönlichen Lern-, Profil-, Gesprächs-, Studien- und Projektanforderungen bleiben je Konto erhalten.
 
@@ -857,7 +857,7 @@ L-08 verbindet regelbasierte Wiederholungszeiten mit evidenzabhängiger Anpassun
 
 L-04 ergänzt UC-65 mit persönlichen Erinnerungsregeln und der konfigurierbaren Ruhezeit 22:00–08:00 in der gewählten Benachrichtigungszeitzone. Individuelle Vorgaben gehen Standards vor; J−5/J−1 bleiben datumbezogene Standardpunkte, Stundenregeln brauchen eine tatsächlich bekannte Ereignisuhrzeit. Vertraulichkeit, zulässige Kanäle und Löschkontrolle bleiben verbindlich.
 
-L-09 konkretisiert G-15/CON-15 mit UC-66; L-02 konkretisiert G-26 bis G-28 und SC-31 innerhalb bestehender Lernfälle. Die vier L-Kennungen bezeichnen die bestätigten Auftragspunkte, keine neuen FE-Kennungen. Die 89 bestehenden FE bleiben erhalten, FE-56 offen. [F2](F2-anwendungsfaelle.md), [Prüfnachweis](E3-pruefnachweis.md) und [Entwicklungszuordnungen](ENTWICKLUNGSPLAN.md) dokumentieren Abnahme und begrenzte Meilensteinfolgen; alle Fassungen bleiben zur Prüfung.
+L-09 konkretisiert G-15/CON-15 mit UC-66; L-02 konkretisiert G-26 bis G-28 und SC-31 innerhalb bestehender Lernfälle. Die vier L-Kennungen bezeichnen die bestätigten Auftragspunkte, keine neuen FE-Kennungen. Die 89 bestehenden FE bleiben erhalten, FE-56: V1-Postfachzugriff ausgeschlossen, Zukunft unverbindlich. [F2](F2-anwendungsfaelle.md), [Prüfnachweis](E3-pruefnachweis.md) und [Entwicklungszuordnungen](ENTWICKLUNGSPLAN.md) dokumentieren Abnahme und begrenzte Meilensteinfolgen; alle Fassungen bleiben zur Prüfung.
 
 ### P1.10.4 Bestätigter Bewertungs- und Sicherungsrahmen (DEC-48 / DEC-49)
 

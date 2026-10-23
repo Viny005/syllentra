@@ -1,6 +1,6 @@
 # Syllentra AI — fachliche Voraussetzungen für spätere Freigaben
 
-**Version:** 0.2 · **Stand:** 22.10.2026 · **Status:** Zur Prüfung durch den Projektinhaber
+**Version:** 0.3 · **Stand:** 23.10.2026 · **Status:** Zur Prüfung durch den Projektinhaber
 
 ## 1. Zweck und Grenze gegenüber S3
 
@@ -33,7 +33,7 @@ Die Tabelle ersetzt nicht die individuelle Anwendbarkeitsprüfung **aller 46 Kon
 | Sensible geräteseitig geschützte Dokumente / Cloudanalyse | SEC-09/10/11/22/27; kein privater Klartextschlüssel am Backend; eigene explizite Operationsfreigabe, Drittanbieter zusätzlich prüfen. |
 | Support, Administration oder Konfigurationsrelease | SEC-04..07; REL-S06/09/15, REL-A13; kein zweiter Super Admin, Selbstbeförderung oder Standardleserecht privater Inhalte. |
 | Cross-Origin-API, Webhooks, konkrete RLS-Technik | REL-S13/S17/S04 nur technisch passend; Nichtanwendbarkeit begründen, zugrunde liegende Autorisierungs-/Integritätsziele dennoch erfüllen. |
-| Zahlung oder FE-56-Inbox | **Nicht durch Mission 3 freigegeben.** REL-Q10 erst nach neuer ausdrücklicher Fachentscheidung; FE-56 bleibt offen. Keine Aktivierung zur vermeintlichen V1-Vervollständigung. |
+| Zahlung oder FE-56-Inbox | REL-Q10 bleibt spätere Option ohne V1-Zahlungsfreigabe. FE-56 schließt seit Mission 19 Postfachlektüre, -synchronisation und -überwachung in V1 ausdrücklich aus. Spätere Integration unverbindlich und nur nach eigenem Fachauftrag; kein Flag/Opt-in als V1-Aktivierung. Erlaubter Versand und manueller Import ausgewählter Inhalte bleiben möglich. |
 
 Eine noch nicht geprüfte optionale Funktion bleibt serverseitig unerreichbar. Versteckte Navigation allein genügt nicht. Abhängige Jobs, Toolaufrufe, Altclients und externe Hooks ebenfalls sperren. Ein Pflichtschutz einer bereits aktiven Funktion ist keine optionale Teilfunktion.
 

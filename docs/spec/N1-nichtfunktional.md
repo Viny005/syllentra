@@ -1,7 +1,7 @@
 # N1 — Nichtfunktionale Anforderungen
 
 **Projekt:** Syllentra AI\
-**Version:** 0.9\
+**Version:** 0.10\
 **Stand:** 23.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber
 
@@ -32,7 +32,7 @@ Dieser fachliche V1-Prüfentwurf ergänzt die bestehenden Qualitätsgrenzen um v
 
 Die offenen Punkte O-S1-02 bis O-S1-14 im [S1-Risikoregister](S1-nachbarsysteme.md) bilden den Arbeitsvorrat: EU-Anbieter und Budget, Geräte-/Hardwarekapazität, Lizenzprüfung, unterstützte Konnektoren, Antwort-/Verarbeitungszeiten, Lastprofil, Verfügbarkeit, Quoten, Retrygrenzen und Aufbewahrungsfristen. Es gibt keine verbindlichen erfundenen Millisekunden-, Speicher-, Tages- oder Prozentwerte. Vor Produktfreigabe sind Zielwerte mit dem Projektinhaber festzulegen und unter repräsentativen Bedingungen zu messen.
 
-**Abgrenzung:** Diese Lieferung prüft Dokumente, keine laufende PWA oder Cloud. S2 behandelt Migration und Wiederherstellung, S3 Inbetriebnahme und sichere Erstbesetzung des einzigen Super Admin. FE-56 bleibt eine offene fachliche Entscheidung, keine noch zu messende bereits genehmigte Inboxfunktion.
+**Abgrenzung:** Diese Lieferung prüft Dokumente, keine laufende PWA oder Cloud. S2 behandelt Migration und Wiederherstellung, S3 Inbetriebnahme und sichere Erstbesetzung des einzigen Super Admin. FE-56 bestätigt seit Mission 19 den Ausschluss jeder Postfachlektüre, -synchronisation und -überwachung in V1. Eine spätere Integration bleibt unverbindlich; erlaubter ausgehender Versand und manueller Import sind davon getrennt. Kein Nachweis einer Produktimplementierung.
 
 ## N1.4 Offene Qualitätsnachweise der S2-Portabilität
 

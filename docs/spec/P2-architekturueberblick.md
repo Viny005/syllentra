@@ -2,8 +2,8 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** P2 — Architekturüberblick\
-**Version:** 0.10\
-**Stand:** 22.10.2026\
+**Version:** 0.11\
+**Stand:** 23.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Spezifikationsmethode:** Bausteine nach Johannes Siedersleben\
 **Geltungsbereich:** Fachlicher Zielumfang der ersten Produktversion (V1)
@@ -95,7 +95,7 @@ Die Bezeichnungen sind zunächst **fachliche Systemkategorien** und keine Zusage
 | NB-02 | Öffentliche Websites und Informationsquellen | Fachliche Recherche und Verifikation | Rechercheanfrage und Informationsabruf; keine unzulässigen Änderungen | Rechtlich und technisch zulässiger Zugriff |
 | NB-03 | Hochschulische Lernplattformen | V1-Materialimport; optional offizielle Lesekonnektoren | Manuell bereitgestellte Inhalte; automatische Abrufe nur nach nachgewiesener Unterstützung und Opt-in | Nutzungsrechte und ausdrückliche Aktivierung (FE-27) |
 | NB-04 | Studienverwaltungsportale | Freiwillig bereitgestellte Studieninformationen | V1 manuelle Importe; keine automatische Anmeldung oder verbindliche Hochschulaktion | Herkunft und Bestätigung; offizielle optionale Verbindung gesondert nachweisen (FE-27) |
-| NB-05 | E-Mail-Dienste | OTP/Sicherheitspost; optionale Erinnerungen | Systemversand zweckgebunden; keine automatische universitäre Postfachlese-V1 | Verifizierte private Primäradresse; Erinnerung opt-in, Inboxentscheidung FE-56 offen |
+| NB-05 | E-Mail-Dienste | OTP/Sicherheitspost; optionale Erinnerungen | Systemversand zweckgebunden; keine Postfachlektüre, -synchronisation oder -überwachung in V1 | Verifizierte private Primäradresse; Erinnerung opt-in, Inboxentscheidung FE-56: V1-Postfachzugriff ausgeschlossen, Zukunft unverbindlich |
 | NB-06 | Externe Online-Kalender | Persönliche zeitliche Verfügbarkeit bestimmen | **Ausschließlich lesend**, keine Erstellung, Änderung oder Löschung | Autorisierte Verbindung |
 | NB-07 | GitHub und andere freigegebene Projektquellen | Projekt- und Kompetenzanalyse | **V1 nur lesend: ausgewählte oder alle eigenen öffentlichen Repositories** | Freiwillige offizielle Kontoverbindung und sichtbar bestätigter Umfang (FE-43) |
 | NB-08 | Externe KI- und Medienverarbeitungsdienste | Text, Sprache, Dokumente, Recherche, Bild, Audio und Video | Aufgabenabhängiger, kontrollierter Austausch | Unterstütztes Verfahren, Freigabe, Kosten- und Datenschutzprüfung |
@@ -134,7 +134,7 @@ V1 verarbeitet freiwillig manuell bereitgestellte Informationen über Module, Le
 
 ### P2.2.6 NB-05 — E-Mail-Dienste
 
-V1 nutzt NB-05 ausgehend für angeforderte E-Mail-OTP, Sicherheits- und Kontomitteilungen sowie optional aktivierte Erinnerungen. Der jeweils ausgelöste Verifikationsvorgang beziehungsweise die Kanalwahl autorisiert diesen zweckgebundenen Systemversand ohne künstliche zweite Einzelbestätigung. Private verifizierte Primäradresse und zusätzliche Hochschuladresse sind getrennt. Manuell bereitgestellte Nachrichten dürfen als Dateien verarbeitet werden; sie erteilen keine Postfachberechtigung. **FE-56 bleibt offen: automatische Postfachlektüre, insbesondere Hochschulpost, ist nicht für V1 freigegeben.** Individuell entworfene externe Nachrichten benötigen weiterhin eine konkrete Versandfreigabe.
+V1 nutzt NB-05 ausgehend für angeforderte E-Mail-OTP, Sicherheits- und Kontomitteilungen sowie optional aktivierte Erinnerungen. Der jeweils ausgelöste Verifikationsvorgang beziehungsweise die Kanalwahl autorisiert diesen zweckgebundenen Systemversand ohne künstliche zweite Einzelbestätigung. Private verifizierte Primäradresse und zusätzliche Hochschuladresse sind getrennt. Manuell bereitgestellte Nachrichten dürfen als Dateien verarbeitet werden; sie erteilen keine Postfachberechtigung. **FE-56: Lektüre, Synchronisation und Überwachung jedes E-Mail-Postfachs sind in V1 ausgeschlossen, auch mit Nutzer- oder Adminfreigabe. Eine spätere Integration ist lediglich eine unverbindliche Zukunftsoption ohne Realisierungszusage.** Individuell entworfene externe Nachrichten benötigen weiterhin eine konkrete Versandfreigabe.
 
 ### P2.2.7 NB-06 — Externe Online-Kalender
 
@@ -392,7 +392,7 @@ Bei einer Löschanforderung soll der Benutzer den betroffenen Umfang, die mögli
 
 ### P2.7.1 Wiederkehrende Informationsprüfungen
 
-Syllentra prüft zulässige Quellen im bestätigten Umfang: allgemeine Informationschecks nach FE-22, externe Verbindungen standardmäßig manuell und nur nach verbindungsspezifischem Opt-in wiederkehrend. Hochschulmeldungen und E-Mails werden V1 manuell bereitgestellt; FE-56 bleibt offen. Kalenderzugriffe bleiben nur lesend und tatsächlich unterstützungsabhängig.
+Syllentra prüft zulässige Quellen im bestätigten Umfang: allgemeine Informationschecks nach FE-22, externe Verbindungen standardmäßig manuell und nur nach verbindungsspezifischem Opt-in wiederkehrend. Hochschulmeldungen und E-Mails werden V1 manuell bereitgestellt; FE-56 ist für V1 als Ausschluss von Postfachlektüre, -synchronisation und -überwachung bestätigt; eine spätere Integration bleibt unverbindlich. Kalenderzugriffe bleiben nur lesend und tatsächlich unterstützungsabhängig.
 
 Soweit Betriebssysteme, Zugriffsrechte und Betriebsmodell dies unterstützen, sollen solche Prüfungen auch bei geschlossener Client-Anwendung möglich sein. Es wird **keine unbegrenzte Hintergrundaktivität auf mobilen Geräten** vorausgesetzt. Prüffrequenzen und Benachrichtigungsregeln sollen über unterstützte Administrationseinstellungen anpassbar sein.
 
@@ -500,13 +500,13 @@ Diese offenen Punkte präzisieren die spätere Umsetzung. Sie streichen keine be
 ---
 
 **Ende von P2 — Architekturüberblick.**\
-**Freigabestatus:** Zur Prüfung durch den Projektinhaber. P2 Version 0.10 und P1 Version 0.9 sind zusammen mit den aktuellen S2-Verweisen zu prüfen. Der Index zeigt den tatsächlichen Dokumentbestand; frühere Änderungsgrenzen beziehen sich auf ihre ursprünglichen Lieferungen.
+**Freigabestatus:** Zur Prüfung durch den Projektinhaber. P2 und P1 sind in den aktuellen Fassungen des [Index](README.md) zusammen mit den S2-Verweisen zu prüfen. Der Index zeigt den tatsächlichen Dokumentbestand; frühere Änderungsgrenzen beziehen sich auf ihre ursprünglichen Lieferungen.
 
 <a id="p291-abgeglichene-produktgrenzen-und-informationsklassen"></a>
 
 ### P2.9.4 Abgeglichene Produktgrenzen und Informationsklassen
 
-Die Entscheidungen FE-27 bis FE-89 ergänzen den Bestand; mit Ausnahme von **FE-56 (offen)** sind ihre fachlichen Vorgaben bestätigt. Die vollständige deutsche Entscheidungsmatrix und die zwölf Nachbarverträge stehen in [S1](S1-nachbarsysteme.md). Eine fachliche Entscheidung ist keine Aussage über implementierte Funktionen oder aktuell erteilte Anbieterrechte. Alle Bausteine bleiben **Zur Prüfung**. Historische Prüfstände, frühere FE-Teilmengen und alte Versionsbezüge bezeichnen ausschließlich ihre damalige Grundlage; maßgeblich ist der aktuelle Index mit [Änderungs- und Prüfnachweis](E3-pruefnachweis.md).
+Die Entscheidungen FE-27 bis FE-89 ergänzen den Bestand. FE-56 war beim historischen Abgleich noch offen; seit der Eigentümerentscheidung aus Mission 19 vom 23.10.2026 sind Postfachlektüre, -synchronisation und -überwachung in V1 ausgeschlossen. Ausgehende OTP-/Sicherheitsmails, autorisierte Benachrichtigungen und manueller Import ausgewählter Inhalte bleiben möglich; eine spätere Integration ist unverbindlich. Die übrigen bestätigten Vorgaben bleiben erhalten. Die vollständige deutsche Entscheidungsmatrix und die zwölf Nachbarverträge stehen in [S1](S1-nachbarsysteme.md). Eine fachliche Entscheidung ist keine Aussage über implementierte Funktionen oder aktuell erteilte Anbieterrechte. Alle Bausteine bleiben **Zur Prüfung**. Historische Prüfstände, frühere FE-Teilmengen und alte Versionsbezüge bezeichnen ausschließlich ihre damalige Grundlage; maßgeblich ist der aktuelle Index mit [Änderungs- und Prüfnachweis](E3-pruefnachweis.md).
 
 Die PWA, zentrale EU-Cloud, interne Datenhaltung, eigene KI-Verarbeitung, Administrationskonsole, Geräteabgleich und interne Sicherung gehören zu Syllentra. Geräte-/Browserumgebung, offizielle Konnektoren und tatsächlich externe KI bleiben Nachbarn. Diese Aussage legt keine interne technische Komponentenstruktur fest. Lokale KI benötigt geeignete Hardware; der künftige Zugriff vom Telefon auf ein PC-Modell wird nicht als V1 versprochen.
 

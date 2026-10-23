@@ -2,7 +2,7 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** B1 — Dialogspezifikation\
-**Version:** 0.6\
+**Version:** 0.7\
 **Stand:** 23.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Methode:** Spezifikationsbaustein nach Johannes Siedersleben (GUI-Statik und GUI-Dynamik), nach der [methodischen Herold-B1-Referenz](https://github.com/carstenlucke/herold/blob/main/docs/spec/B1-dialogspezifikation.md), ohne Übernahme ihrer Authentifizierungs- oder Produktentscheidungen\
@@ -2003,7 +2003,7 @@ Die DM-/DT-Angaben in jeder GUI-Statik verweisen auf die vollständigen Kataloge
 
 ## B1.10 Ergänzende Dialogverträge und getrennte Administration
 
-Die Entscheidungen FE-27 bis FE-89 ergänzen den Bestand; mit Ausnahme von **FE-56 (offen)** sind ihre fachlichen Vorgaben bestätigt. Die vollständige deutsche Entscheidungsmatrix und die zwölf Nachbarverträge stehen in [S1](S1-nachbarsysteme.md). Eine fachliche Entscheidung ist keine Aussage über implementierte Funktionen oder aktuell erteilte Anbieterrechte. Alle Bausteine bleiben **Zur Prüfung**. Historische Prüfstände, frühere FE-Teilmengen und alte Versionsbezüge bezeichnen ausschließlich ihre damalige Grundlage; maßgeblich ist der aktuelle Index mit [Änderungs- und Prüfnachweis](E3-pruefnachweis.md).
+Die Entscheidungen FE-27 bis FE-89 ergänzen den Bestand. FE-56 war beim historischen Abgleich noch offen; seit der Eigentümerentscheidung aus Mission 19 vom 23.10.2026 sind Postfachlektüre, -synchronisation und -überwachung in V1 ausgeschlossen. Ausgehende OTP-/Sicherheitsmails, autorisierte Benachrichtigungen und manueller Import ausgewählter Inhalte bleiben möglich; eine spätere Integration ist unverbindlich. Die übrigen bestätigten Vorgaben bleiben erhalten. Die vollständige deutsche Entscheidungsmatrix und die zwölf Nachbarverträge stehen in [S1](S1-nachbarsysteme.md). Eine fachliche Entscheidung ist keine Aussage über implementierte Funktionen oder aktuell erteilte Anbieterrechte. Alle Bausteine bleiben **Zur Prüfung**. Historische Prüfstände, frühere FE-Teilmengen und alte Versionsbezüge bezeichnen ausschließlich ihre damalige Grundlage; maßgeblich ist der aktuelle Index mit [Änderungs- und Prüfnachweis](E3-pruefnachweis.md).
 
 Alle neuen Dialoge sind mit Tastatur und auf schmalen Geräten bedienbar. Sie zeigen verständliche deutsche Beschriftungen; UI-Sprachwahl FR/DE/EN ändert die Sprache dieser Spezifikation nicht. Pflichtfelder werden kontextabhängig validiert, Fehler am Eingabefeld und in einer erreichbaren Zusammenfassung erläutert. Abbruch erhält unbestätigte Ausgangsdaten. Kein Dialog zeigt Secrets in Vorschau oder Protokoll.
 
@@ -2019,6 +2019,8 @@ Alle neuen Dialoge sind mit Tastatur und auf schmalen Geräten bedienbar. Sie ze
 
 **Abnahmebeispiel:** Konto A wird verifiziert; es erhält sein leeres Dashboard und niemals Inhalte von Konto B.
 
+**R4 — beobachtbare Registrierungsvariante:** UC-51 beschreibt den kontrollierten Neustart ab exakt `>= 24 h` unverifiziertem Zustand. OTP-Resend verlängert den serverseitigen Startpunkt nicht; neuer Lauf benötigt neue gebundene OTP-Verifikation und neues Passwort. Alte Challenges werden ungültig. Kein Reset verifizierter Konten, keine Rechte-/Datenübernahme und kein Reset bei unerwartetem Datenbestand; Konflikte mit paralleler Verifikation sicher behandeln. Rückmeldung verrät keinen fremden Kontostatus; bis zur neuen gültigen Verifikation keine Appdaten. DM-54, DT-67/85, N2.2 und die Soll-Abnahme bei UC-51 gelten, keine neuen UI-/Produktbelege.
+
 ### DLG-52 — Sitzungssperre und Wiederherstellung
 
 **Einstieg und Recht:** UC-52; GP-01, GP-15. Anmeldung/Verifikation sind eingeschränkte Zugänge, Administration verlangt aktuelle MFA und genau das betreffende Recht.
@@ -2030,6 +2032,8 @@ Alle neuen Dialoge sind mit Tastatur und auf schmalen Geräten bedienbar. Sie ze
 **Grenzen und Fehler:** Schließen, lokale Sperre, Abmelden und Serversitzungsablauf sind verschieden. Lokales OS-Biometrie-/PIN-Entsperren verlängert keine abgelaufene Serversitzung. Kontorecovery ersetzt keine Dokumentenschlüssel. Fehlende Fähigkeit wird mit tatsächlich verfügbarem manuellem oder dateibasiertem Ersatz erläutert.
 
 **Abnahmebeispiel:** Ein abgelaufener Serverzugang bleibt trotz erfolgreicher lokaler Biometrie gesperrt; verlorene Geräte bleiben widerrufen.
+
+**R1 — getrennte Nachweise:** Die Bedienung unterscheidet befristeten E-Mail-OTP/Recoveryvorgang vom persönlichen Einmal-Recoverycode ohne automatischen Sieben-Tage-Ablauf. Verbrauch, Widerruf, Ersatz/Rotation oder Sicherheitsinvalidierung beenden den persönlichen Code. Abgelaufene temporäre Nachweise oder ungültige persönliche Codes erlauben keine Fortsetzung. Keine Dokumentenschlüssel- oder MFA-Umgehung; keine Geheimnisse in Vorschauen/Logs. UC-52, DM-54, DT-67/85 und N2.2 bestimmen die Soll-Abnahme; sichere produktive Codeübergabe bleibt gesondert zu klären.
 
 ### DLG-53 — Rollenverwaltung und Administrationszugang
 

@@ -1,8 +1,8 @@
 # S3 — Inbetriebnahme, Rollout und Betriebsaufnahme
 
 **Projekt:** Syllentra AI\
-**Version:** 0.2\
-**Stand:** 22.10.2026\
+**Version:** 0.3\
+**Stand:** 23.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Ausgangsbasis:** `1885a9c76ed549367097ac15d3960399a8651b88`, bestehender Spezifikationsbranch und [PR #1](https://github.com/Viny005/syllentra/pull/1).
 
@@ -12,7 +12,7 @@ S3 spezifiziert nach Siedersleben Voraussetzungen, Verantwortungen, Ablauf, Frei
 
 **Iststand:** Am Ausgangscommit ausschließlich Dokumentation und `.gitignore`; keine Anwendung, Apppipeline, Infrastruktur oder ausgeführten Betriebsverfahren. Alle folgenden Schritte und AT-S3-Fälle sind **zukünftige Sollverfahren**, nicht während Mission 4 ausgeführte Aktionen. Für Produktfreigabe fehlen Architekturentscheidungen, Implementierung, Zielwerte und reale Nachweise. Der Auftrag autorisiert Dokumentation sowie Commit/normalen Push, **keinen Merge, Deployment, Account, Infrastrukturtest oder Ausgabe**.
 
-89 FE, 66 UC, 25 DEC-V1, DEC-48/49 und alle 46 Release-Kontrollen bleiben erhalten. FE-56 bleibt offen, REL-Q10 außerhalb V1. Keine neue Produktfunktion oder neue REL-Kontrolle. Fachlich bestätigte Einzelentscheidungen sind keine Gesamtabnahme dieser Spezifikation.
+89 FE, 66 UC, 25 DEC-V1, DEC-48/49 und alle 46 Release-Kontrollen bleiben erhalten. FE-56 ist für V1 als Ausschluss von Postfachlektüre, -synchronisation und -überwachung bestätigt; eine spätere Integration bleibt unverbindlich, REL-Q10 außerhalb V1. Keine neue Produktfunktion oder neue REL-Kontrolle. Fachlich bestätigte Einzelentscheidungen sind keine Gesamtabnahme dieser Spezifikation.
 
 ## S3.2 Verantwortungen, Auftrag und Nachweisakte
 
@@ -281,7 +281,7 @@ Die folgenden O-S3-Kennungen sind Arbeits-/Nachweisbezüge, **keine neuen Produk
 | O-S3-13 | Namentliche Verantwortliche, Vertretung, Reaktions-/Prüfintervalle, eng begrenzte Notfallrechte und Belegretention | Projektinhaber; vor Produktion bestätigen |
 | O-S3-14 | Rolloutstufen, Migrations-/Rollbackkompatibilität, Kontrollstand und technische Smoke-/Regressionstests | Architektur/Betrieb/Qualitätsprüfung; S2-UPG/MOV und NFR-25 |
 
-FE-56 bleibt unabhängig hiervon offen. Pädagogische Rubriken und zulässiger Funktionsumfang bleiben nach N1/Entscheidungsmatrix zu bestätigen. Bestehende M2b/M5/M8-Zuordnungen aus dem [Teilplan](ENTWICKLUNGSPLAN.md) unverändert; S3 schafft keinen Gesamtmeilensteinplan und keine Termine.
+FE-56 ist für V1 als Ausschluss von Postfachlektüre, -synchronisation und -überwachung bestätigt; eine spätere Integration bleibt unverbindlich. Pädagogische Rubriken und zulässiger Funktionsumfang bleiben nach N1/Entscheidungsmatrix zu bestätigen. Bestehende M2b/M5/M8-Zuordnungen aus dem [Teilplan](ENTWICKLUNGSPLAN.md) unverändert; S3 schafft keinen Gesamtmeilensteinplan und keine Termine.
 
 ## S3.15 Künftige Abnahmeszenarien
 

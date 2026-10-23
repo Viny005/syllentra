@@ -2,7 +2,7 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** D2 — Datentypen\
-**Version:** 0.6\
+**Version:** 0.7\
 **Stand:** 23.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Bezugsstand:** Vier bestätigte Entscheidungen vom 19.10.2026; Ausgangs-HEAD `53ef171be4783748b5c7e3a84bb0cc363d5b4194`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1; aktuelle Fassungen im [Index](README.md).\
@@ -1527,12 +1527,12 @@ Die bestehenden Kennungen `CFG-01`; `CFG-02`; `CFG-03`; `CFG-04`; `CFG-05`; `CFG
 | Ein globaler Messstand und Euro-Einheit zu eng | Messstand je Kennzahl, Geldwerte mit Währung und zeitbezogener Grundlage; keine erfundenen feinen Perioden aus gröberen Summen. |
 | GitHub-Ausschnitt könnte als festgelegte Produktgrenze gelesen werden | Historischer V1-Vorschlag durch FE-43 ersetzt; bestätigter öffentlicher Scope bei weiterhin ausstehender technischer Rechteprüfung; keine zugesagten privaten Repositories, weitere Plattformen oder aktuellen API-Rechte. Quellenabruf blockiert, spätere offizielle Prüfung erforderlich. |
 
-**Freigabestatus:** Zur Prüfung durch den Projektinhaber — D2 v0.5. Git-Commit und Push ersetzen keine gemeinsame fachliche Abnahme.
+**Freigabestatus:** Zur Prüfung durch den Projektinhaber — D2 v0.7. Git-Commit und Push ersetzen keine gemeinsame fachliche Abnahme.
 
 
 ## D2.12 Ergänzende Datentypen für Konten und sichere Lebenszyklen
 
-Die Entscheidungen FE-27 bis FE-89 ergänzen den Bestand; mit Ausnahme von **FE-56 (offen)** sind ihre fachlichen Vorgaben bestätigt. Die vollständige deutsche Entscheidungsmatrix und die zwölf Nachbarverträge stehen in [S1](S1-nachbarsysteme.md). Eine fachliche Entscheidung ist keine Aussage über implementierte Funktionen oder aktuell erteilte Anbieterrechte. Alle Bausteine bleiben **Zur Prüfung**. Historische Prüfstände, frühere FE-Teilmengen und alte Versionsbezüge bezeichnen ausschließlich ihre damalige Grundlage; maßgeblich ist der aktuelle Index mit [Änderungs- und Prüfnachweis](E3-pruefnachweis.md).
+Die Entscheidungen FE-27 bis FE-89 ergänzen den Bestand. FE-56 war beim historischen Abgleich noch offen; seit der Eigentümerentscheidung aus Mission 19 vom 23.10.2026 sind Postfachlektüre, -synchronisation und -überwachung in V1 ausgeschlossen. Ausgehende OTP-/Sicherheitsmails, autorisierte Benachrichtigungen und manueller Import ausgewählter Inhalte bleiben möglich; eine spätere Integration ist unverbindlich. Die übrigen bestätigten Vorgaben bleiben erhalten. Die vollständige deutsche Entscheidungsmatrix und die zwölf Nachbarverträge stehen in [S1](S1-nachbarsysteme.md). Eine fachliche Entscheidung ist keine Aussage über implementierte Funktionen oder aktuell erteilte Anbieterrechte. Alle Bausteine bleiben **Zur Prüfung**. Historische Prüfstände, frühere FE-Teilmengen und alte Versionsbezüge bezeichnen ausschließlich ihre damalige Grundlage; maßgeblich ist der aktuelle Index mit [Änderungs- und Prüfnachweis](E3-pruefnachweis.md).
 
 Die folgenden Wertbereiche sind fachliche Typen, keine ausgewählten Kryptoverfahren oder API-Payloads. Strukturfelder mit `_optional` dürfen fehlen; notwendige Rechte werden bei Abwesenheit nicht angenommen. Kennungen gehören zum jeweiligen Eigentumskontext.
 
@@ -1562,7 +1562,7 @@ Die folgenden Wertbereiche sind fachliche Typen, keine ausgewählten Kryptoverfa
 
 **Werte beziehungsweise Felder:** `registrierung; neue_adresse; neues_geraet; kontorecovery; administrative_mfa; sensible_aktion`.
 
-**Validität und Vergleich:** Nachweis ist zweckgebunden, befristet und bei Einmalverfahren nur einmal verbrauchbar. Unbekannte Pflichtangaben führen zu „nicht prüfbar“ oder Sperre, nicht zu erfundenem Erfolg. Gleichheit benötigt passenden Eigentümer, Zweck und aktuelle Revision; Statusnamen allein erteilen keine Erlaubnis.
+**Validität und Vergleich:** Der Zweck allein bestimmt keine gemeinsame Frist aller Nachweisarten. OTP und temporäre Verifikations-/Recoveryanfragen bleiben befristet; der zusätzliche persönliche Einmal-Recoverycode nach R1 besitzt kein automatisches Sieben-Tage-Verfallsdatum und endet durch Verbrauch, Widerruf, kontrollierten Ersatz/Rotation oder Sicherheitsinvalidierung. Beide Nachweise sind getrennt zu prüfen; einmaliger Verbrauch bleibt verbindlich. Unbekannte Pflichtangaben führen zu „nicht prüfbar“ oder Sperre, nicht zu erfundenem Erfolg. Gleichheit benötigt passenden Eigentümer, Zweck und aktuelle Revision; Statusnamen allein erteilen keine Erlaubnis.
 
 **Prüfbeispiel:** Ein Wert außerhalb des beschriebenen Bereichs wird sichtbar zurückgewiesen, ohne vorhandene gültige Daten zu überschreiben.
 
@@ -1742,9 +1742,9 @@ Die folgenden Wertbereiche sind fachliche Typen, keine ausgewählten Kryptoverfa
 
 **Art / Verwendung:** Struktur; DM-54, DM-65.
 
-**Werte beziehungsweise Felder:** `geschuetzter_verweis, zweck, ausgabezeit, ablauf, verbrauchsstatus`.
+**Werte beziehungsweise Felder:** `geschuetzter_verweis, zweck, nachweisart, ausgabezeit, ablauf_optional, verbrauchsstatus, widerrufsstatus, ersetzungsstatus, sicherheitsinvalidierungsstatus`.
 
-**Validität und Vergleich:** Opaker geschützter Nachweis, kein sichtbares Geheimnisfeld. Keine Passwörter, OTP, Recoverycodes, Tokens oder privaten Schlüssel in Ausgabe/Repository/Logs; konkretes Schutzverfahren N2. Unbekannte Pflichtangaben führen zu „nicht prüfbar“ oder Sperre, nicht zu erfundenem Erfolg. Gleichheit benötigt passenden Eigentümer, Zweck und aktuelle Revision; Statusnamen allein erteilen keine Erlaubnis.
+**Validität und Vergleich:** Opaker geschützter Nachweis, kein sichtbares Geheimnisfeld. `ablauf_optional` fehlt nur bei einer nach bestätigter Regel nicht automatisch ablaufenden Nachweisart wie dem persönlichen Einmal-Recoverycode nach R1. Für OTP und temporäre Recoveryanfragen ist eine eigene Ablaufgrenze obligatorisch; fehlender Pflichtablauf ist ungültig. Die persönliche Codegültigkeit endet durch Verbrauch, Widerruf, Ersatz/Rotation oder Sicherheitsinvalidierung; unbekannter Nachweisstatus erlaubt keine Nutzung. N2.2/SEC-03 und DM-54 sind maßgeblich. Keine Passwörter, OTP, Recoverycodes, Tokens oder privaten Schlüssel in Ausgabe/Repository/Logs; konkretes Schutzverfahren N2. Unbekannte Pflichtangaben führen zu „nicht prüfbar“ oder Sperre, nicht zu erfundenem Erfolg. Gleichheit benötigt passenden Eigentümer, Zweck und aktuelle Revision; Statusnamen allein erteilen keine Erlaubnis.
 
 **Prüfbeispiel:** Ein Wert außerhalb des beschriebenen Bereichs wird sichtbar zurückgewiesen, ohne vorhandene gültige Daten zu überschreiben.
 

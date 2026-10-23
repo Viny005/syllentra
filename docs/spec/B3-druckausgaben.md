@@ -2,8 +2,8 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** B3 — Druckausgaben\
-**Version:** 0.5\
-**Stand:** 22.10.2026\
+**Version:** 0.6\
+**Stand:** 23.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Methode:** Baustein B3 nach Johannes Siedersleben — fachlich prüfbare Ausgaben, unabhängig von Layoutbibliothek und Drucktechnik\
 **Bezugsstand:** Vier bestätigte Entscheidungen vom 19.10.2026; Ausgangs-HEAD `53ef171be4783748b5c7e3a84bb0cc363d5b4194`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1; aktuelle Fassungen im [Index](README.md).
@@ -642,7 +642,7 @@ Sämtliche Beispiele sind **künftige fachliche Akzeptanztests**. Kein automatis
 2. Schrift-, Lesbarkeits-, Zugänglichkeits-, Umfangs-, Skalierungs- und Leistungskennzahlen, tolerierte Fehler/Abbruchzeiten (**N1**); B3 setzt keine erfundenen Prozent- oder Millisekundengrenzen.
 3. Sicherer temporärer Speicher, Downloadauthentisierung, sichere CSV-Werte, Session-/Gerätewiderruf, Zugriffskontrolle, Aufbewahrungsfristen, Lösch- und Backup-Strategie (**N2/D1/D2**).
 4. Tatsächlich unterstützte bearbeitbare Word-Ausgabe; bis dahin `optional`, kein garantierter DOCX-Export.
-5. Institutionsbeziehung für freie Studienleistungen ohne Modul-/Prüfungsbezug (**D1/F2**). Bericht erfindet fehlende Verknüpfung nicht.
+5. Der optionale direkte Studienzugehörigkeitsbezug DM-12 → DM-04 ist in D1 bereits definiert, auch ohne Modul-/Prüfungsbezug. Offen bleiben seine technische Übernahme und Berichtsprüfung; bei tatsächlich fehlendem Bezug keine Institution erfinden.
 6. Ergänzende Dialogaktionen für Berichtsart, Abdeckungsumfang, sensible Notenauswahl und geschützte Bereitstellung (**B1**); vorhandene DLG-Kennungen bleiben unverändert.
 7. Nutzbare und erlaubte Drittanbieter, Datenübermittlungen, tatsächliche Preise und zugesagte Speicher-/Löschbedingungen (**S1**, keine Vertrauensannahme aus Abonnement oder URL).
 8. Auskunftsumfang und Datenschutzverpflichtungen zum aktuellen Rechtsstand sind bei konkreter Umsetzung zu prüfen; B3 ersetzt keine Rechtsprüfung oder Rechtsberatung.
@@ -652,7 +652,7 @@ Sämtliche Beispiele sind **künftige fachliche Akzeptanztests**. Kein automatis
 
 ## B3.14 Kontoisolation, Schlüssel- und Schutzgrenzen für Ausgaben
 
-Die Entscheidungen FE-27 bis FE-89 ergänzen den Bestand; mit Ausnahme von **FE-56 (offen)** sind ihre fachlichen Vorgaben bestätigt. Die vollständige deutsche Entscheidungsmatrix und die zwölf Nachbarverträge stehen in [S1](S1-nachbarsysteme.md). Eine fachliche Entscheidung ist keine Aussage über implementierte Funktionen oder aktuell erteilte Anbieterrechte. Alle Bausteine bleiben **Zur Prüfung**. Historische Prüfstände, frühere FE-Teilmengen und alte Versionsbezüge bezeichnen ausschließlich ihre damalige Grundlage; maßgeblich ist der aktuelle Index mit [Änderungs- und Prüfnachweis](E3-pruefnachweis.md).
+Die Entscheidungen FE-27 bis FE-89 ergänzen den Bestand. FE-56 war beim historischen Abgleich noch offen; seit der Eigentümerentscheidung aus Mission 19 vom 23.10.2026 sind Postfachlektüre, -synchronisation und -überwachung in V1 ausgeschlossen. Ausgehende OTP-/Sicherheitsmails, autorisierte Benachrichtigungen und manueller Import ausgewählter Inhalte bleiben möglich; eine spätere Integration ist unverbindlich. Die übrigen bestätigten Vorgaben bleiben erhalten. Die vollständige deutsche Entscheidungsmatrix und die zwölf Nachbarverträge stehen in [S1](S1-nachbarsysteme.md). Eine fachliche Entscheidung ist keine Aussage über implementierte Funktionen oder aktuell erteilte Anbieterrechte. Alle Bausteine bleiben **Zur Prüfung**. Historische Prüfstände, frühere FE-Teilmengen und alte Versionsbezüge bezeichnen ausschließlich ihre damalige Grundlage; maßgeblich ist der aktuelle Index mit [Änderungs- und Prüfnachweis](E3-pruefnachweis.md).
 
 OUT-01 bis OUT-08 behalten ihre Bedeutung und werden weder automatisch veröffentlicht noch kontoübergreifend erzeugt. Alle neuen Konten-, Rollen-, Support-, Quoten- und Integrationszustände aus D1/D2 gelten vor Auswahl, Vorschau und tatsächlicher Ausgabe erneut.
 

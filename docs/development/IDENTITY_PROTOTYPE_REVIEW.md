@@ -1,6 +1,8 @@
 # Validierung — lokale Identitätsprobe Mission 10, Mission 12, Mission 13 & Mission 14
 
-**Version:** 0.4 · **Stand:** 23.10.2026 · **Status:** Experimentell / Zur Prüfung
+**Version:** 0.5 · **Stand:** 23.10.2026 · **Status:** Experimentell / Zur Prüfung durch den Projektinhaber
+
+**Redaktioneller Nachtrag Mission 19:** Der Bericht erhält die historischen Mission-10..14-Nachweise. Die damaligen FE-56-offen-Angaben sind seit der Eigentümerentscheidung aus Mission 19 für V1 durch den Postfachausschluss überholt; maßgeblich ist [S1](../spec/S1-nachbarsysteme.md). Nur der unklare Browser-E2E-Status der Mission 14 wird unten als nicht ausgeführt/nicht nachgewiesen präzisiert; kein neuer Produkttest.
 
 ## Ausgang, Auftrag und Reviewgrenze
 
@@ -293,7 +295,7 @@ Mission 12 führt [scripts/test_db.py](../../prototypes/backend/scripts/test_db.
 | `.venv/bin/ruff check src tests scripts` & `ruff format --check src tests scripts` | `All checks passed!`, `21 files already formatted`. |
 | `.venv/bin/pip-audit --cache-dir /tmp/syllentra-pip-audit` | `No known vulnerabilities found` (58 gepinnte Pakete). |
 | `npm run build`, `npm run lint`, `npm run format:check`, `npm test`, `npm audit --json` (`prototypes/frontend`) | TypeScript-Strictbuild + Vite-Build erfolgreich, ESLint 0 Fehler, Prettier 41/41 Dateien konform, Vitest 7/7 Unit-Tests bestanden, `npm audit` 0 bekannte Schwachstellen. |
-| Browser-E2E (`npm run test:e2e`, `npm run test:identity`) | `npm run test:e2e` auf dem Host bzw. Status der Browser-Suiten ehrlich nach tatsächlicher Ausführung dokumentiert (Frontend-Code unverändert). |
+| Browser-E2E (`npm run test:e2e`, `npm run test:identity`) | Für Mission 14 liegt kein konkreter Ausführungsbeleg für diese Browser-Suiten vor; daher als **nicht ausgeführt / nicht nachgewiesen** geführt, kein neuer Browser-E2E-Erfolg behauptet. Frühere belegte Mission-10-Läufe bleiben historische Nachweise. Mission 19 korrigiert nur diesen Dokumentationsstatus und führt keine Browser- oder Backendtests aus. |
 
 ### 3. Dateiumfang Mission 14
 

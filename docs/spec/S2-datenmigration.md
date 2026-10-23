@@ -2,8 +2,8 @@
 
 **Projekt:** Syllentra AI\
 **Baustein:** S2 — Datenmigration (fachliche Soll-Spezifikation)\
-**Version:** 0.4\
-**Stand:** 22.10.2026\
+**Version:** 0.5\
+**Stand:** 23.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Bezugsstand:** `Viny005/syllentra`, PR #1, Branch `docs/spec/p1-p2-mobile-workspaces`, verifizierter HEAD `723af7fa1692f8dbaf888b694fa63806d7d5fc5f` (vor Erstellung dieses Entwurfs).\
 **Methodik:** Fachbaustein S2 gemäß Siedersleben. Gelesene methodische Referenz: [Herold-Bausteinübersicht](https://github.com/carstenlucke/herold/blob/main/docs/spec/SIEDERSLEBEN.md), insbesondere „Schnittstellen zu Alt- und Nachbarsystemen“, und [Herold-README](https://github.com/carstenlucke/herold/blob/main/docs/spec/README.md), Abschnitt S2, im Git-Stand `fce50b47ae646a70bf4d796026dcd1a99d3ae3c2`. Herold erklärt S2 wegen fehlender Altdaten für nicht anwendbar und enthält keine eigene S2-Datei. Daher wird keine konkrete Herold-S2-Vertragsvorlage behauptet und Herolds Nichtanwendbarkeit nicht auf Syllentra übertragen. S1 beschreibt externe Nachbarn, S2 die Übernahme/Umwandlung eigener Daten und Bestände, S3 den sicheren Betriebsstart.\
@@ -376,7 +376,7 @@ Die folgenden DEC-V1-Schlüssel sind ausschließlich die temporären Auditbezüg
 | AT-S2-29 | Altes Profil mit niedriger Schätzung, neue Beweislage stärker | Jüngere Beweislage bleibt; Konflikt/Provenienz sichtbar |
 | AT-S2-30 | Alte Quiznote war KI-Schätzung | Nach Import weiterhin „geschätzt“, keine amtliche Notenbestätigung |
 | AT-S2-31 | Externer Kalender wird mitimportiert | Kein Schreibaufruf an Dritt-Kalender |
-| AT-S2-32 | Zulässiger lokaler Dokumentimport bei FE-56 offen | Keine Mailboxanmeldung oder Inboxautomatik |
+| AT-S2-32 | Zulässiger lokaler Dokumentimport trotz V1-Postfachausschluss nach FE-56 | Keine Mailboxanmeldung oder Inboxautomatik |
 | AT-S2-33 | Ursprüngliche Podcast-/Videodatei nicht mehr vorhanden | Keine erdachten Transkriptzeitstempel oder Quellenkopie |
 | AT-S2-34 | Browser kann großes Paket nicht lokal halten | Transparenter begrenzter Alternativablauf statt Speicherüberlauf |
 | AT-S2-35 | Exportpaket verschlüsselt, Nutzerschlüssel verloren | Verständliche Nicht-Wiederherstellbarkeit dokumentiert |
@@ -411,7 +411,7 @@ Die folgenden DEC-V1-Schlüssel sind ausschließlich die temporären Auditbezüg
 
 ## S2.16 Explizite Nichtziele V1 und spätere Ausbauten
 
-Nicht V1-verbindlich: automatische Übernahme *aller* Daten beliebiger fremder Lernapps; Migration fremder/gelöschter fremder Konten; vollständiges Offline-Backup mit allen geheimen Schlüsseln in der PWA; automatische GitHub-/OneDrive-/Drive-Schreibsynchronisierung; aktivierte Mail-Inbox-Funktion FE-56; automatische kostenpflichtige Konverter; garantierter verlustfreier Export jeder proprietären Formatsemantik; native Mobile-Keychain-Funktionen auf allen Browsern; automatisch verifizierte amtliche Prüfungsdaten; freie Datenbank-Dumps als Nutzerselfservice. Zusätzliche Adapter später nur nach dokumentiertem Format-, Lizenz-, Datenschutz- und Sicherheitstest. Produktfeatures aus dem separat bestätigten DEC-V1-Katalog sind davon nicht insgesamt ausgeschlossen.
+Nicht V1-verbindlich: automatische Übernahme *aller* Daten beliebiger fremder Lernapps; Migration fremder/gelöschter fremder Konten; vollständiges Offline-Backup mit allen geheimen Schlüsseln in der PWA; automatische GitHub-/OneDrive-/Drive-Schreibsynchronisierung; aktivierte jede Postfachlektüre, -synchronisation und -überwachung (FE-56, in V1 ausdrücklich ausgeschlossen, Zukunft unverbindlich); automatische kostenpflichtige Konverter; garantierter verlustfreier Export jeder proprietären Formatsemantik; native Mobile-Keychain-Funktionen auf allen Browsern; automatisch verifizierte amtliche Prüfungsdaten; freie Datenbank-Dumps als Nutzerselfservice. Zusätzliche Adapter später nur nach dokumentiertem Format-, Lizenz-, Datenschutz- und Sicherheitstest. Produktfeatures aus dem separat bestätigten DEC-V1-Katalog sind davon nicht insgesamt ausgeschlossen.
 
 ## S2.17 Offene technische Parameter und Nachweispflichten
 
@@ -430,7 +430,7 @@ Nicht V1-verbindlich: automatische Übernahme *aller* Daten beliebiger fremder L
 | O-S2-11 | Zentrale EU-Betriebskosten, Recovery-RPO/RTO und Kapazitätsstaffelung ohne verpflichtende Pay-API |
 | O-S2-12 | Produktabnahme je V1-Feature und mobilem Browser, inklusive Realtests der oben formulierten Negativfälle |
 
-**Gesamtergebnis:** Alle fachlichen S2-Grundsatzentscheidungen MIG-01 bis MIG-36 sind festgelegt. Die technische Machbarkeit, konkrete Verfahren und produktive Freischaltung bleiben prüfpflichtig. **FE-56 bleibt in S1 offen**, weil die pauschale Delegation zu S2 keine Entscheidung zur zukünftigen Mailbox-Lesefunktion darstellt. Eine Vollfunktionserweiterung von S2 erteilt keine neue externe Schreibberechtigung, keinen Datenzugriff auf fremde Konten und keine Genehmigung zum Merge von PR #1.
+**Gesamtergebnis:** Alle fachlichen S2-Grundsatzentscheidungen MIG-01 bis MIG-36 sind festgelegt. Die technische Machbarkeit, konkrete Verfahren und produktive Freischaltung bleiben prüfpflichtig. **FE-56 ist seit der ausdrücklichen Eigentümerentscheidung in Mission 19 in S1 für V1 als Postfachausschluss bestätigt.** Eine spätere Integration bleibt unverbindlich; weder ein S2-Auftrag noch ein Importauftrag erteilt Postfachrechte. Eine Vollfunktionserweiterung von S2 erteilt keine neue externe Schreibberechtigung, keinen Datenzugriff auf fremde Konten und keine Genehmigung zum Merge von PR #1.
 
 ## S2.18 Nachverfolgbarkeit, Entscheidungsquellen und Konfliktauflösung
 

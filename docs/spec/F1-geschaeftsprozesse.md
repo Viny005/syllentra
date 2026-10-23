@@ -2,11 +2,11 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** F1 — Geschäftsprozesse\
-**Version:** 0.6\
-**Stand:** 22.10.2026\
+**Version:** 0.7\
+**Stand:** 23.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Spezifikationsmethode:** Bausteine nach Johannes Siedersleben\
-**Geltungsbereich:** Fachlicher Zielumfang der ersten Produktversion (V1), auf Grundlage von P1 Version 0.8 und P2 Version 0.9
+**Geltungsbereich:** Fachlicher Zielumfang der ersten Produktversion (V1), auf Grundlage der aktuellen P1-/P2-Fassungen im [Spezifikationsindex](README.md)
 
 ---
 
@@ -594,8 +594,8 @@ Geplante Bausteine werden hier mit ihren Kennungen genannt und nicht mit Links a
 
 ### F1.9.3 Referenzdokumente
 
-- [P1 — Ziele und Rahmenbedingungen](P1-ziele-rahmenbedingungen.md), Version 0.5, insbesondere P1.4, P1.5, P1.6 und P1.9.
-- [P2 — Architekturüberblick](P2-architekturueberblick.md), Version 0.6, insbesondere Nachbarsysteme, Kalender, Integrationen, Administration und Datenkontrolle.
+- [P1 — Ziele und Rahmenbedingungen](P1-ziele-rahmenbedingungen.md), aktuelle Fassung laut [Index](README.md), insbesondere P1.4, P1.5, P1.6 und P1.9.
+- [P2 — Architekturüberblick](P2-architekturueberblick.md), aktuelle Fassung laut [Index](README.md), insbesondere Nachbarsysteme, Kalender, Integrationen, Administration und Datenkontrolle.
 - [Spezifikationsindex und Leseanleitung](README.md), insbesondere Trennung der Bausteine und Statuskonventionen.
 - [Projektvision](../PROJECT_VISION.md), insbesondere Lernkontinuität, adaptive Unterstützung und schrittweise Entwicklung.
 - [Bisherige Anforderungen](../REQUIREMENTS.md), insbesondere funktionale Anforderungen, Einwilligung und Datenschutz.
@@ -605,9 +605,9 @@ Geplante Bausteine werden hier mit ihren Kennungen genannt und nicht mit Links a
 
 ## F1.10 Prüfstand, Grenzen und spätere Konkretisierung
 
-F1 Version 0.3 umfasst fünfzehn Prozesse mit Auslöser, Ende, Akteuren, geordneten Aktivitäten mit zugeordneten Verantwortlichkeiten, Artefakten, Varianten und Grenzen. Die Entscheidungen FE-01 bis FE-06 werden als bereits bestätigte fachliche Vorgaben übernommen. Das vollständige Dokument steht zur Prüfung; daraus folgt keine Behauptung bereits implementierter oder abgenommener Produktfunktionen.
+Die aktuelle F1-Fassung umfasst fünfzehn Prozesse mit Auslöser, Ende, Akteuren, geordneten Aktivitäten mit zugeordneten Verantwortlichkeiten, Artefakten, Varianten und Grenzen. Die Entscheidungen FE-01 bis FE-06 werden als bereits bestätigte fachliche Vorgaben übernommen. Das vollständige Dokument steht zur Prüfung; daraus folgt keine Behauptung bereits implementierter oder abgenommener Produktfunktionen.
 
-Die Prozessvorgaben konkretisieren P1 Version 0.6 und P2 Version 0.7. P1/P2 werden durch dieses Dokument weder stillschweigend umgeschrieben noch um technische Entscheidungen ergänzt. Bei später erkannten Widersprüchen ist eine ausdrückliche fachliche Klärung nötig; bis dahin dürfen Schutzgrenzen nicht durch großzügigere Interpretation eines Prozessschritts aufgehoben werden.
+Die ursprüngliche F1-Einzellieferung v0.3 konkretisierte damals P1 v0.6 und P2 v0.7. Der heutige Abgleich verwendet die aktuellen P1-/P2-Fassungen im [Index](README.md). P1/P2 werden durch dieses Dokument weder stillschweigend umgeschrieben noch um technische Entscheidungen ergänzt. Bei später erkannten Widersprüchen ist eine ausdrückliche fachliche Klärung nötig; bis dahin dürfen Schutzgrenzen nicht durch großzügigere Interpretation eines Prozessschritts aufgehoben werden.
 
 Für nachfolgende Arbeiten bleiben insbesondere zu konkretisieren:
 
@@ -629,7 +629,7 @@ Diese Punkte betreffen die spätere Detaillierung. Freiwilliger Einstieg, bestä
 
 ## F1.11 Erweiterter V1-Prozessrahmen ohne neue Prozesskennungen
 
-Die Entscheidungen FE-27 bis FE-89 ergänzen den Bestand; mit Ausnahme von **FE-56 (offen)** sind ihre fachlichen Vorgaben bestätigt. Die vollständige deutsche Entscheidungsmatrix und die zwölf Nachbarverträge stehen in [S1](S1-nachbarsysteme.md). Eine fachliche Entscheidung ist keine Aussage über implementierte Funktionen oder aktuell erteilte Anbieterrechte. Alle Bausteine bleiben **Zur Prüfung**. Historische Prüfstände, frühere FE-Teilmengen und alte Versionsbezüge bezeichnen ausschließlich ihre damalige Grundlage; maßgeblich ist der aktuelle Index mit [Änderungs- und Prüfnachweis](E3-pruefnachweis.md).
+Die Entscheidungen FE-27 bis FE-89 ergänzen den Bestand. FE-56 war beim historischen Abgleich noch offen; seit der Eigentümerentscheidung aus Mission 19 vom 23.10.2026 sind Postfachlektüre, -synchronisation und -überwachung in V1 ausgeschlossen. Ausgehende OTP-/Sicherheitsmails, autorisierte Benachrichtigungen und manueller Import ausgewählter Inhalte bleiben möglich; eine spätere Integration ist unverbindlich. Die übrigen bestätigten Vorgaben bleiben erhalten. Die vollständige deutsche Entscheidungsmatrix und die zwölf Nachbarverträge stehen in [S1](S1-nachbarsysteme.md). Eine fachliche Entscheidung ist keine Aussage über implementierte Funktionen oder aktuell erteilte Anbieterrechte. Alle Bausteine bleiben **Zur Prüfung**. Historische Prüfstände, frühere FE-Teilmengen und alte Versionsbezüge bezeichnen ausschließlich ihre damalige Grundlage; maßgeblich ist der aktuelle Index mit [Änderungs- und Prüfnachweis](E3-pruefnachweis.md).
 
 | Bestehender Prozess | Ergänzter fachlicher Ablauf und Abschluss |
 |---|---|
@@ -642,6 +642,8 @@ Die Entscheidungen FE-27 bis FE-89 ergänzen den Bestand; mit Ausnahme von **FE-
 | GP-15 | Freiwilliger enger Support, sensible Geräteschlüssel, pro Vorgang erlaubte Cloudanalyse, verschlüsselte EU-Sicherung, Differenzrestore, Papierkorb, KI-Löschbestätigung und Konto-Pause/Löschung; administrative Sperre ist gesondert. |
 
 **Akteure und Ende:** Studierende sind jeweils eigene Dateninhaber. Administratoren führen ausschließlich zugewiesene Verwaltungsarbeit aus; Support endet bei Ablauf/Widerruf. Externe Dienste besitzen keine autonome Entscheidungsbefugnis. Produktiv verfügbares Ergebnis, fachliche Bestätigung, tatsächliche Ausführung und Prüfstatus bleiben unterscheidbar.
+
+**FE-56 — V1-Grenze aus Mission 19:** GP-03/GP-07 verarbeiten ausgewählte manuell bereitgestellte E-Mail-Inhalte, keine Postfächer. Lektüre, Synchronisation oder Überwachung eines Postfachs ist in V1 auch nach Opt-in ausgeschlossen. Angeforderte OTP, Sicherheitsmeldungen und autorisierte Benachrichtigungen dürfen ausgehend versandt werden. Spätere Integration bleibt unverbindlich und braucht einen neuen Fachauftrag.
 
 ## F1.12 Portabilität als begrenzte Vertiefung von GP-15
 

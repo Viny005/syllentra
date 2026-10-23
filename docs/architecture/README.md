@@ -1,9 +1,11 @@
 # Technische Architekturstudie — Vergleich und Empfehlung
 
-**Version:** 0.3 · **Stand:** 22.10.2026 · **Status:** Empfohlen / Zur Entscheidung
+**Version:** 0.4 · **Stand:** 23.10.2026 · **Status:** Empfohlen / Zur Entscheidung
 
 > **Fortschreibung Mission 7:** Für künftige Vergleiche gilt jetzt bis zu **20 EUR brutto/Monat**, keine Ausgabe genehmigt. Die nachfolgenden 10-EUR-Aussagen/Rechnungen dokumentieren den früheren Untersuchungsstand aus Mission 5/6; sie sind keine aktuelle Obergrenze. Auch unter 20 EUR ist vollständige V1-Leistung nicht nachgewiesen. [Bestätigter Rahmen](../ARCHITECTURE_DECISIONS.md#adr-0006--persönlicher-qualitätsfokus-und-vergleichsrahmen-aus-mission-7).
 
+
+**Fortschreibung Mission 19 (23.10.2026):** FE-56 schließt Postfachlektüre, -synchronisation und -überwachung in V1 aus. Ausgehende OTP-/Sicherheitsmails, autorisierte Benachrichtigungen und manueller Import ausgewählter Inhalte bleiben zulässig. Ältere „FE-56 offen“-Angaben der datierten Teilstudien beschreiben den damaligen Entscheidungsstand; eine spätere Integration bleibt lediglich unverbindlich. Maßgeblich ist das aktuelle [S1-Register](../spec/S1-nachbarsysteme.md). Alle 14 TECH-O und technischen Empfehlungen bleiben unverändert offen, keine Architekturwahl.
 ## 1. Auftrag, Status und Leitentscheidung zur Prüfung
 
 Ausgangsbasis `5ab55032b66e87950411cf6c1323fb3284d63eb6`, bestehender Spezifikationsbranch/PR #1. Mission 5 autorisiert ausschließlich Forschung, Vergleich und Dokumentation mit normalem Commit/Push. Keine Technologie ausgewählt, keine Anwendung, Ressource, Cloudaccount, Modellausführung oder Ausgabe; kein Merge/Deployment. Empfehlungen sind **Empfohlen / Zur Entscheidung**, niemals eine Freigabe.
@@ -174,7 +176,7 @@ Die robuste Empfehlung betrifft **die Architekturform**, nicht endgültig den Pr
 
 | Spezifikationsgrundlage | Technische Untersuchungsfolge |
 |---|---|
-| 89 FE, FE-56 offen, 66 UC und 25 DEC-V1 | Vollständiger bestätigter Funktionsrahmen bleibt Soll; vereinfachter Prototyp ist keine heimliche V1-Kürzung |
+| 89 FE, FE-56 mit bestätigtem V1-Postfachausschluss, 66 UC und 25 DEC-V1 | Vollständiger bestätigter Funktionsrahmen bleibt Soll; vereinfachter Prototyp ist keine heimliche V1-Kürzung |
 | D1/D2, NFR-01/03/12/16/24; SEC-04/11/15/19 | Relationen, kontogebundene Quellen, Memory-/Chat-Trennung, Konflikte, Schutzvererbung und Lösch-/Restorekontrollstand |
 | FE-55, NFR-02/08/19/20 | Echte PWA-/Geräte-/Offline-/Sprach-/Accessibilityprüfungen, keine native Universalgarantie |
 | SEC-01..07/18/22/23; S3.5/8 | Auth/OTP-/MFA-/Admin-/Serverrechte-/Bootstrapnachweise und vertrauenswürdige Build-/Toolketten |

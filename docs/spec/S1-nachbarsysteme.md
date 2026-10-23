@@ -1,7 +1,7 @@
 # S1 — Nachbarsysteme und fachliche Schnittstellenverträge
 
 **Projekt:** Syllentra AI\
-**Version:** 0.7\
+**Version:** 0.8\
 **Stand:** 23.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Ausgangsstand:** `ace1d80e80245379beed02296c3c4dd184c8dd70` auf `docs/spec/p1-p2-mobile-workspaces`, bestehende [PR #1](https://github.com/Viny005/syllentra/pull/1).
@@ -12,7 +12,7 @@ S1 beschreibt Operationen, Austauschrichtungen, fachliche Eingaben/Ergebnisse, R
 
 V1 ist eine offene Mehrbenutzerplattform mit isolierten persönlichen Konten, einem Super Admin und eingeschränkt delegierten sekundären Admins. Verifikation per E-Mail-OTP geht dem erstmaligen Zugriff auf Anwendungsdaten voraus; zuvor bleiben nur beschränkte Verifikations-/Recoveryfunktionen erreichbar. Normale Wiederanmeldung und Sitzungsentsperrung folgen FE-61/62. Der eigene PWA-Client, die eigene zentrale EU-Cloud, interne KI und Sicherungen gehören zur Produktgrenze. Der persönliche PC ist kein notwendiger Server; andere Konten sind keine freigegebenen Quellen. Adminrolle gewährt kein Inhaltsleserecht. Optionaler externer Speicher ist ausschließlich NB-10, nicht der interne Betrieb.
 
-Alle hier beschriebenen Verbindungen sind Soll-Verträge. Kein Produktkonnektor, Mail-/Pushdienst, Sprachdienst oder Providerrecht wurde in dieser Dokumentationsarbeit aktiviert oder getestet. FE-56 bleibt ausdrücklich offen. Die bestätigten Vorgaben und neue konkrete Modell-/Vertragspräzisierungen sind von der ausstehenden Abnahme getrennt. Keine zukünftige Spielezone oder Developer-Skill-Installation wird V1-Pflicht.
+Alle hier beschriebenen Verbindungen sind Soll-Verträge. Kein Produktkonnektor, Mail-/Pushdienst, Sprachdienst oder Providerrecht wurde in dieser Dokumentationsarbeit aktiviert oder getestet. FE-56 schließt Postfachlektüre, -synchronisation und -überwachung in V1 ausdrücklich aus; eine spätere Integration bleibt unverbindlich. Die bestätigten Vorgaben und neue konkrete Modell-/Vertragspräzisierungen sind von der ausstehenden Abnahme getrennt. Keine zukünftige Spielezone oder Developer-Skill-Installation wird V1-Pflicht.
 
 **Bestandsaufnahme vor Bearbeitung:** P1 0.5, P2 0.6, F1 0.2, F2/F3/D1/D2/B1/B2/B3 jeweils 0.1 und README waren vorhanden. S1, S2, S3, N1, N2, E2 fehlten. Einschlägige Grundlagen: [Projektvision](../PROJECT_VISION.md), [Anforderungen](../REQUIREMENTS.md), [Architekturentscheidungen](../ARCHITECTURE_DECISIONS.md), [Roadmap](../ROADMAP.md). Der entfernte Branch und PR-Head entsprachen dem Ausgangsstand. Die GitHub-Metadaten-API lieferte auch nach Wiederholung HTTP 403; der offene PR-Status aus dem Anhang konnte daher nicht unabhängig erneut bestätigt werden. Verifizierbar sind Git-Refs und Inhalt; kein automatisches Merge.
 
@@ -103,7 +103,7 @@ Alle hier beschriebenen Verbindungen sind Soll-Verträge. Kein Produktkonnektor,
 | Vertragsaspekt | Fachliche Festlegung |
 |---|---|
 | Rolle | Ausgehende System- und optionale Benachrichtigungsmail, getrennt vom Inbox-Lesen. |
-| Verfügbarkeit | V1-Soll für OTP/Sicherheit/Recovery; Anbieter und Lieferfähigkeit offen. Inbox-Lesen: FE-56 offen, noch kein ausführbarer Vertrag. |
+| Verfügbarkeit | V1-Soll für OTP/Sicherheit/Recovery und autorisierte Benachrichtigungen; Anbieter und Lieferfähigkeit offen. FE-56: Postfachlektüre, -synchronisation und -überwachung in V1 ausgeschlossen; keine Inbox-Leseoperation. Manueller Import ausgewählter Inhalte bleibt möglich. |
 | Fachliche Operationen | VerifikationsmailSenden(Adressbezug, Zweck, geschützter Vorgangsbezug) → Annahme/Fehler; SicherheitsmailSenden(Konto, Ereignis, Primäradresse) → Versandstand; HinweisMailSenden(Konto, freigegebene neutrale Meldung) → Versandstand |
 | Richtung | Ausgehend zu erlaubtem Maildienst; Zustellrückmeldung eingehend soweit nachweisbar. Keine Inbox-Lesekante. |
 | Auslöser | Registrierung/Verifikation/Recovery oder autorisiertes Sicherheitsereignis; wichtige Erinnerungsmail nur nach optionaler Konfiguration. |
@@ -335,7 +335,7 @@ Die folgenden Prüfungen sind Soll-Abnahmen, keine in dieser Lieferung ausgefüh
 
 ### S1.18.1 Vollständiges deutsches FE-Register
 
-Genau ein Registereintrag je FE-ID. **88 bestätigte Entscheidungen und ein offener Punkt FE-56**; technisch bedingte Umsetzung ist keine Rücknahme der bestätigten fachlichen Vorgabe. „Direkt“ betrifft Nachbaroperationen; „indirekt“ deren Eingaben, Rechte oder Ergebnisse; „außerhalb S1“ interne Fach-/Dialoglogik. Verweise benennen die in dieser Mission harmonisierten Bausteine; die konkreten Modell-/Interaktionsdetails bleiben ebenfalls Zur Prüfung. Die Spalte Abnahme ist je Entscheidung überprüfbar und ergänzt AT-S1-01 bis AT-S1-30.
+Genau ein Registereintrag je FE-ID. **89 FE mit bestätigtem V1-Rahmen; FE-56 bestätigt den Ausschluss jeder Postfachlektüre, -synchronisation und -überwachung aus V1. Eine spätere Integration bleibt unverbindliche Zukunftsoption**; technisch bedingte Umsetzung ist keine Rücknahme der bestätigten fachlichen Vorgabe. „Direkt“ betrifft Nachbaroperationen; „indirekt“ deren Eingaben, Rechte oder Ergebnisse; „außerhalb S1“ interne Fach-/Dialoglogik. Verweise benennen die in dieser Mission harmonisierten Bausteine; die konkreten Modell-/Interaktionsdetails bleiben ebenfalls Zur Prüfung. Die Spalte Abnahme ist je Entscheidung überprüfbar und ergänzt AT-S1-01 bis AT-S1-30.
 
 | FE | Deutscher Kurzinhalt | S1-Betroffenheit | NB | Dokumente | Änderungsbedarf / Ergebnis | Abnahmekriterium | Entscheidungsstatus |
 |---|---|---|---|---|---|---|---|
@@ -394,7 +394,7 @@ Genau ein Registereintrag je FE-ID. **88 bestätigte Entscheidungen und ein offe
 | FE-53 | Kostenfreie Software/Modellgewichte mit kommerziell geeigneter Lizenzkette; keine verpflichtende bezahlte API, Infrastrukturkosten getrennt. | direkt | NB-08, NB-11 | P1, P2, F3, N1 | Neu aus Auftrag übernommen und in Fachbausteinen ergänzt | Ungeprüfte Modell- oder Dependencylizenz ist keine Freigabe. | bestätigt |
 | FE-54 | Autonomer Kern mit eigener Cloud; freiwilliger externer Integrationskatalog bleibt erhalten. | direkt | NB-08, NB-11 | P1, P2 | Neu aus Auftrag übernommen und in Fachbausteinen ergänzt | Ausfall externer KI sperrt nicht die eigenen importierten Dateien. | bestätigt |
 | FE-55 | Installierbare PWA V1 auf kompatiblen Geräten, native Apps gegebenenfalls später. | direkt | NB-01, NB-12 | P1, P2, F1, F2, B1 | Neu aus Auftrag übernommen und in Fachbausteinen ergänzt | Nicht unterstützte native API wird nicht als PWA-Fähigkeit versprochen. | bestätigt; Umsetzung bedingt |
-| FE-56 | Optionale zukünftige Inbox-Lesefunktion nicht endgültig entschieden; keine automatische Hochschulpost in V1. | direkt | NB-05 | P2, F1, F2, B2, S1 | Offene Leseoption abgegrenzt; kein V1-Leserecht | Kein Postfachabruf allein wegen Registrierung, E-Mail-Adresse oder Sendeberechtigung. | offen — keine Freigabe zur Inbox-Lesefunktion |
+| FE-56 | Keine Lektüre, Synchronisation oder Überwachung von E-Mail-Postfächern in V1. OTP-/Sicherheitsversand, autorisierte Benachrichtigungen und manueller Import ausgewählter Inhalte bleiben möglich; spätere Integration nur unverbindliche Option. | direkt | NB-05 | P2, F1, F2, B2, S1 | V1-Ausschluss vom Projektinhaber in Mission 19 am 23.10.2026 bestätigt und dokumentarisch integriert; keine neue Implementierung oder Produktprüfung | Kein Postfachabruf, Sync oder Monitoring in V1, auch nicht nach Verbindung, Nutzer-Opt-in oder Adminfreigabe; erlaubter Versand und manueller Datei-/Textimport bleiben getrennt möglich. | bestätigt — V1 ausgeschlossen; Zukunft ohne Realisierungszusage |
 | FE-57 | Getrennte Administrationskonsole für unterstützte Inhalte/Branding/Übersetzungen/Navigation mit Historie; neue Technik braucht Entwicklung. | indirekt | NB-11 | P1, P2, F2, B1 | Neu aus Auftrag übernommen und in Fachbausteinen ergänzt | Textänderung führt keinen fremden Code aus. | bestätigt |
 | FE-58 | Featureflags öffentlich, verborgen, bald verfügbar oder Testgruppe; global/rollenbezogen und serverseitig wirksam. | indirekt | NB-11 | F3, D1, D2, B1, N2 | Neu aus Auftrag übernommen und in Fachbausteinen ergänzt | Ausgeblendetes gesperrtes Feature lässt sich nicht über direkten Aufruf nutzen. | bestätigt |
 | FE-59 | Offene Registrierung V1, individuelle isolierte Konten; nach Verifikation aktive fertige Funktionen ohne manuelle Genehmigung nutzen. | indirekt | NB-01, NB-05 | P1, P2, F1, F2, D1 | Neu aus Auftrag übernommen und in Fachbausteinen ergänzt | Verifiziertes Konto benötigt keinen Admin-Registrierungsfreigabeschritt. | bestätigt |
@@ -439,7 +439,7 @@ Genau ein Registereintrag je FE-ID. **88 bestätigte Entscheidungen und ein offe
 
 | Offener Punkt | Erforderliche Entscheidung / Nachweis | Zuständigkeit und Freigabegrenze |
 |---|---|---|
-| O-S1-01 | Optionale Inbox-Lesefunktion FE-56 überhaupt zulassen, Umfang und Version | Projektinhaber; offen, V1 keine automatische Hochschulpost. |
+| O-S1-01 | Unverbindliche mögliche Postfachintegration nach V1 (FE-56) | Kein offener V1-Umfang: Ausschluss in Mission 19 bestätigt. Jede spätere Erweiterung benötigt eigenen Fachauftrag; keine Realisierungszusage. |
 | O-S1-02 | EU-Cloudanbieter, Kapazität, Budget und Portabilität | Architektur/S3; kein Anbieter durch diesen Entwurf beschafft. |
 | O-S1-03 | Tatsächlich erlaubte OTP-/Sicherheitsmail-/Pushdienste und Zustellnachweise | S1-Bindung/S3/N2; keine erfundenen Tarife oder Verfügbarkeit. |
 | O-S1-04 | Konkrete offizielle Konnektoren und minimale OAuth-/API-Scopes | Je NB Nachweis; kein pauschaler Zugriff oder Cookie-Scraping. |
@@ -454,7 +454,7 @@ Genau ein Registereintrag je FE-ID. **88 bestätigte Entscheidungen und ein offe
 | O-S1-13 | Sichere initiale Bestellung/Recovery des einzigen Super Admin und Betriebstrennung | S3/N2; kein sekundärer Admin oder Self-Service-Signup erlangt dieses Recht. |
 | O-S1-14 | Reale Verfügbarkeit, Implementierungs- und Produktabnahmetests sämtlicher Verbindungen | Spätere Implementierung; diese Lieferung enthält nur Dokumentationsprüfungen. |
 
-**Freigabestatus:** Zur Prüfung durch den Projektinhaber. FE-56 bleibt offen; alle übrigen fachlichen Entscheidungen des Anhangs werden als Anforderungen erhalten. Kein Merge, Deployment, Kontoverbinden oder Produktdatenverarbeiten.
+**Freigabestatus:** Zur Prüfung durch den Projektinhaber. FE-56 ist für V1 als Ausschluss bestätigt; alle fachlichen Entscheidungen des Anhangs bleiben Anforderungen. Eine spätere Postfachintegration ist unverbindlich. Kein Merge, Deployment, Kontoverbinden oder Produktdatenverarbeiten.
 
 ## S1.20 Anschluss der vier Fachentscheidungen ohne neue Nachbarrechte
 
@@ -462,7 +462,7 @@ L-04/UC-65 verändert keine NB-Kennung: In-App-Regeln/Hinweise/Verlauf sind inte
 
 **Zusätzlicher Vertragsbezug NB-09/NB-05:** DM-77-Regelfassung, aktuelle Ereignisrevision, tatsächliches Geräte-/Kanalrecht, Benachrichtigungszone und konfigurierbare Ruhezeit initial 22:00–08:00 vor jedem Zustellversuch prüfen. Unbestätigte Terminänderung verändert keine Erinnerungsfristen. Keine private Note/Lerninformation im ungeschützten Vorschautext; unbekannte Auslieferung/Lesenachweise in DM-78 nicht erfinden. Hinweis bleibt intern unabhängig vom Pushrecht. Kein automatischer E-Mail-Ersatz, kein Retry nach Widerruf/Hinweislöschung, keine doppelte fachliche Absicht durch wiederholte Jobs. Dringlichkeit oder Fokusmodus erlaubt keinen Bruch der bestehenden Schutz-/Ruhezeitregeln.
 
-L-09/UC-66 kann ohne NB-03/NB-04-Konnektor auf manuell bereitgestellten Unterlagen arbeiten; Quelle, persönliche Geltung und Nutzerprüfung bleiben getrennt. L-08-Reihenfolgeautomatik und L-02-Darstellungsmodus sind interne Vorgänge und erteilen weder Dritt-KI-, Mikrofon- noch Kalenderrechte. FE-56 bleibt ausdrücklich offen. [F2](F2-anwendungsfaelle.md), [D1](D1-datenmodell.md) und [B2](B2-batch.md) konkretisieren Wirkung/Nachweise; alle bestehenden S1-Verträge und die 89-FE-Matrix bleiben erhalten.
+L-09/UC-66 kann ohne NB-03/NB-04-Konnektor auf manuell bereitgestellten Unterlagen arbeiten; Quelle, persönliche Geltung und Nutzerprüfung bleiben getrennt. L-08-Reihenfolgeautomatik und L-02-Darstellungsmodus sind interne Vorgänge und erteilen weder Dritt-KI-, Mikrofon- noch Kalenderrechte. FE-56 schließt Postfachlektüre, -synchronisation und -überwachung in V1 ausdrücklich aus; eine spätere Integration bleibt unverbindlich. [F2](F2-anwendungsfaelle.md), [D1](D1-datenmodell.md) und [B2](B2-batch.md) konkretisieren Wirkung/Nachweise; alle bestehenden S1-Verträge und die 89-FE-Matrix bleiben erhalten.
 
 ## S1.21 Anschluss von DEC-48 und DEC-49
 
@@ -474,7 +474,7 @@ Die bestehenden NB-01-/NB-08-Operationen zur Sprachausgabe werden durch UC-20-Au
 
 ## S1.23 Audioverträge, Fähigkeitsgrenzen und offene Alternativen
 
-**Quelle / Status:** Eigentümerauftrag Mission 15 vom 23.10.2026, AUDIO-01 bis AUDIO-03 fachlich bestätigt; technische Alternativen **Empfohlen / Zur Entscheidung**, gesamter Spezifikationsentwurf **Zur Prüfung**. Die Arbeitsreferenzen ergänzen FE-21/FE-74 und bestehende Benachrichtigungsanforderungen, keine neuen FE, UC, DEC-V1 oder Nachbarsysteme. Alle 89 Registereinträge in S1.18.1 einschließlich FE-56 offen bleiben unverändert.
+**Quelle / Status:** Eigentümerauftrag Mission 15 vom 23.10.2026, AUDIO-01 bis AUDIO-03 fachlich bestätigt; technische Alternativen **Empfohlen / Zur Entscheidung**, gesamter Spezifikationsentwurf **Zur Prüfung**. Die Arbeitsreferenzen ergänzen FE-21/FE-74 und bestehende Benachrichtigungsanforderungen, keine neuen FE, UC, DEC-V1 oder Nachbarsysteme. Die Audio-Lieferung änderte die damaligen 89 FE-Registereinträge nicht. Mission 19 präzisiert ausschließlich FE-56 als bestätigten V1-Postfachausschluss mit unverbindlicher Zukunftsoption; alle übrigen Einträge bleiben erhalten.
 
 ### S1.23.1 Ergänzung der bestehenden Nachbarverträge
 

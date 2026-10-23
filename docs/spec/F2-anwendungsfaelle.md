@@ -2,7 +2,7 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** F2 — Anwendungsfälle\
-**Version:** 0.6\
+**Version:** 0.7\
 **Stand:** 23.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Spezifikationsmethode:** Bausteine nach Johannes Siedersleben\
@@ -1909,9 +1909,11 @@ Diese Punkte entscheiden FE-01 bis FE-09 nicht neu. Unklare Schnittstellen oder 
 
 ## F2.14 Ergänzte Anwendungsfälle für Konten, Datenkontrolle und Integrationsgrenzen
 
-Die Entscheidungen FE-27 bis FE-89 ergänzen den Bestand; mit Ausnahme von **FE-56 (offen)** sind ihre fachlichen Vorgaben bestätigt. Die vollständige deutsche Entscheidungsmatrix und die zwölf Nachbarverträge stehen in [S1](S1-nachbarsysteme.md). Eine fachliche Entscheidung ist keine Aussage über implementierte Funktionen oder aktuell erteilte Anbieterrechte. Alle Bausteine bleiben **Zur Prüfung**. Historische Prüfstände, frühere FE-Teilmengen und alte Versionsbezüge bezeichnen ausschließlich ihre damalige Grundlage; maßgeblich ist der aktuelle Index mit [Änderungs- und Prüfnachweis](E3-pruefnachweis.md).
+Die Entscheidungen FE-27 bis FE-89 ergänzen den Bestand. FE-56 war beim historischen Abgleich noch offen; seit der Eigentümerentscheidung aus Mission 19 vom 23.10.2026 sind Postfachlektüre, -synchronisation und -überwachung in V1 ausgeschlossen. Ausgehende OTP-/Sicherheitsmails, autorisierte Benachrichtigungen und manueller Import ausgewählter Inhalte bleiben möglich; eine spätere Integration ist unverbindlich. Die übrigen bestätigten Vorgaben bleiben erhalten. Die vollständige deutsche Entscheidungsmatrix und die zwölf Nachbarverträge stehen in [S1](S1-nachbarsysteme.md). Eine fachliche Entscheidung ist keine Aussage über implementierte Funktionen oder aktuell erteilte Anbieterrechte. Alle Bausteine bleiben **Zur Prüfung**. Historische Prüfstände, frühere FE-Teilmengen und alte Versionsbezüge bezeichnen ausschließlich ihre damalige Grundlage; maßgeblich ist der aktuelle Index mit [Änderungs- und Prüfnachweis](E3-pruefnachweis.md).
 
 Die neuen Kennungen ergänzen UC-01 bis UC-50 ohne Umnummerierung. Gemeinsame Vorbedingungen: verifiziertes eigenes Konto, aktuelle Sitzung, passende Geräte- und Funktionsrechte; Registrierung und Recovery sind ausdrücklich beschränkte Ausnahmen.
+
+**FE-56 — verbindliche Grenze:** Kein UC liest, synchronisiert oder überwacht in V1 ein E-Mail-Postfach, auch nicht über UC-45/UC-56 oder administrativen Scope. Angeforderter OTP-/Sicherheitsversand und autorisierte Benachrichtigungen bleiben ausgehende Vorgänge; UC-11/UC-59 dürfen ausgewählte manuell bereitgestellte Inhalte aufnehmen. Zukunftsoption ohne Realisierungszusage, keine neue UC- oder DEC-Kennung.
 
 ### UC-51 — Registrieren und E-Mail bestätigen
 
@@ -1929,6 +1931,10 @@ Die neuen Kennungen ergänzen UC-01 bis UC-50 ohne Umnummerierung. Gemeinsame Vo
 
 **Abnahmebeispiel:** Konto A wird verifiziert; es erhält sein leeres Dashboard und niemals Inhalte von Konto B.
 
+**Bestätigte R4-Variante:** Ab exakt 24 Stunden (`>= 24 h`) unverifiziertem `pending`-Zustand ist ein kontrollierter neuer Registrierungsdurchlauf zulässig. Die Frist beginnt am verlässlichen serverseitigen Startpunkt und wird durch OTP-Neuversand nicht verlängert. Neuer Passwortnachweis und neue gebundene E-Mail-OTP-Prüfung; alte Challenges werden entwertet. Gleichzeitige Verifikation/Neuregistrierung sind atomar zu prüfen; bereits verifizierte Konten werden niemals zurückgesetzt, unerwartete vorhandene Anwendungsdaten sperren den Reset. Keine Übertragung von Daten oder Privilegien. DM-54, DT-67/85 und N2.2 sind maßgeblich.
+
+**Zusätzliche Soll-Abnahme R4:** Unter 24 h kein Reset mit anderem Passwort; bei exakt 24 h neuer Lauf nur unter den genannten Schutzbedingungen. Eine bereits wirksame Verifikation sperrt jeden nachfolgenden Reset; gewinnt der zulässige Reset zuerst, bleibt der alte OTP ungültig. Ein zurückgesetztes Konto erhält vor neuer gültiger OTP-Prüfung keine Appdaten. Dokumentierter Sollfall, in Mission 19 kein neuer Testlauf.
+
 ### UC-52 — Sitzung sicher entsperren und Konto wiederherstellen
 
 | Merkmal | Festlegung |
@@ -1944,6 +1950,10 @@ Die neuen Kennungen ergänzen UC-01 bis UC-50 ohne Umnummerierung. Gemeinsame Vo
 **Alternativen, Fehler und Schutz:** Schließen, lokale Sperre, Abmelden und Serversitzungsablauf sind verschieden. Lokales OS-Biometrie-/PIN-Entsperren verlängert keine abgelaufene Serversitzung. Kontorecovery ersetzt keine Dokumentenschlüssel. Abbruch vor bestätigter Wirkung erhält den Ausgangsbestand; nach unklarem Ausgang wird zunächst die tatsächliche Wirkung geprüft.
 
 **Abnahmebeispiel:** Ein abgelaufener Serverzugang bleibt trotz erfolgreicher lokaler Biometrie gesperrt; verlorene Geräte bleiben widerrufen.
+
+**Bestätigte R1-Variante:** Die Recovery prüft den befristeten gebundenen E-Mail-OTP/Vorgang und den davon unabhängigen persönlichen Einmal-Recoverycode. Letzterer läuft nicht automatisch nach sieben Tagen ab; Verbrauch, Widerruf, kontrollierter Ersatz/Rotation oder Sicherheitsinvalidierung beenden seine Gültigkeit. Abgelaufener OTP, ungültiger persönlicher Code oder gesperrtes Konto erlauben keine Recovery. Kontorecovery ersetzt keine Dokumentenschlüssel oder Admin-MFA; DM-54, DT-67/85 und N2.2 gelten weiter.
+
+**Zusätzliche Soll-Abnahme R1:** Ein älterer, noch gültiger persönlicher Code mit aktuellem erlaubtem OTP bleibt nutzbar; derselbe Code mit abgelaufenem OTP oder nach Verbrauch/Widerruf/Ersetzung/Invalidierung bleibt gesperrt. Keine Änderung der vorhandenen lokalen Implementierung und kein neuer Produkttest durch diesen Nachtrag.
 
 ### UC-53 — Rollen delegieren und Administration absichern
 

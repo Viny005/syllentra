@@ -1,6 +1,6 @@
 # Syllentra AI — konsolidierte Release-Kontrollmatrix
 
-**Version:** 0.2 · **Stand:** 22.10.2026 · **Status:** Zur Prüfung durch den Projektinhaber
+**Version:** 0.3 · **Stand:** 23.10.2026 · **Status:** Zur Prüfung durch den Projektinhaber
 
 ## 1. Bestand, Zählung und Abgrenzung
 
@@ -733,7 +733,7 @@ Die Profile konkretisieren das Original, ohne es zu ersetzen. Ein Beleg umfasst 
 
 Jeder neue NFR-/SEC-Aspekt ist über sein Prüfprofil an mindestens eine Kontrolle angeschlossen. Mehrfachbezüge bezeichnen unterschiedliche Nachweisanteile, keine mehrfachen Kontrollnummern. Quellenqualität (REL-A05), pädagogische Bewertung (REL-A18) und sichere Modell-/Agentenwirkung (REL-A01/S06) sind getrennte Nachweise: eine korrekte Antwort beweist keine Autorisierung und eine sichere Toolausführung keine fachliche Güte.
 
-REL-A16 führt WCAG 2.2 AA ausdrücklich als **zu bestätigendes Ziel**. Bestehende Zugänglichkeitsanforderungen gelten bereits; es wird keine zusätzliche formal genehmigte Standardbindung behauptet. REL-A20 erhält kein neues Profil, seine Incident-/Rollbackfälle sind vor Produktion unter REL-Q17/18/20 nachzuweisen. REL-Q10 bleibt spätere Option ohne V1-Zahlungsumfang. FE-56 bleibt offen. Dokumentstatus und erfolgte Dokumentprüfungen sind in [E3](../spec/E3-pruefnachweis.md) getrennt von der ausstehenden Produktabnahme nachgewiesen.
+REL-A16 führt WCAG 2.2 AA ausdrücklich als **zu bestätigendes Ziel**. Bestehende Zugänglichkeitsanforderungen gelten bereits; es wird keine zusätzliche formal genehmigte Standardbindung behauptet. REL-A20 erhält kein neues Profil, seine Incident-/Rollbackfälle sind vor Produktion unter REL-Q17/18/20 nachzuweisen. REL-Q10 bleibt spätere Option ohne V1-Zahlungsumfang. FE-56 schließt gemäß Mission 19 jede Postfachlektüre, -synchronisation und -überwachung in V1 aus; eine spätere Integration bleibt unverbindlich. Dokumentstatus und erfolgte Dokumentprüfungen sind in [E3](../spec/E3-pruefnachweis.md) getrennt von der ausstehenden Produktabnahme nachgewiesen.
 
 ## 5. Betriebszuordnung aus S3
 

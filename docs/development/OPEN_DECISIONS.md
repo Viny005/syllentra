@@ -1,10 +1,10 @@
 # Offene Entscheidungen des Entwicklungsökosystems
 
-**Version:** 0.3 · **Stand:** 23.10.2026 · **Status:** Empfohlen / Zur Entscheidung
+**Version:** 0.4 · **Stand:** 23.10.2026 · **Status:** Empfohlen / Zur Entscheidung
 
 ## 1. Fortgeltung
 
-Alle 14 [TECH-O](../architecture/OFFENE_ENTSCHEIDUNGEN.md) bleiben offen; A/B/C/D aus der [Entscheidungsvorlage](../architecture/ENTSCHEIDUNGSVORLAGE.md) ist Evidenzklasse, keine Genehmigung. Keine neue FE/UC/DEC oder konkurrierende Entscheidungsnummer. FE-56 offen; 25 DEC-V1, DEC-48/49 und 46 REL erhalten. Technische/visuelle Empfehlungen hier Empfohlen / Zur Entscheidung; Fachspezifikation weiterhin Zur Prüfung.
+Alle 14 [TECH-O](../architecture/OFFENE_ENTSCHEIDUNGEN.md) bleiben offen; A/B/C/D aus der [Entscheidungsvorlage](../architecture/ENTSCHEIDUNGSVORLAGE.md) ist Evidenzklasse, keine Genehmigung. Keine neue FE/UC/DEC oder konkurrierende Entscheidungsnummer. FE-56: Postfachlektüre, -synchronisation und -überwachung in V1 ausgeschlossen; Zukunft unverbindlich (Mission 19); 25 DEC-V1, DEC-48/49 und 46 REL erhalten. Technische/visuelle Empfehlungen hier Empfohlen / Zur Entscheidung; Fachspezifikation weiterhin Zur Prüfung.
 
 ## 2. Vor konkreter Einführung zu entscheiden
 
@@ -30,7 +30,7 @@ Entscheidungen zuerst nach [ADR-Konvention](../ARCHITECTURE_DECISIONS.md) dokume
 
 ## 4. Vom Projektinhaber am 23.10.2026 bestätigte und in Mission 14 umgesetzte Identitätsentscheidungen (R1 und R4)
 
-Die in Mission 13 vorbereiteten Optionen zu **R1** und **R4** wurden vom Projektinhaber am 23.10.2026 ausdrücklich freigegeben und in Mission 14 im lokalen Identitätsprototyp ([004_r1_r4_lifetimes.sql](../../prototypes/backend/migrations/004_r1_r4_lifetimes.sql), [identity.py](../../prototypes/backend/src/syllentra_backend/identity.py), [test_mission12_audit.py](../../prototypes/backend/tests/test_mission12_audit.py)) umgesetzt. Es werden keine neuen konkurrierenden `DEC-*`-Nummern vergeben; die 14 TECH-O (insbesondere TECH-O-05/06 zur späteren produktiven Faktor-/Offlinecode-Übergabe) und FE-56 bleiben offen:
+Die in Mission 13 vorbereiteten Optionen zu **R1** und **R4** wurden vom Projektinhaber am 23.10.2026 ausdrücklich freigegeben und in Mission 14 im lokalen Identitätsprototyp ([004_r1_r4_lifetimes.sql](../../prototypes/backend/migrations/004_r1_r4_lifetimes.sql), [identity.py](../../prototypes/backend/src/syllentra_backend/identity.py), [test_mission12_audit.py](../../prototypes/backend/tests/test_mission12_audit.py)) umgesetzt. Es werden keine neuen konkurrierenden `DEC-*`-Nummern vergeben; die 14 TECH-O (insbesondere TECH-O-05/06 zur späteren produktiven Faktor-/Offlinecode-Übergabe) bleiben offen. FE-56 ist seit Mission 19 für V1 als Postfachausschluss bestätigt; eine spätere Integration bleibt unverbindlich:
 
 | Gegenstand | Bestätigte Eigentümerentscheidung (23.10.2026) | Technische Umsetzung in Mission 14 | Betroffene Quellen / Nachweise |
 |---|---|---|---|

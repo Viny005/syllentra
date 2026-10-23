@@ -1,8 +1,8 @@
 # Entscheidungsabdeckung — konsolidierter Fachstand
 
 **Projekt:** Syllentra AI\
-**Version:** 0.4\
-**Stand:** 22.10.2026\
+**Version:** 0.5\
+**Stand:** 23.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber
 
 ## 1. Quelle, Kennungsgrenzen und Leseregel
@@ -143,7 +143,7 @@ FE-20 betrifft Eingabe/Sprachdialog; FE-21 betrifft gewählte Einzelwiedergabe u
 - **Weitere fachliche Präzisierung mit Projektinhaber:** Unterstützter Umfang einer einfachen Wissenskarte/Relationssemantik und zitierfähiger Quellenformate, konkrete messbare Lern-/Bewertungskriterien, Häufigkeit/Deaktivierung von Hilfe-/Pausenangeboten und zulässige Zeitmessbasis/Datensparsamkeit. Keine neue Schwelle, Gesundheitsinferenz, versteckte Erhebung, Pflicht oder feste Formel wurde beschlossen. Wo eine neue Produktwirkung nötig wäre, vor Änderung eine explizite Entscheidung einholen.
 - **Technische Auswahl/Nachweise später:** Oracle-/Alternativvergleich, unabhängiger Backupanbieter und Rechte-/Schlüsselverfahren, tatsächliche PWA-/TTS-/OCR-/Modellfähigkeiten, Kosten und kommerziell passende Lizenzkette; Quoten, RPO/RTO, Frequenzen und Retention bleiben die vorhandenen O-S1/O-S2-Arbeiten. Keine externe Infrastrukturprobe in dieser Mission.
 - **Planung:** Bestehende M2b/M5/M8-Zuordnungen bleiben unverändert. Für übrige DEC-V1 und technische Abhängigkeiten ist ein vollständiger Meilensteinplan separat zu erarbeiten; keine neuen Termine/Meilensteinnummern.
-- **Abnahme:** Die Spezifikation insgesamt, konkrete Darstellungen, Typausprägungen und alle Produktnachweise bleiben zur Prüfung beziehungsweise noch auszuführen. [S3](S3-inbetriebnahme.md) liegt als fachlicher Prüfentwurf vor; konkrete Architektur, Ausführung und Freigaben bleiben Folgearbeiten. N1/N2 sind jetzt fachlich vervollständigt; technische Konkretisierung, Zielwertbestätigung und tatsächliche Produktprüfungen bleiben offen. FE-56 bleibt offen. REL-Q10 bleibt außerhalb V1.
+- **Abnahme:** Die Spezifikation insgesamt, konkrete Darstellungen, Typausprägungen und alle Produktnachweise bleiben zur Prüfung beziehungsweise noch auszuführen. [S3](S3-inbetriebnahme.md) liegt als fachlicher Prüfentwurf vor; konkrete Architektur, Ausführung und Freigaben bleiben Folgearbeiten. N1/N2 sind jetzt fachlich vervollständigt; technische Konkretisierung, Zielwertbestätigung und tatsächliche Produktprüfungen bleiben offen. FE-56 ist für V1 als Ausschluss von Postfachlektüre, -synchronisation und -überwachung bestätigt; eine spätere Integration bleibt unverbindlich. REL-Q10 bleibt außerhalb V1.
 
 ## 7. Verweise
 
@@ -151,4 +151,4 @@ FE-20 betrifft Eingabe/Sprachdialog; FE-21 betrifft gewählte Einzelwiedergabe u
 
 ## 8. Qualitäts- und Schutzanschluss aus Mission 3
 
-[N1](N1-nichtfunktional.md) führt NFR-01..25 und [N2](N2-querschnittskonzepte.md) SEC-01..27 mit Prüfprofilen. Die [Kontrollmatrix](../quality/RELEASE_KONTROLLMATRIX.md) bewahrt die 40 ursprünglichen Kontrollen und ergänzt sechs eigenständige Kontrollen; [Referenzrahmen](../quality/REFERENZRAHMEN.md) und [Freigabevoraussetzungen](../quality/FREIGABEVORAUSSETZUNGEN.md) dokumentieren Quellen-/Nachweisgrenzen. Alle 25 DEC-V1- und lokalen Sollfallzeilen oben bleiben unverändert. Die Auswahl von Grenzwerten, Geräten, Verfahren, Quellen-/Bewertungsrubriken und dem WCAG-AA-Ziel benötigt menschliche Bestätigung; FE-56 bleibt offen.
+[N1](N1-nichtfunktional.md) führt NFR-01..25 und [N2](N2-querschnittskonzepte.md) SEC-01..27 mit Prüfprofilen. Die [Kontrollmatrix](../quality/RELEASE_KONTROLLMATRIX.md) bewahrt die 40 ursprünglichen Kontrollen und ergänzt sechs eigenständige Kontrollen; [Referenzrahmen](../quality/REFERENZRAHMEN.md) und [Freigabevoraussetzungen](../quality/FREIGABEVORAUSSETZUNGEN.md) dokumentieren Quellen-/Nachweisgrenzen. Alle 25 DEC-V1- und lokalen Sollfallzeilen oben bleiben unverändert. Die Auswahl von Grenzwerten, Geräten, Verfahren, Quellen-/Bewertungsrubriken und dem WCAG-AA-Ziel benötigt menschliche Bestätigung; FE-56 ist für V1 als Ausschluss von Postfachlektüre, -synchronisation und -überwachung bestätigt; eine spätere Integration bleibt unverbindlich.
