@@ -1,7 +1,7 @@
 # N2 — Querschnittskonzepte
 
 **Projekt:** Syllentra AI\
-**Version:** 0.8\
+**Version:** 0.9\
 **Stand:** 23.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber
 
@@ -459,3 +459,16 @@ Die Auflistung ist eine auf Syllentra bezogene fachliche Bedrohungsanalyse, kein
 Vor betroffener Aktivierung sind Identitäts-/Session-/Schlüsselverfahren, Recovery und einziger Super-Admin-Bootstrap, Datenschutzrollen/-grundlagen, zulässige Providerbedingungen, Secret-/CI-Konzept, Ressourcen-/Retentionsgrenzen und die unabhängige Restorefähigkeit zu bestätigen und technisch nachzuweisen. WCAG-Ziel und pädagogische Bewertungsrubriken brauchen die in N1 genannten Entscheidungen. FE-56 bleibt offen; keine Inboxfunktion wird freigegeben. DEC-48 ist eine Bewertungspriorität, DEC-49 eine Sicherungsanforderung, keine Infrastrukturfreigabe.
 
 Die [Freigabevoraussetzungen](../quality/FREIGABEVORAUSSETZUNGEN.md) ordnen Erstveröffentlichung, Funktionsaktivierung, Regression und periodische Nachweise zu. Sie liefern die Gates für [S3](S3-inbetriebnahme.md); dessen Bootstrap-, Recovery-, Freigabe- und Incidentabläufe sind spezifiziert, aber keine ausgeführten Betriebsverfahren. Kein Kryptoverfahren, Anbieter, Framework, Modell, kostenpflichtiger Dienst oder neues Nutzungsrecht wird durch N2 gewählt.
+
+## N2.16 Schutzgrenzen für Töne und Stimmen
+
+AUDIO-01/02/03 konkretisieren SEC-02/04/05/06/07/11/13/14/19/20/24/26/27; keine neue SEC-/FE-/DEC-V1-Kennung und durch diese Audioanforderungen keine Änderung der in N2.2 (Mission 14, R1/R4) bestätigten Identitäts- und Recoveryentscheidungen. Sollfälle: [B1.13](B1-dialogspezifikation.md#b113-abnahmeszenarien-für-töne-und-stimmen).
+
+1. **Rechte und Steuerung:** TTS-Ausgabe, Mikrofonaufnahme und OS-/Push-Freigabe sind getrennte Vorgänge. Nur Hören verlangt kein Mikrofonrecht. Persönlicher Hörmodus ist freiwillig und standardmäßig aus; gespeicherte Präferenzen oder deren Geräteabgleich aktivieren nach Gerätewechsel/erneuter Anmeldung keine ungeprüfte Hörsitzung. Vor Start/Fortsetzen und weiterer Erzeugung heutige Konto-/Geräte-/Inhalts-/Anbieterrechte und Serverflags prüfen.
+2. **Entzug:** Bei erkanntem Rechte-/Sitzungs-/Providerverlust laufende unzulässige Ausgabe, Warteschlange und Folgeaufträge sofort stoppen; temporäre zugängliche Kopien nach gültigen Löschregeln bereinigen. Technische Erkennungs-/Synchronisationsfristen bleiben nachzuweisen. Ein unerreichbares Gerät kann nicht garantiert augenblicklich unterbrochen oder rückwirkend „ungehört“ gemacht werden. Offlinefreigabe und zulässige lokale Gültigkeit sind vor Aktivierung zu klären, kein stiller Offline-Ausweg.
+3. **Minimale Weitergabe:** Auch eine vom Browser angebotene Stimme ist nicht automatisch lokal. Tatsächlichen Verarbeitungsort, Motor und Datenfluss feststellen; kein persönlicher Inhalt an entfernten TTS-Motor ohne passende Anbieter-/Kategorie-/Zweckfreigabe und geprüfte Bedingungen. Vorschau nur mit neutralem Text, keine privaten Notizen/Gespräche im Vorschauauftrag, in Push/Sperrbildschirm oder Diagnosen. Stimme/Audiodateien dürfen ohne geeignete Einwilligung nicht zum Training Dritter genutzt werden. Play-Klick ist weder Trainings-, Mikrofon- noch pauschale Anbieterfreigabe.
+4. **Kontentrennung und Lebenszyklus:** Persönliche Ton-/Stimmenwerte und temporäre Audioableitungen bleiben kontogebunden. Puffer, Caches, Vorschauen und Wiedergabeposition erben Schutz und endliche Retention; Quelllöschung/Entzug verbietet Wiederbelebung durch Replay, Restore oder veraltete Geräte. Statistik protokolliert keine gesprochenen Privattexte. Neutraler Referenztext ersetzt keine Lizenz-/Datenschutzprüfung eines Dienstes.
+5. **Administrationsgrenze:** Getrennte Administration verwaltet Kataloge/Motoren/Stimmen, servergeprüfte Verfügbarkeit/Rollenflags, Quoten und Kostenrahmen samt Rücknahme. Sie besitzt dadurch weder Inhaltsleserecht noch persönliche Opt-in-Vollmacht. Globaler Providerentzug sperrt betroffene Ausgabe, Rollback umgeht keine heutigen Rechte. UI-Verbergen allein ist keine Sperre. Keine funktionsfähige Administration wird in Mission 15 implementiert.
+6. **Vertrauenswürdige Kataloge und Kosten:** Keine Ton-/Motorinstallation oder Codeausführung durch bloße URL. Herkunft/Fassung, Audio-/Stimmenrechte, Software-/Gewichtslizenzen und Lieferkette prüfen; externe Region, Aufbewahrung, Training und Vertragsrollen bleiben zur Bewertung. Keine obligatorische bezahlte API und keine Kosten ohne ausdrückliche Freigabe; unklare Kosten sperren kostenpflichtige Nutzung statt stillen Fallbacks.
+
+Lautlos für optionale Benachrichtigungen beseitigt keine visuellen Hinweise und ändert keine Zustellrechte/Ruhezeiten. Bewusstes Probehören und manuelles TTS sind getrennte Aktionen, kein Umgehen eines ausgeschalteten Hörmodus. Reset setzt keine Datenschutzentscheidung zurück. Verfahren für Entzugserkennung, sichere Audiopuffer und tatsächlich unterstützte lokale/entfernte Stimmen bleiben technische offene Punkte; kein Schutztest als bestanden behauptet.

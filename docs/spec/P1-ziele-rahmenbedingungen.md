@@ -2,8 +2,8 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** P1 — Ziele und Rahmenbedingungen\
-**Version:** 0.10\
-**Stand:** 22.10.2026\
+**Version:** 0.11\
+**Stand:** 23.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Spezifikationsmethode:** Bausteine nach Johannes Siedersleben\
 **Geltungsbereich:** Fachlicher Zielumfang der ersten Produktversion (V1)
@@ -253,7 +253,7 @@ Vorgesehen sind:
 - Zusätzliche Audio- und Videolerninhalte, soweit die technische Machbarkeit geklärt ist.
 - Mehrsprachige Lernbegleitung, insbesondere in Deutsch, Französisch und Englisch.
 
-Der Lernkontext soll bei einem Wechsel zwischen den Kommunikationsformen erhalten bleiben.
+Der Lernkontext soll bei einem Wechsel zwischen den Kommunikationsformen erhalten bleiben. Persönliche Stimmen je Ausgabesprache, freiwilliges Anhören und ein ausdrücklich aktivierter Hörmodus sowie auswählbare Benachrichtigungstöne werden in P1.10.6 abgegrenzt.
 
 ### D. Prüfungsvorbereitung
 
@@ -869,3 +869,15 @@ DEC-49 konkretisiert G-45, CON-36/40/42 und SC-60/61: Verschlüsselte EU-Sicheru
 ### P1.10.5 Präzisierung des Eigentümers aus Mission 7
 
 Priorität ist zunächst eine hochwertige persönliche Lernassistenz mit guter Bedienbarkeit, pädagogischem Nutzen und zufriedenstellender Leistung. Das bestätigt keine Kürzung der V1-Ziele: Registrierung/Multiuser, strikte Kontoisolation, getrennte Administration, serverseitige Rechte und progressive Funktionsaktivierung bleiben erhalten. Bis zu 20 EUR brutto/Monat sind ausschließlich ein neuer Rahmen für künftige Vergleiche; frühere 10-EUR-Hypothese ersetzt, keine Ausgabe genehmigt. Mögliche finanzielle Beiträge späterer Nutzer sind nur eine spätere Untersuchungsoption, kein genehmigtes V1-Zahlungssystem. Quelle/Abgrenzung: [ADR-0006](../ARCHITECTURE_DECISIONS.md#adr-0006--persönlicher-qualitätsfokus-und-vergleichsrahmen-aus-mission-7). Keine G-/CON-/SC-/AS-/R-Kennung oder Abnahme entfällt.
+
+### P1.10.6 Bestätigte Audioentscheidungen aus Mission 15
+
+Quelle: vollständiger Eigentümerauftrag „SYLLENTRA AI — MISSION 15“, Abschnitte 3–6 und 9, vom 23.10.2026. AUDIO-01 bis AUDIO-03 sind Arbeitsreferenzen für bestätigte Präzisierungen, keine neuen FE oder DEC-V1. Dokumentstatus weiterhin **Zur Prüfung**; keine Audioimplementierung oder Anbieterwahl.
+
+- **AUDIO-01:** Nutzer können mehrere bereitgestellte Benachrichtigungstöne auswählen, optionale Töne ausschalten und bei tatsächlicher Plattformfähigkeit gezielt probehören. Lautlos erhält visuelle Hinweise und ihren geschützten Verlauf. In-App-Töne sind von OS-/Push-Tönen getrennt; eine freie Anpassung aller Hintergrundtöne wird nicht zugesagt. Bestehende Ruhezeiten und Kanalrechte gelten weiter.
+- **AUDIO-02:** Mehrere Stimmen werden angeboten, soweit der jeweilige zulässige Motor sie tatsächlich unterstützt. Die persönliche Auswahl erfolgt je Audiosprache, zunächst Deutsch, Französisch und Englisch, unabhängig von der Oberflächensprache. Vorschau nur auf bewusste Aktion mit neutralem Text, ohne private Lerninhalte. Konkrete Stimmen und gleiche Qualität in allen Sprachen sind vor technischen Prüfungen nicht garantiert.
+- **AUDIO-03:** Automatisches Vorlesen ist standardmäßig aus; geeignete berechtigte Antworten bleiben manuell anhörbar. Nur ausdrücklicher Hörmodus erlaubt neue zulässige Antworten automatisch. Pause, Fortsetzen und sofortiges Stoppen sowie dauerhaft zugänglicher Text sind vorzusehen. Reines Hören benötigt kein Mikrofonrecht. Rechteverlust stoppt unzulässige Ausgabe nach den Erkennungsgrenzen von N2; Gerätewechsel oder erneute Anmeldung aktiviert keinen Hörmodus aus einer gespeicherten Präferenz ohne geprüfte bestätigte Wiederaufnahmeregeln.
+
+Die Rubrik „Töne und Stimmen“ umfasst persönliche Auswahl, Vorschau, unterstütztes Tempo/Volumen, Verfügbarkeitsanzeige und kontrolliertes Zurücksetzen. Getrennte Administration verwaltet nur zulässige Kataloge, Verfügbarkeit, Serverflags, Rollenrestriktionen und Kosten-/Quotengrenzen; sie darf keinen Hörmodus erzwingen oder private Inhalte frei lesen. Kein persönlicher TTS-Text ohne passende externe Freigabe, kein Dritttraining von Stimme/Audiodateien ohne geeignete Einwilligung. Bis zu 20 EUR brutto/Monat bleiben Untersuchungsrahmen, keine Ausgabe genehmigt.
+
+**Prüfbarer Erfolg:** SC-07/SC-29/SC-46 werden durch die zehn Sollfälle in [B1.13](B1-dialogspezifikation.md#b113-abnahmeszenarien-für-töne-und-stimmen) konkretisiert; FE-21/FE-74 und UC-20/UC-48/UC-65 bleiben unverändert identifiziert. [S1.23](S1-nachbarsysteme.md#s123-audioverträge-fähigkeitsgrenzen-und-offene-alternativen) trennt Vertragsgrenzen, geprüfte Quellen und offene technische Alternativen.

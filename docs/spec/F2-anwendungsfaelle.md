@@ -2,8 +2,8 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** F2 — Anwendungsfälle\
-**Version:** 0.5\
-**Stand:** 22.10.2026\
+**Version:** 0.6\
+**Stand:** 23.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Spezifikationsmethode:** Bausteine nach Johannes Siedersleben\
 **Bezugsstand:** Vier bestätigte Entscheidungen vom 19.10.2026; Ausgangs-HEAD `53ef171be4783748b5c7e3a84bb0cc363d5b4194`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1; aktuelle Fassungen im [Index](README.md).\
@@ -764,6 +764,8 @@ Nachverfolgung und Soll-Abnahme: [DEC-V1-Matrix](ENTSCHEIDUNGSMATRIX.md).
 **Abnahmebeispiel:** Nach einer Textfrage zur Ableitung wird eine Sprachantwort derselben Diskussion zugeordnet. Bei verweigerter Mikrofonberechtigung lässt sich dort ohne neue Unterhaltung weiter schreiben.
 
 **Eigenständige Ausgabevariante FE-21 — Anhören und Hörmodus:** Dies ist keine Mikrofonaufnahme oder bloße Umschaltung der Eingabeform. Der Nutzer wählt an einer zulässigen Antwort „Anhören“; Syllentra prüft aktuelle Inhalts-/Anbieter-/Kostenrechte und tatsächliche TTS-Fähigkeit, bereitet nur den erlaubten Antworttext vor und zeigt Wiedergabestand sowie Fehler. Pause, Fortsetzung, erneutes Abspielen und unterstützte Geschwindigkeitsauswahl sind bedienbar. Ein ausdrücklich eingeschalteter Hörmodus liest neue dafür zulässige Antworten automatisch; automatische Ausgabe ist standardmäßig aus, abschaltbar und erfordert kein Mikrofonrecht. Gespeicherter Text und Gesprächskontext bleiben unverändert; Audiofehler sperren keine Texteingabe. Stimme, Sprache, Offline-/Hintergrundfähigkeit sind nur tatsächlich unterstützt auswählbar, keine Gerätegarantie.
+
+**AUDIO-02/03 — bestätigte Präzisierung:** Unter „Töne und Stimmen“ wählt der Kontoinhaber je Audiosprache eine tatsächlich verfügbare zulässige Stimme; Deutsch, Französisch und Englisch sind die initialen Zielsprachen, keine Garantie identischer Stimmenqualität. Oberfläche und Audiosprache bleiben unabhängig (FE-74), vorhandene Kurs-/Gesprächspräferenzen bleiben wirksam. Vorschau verwendet ausschließlich neutralen Text, nie eine zufällige private Antwort. Tempo und Lautstärke sind nur im belegten Bereich bedienbar. Rechte-/Sitzungsverlust beendet unzulässige laufende Ausgabe und Warteschlange; erneute Anmeldung oder Gerätewechsel startet sie nicht automatisch. Eine gespeicherte Wahl ist keine aktive Hörsitzung. Verfügbarkeitsfehler erklären, Text erhalten, keinen Anbieter still wechseln. Prüffälle: [B1.13](B1-dialogspezifikation.md#b113-abnahmeszenarien-für-töne-und-stimmen).
 
 **Schutz/Abnahme FE-21:** Ohne Mikrofonerlaubnis ist berechtigtes Anhören möglich; ohne eigene Aktivierung keine automatische Ausgabe. Bei verweigertem Medienstart, Widerruf, fehlender Fähigkeit oder nicht freigegebenen Kosten zeigt die App den tatsächlichen Zustand und lässt Text verfügbar, statt fremden Dienst oder Mikrofon zu aktivieren. Eine pausierte Ausgabe lässt sich fortsetzen oder erneut abspielen, soweit unterstützt; private Antworten werden nicht aus gelöschten/entzogenen Quellen wiederhergestellt. DLG-26/DLG-50, AF-01/AF-16/AF-17/AF-18/AF-19/AF-25/AF-32, DM-02/DM-25/DM-26/DM-48 und DT-07/DT-61 tragen Kontext, Präferenz und Schutz. Keine neue UC-Kennung. [Matrix](ENTSCHEIDUNGSMATRIX.md#4-fe-21--getrennte-ausgabevariante-und-abnahme).
 
@@ -1659,6 +1661,8 @@ Nachverfolgung und Soll-Abnahme: [DEC-V1-Matrix](ENTSCHEIDUNGSMATRIX.md).
 4. Der Administrator speichert die geprüfte Fassung oder wählt die erneute Prüfung einer geeigneten früheren Fassung.
 5. Syllentra berücksichtigt die gültige Konfiguration konsistent nach Neustart und erklärt plattformgebundene Installationsgrenzen.
 
+**AUDIO-01/02/03 — Administrationsvariante:** Die getrennte Administration verwaltet unterstützte Audioverfügbarkeit, lizenzgeprüfte Tonkataloge, freigegebene Motoren/Stimmen, Rollen-/Serverflags, Quoten, Kostenobergrenzen und Meldungen „Nicht verfügbar“/„In Entwicklung“. Globale Anbietersperre verhindert neue Aufträge und beendet betroffene unzulässige Ausgabe; Rollback stellt keine widerrufenen Rechte her. Direkte API-Versuche ohne aktuelles Verwaltungsrecht bleiben wirkungslos. Kein Admin aktiviert den persönlichen Hörmodus, erzwingt private Tonausgabe, liest pauschal Gespräche oder umgeht Datenschutzpräferenzen. Keine Administrationsimplementierung durch diesen Entwurf.
+
 **Alternative Szenarien:** Der Listentitel „Zu prüfen“ kann geändert werden, ohne Entscheidungsidentität oder Status zu verändern. Eine normale direkte Konfiguration erzeugt keinen zusätzlichen Vorschlagsdialog; ausdrücklich zustimmungspflichtige KI-Vorschläge folgen FE-08.
 
 **Fehler- und Schutzfälle:** Ungültige Werte, Rechteverletzungen oder Bearbeitungskonflikte verhindern unbemerkte Übernahme. Rücknahme erlaubt keine alten verbotenen Berechtigungen und stellt keine gelöschten persönlichen Daten wieder her.
@@ -2176,6 +2180,8 @@ Die neuen Kennungen ergänzen UC-01 bis UC-50 ohne Umnummerierung. Gemeinsame Vo
 6. Der eigene geschützte Verlauf unterscheidet logischen Hinweis, Zustellabsicht, Providerannahme, belegte Auslieferung und belegtes Lesen. Auswahl kann kontrolliert gelöscht werden; Quellereignis, Planung und pädagogische Erinnerung werden dadurch nicht mitgelöscht.
 
 **Alternativen/Fehler:** Ohne Pushrecht bleiben eigene In-App-Hinweise verfügbar. Zurückstellen in Ruhe-/Fokuszeit erhält den fachlichen Hinweis, garantiert keinen späteren Versand veralteter Meldungen. Kein Kanalersatz durch ungefragt aktivierte E-Mail, kein mehrfacher Versand durch Retry oder zwei Geräte. Unbekannter Zustellerfolg bleibt unbekannt. Dringlichkeit hebt Datenschutz/Ruhezeit nicht selbsttätig auf; zusätzliche Ruhezeitausnahmen werden nicht neu beschlossen. Verlaufslöschung lässt alte Jobs keine gelöschten Meldungen erneut anlegen.
+
+**AUDIO-01 — Tonwahl als Variante:** Nutzer öffnet „Töne und Stimmen“ aus UC-65/DLG-66, sieht den geltenden In-App-Ton, wählt einen von mehreren bereitgestellten Tönen oder Lautlos und speichert gültige eigene Werte. Gezieltes Probehören ist nur bei tatsächlich erlaubter Fähigkeit möglich. Lautlos beendet optionale Benachrichtigungstöne, entfernt aber weder visuelle Meldungen noch den Verlauf. OS-/Push-Tonwahl und ihre etwaige Nichtverfügbarkeit werden separat angezeigt; Appwahl umgeht weder OS-Regeln noch Ruhezeiten. Änderungen wählen keinen neuen Zustellkanal und wiederholen keine alten Hinweise. Querverweis: DLG-50, DT-61 und AUDIO-01 in P1.10.6.
 
 **Meilensteine:** M5: interne Erinnerungen, persönliche Regeln, In-App und Verlauf. M8: OS-Push, Hauptgerät, Digest, optionale E-Mail und externe Zustellnachweise. Noch nicht verfügbare Teilfunktionen werden nicht als aktiv ausgegeben; siehe [Entwicklungszuordnungen](ENTWICKLUNGSPLAN.md).
 

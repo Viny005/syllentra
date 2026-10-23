@@ -1,8 +1,8 @@
 # S1 — Nachbarsysteme und fachliche Schnittstellenverträge
 
 **Projekt:** Syllentra AI\
-**Version:** 0.6\
-**Stand:** 22.10.2026\
+**Version:** 0.7\
+**Stand:** 23.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Ausgangsstand:** `ace1d80e80245379beed02296c3c4dd184c8dd70` auf `docs/spec/p1-p2-mobile-workspaces`, bestehende [PR #1](https://github.com/Viny005/syllentra/pull/1).
 
@@ -191,7 +191,7 @@ Alle hier beschriebenen Verbindungen sind Soll-Verträge. Kein Produktkonnektor,
 | Erfolg und fachliche Datenwirkung | Geteilte persönliche In-App-Historie; ein logischer Hinweis mit getrennten Zielversuchen. Noten, Schwächen, private Texte und sensible Ableitungen nie in Vorschauen. |
 | Fehlerklassen und sichere Reaktion | OS-Verweigerung, Offline, Ablauf oder unklarer Empfang → keine Zustell-/Lesebehauptung, erlaubte In-App-Ablage bleibt. |
 | Idempotenz und Wiederanlauf | Identität/Erinnerungspunkt/Zielgerät/Kanal deduplizieren. Annahme ≠ Auslieferung ≠ Lesen; keine fremde Genau-einmal-Garantie oder ungefragte Replay-Welle. |
-| Rückverweise | FE-23, FE-24, FE-44, FE-45, FE-67, FE-68, FE-79, FE-88; UC-38, UC-55; BAT-07, BAT-08, BAT-19, BAT-21 |
+| Rückverweise | FE-23, FE-24, FE-44, FE-45, FE-67, FE-68, FE-79, FE-88; UC-38, UC-55, UC-65; BAT-07, BAT-08, BAT-19, BAT-21 |
 | Schutz und Aufbewahrung | Nur zwecknotwendige Daten und minimale Diagnose; Ursprungsschutz vererben, Geheimnisse nicht protokollieren. Tatsächliche Retention, externer Rest und zulässige Kopie getrennt. Nutzerhistorie nach S1.16, technische Einzelwerte nach S1.19. |
 
 **Positives Abnahmebeispiel:** Freigegebenes Hauptgerät erhält neutrale Meldung nach Ruhezeit-/Relevanzprüfung; dieselbe In-App-Information bleibt zugänglich.
@@ -471,3 +471,51 @@ Oracle Cloud ist ausschließlich der vorrangige spätere Bewertungskandidat gem�
 ## S1.22 FE-21 — Getrennte Sprachausgabe ohne Aufnahme
 
 Die bestehenden NB-01-/NB-08-Operationen zur Sprachausgabe werden durch UC-20-Ausgabevariante, F3.14, DLG-26/DLG-50 und D1/D2 angeschlossen. Nur gewählter zulässiger Antwortstand, erlaubte Sprache/Stimme/Geschwindigkeit, tatsächliche Fähigkeit und aktuelle Anbieter-/Kostenrechte bilden die Eingabe. Pause, Fortsetzung und Replay steuert der Client im verfügbaren Umfang; ein ausdrücklich eingeschalteter Hörmodus liest nur neue zulässige Antworten. Kein Mikrofonrecht zum Hören, kein automatischer Drittanbieterwechsel und kein periodischer TTS-Job. Vorübergehende Audio-/Wiedergabedaten erben Quellschutz und Löschregeln. Verweigerter Medienstart oder fehlende Stimme ist ein sichtbarer Fehler, kein erfolgreich abgespielter Beitrag; Text bleibt nutzbar. Die [Matrix](ENTSCHEIDUNGSMATRIX.md#4-fe-21--getrennte-ausgabevariante-und-abnahme) enthält überprüfbare Soll-Abnahmen, keine ausgeführten Audiotests.
+
+## S1.23 Audioverträge, Fähigkeitsgrenzen und offene Alternativen
+
+**Quelle / Status:** Eigentümerauftrag Mission 15 vom 23.10.2026, AUDIO-01 bis AUDIO-03 fachlich bestätigt; technische Alternativen **Empfohlen / Zur Entscheidung**, gesamter Spezifikationsentwurf **Zur Prüfung**. Die Arbeitsreferenzen ergänzen FE-21/FE-74 und bestehende Benachrichtigungsanforderungen, keine neuen FE, UC, DEC-V1 oder Nachbarsysteme. Alle 89 Registereinträge in S1.18.1 einschließlich FE-56 offen bleiben unverändert.
+
+### S1.23.1 Ergänzung der bestehenden Nachbarverträge
+
+| Bestehende Grenze | Vertragspräzisierung / sichere Reaktion |
+|---|---|
+| NB-01 Geräteumgebung | Tatsächliche Stimmen je Audiosprache sowie Tempo-/Volumen-/Vorschaufähigkeit ermitteln; Ausgaberecht ist kein Mikrofonrecht. DE/FR/EN sind initialer Zielumfang, keine Garantie konkreter Stimmen, gleicher Qualität oder Offline-/Hintergrundfähigkeit. Fehlende Fähigkeit verständlich anzeigen, Text erhalten. |
+| NB-08 entfernter TTS-Anbieter | Nur aktuell erlaubter Antwortstand, minimierte Daten, Sprache/Stimmenbezug, bestätigter Zweck und vorhandene Kosten-/Anbieterrechte. Auch Browserstimme kann entfernt arbeiten: Verarbeitungsort prüfen, kein Privatinhaltsversand allein aufgrund einer Browserauswahl. Kein stiller Motor-/Regionswechsel oder Dritttraining ohne geeignete Einwilligung. |
+| NB-09 OS-/Pushdienst | Nur neutrale Hinweisdaten, keine privaten Notizen, Gespräche oder gesprochenen Inhalte. Appinterner Tonkatalog garantiert keine freie Wahl systemweiter Hintergrundtöne. Plattformregeln und echtes Kanalrecht separat beachten; Lautlos entfernt keine visuellen Hinweise oder interne Historie. |
+| Interne Syllentra-Verantwortung | Persönliche Auswahl nach DM-48/49/DT-61 und DLG-50, Hörzustand nach DLG-26; interne Tonressourcen und eigene lokale TTS-Verarbeitung sind kein neuer Drittanbieter. Administration nach UC-48 begrenzt Katalog/Verfügbarkeit serverseitig, aktiviert keinen persönlichen Hörmodus. |
+
+Vorschau ausschließlich bewusst mit neutralem Ton/Text, beispielsweise „Willkommen. Dies ist eine Stimmvorschau.“, „Bienvenue. Ceci est un aperçu de voix.“ oder „Welcome. This is a voice preview.“; kein privater Text als Probe. Entzug/Deaktivierung beendet betroffene verbotene Ausgabe und Folgeaufträge nach den nachzuweisenden Erkennungsgrenzen aus [N2.16](N2-querschnittskonzepte.md#n216-schutzgrenzen-für-töne-und-stimmen). Reconnect oder Gerätewechsel darf keine gespeicherte Auswahl ungeprüft in eine aktive Hörsitzung verwandeln. Fehlende Stimme/Quota/Datenschutzfreigabe ergibt sichtbare Nichtverfügbarkeit, keinen automatischen anderen Dienst. Manuelles Anhören einer geeigneten Antwort bleibt bei zulässiger Fähigkeit unabhängig vom Hörmodus erreichbar.
+
+**Vertragsabnahme:** Die zehn [AT-AUDIO-Sollfälle](B1-dialogspezifikation.md#b113-abnahmeszenarien-für-töne-und-stimmen) prüfen Auswahl, Lautlos, Sprachbindung, neutrale Vorschau, Opt-in, Wiedergabesteuerung, Entzug, getrennte Berechtigungen, Verfügbarkeitsgrenzen und Administration. Das sind zukünftige Produktprüfungen, keine ausgeführten Audiotests.
+
+### S1.23.2 Nicht ausgewählte technische Alternativen
+
+Dieser begrenzte Vergleich erläutert die Erfüllbarkeit der Nachbarverträge; keine interne Komponentenarchitektur, Installation oder Anbieterentscheidung. Priorität haben geeignete lizenzverträgliche kostenlose Software und lokale Verarbeitung; Softwarepreis, Modellrechte und Betriebskosten bleiben getrennt.
+
+| Alternative | Sprache / Qualität / Lizenz | Datenschutz / Plattform / Latenz | Ressourcen / mögliche Kosten / offene Belege |
+|---|---|---|---|
+| Web Speech API / SpeechSynthesis | Standardentwurf bietet Stimmabfrage, Sprache, Stimme, Tempo und Volumen; tatsächlicher OS-/Browserkatalog entscheidet über DE/FR/EN und mehrere Stimmen. API-Spezifikation ist weder Stimmnutzungsrecht noch Qualitätsnachweis. | Lokaler oder entfernter Dienst möglich (`localService`); tatsächliche Datenflüsse und Betriebssystembedingungen prüfen. Pause/Resume/Cancel im Entwurf sind keine geprüfte Browser-/PWA-Garantie; Autoplay-/Hintergrundverhalten je Version testen. | Keine zusätzlich installierte Serverengine zwingend aus der API ableitbar. CPU/RAM und Startlatenz je realer Stimme unbekannt; „Browser-API vorhanden“ beweist weder kostenlosen Dienst noch Offlinebetrieb. |
+| Lokaler TTS-Motor, Beispiel Piper | Projekt beschreibt lokale neuronale Synthese; gelesene Softwarelizenz GPL-3.0. Jede Stimme besitzt gesonderte Modellkarte, teils restriktive Rechte. Konkrete erlaubte DE-/FR-/EN-Gewichte, Aussprache und kommerzielle Verträglichkeit noch ungeprüft. | Berechtigtes Gerät bzw. eigene zentrale EU-Umgebung unterscheiden: eigener Server sieht Text unter geltenden Schutzregeln. Keine externe TTS-Weitergabe bei tatsächlich lokaler isolierter Ausführung; keine belegte direkte Browser-/iOS-Integration. | CPU-/RAM-/Modellspeicher, Parallelität und Echtzeitfähigkeit müssen pro Gewicht/Hardware gemessen werden. Keine GPU-Pflicht oder niedrige RAM-Grenze belegt. Softwarelizenz ohne Kaufpreis ersetzt nicht Infrastruktur-/Wartungsaufwand oder Lizenzprüfung. |
+| Externer TTS-Dienst, Beispiel Azure Speech | Nur Vergleichskandidat; Motor-/Stimmen-/Sprachliste, Qualitätsniveau, Dienst-/Ausgaberechte und aktuelle Tarife nicht verifiziert. Kein Gratisangebot voraussetzen. | Externe Übermittlung nur mit passender Freigabe und geeigneten Regionen, Verträgen, Trainings-/Retentionsregeln. Netz-/Providerlatenz und Ausfallgrenzen testen; Gerätesteuerung bleibt separat. | Zeichen-/Audiominuten-/Requestabrechnung, Quoten, Speicherung und Transfer anhand tatsächlich gültigen Angebots prüfen. Keine Preise, Gratisquote, CPU-/RAM-Zusage oder Anbieteraktivierung bestätigt. |
+| Eingebettete In-App-Audiodateien | Mehrere geprüfte Tonassets; Herkunft, Lizenz/Fassung und Verwendungsrechte jedes Assets vor Aufnahme. Keine Assets ausgewählt oder heruntergeladen. Töne tragen keinen privaten Inhalt und benötigen keine TTS-Stimme. | Vorschau auf Nutzeraktion; Medienstart kann durch Plattform blockiert sein. Visuelle Hinweise unabhängig. App-Ton ist kein OS-Push-Ton und keine Hintergrundgarantie. | Clientdecodierung/Puffer, Paketgröße und Übertragung messen; keine TTS-Inferenz dafür nötig. Freie Dateilizenz bedeutet nicht automatisch kostenfreie Verteilung/Betrieb. |
+| Web-/Push-Benachrichtigungen | Gelesener WHATWG-Entwurf enthält `silent` als Plattformpräferenz; kein frei wählbarer Tondatei-Parameter im gelesenen `NotificationOptions`-Vertrag. Native Plattformfähigkeiten getrennt prüfen. | OS entscheidet mit; keine appseitige Umgehung von Berechtigungen, Ruhe-/Systemregeln. Neutrale Vorschau und interne visuelle Historie erhalten. | Pushzustellung, Servicebetrieb und tatsächliche Einschränkungen je OS/PWA offen. Keine Genau-einmal-, Zustell-, Tonanpassungs- oder Kostenlosigkeitsgarantie. |
+
+**Ressourcenvergleich vorbereiten:** Für jeden Kandidaten Textmenge, Sprache/Stimme/Fassung, Ausgabelänge und Gleichzeitigkeit festlegen. Client- und Servermessung getrennt: Kaltstart, Erstton, Synthesezeit/Audiodauer, Spitzen-RAM/CPU und temporäre Dateigröße; Netzwerk/Storage/Transfer und Kostenmetrik ergänzen. Eine speicherbare PCM-Ausgabe hängt rechnerisch von Dauer × Abtastrate × Kanalzahl × Bytes je Sample ab; Modell-/Laufzeitspeicher kommt hinzu. Das ist eine Rechenmethode, kein gemessener Ressourcenbedarf. Schwellen, Hardware und Testumfang vor Abnahme bestätigen; keine Modelle herunterladen oder Benchmarks in dieser Mission starten.
+
+**Kostenrahmen:** Höchstens 20 EUR brutto/Monat sind persönlicher Untersuchungsrahmen, keine Ausgabe genehmigt. Keine Konten, Dienste, APIs oder kostenpflichtigen Anbieter aktivieren. Unbekannte Preise bleiben unbekannt; weder Verbraucherabonnement noch vermeintliche Gratisquote ist automatisch ein API-/Nutzungsrecht. Aktuelle kommerzielle Nutzbarkeit, Steuern, Limits und Überlauf-/Abrechnungsrisiken vor späterer Auswahl prüfen. TTS bleibt ohne verpflichtende bezahlte KI-API zu planen.
+
+### S1.23.3 Gelesene Quellen und Abrufgrenzen
+
+Abrufdatum aller folgenden Quellen: **23.10.2026**. GitHub-Quelldateien wurden gelesen und gegen die hier fixierten Revisionen bytegleich geprüft; Spezifikationsentwurf und Anbieterbeschreibung sind keine Implementierungs-/Leistungsnachweise.
+
+| Quelle / fixierte Fassung | Tatsächlich belegter Inhalt / Grenze |
+|---|---|
+| [Web Speech API, index.bs](https://github.com/WebAudio/web-speech-api/blob/000c9c063e521f4fe1495f44029e3cb7709d6f42/index.bs) | `getVoices`, Sprach-/Stimmenattribute, `localService`, `pause`, `resume`, `cancel`, Tempo/Volumen. Standardentwurf, keine Gerätekompatibilität oder Lizenz-/Kostenfreigabe. Veröffentlichte Website nicht abrufbar (403), offizielle Repositoryquelle lesbar. |
+| [WHATWG Notifications, notifications.bs](https://github.com/whatwg/notifications/blob/4cf42508117bbe1162a6bcfd583d407533afaebd/notifications.bs) | `silent` und Plattformkonventionen; `NotificationOptions` ohne frei wählbare Audiodatei. Veröffentlichte Website nicht abrufbar (403), offizielle Repositoryquelle lesbar. |
+| [Piper README](https://github.com/OHF-Voice/piper1-gpl/blob/619f513580c04dff5ef9a680f6f3f6979ed94d2e/README.md), [COPYING](https://github.com/OHF-Voice/piper1-gpl/blob/619f513580c04dff5ef9a680f6f3f6979ed94d2e/COPYING), [Stimmenhinweise](https://github.com/OHF-Voice/piper1-gpl/blob/619f513580c04dff5ef9a680f6f3f6979ed94d2e/docs/VOICES.md) | Lokale Synthese, GPL-3.0-Text, getrennte Modellkarten und Warnung vor restriktiven Stimmenlizenzen. Kein konkretes Stimmengewicht, Betriebssystempaket oder Ressourcenminimum geprüft; Projektverweis auf persönliche Nutzung/Forschung verlangt Prüfung der konkreten Eignung vor Produkteinsatz. |
+| [Chrome Autoplay Policy](https://developer.chrome.com/blog/autoplay/) | Abruf 403; Detailregeln nicht aktuell verifiziert. Verweigerter Medienstart ist fachlich zu behandeln, tatsächliche SpeechSynthesis-/Medien-/PWA-Matrix bleibt offen. |
+| [Azure-Speech-Tarife](https://azure.microsoft.com/en-us/pricing/details/cognitive-services/speech-services/), [Datenschutzhinweise](https://learn.microsoft.com/en-us/azure/ai-services/speech-service/speech-services-privacy-information) | Abruf 403; keine aktuelle Preis-/Gratis-/Vertrags-/Retentionsaussage daraus übernommen. Alternativer offizieller Repositorypfad für Datenschutzhinweis ergab 404; Daten bleiben nicht verifiziert. |
+| [Herold-Spezifikationskonvention](https://github.com/carstenlucke/herold/blob/fce50b47ae646a70bf4d796026dcd1a99d3ae3c2/docs/spec/README.md) | Fachliches Was/Warum in getrennten Bausteinen; Architektur und Code separat. Keine Herold-Produktentscheidung übernommen. |
+
+**Noch zu entscheiden/nachzuweisen:** zulässige konkrete Motoren, Stimm-/Tonassets und deren Rechte; DE-/FR-/EN-Kataloge und Qualität; unterstützte Browser/OS/PWA-/Hintergrund-/Offlinefähigkeiten; Lizenz- und Dienstverträglichkeit; Verarbeitungsregion, Vertrag, Retention/Training; Ressourcen/Quoten/Latenz und Widerrufserkennung. Keine Wiederaufnahmeregel für automatisches Hören nach neuer Sitzung/anderem Gerät allein aus technischen Annahmen schließen. Diese Punkte vertiefen bestehende O-S1-/TECH-O-Arbeiten, schließen sie nicht und erteilen keine Implementierungs- oder Kostenerlaubnis.
