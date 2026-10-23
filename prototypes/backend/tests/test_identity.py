@@ -2,69 +2,15 @@
 
 import secrets
 from concurrent.futures import ThreadPoolExecutor
-from datetime import UTC, datetime, timedelta
+from datetime import timedelta
 from typing import Any
 
 import psycopg
 import pytest
 from fastapi.testclient import TestClient
-from private_fixtures import PrivateEnvironment
+from helpers import NEW_PASSWORD, PASSWORD, account, registration, verify
 
-from scripts.migrate import migrate, urls
-from syllentra_backend.api import create_app
-from syllentra_backend.delivery import MemoryChannel
-from syllentra_backend.identity import DEVICE, PREAUTH, SESSION, LocalIdentity
-
-PASSWORD = "synthetic-password-for-tests"
-NEW_PASSWORD = "different-synthetic-password"
-
-
-@pytest.fixture()
-def env() -> Any:
-    admin, runtime = urls(test=True)
-    migrate(admin)
-    with psycopg.connect(admin) as db:
-        for table in ["identity_budgets", "sessions", "notes", "devices", "accounts"]:
-            db.execute(f"DELETE FROM {table}")  # noqa: S608 -- feste Liste
-        db.execute(
-            "UPDATE capabilities SET mode='available',allowed_kind='user' WHERE name='notes'"
-        )
-    now = [datetime(2026, 10, 22, tzinfo=UTC)]
-    mail, offline = MemoryChannel(), MemoryChannel()
-    config = LocalIdentity(secrets.token_bytes(32), mail, offline)
-    app = create_app(runtime, identity=config, clock=lambda: now[0])
-    clients = []
-
-    def browser() -> TestClient:
-        c = TestClient(app, base_url="https://testserver")
-        csrf = c.get("/auth/csrf").json()["csrf_token"]
-        c.headers.update({"Origin": config.origin, "X-CSRF-Token": csrf})
-        clients.append(c)
-        return c
-
-    yield PrivateEnvironment(
-        admin=admin, runtime=runtime, now=now, mail=mail, offline=offline, browser=browser, app=app
-    )
-    for c in clients:
-        c.close()
-
-
-def registration(e: Any, c: TestClient, email: str = "alice@example.test") -> str:
-    r = c.post("/auth/register", json={"email": email, "password": PASSWORD})
-    assert r.status_code == 202 and set(r.json()) == {"status", "challenge_id"}
-    return str(r.json()["challenge_id"])
-
-
-def verify(e: Any, c: TestClient, ref: str) -> None:
-    code = e["mail"].take(ref)
-    r = c.post("/auth/verify", json={"challenge_id": ref, "code": code})
-    assert r.status_code == 200 and code not in r.text
-    assert c.cookies.get(DEVICE) and not c.cookies.get(SESSION)
-
-
-def account(e: Any, c: TestClient, email: str = "alice@example.test") -> None:
-    verify(e, c, registration(e, c, email))
-    assert c.post("/auth/login", json={"login": email, "password": PASSWORD}).status_code == 200
+from syllentra_backend.identity import DEVICE, PREAUTH, SESSION
 
 
 def test_registration_duplicate_normalization_and_no_privileges(env: Any) -> None:
@@ -145,8 +91,8 @@ def test_resend_replaces_code_and_limits_sends(env: Any) -> None:
         assert c.post("/auth/resend", json={"challenge_id": ref}).status_code == 202
     assert len(env["mail"].messages) == 3
     latest = env["mail"].take(ref)
-    if old != latest:
-        assert c.post("/auth/verify", json={"challenge_id": ref, "code": old}).status_code == 400
+    assert old != latest
+    assert c.post("/auth/verify", json={"challenge_id": ref, "code": old}).status_code == 400
     verify(env, c, ref)
 
 

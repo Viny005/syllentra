@@ -1,8 +1,8 @@
 # Lokale experimentelle Backendgrundlage
 
-**Version:** 0.2 · **Stand:** 22.10.2026 · **Status:** Experimentell / Zur Prüfung
+**Version:** 0.3 · **Stand:** 23.10.2026 · **Status:** Experimentell / Zur Prüfung
 
-Mission 10 erweitert die lokale Sicherheitsprobe aus Mission 9 um tatsächlich testbare synthetische Identität. Keine öffentliche Registrierung, produktive Authentifizierung, echte Mailzustellung oder endgültige Stackwahl. [Identitätsarchitektur](../../docs/development/IDENTITY_ARCHITECTURE.md), [aktueller Prüfbericht](../../docs/development/IDENTITY_PROTOTYPE_REVIEW.md), [historische Mission 9](../../docs/development/BACKEND_PROTOTYPE_REVIEW.md), [Lizenzen](LICENSES.md).
+Mission 10 erweitert die lokale Sicherheitsprobe aus Mission 9 um tatsächlich testbare synthetische Identität; Mission 12 isoliert PostgreSQL-Testläufe pro Prozess und ergänzt Sicherheits-/Charakterisierungsprüfungen. Keine öffentliche Registrierung, produktive Authentifizierung, echte Mailzustellung oder endgültige Stackwahl. [Identitätsarchitektur](../../docs/development/IDENTITY_ARCHITECTURE.md), [aktueller Prüfbericht](../../docs/development/IDENTITY_PROTOTYPE_REVIEW.md), [historische Mission 9](../../docs/development/BACKEND_PROTOTYPE_REVIEW.md), [Lizenzen](LICENSES.md).
 
 ## Aufbau und Grenzen
 
@@ -23,7 +23,9 @@ PYTHONPATH=src .venv/bin/python -m scripts.identity_server
 
 `local_db.py start` nur ausführen, wenn der eigene Containername/Port 55439 und `.local/database.json` noch nicht belegt sind. Vorhandenen eigenen laufenden Zustand weiterverwenden, nicht überschreiben. Das offizielle Image ist per Digest `postgres@sha256:858bb5e98eed02eb8cafbcdc007f9a65d1b613972028944a8ec2133ccaf80d27` fixiert, beobachtet PostgreSQL 17.11 / Debian Bookworm. Bei fehlendem Image zuerst diesen Digest bewusst mit `docker pull` beziehen. Kein Cloudhosting. Zufällige Datenbankpasswörter nur in ignorierter `.local/database.json` (0600, Verzeichnis 0700); getrennte Migrations-/APIrolle und Entwicklungs-/Testdatenbanken.
 
-`prepare_identity.py` erzeugt ausschließlich lokale 0600-Dateien für Servergeheimnis und zweitägiges selbst signiertes Loopback-TLS. Bestehende Dateien werden nicht überschrieben; abgelaufene Testzertifikate bewusst prüfen/erneuern. Keine vertrauenswürdige öffentliche Zertifikatskette behauptet. `identity_server` bindet fest an Loopback:8443, erlaubt ausschließlich lokale bekannte Datenbankziele und startet ohne Konten. Option `--test` ausschließlich für Browserprüfungen gegen `syllentra_test`, nie parallel zu pytest.
+`prepare_identity.py` erzeugt ausschließlich lokale 0600-Dateien für Servergeheimnis und zweitägiges selbst signiertes Loopback-TLS. Bestehende Dateien werden nicht überschrieben; abgelaufene Testzertifikate bewusst prüfen/erneuern. Keine vertrauenswürdige öffentliche Zertifikatskette behauptet. `identity_server` bindet fest an Loopback:8443, erlaubt ausschließlich lokale bekannte Datenbankziele und startet ohne Konten. Option `--test` ausschließlich für Browserprüfungen gegen `syllentra_test`. Backend-Pytestläufe erzeugen seit Mission 12 über [scripts/test_db.py](scripts/test_db.py) je Prozess eine eigene Datenbank `syllentra_t_<12 Hex>` (`TEMPLATE template0`) mit Eigentumsvermerk (`COMMENT ON DATABASE`) und berühren `syllentra_test` oder `syllentra_prototype` niemals. Zerstörende Bereinigungen (`wipe`/`drop_run_database`) prüfen vor jedem `DELETE`/`DROP` Namen und Eigentumskommentar. Verwaiste Laufdatenbanken lassen sich kontrolliert mit `.venv/bin/python -m scripts.test_db sweep <Stunden>` auflisten und nur mit `--apply` entfernen.
+
+**Hinweis für Windows / WSL / Linux-Container:** `LocalFileChannel` ([delivery.py](src/syllentra_backend/delivery.py)) und `identity_server.py` erzwingen POSIX-Dateirechte (`0600`/`0700`, `os.getuid()`, `os.O_NOFOLLOW`). Auf Windows-Hosts ohne native Linux-WSL-Distribution sind Backend-Tests und Linter deshalb in einem nativen Linux-Dateisystem (z. B. WSL2 oder im gepinnten Container `ghcr.io/astral-sh/uv:python3.12-bookworm-slim` im selben Loopback-Netz wie `syllentra-mission9-local`) auszuführen, da Windows-Bind-Mounts in Docker Desktop standardmäßig Modus `0777` zeigen.
 
 In einem zweiten Terminal:
 

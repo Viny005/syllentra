@@ -2,17 +2,22 @@
 
 import hashlib
 import json
+import re
 import sys
 from pathlib import Path
 
 import psycopg
 
 ROOT = Path(__file__).resolve().parents[1]
+ALLOWED_DATABASES = re.compile(r"syllentra_prototype|syllentra_test|syllentra_t_[0-9a-f]{12}")
 
 
-def urls(test: bool = False) -> tuple[str, str]:
+def urls(test: bool = False, database: str | None = None) -> tuple[str, str]:
+    """``syllentra_test`` ist ausschließlich für Browserprüfungen; pytest nutzt Lauf-Datenbanken."""
     data = json.loads((ROOT / ".local/database.json").read_text())
-    name = "syllentra_test" if test else "syllentra_prototype"
+    name = database or ("syllentra_test" if test else "syllentra_prototype")
+    if not ALLOWED_DATABASES.fullmatch(name):
+        raise ValueError("Unzulässiger Datenbankname für die lokale Probe.")
     return str(data["migration_url"]) + name, str(data["runtime_url"]) + name
 
 

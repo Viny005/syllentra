@@ -55,7 +55,9 @@ class LocalIdentity:
             or bool(url.query or url.fragment)
             or url.port != 55439
             or url.hostname not in {"127.0.0.1", "localhost"}
-            or url.path not in {"/syllentra_test", "/syllentra_prototype"}
+            or not re.fullmatch(
+                r"/(syllentra_test|syllentra_prototype|syllentra_t_[0-9a-f]{12})", url.path
+            )
             or len(self.pepper) < 32
             or self.mail is self.offline
             or self.origin != "https://127.0.0.1:5174"

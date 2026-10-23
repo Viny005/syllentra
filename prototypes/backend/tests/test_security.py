@@ -11,7 +11,8 @@ import pytest
 from fastapi.testclient import TestClient
 from private_fixtures import PrivateEnvironment
 
-from scripts.migrate import migrate, urls
+from scripts.migrate import migrate
+from scripts.test_db import RunDatabase, assert_owned, wipe
 from syllentra_backend.api import create_app
 from syllentra_backend.delivery import MemoryChannel
 from syllentra_backend.identity import SESSION, LocalIdentity
@@ -22,19 +23,15 @@ NOW = datetime(2026, 10, 22, tzinfo=UTC)
 
 
 @pytest.fixture()
-def setup() -> Iterator[dict[str, Any]]:
-    admin_url, runtime_url = urls(test=True)
-    assert admin_url.endswith("/syllentra_test")
+def setup(run_db: RunDatabase) -> Iterator[dict[str, Any]]:
+    admin_url, runtime_url = run_db.admin_url, run_db.runtime_url
+    assert_owned(run_db, admin_url)  # niemals eine nicht verifizierte Datenbank leeren
     migrate(admin_url)
     migrate(admin_url)  # Wiederholung darf weder Daten zurücksetzen noch Schema duplizieren.
     ids = {key: uuid4() for key in ["a", "b", "pending", "admin", "da", "db", "na", "nb"]}
     proof = secrets.token_urlsafe(32)
+    wipe(run_db)
     with psycopg.connect(admin_url) as db:
-        for table in ["identity_budgets", "sessions", "notes", "devices", "accounts"]:
-            db.execute(f"DELETE FROM {table}")  # noqa: S608 -- ausschließlich konstante Tabellenliste
-        db.execute(
-            "UPDATE capabilities SET mode = 'available', allowed_kind = 'user' WHERE name = 'notes'"
-        )
         encoded = PASSWORDS.hash(PASSWORD)
         for key in ["a", "b", "pending", "admin"]:
             db.execute(
