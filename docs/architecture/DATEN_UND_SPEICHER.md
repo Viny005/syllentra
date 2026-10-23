@@ -1,6 +1,6 @@
 # Datenbank, Suche und Dateispeicher
 
-**Version:** 0.1 · **Stand:** 22.10.2026 · **Status:** Empfohlen / Zur Entscheidung
+**Version:** 0.2 · **Stand:** 23.10.2026 · **Status:** Architekturprinzipien (A) in Mission 21 bestätigt; technische Unterentscheidungen (B) und Nachweise (C) offen
 
 ## 1. Ausgangspunkt und Alternativen
 
@@ -42,3 +42,15 @@ Binäre PDFs/Medien/Archive bevorzugt als versionierte geschützte Dateien oder 
 Kein großes Primärbackup als persönliches Exportpaket anbieten. DB-Transaktionsstand, Objektversionen, Konfigurationsfassung und aktueller Lösch-/Entzugskontrollstand müssen zusammen rekonstruierbar sein. restic auf laufende DBdateien allein liefert keinen konsistenten PostgreSQL-Restore: geeigneter Dump oder physische Sicherung mit korrektem WAL-/Konsistenzverfahren erforderlich. RPO bestimmt später Dump-/WAL-Bedarf; Snapshot, Replikat und unabhängiges Backup sind verschieden.
 
 Schema-/Dateiformat-/Embeddingversionen mit Migration, Trockenlauf, altem PWA-Client, Abbruch und Rückweg nach [S2](../spec/S2-datenmigration.md) und [S3](../spec/S3-inbetriebnahme.md) prüfen. Embeddings neu berechnen darf keine gelöschten Quellen reaktivieren. Dokumentenschlüssel bleiben persönlich; Backend besitzt keine privaten Klartextschlüssel.
+
+
+## 5. Vom Projektinhaber bestätigte Architekturprinzipien aus Mission 21 (TECH-O-04, TECH-O-08, TECH-O-10 und Multi-Provider-Grenze)
+
+Am 23.10.2026 hat der Projektinhaber die folgenden Daten-, Retrieval- und Sicherungsprinzipien bestätigt ([ADR-0013](../ARCHITECTURE_DECISIONS.md#adr-0013--datenhaltung-geschützter-dateispeicher-volltextsuche-und-postgresql-queue-tech-o-04), [ADR-0017](../ARCHITECTURE_DECISIONS.md#adr-0017--quellenbasiertes-rag-volltext-referenz-und-strukturiertes-pädagogisches-gedächtnis-tech-o-08), [ADR-0019](../ARCHITECTURE_DECISIONS.md#adr-0019--anbieterunabhängige-verschlüsselte-sicherung-und-konsistenter-restore-tech-o-10), [ADR-0021](../ARCHITECTURE_DECISIONS.md#adr-0021--querschnittsentscheidung-kontrollierte-multi-provider-austauschbarkeit-und-fallback-grenzen)):
+
+| Bezug | A. Bestätigtes Architekturprinzip | B. Offene technische Unterentscheidungen | C. Ausstehende Nachweise |
+|---|---|---|---|
+| **TECH-O-04 — Daten, Suche und Queue** | **PostgreSQL** ist die primäre Datenbank; große Dateien nutzen einen getrennten geschützten Speicher; die **PostgreSQL-Volltextsuche** bildet die initiale Referenz; der Einsatz von `pgvector` hängt von Testergebnissen ab; eine **PostgreSQL-Aufgabenwarteschlange (Task-Queue)** wird vor der Auswahl einer zusätzlichen Queue-Technologie evaluiert. | Konkrete PostgreSQL-Major-/Patchversion, Dateispeichervariante (verschlüsseltes Volume vs. S3-kompatibler EU-Objektspeicher), `pgvector`-Aktivierung, PG-Queue-Schema und RLS-/Rollenhärtung. | Qualitäts-/Latenzvergleich Volltext vs. `pgvector` (`T03`, `T04`), Durchsatz-/Sperrverhalten der PG-Queue (`T01`, `T09`) und konsistenter DB-plus-Dateispeicher-Restore (`T07`). |
+| **TECH-O-08 — RAG und Gedächtnis** | RAG stützt sich auf überprüfbare Quellen; PostgreSQL-Volltext als initiale Referenz; `pgvector` und Embeddings nur bei nachgewiesenem Mehrwert; strukturiertes pädagogisches Gedächtnis getrennt von der Konversationshistorie; strikte Datenisolation jedes einzelnen Kontos. | Chunking-/Zitierstrategie, eventuelles mehrsprachiges Embeddingmodell (`E5`, `BGE-M3`, `Qwen3-Embedding`) und Reindexierungsregeln. | Messbarer Retrievalgewinn gegenüber Volltext (`T03`, `T04`), A/B-Isolations- und Lösch-/Nichtwiederbelebungstests auf Suchindizes (`T09`, `REL-S04/Q16`). |
+| **TECH-O-10 — Sicherungen (DEC-49)** | Verschlüsselte Sicherungen unabhängig vom primären Hostinganbieter (`DEC-49`); getrennte Verwaltung der Wiederherstellungsschlüssel; Konsistenz zwischen PostgreSQL und Dateien; Restores verbindlich zu testen; noch kein Backupwerkzeug oder -anbieter ausgewählt. | Konkretes Sicherungswerkzeug (`restic`, `Borg`), unabhängiger EU-Speicheranbieter (R2-EU, Storage Box, Scaleway Object Storage, B2 EU je Primärhost) und Append-only-/Schlüsselrotationsverfahren. | Vertrags-/EU-Prüfung des Backupziels, Nachweis getrennter Schreib-/Löschrechte und praktische Restore-Proben einschließlich Nichtwiederbelebung gelöschter Inhalte (`T07`, `AT-S3-06..09`, `REL-S20/Q20`). |
+| **Querschnitt — Keine naive Rotation** | Keine naive Anbieterrotation auf PostgreSQL, private Schlüssel oder das gesamte Primärhosting anwenden; Austauschbarkeit betrifft klar abgegrenzte Adapter, nicht die relationale Wahrheitsquelle. | — | Konsistenz- und Integritätsnachweise bei Migration/Restore nach [S2](../spec/S2-datenmigration.md) und [S3](../spec/S3-inbetriebnahme.md). |

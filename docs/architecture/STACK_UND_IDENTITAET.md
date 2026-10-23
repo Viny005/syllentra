@@ -1,6 +1,6 @@
 # Frontend, Backend und Identität
 
-**Version:** 0.2 · **Stand:** 22.10.2026 · **Status:** Empfohlen / Zur Entscheidung
+**Version:** 0.3 · **Stand:** 23.10.2026 · **Status:** Architekturprinzipien (A) in Mission 21 bestätigt; technische Unterentscheidungen (B) und Nachweise (C) offen
 
 ## 1. Vergleich der Laufzeit-/Oberflächenvarianten
 
@@ -40,3 +40,15 @@ Sicherer Bootstrap, administrative MFA-Recovery und Schlüsselrecovery bleiben [
 ## 5. Präzisierung aus neuer offizieller Quelle — Mission 6
 
 Neu gelesene Keycloak-Anleitung bestätigt Linkverifikation; Generator-OTP ist kein E-Mail-Codeflow. Die authentik Email-Stage kann bei Recovery standardmäßig einen inaktiven Benutzer aktivieren. Appkontostatus, Konfiguration und Anti-Enumeration deshalb gezielt gegen Pause/Adminsperre/Löschung prüfen. Quellen und konkrete Beleggrenzen in [Machbarkeit Abschnitt 5](MACHBARKEITSPRUEFUNG.md#5-identität-fähigkeiten-und-konkrete-integrationslücken) und [Quellen M6](QUELLEN.md#6-nachrecherche-mission-6); T06/T09 im [Testplan](BENCHMARKPLAN.md) sind nur geplant. Keine endgültige Authauswahl.
+
+
+## 6. Vom Projektinhaber bestätigte Architekturprinzipien aus Mission 21 (TECH-O-01, TECH-O-03, TECH-O-05, TECH-O-06)
+
+Am 23.10.2026 hat der Projektinhaber die folgenden Architekturprinzipien bestätigt ([ADR-0010](../ARCHITECTURE_DECISIONS.md#adr-0010--evolutionärer-modularer-monolith-und-isolierte-worker-tech-o-01), [ADR-0012](../ARCHITECTURE_DECISIONS.md#adr-0012--anwendungsstack-react--vite--typescript-und-fastapi--python-tech-o-03), [ADR-0014](../ARCHITECTURE_DECISIONS.md#adr-0014--austauschbare-identitätsarchitektur-und-autoritative-fastapi-autorisierung-tech-o-05), [ADR-0015](../ARCHITECTURE_DECISIONS.md#adr-0015--schutzgrenzen-starke-mfa-und-trennung-des-super-admin-tech-o-06)); die obigen Abschnitte 1–5 bleiben als historischer Vergleich aus Mission 5/6 erhalten:
+
+| Bezug | A. Bestätigtes Architekturprinzip | B. Offene technische Unterentscheidungen | C. Ausstehende Nachweise |
+|---|---|---|---|
+| **TECH-O-01 — Architekturform** | Evolutionärer modularer Monolith mit klarer Aufgabentrennung und isolierten Workern für schwere Verarbeitung; keine flächendeckenden Microservices ab V1. | Prozess-/Supervisor-Zuschnitt und Ressourcenlimits (CPU/RAM/Timeouts) je Workerklasse. | Koexistenz- und Isolationsmessungen (`T01`, `T09`), Nachweis der Fehler-/Abbruchkapselung (`NFR-25`). |
+| **TECH-O-03 — Technischer Stack** | Frontend: **React + Vite + TypeScript**; Backend: **FastAPI + Python**; Erhalt des PWA-Ziels (`FE-55`) und der Barrierefreiheitsanforderungen (`NFR-08/19/20`). | Konkrete Service-Worker-/Offline-Synchronisationsstrategie, gezielte UI-/Hilfspakete und Produktions-ASGI-/Proxy-Konfiguration. | Echte Geräte-/PWA-/Offline-Konfliktprüfungen (`NFR-02/03`) und vollständige WCAG-2.2-AA-/Screenreader-Prüfung (`REL-A16`). |
+| **TECH-O-05 — Identität** | Austauschbare Identitätsarchitektur; fachliche Autorisierung autoritativ in FastAPI; Erhalt von `FE-60`, Geräteverifikation, Sessions und `R1`/`R4`; Vergleich von **Google Identity Platform / Firebase Authentication**, **Keycloak**, **authentik** und geeigneten **FastAPI-Komponenten**; noch kein Anbieter gewählt. | Konkrete Auswahl zwischen Google Identity Platform / Firebase Authentication, Keycloak, authentik oder FastAPI-Komponenten sowie produktives Verfahren zur sicheren Übergabe des persönlichen Recoverycodes. | Nachweis der Einhaltung von E-Mail-OTP (`FE-60`), Gerätebindung, `R1`/`R4`-Lebenszyklen, Anti-Enumeration, EU-/Datenschutzbedingungen, RAM und Kosten (`T06`, `T09`, `REL-S01..S09`). |
+| **TECH-O-06 — Sicherheit des Super Admin** | Verpflichtende starke MFA; getrenntes Adminkonto und getrennte Adminumgebung; administrative Recovery getrennt von persönlicher Recovery; **kein Generalschlüssel (kein Master-Key)** für den Super Admin zur Entschlüsselung privater Dokumente. | Konkrete MFA-Faktoren (z. B. WebAuthn/FIDO2 vs. TOTP), technisches Erstbootstrap-Verfahren (`O-S3-04`), administrative Notfall-Recovery (`O-S3-05`) und persönliche Dokumentenschlüssel-Recovery (`O-S3-11`). | Negativ- und Verlustfalltests für Bootstrap, MFA-Zwang, Admin-Isolation und Schlüsselverlust (`AT-S3-02..05`, `T06`, `T09`, `REL-S04/S06/S09/S19`). |

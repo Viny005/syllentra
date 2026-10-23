@@ -1,6 +1,6 @@
 # Unabhängige Sicherung — Verfahren und Anbieter
 
-**Version:** 0.2 · **Stand:** 22.10.2026 · **Status:** Empfohlen / Zur Entscheidung
+**Version:** 0.3 · **Stand:** 23.10.2026 · **Status:** Architekturprinzip (A) in Mission 21 bestätigt; Werkzeug-/Anbieterwahl (B) und Restore-Proben (C) offen
 
 ## 1. Verbindlicher Rahmen
 
@@ -30,3 +30,11 @@ Restores zuerst isoliert, Konten-/Quellschutz/Rechte/Integrität prüfen, aktuel
 ## 4. Präzisierung aus neuer offizieller Quelle — Mission 6
 
 R2-Bucketlocks sind nun dokumentarisch belegt, einschließlich Vorrang gegenüber Lifecyclelöschung und Entfernbarkeit durch Konfigurationsberechtigte. Kein nachgewiesener unentfernbarer Schutz gegen kompromittierte Accountadministration. Endliche Retention, gesonderte Löschrechte und restic-Prune-/Scratchanforderungen müssen abgestimmt werden. Neue Quellen, Vertragslücken und T07-Voraussetzungen: [Machbarkeit](MACHBARKEITSPRUEFUNG.md#6-backup-neue-technische-aussage-vertrag-weiter-offen), [Quellen](QUELLEN.md#6-nachrecherche-mission-6), [Testplan](BENCHMARKPLAN.md). Kein Bucket, Lock oder Backup eingerichtet und keine Restoreprobe ausgeführt.
+
+
+## 5. Vom Projektinhaber bestätigtes Architekturprinzip aus Mission 21 (TECH-O-10 und DEC-49)
+
+Am 23.10.2026 hat der Projektinhaber das Sicherungsprinzip `TECH-O-10` unter Wahrung von `DEC-49` ([ADR-0005](../ARCHITECTURE_DECISIONS.md#adr-0005--anbieterunabhängige-verschlüsselte-sicherung-dec-49), [ADR-0019](../ARCHITECTURE_DECISIONS.md#adr-0019--anbieterunabhängige-verschlüsselte-sicherung-und-konsistenter-restore-tech-o-10)) auf Architekturebene bestätigt:
+- **A. Bestätigtes Architekturprinzip:** Verschlüsselte Sicherungen unabhängig vom primären Hostinganbieter; getrennte Verwaltung der Wiederherstellungsschlüssel; Konsistenz zwischen PostgreSQL und geschützten Dateien; verbindlich zu testende Wiederherstellungen (Restores); Erhalt von `DEC-49`. Es ist noch kein Backupwerkzeug und kein Backupanbieter endgültig ausgewählt.
+- **B. Offene technische Unterentscheidungen:** Auswahl des konkreten Backupwerkzeugs (`restic`, `Borg`), des unabhängigen EU-Speicheranbieters (z. B. Cloudflare R2 EU, Hetzner Storage Box, Scaleway Object Storage oder Backblaze B2 EU abhängig vom Primärhost) sowie des Append-only-/Lock- und Schlüsselrotationsverfahrens.
+- **C. Ausstehende Nachweise:** Vertrags-/EU-Verifikation des Backupziels, Nachweis getrennter Schreib-/Löschrechte und praktische Restore-Proben einschließlich Nichtwiederbelebung gelöschter Inhalte (`T07`, `AT-S3-06..09`, `REL-S20/Q20`).

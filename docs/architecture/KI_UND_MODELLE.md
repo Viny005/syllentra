@@ -1,6 +1,6 @@
 # KI, Modelle und nachzuweisende Kapazität
 
-**Version:** 0.1 · **Stand:** 22.10.2026 · **Status:** Empfohlen / Zur Entscheidung
+**Version:** 0.2 · **Stand:** 23.10.2026 · **Status:** Architekturprinzipien (A) in Mission 21 bestätigt; Modell-/Stimmenwahl (B) und Benchmarks (C) offen
 
 ## 1. Ergebnis und Evidenzklassen
 
@@ -71,3 +71,15 @@ Retrieval begrenzt Quellen **vor** Promptaufbau auf aktuelles Konto/Objekt/Quell
 Keine Gewichte herunterladen/ausführen in dieser Mission. Für spätere autorisierte Probe: vorab geprüfte Lizenzen/Hashes, echte ARM64/x86-Hardware, Basisspeicher/Netz und konkurrierende Konten; Modelle/Quantisierung/Kontext/Grenzen fixieren. Kalt-/Warmlauf, erste/volle Ausgabe, Prefill/Decode, CPU/RAM/KV, Fehler, Queue und Durchsatz erfassen; ASR-Realtime-Faktor, OCRgüte und Retrieval separat. Dann fachliche DE/FR/EN-Referenzfälle und REL-A01/05/07/18 prüfen.
 
 Zeitrechnung nur als Sensitivität: 500 Ausgabetoken benötigen bei **hypothetischen** 1/5/20 Token/s allein 500/100/25 Sekunden Decode, plus Prefill/Queue/Netz. Keine dieser Raten wurde gemessen oder für OCI als plausibler Istwert bestätigt. Lange Antwort und mehrere gleichzeitige Nutzer verschärfen die Last. Bestätigte N1-Ziele vor Abnahmelauf vereinbaren; ohne Messung keine Zusage „Echtzeit auf Always Free“.
+
+
+## 8. Vom Projektinhaber bestätigte Architekturprinzipien aus Mission 21 (TECH-O-07, TECH-O-08, TECH-O-09, TECH-O-13 und Multi-Provider)
+
+Am 23.10.2026 hat der Projektinhaber die folgenden KI-, RAG-, Medien- und Lizenzprinzipien auf Architekturebene bestätigt ([ADR-0016](../ARCHITECTURE_DECISIONS.md#adr-0016--austauschbare-ki-motoren-mit-lokalerkontrollierter-priorität-tech-o-07), [ADR-0017](../ARCHITECTURE_DECISIONS.md#adr-0017--quellenbasiertes-rag-volltext-referenz-und-strukturiertes-pädagogisches-gedächtnis-tech-o-08), [ADR-0018](../ARCHITECTURE_DECISIONS.md#adr-0018--lokale-priorität-und-austauschbare-medienverarbeitung-unter-erhalt-von-audio-0103-tech-o-09), [ADR-0021](../ARCHITECTURE_DECISIONS.md#adr-0021--querschnittsentscheidung-kontrollierte-multi-provider-austauschbarkeit-und-fallback-grenzen), [ADR-0023](../ARCHITECTURE_DECISIONS.md#adr-0023--vollständiges-lizenz--artefakt--datenschutz--und-kommerzialisierungsinventar-tech-o-13)):
+
+| Bezug | A. Bestätigtes Architekturprinzip | B. Offene technische Unterentscheidungen | C. Ausstehende Nachweise |
+|---|---|---|---|
+| **TECH-O-07 — Künstliche Intelligenz** | Austauschbare KI-Motoren; Priorität für lokal oder auf kontrollierter eigener Infrastruktur ausführbare Modelle; optionale externe APIs nur nach Prüfung von Datenschutz, Lizenz, Qualität und Kosten; noch kein Modell endgültig ausgewählt. | Konkreter Inferenzmotor (`llama.cpp`, `Ollama`, `vLLM`), konkrete Modellgewichte und Quantisierung (`Qwen3-1.7B`/`4B`/`8B`), ggf. optionale API-Adapter. | Individuelle Lizenz-/Hashprüfung vor Download, CPU-/RAM-/Latenzmessungen (`T01`, `T02`) und pädagogische Qualitätsprüfung in `DE`/`FR`/`EN` (`T03`, `REL-A01/05/07/18`). |
+| **TECH-O-08 — RAG und Gedächtnis** | Quellenbasiertes RAG auf überprüfbaren Quellen; PostgreSQL-Volltext als initiale Referenz; `pgvector`/Embeddings nur bei nachgewiesenem Mehrwert; strukturiertes pädagogisches Gedächtnis getrennt von der Konversationshistorie; strikte Datenisolation jedes Kontos. | Chunking-/Zitierstrategie, eventuelles mehrsprachiges Embeddingmodell (`E5`, `BGE-M3`, `Qwen3-Embedding`). | Messbarer Retrievalgewinn gegenüber Volltext (`T03`, `T04`) und A/B-Isolations-/Löschtests (`T09`, `REL-S04/Q16`). |
+| **TECH-O-09 — Multimediaverarbeitung** | Lokale Verarbeitung vorrangig; austauschbare PDF-/OCR-/ASR-/TTS-/Videokomponenten; direkte Textextraktion vor OCR; Erhalt von Seiten- und Zeitstempelverweisen; Langläufer mit Fehler-, Abbruch- und kontrollierter Temp-Dateilöschung; vollständiger Erhalt von `AUDIO-01`, `AUDIO-02` und `AUDIO-03`; optionale Google-Dienste bei nachgewiesenem Vorteil. | Konkrete PDF-/OCR-/ASR-/TTS-/Videowerkzeuge, Stimmenkatalog `DE`/`FR`/`EN`, Tonassets (`AUDIO-01`), optionale Google-Adapter. | Stimmen-/Codec-/Parserlizenzprüfung, Ressourcen-/Temp-Löschtests (`T04`, `T05`) und Produktabnahme von `AT-AUDIO-01..10`. |
+| **Querschnitt — Multi-Provider & Lizenzinventar (TECH-O-13)** | Austauschbare Adapter für KI, OCR, ASR und TTS mit sicherem, vertraglich und datenschutzkonformem Fallback, Idempotenz/Deduplizierung, Verbot automatischer Ausgaben/Upgrades und vollständigem Komponenten-/Gewichts-/Stimmeninventar. | Konkrete Fallbackpaare, Idempotenzschlüssel und Einzelfreigabe jedes Modell-/Stimmenartefakts. | Negativtests für Quota-Erschöpfung, Providerausfall und Lizenz-/SBOM-Vollständigkeit (`AT-S3-14`, `AT-S3-18`, `AT-AUDIO-07/09`, `REL-S17/A13`). |
