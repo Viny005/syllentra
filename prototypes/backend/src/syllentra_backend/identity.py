@@ -149,30 +149,64 @@ class IdentityService:
         cookie(response, PREAUTH, secrets.token_urlsafe(32), 300)
         return response
 
+    def has_unexpected_pending_state(self, db: Db, account_id: UUID) -> bool:
+        row = db.execute(
+            "SELECT EXISTS(SELECT 1 FROM notes WHERE account_id = %s) "
+            "OR EXISTS(SELECT 1 FROM devices WHERE account_id = %s) "
+            "OR EXISTS(SELECT 1 FROM sessions WHERE account_id = %s) "
+            "OR EXISTS(SELECT 1 FROM recovery_codes WHERE account_id = %s) AS anomaly",
+            (account_id, account_id, account_id, account_id),
+        ).fetchone()
+        return bool(row and row["anomaly"])
+
     def register(self, db: Db, email: str, password: str, caller: str = "local") -> JSONResponse:
         if not self.budget(db, "register", f"{email}:{caller}", 10) or not self.budget(
             db, "register-address", email, 30
         ):
             return result(429, "try_later")
+        now = self.clock()
         encoded = PASSWORDS.hash(password)  # Auch im Duplikatpfad keine billige Existenzantwort.
         row = db.execute(
-            "INSERT INTO accounts (id,login,password_hash,verification,status) "
-            "VALUES (%s,%s,%s,'pending','active') ON CONFLICT (login) DO NOTHING "
+            "INSERT INTO accounts (id,login,password_hash,verification,status,pending_since) "
+            "VALUES (%s,%s,%s,'pending','active',%s) ON CONFLICT (login) DO NOTHING "
             "RETURNING *",
-            (uuid4(), email, encoded),
+            (uuid4(), email, encoded, now),
         ).fetchone()
         if not row:
             pending = db.execute(
                 "SELECT * FROM accounts WHERE login = %s FOR UPDATE", (email,)
             ).fetchone()
             if (
-                pending
-                and pending["verification"] == "pending"
-                and pending["status"] == "active"
-                and pending["kind"] == "user"
-                and not pending["mfa_required"]
-                and verify_password(pending["password_hash"], password)
+                not pending
+                or pending["verification"] != "pending"
+                or pending["status"] != "active"
+                or pending["kind"] != "user"
+                or pending["mfa_required"]
             ):
+                verify_password(pending["password_hash"] if pending else DUMMY_HASH, password)
+                return self.fake_challenge()
+            same_password = verify_password(pending["password_hash"], password)
+            if self.has_unexpected_pending_state(db, pending["id"]):
+                self.audit(db, "pending_reset_blocked", pending["id"])
+                return self.fake_challenge()
+            if now >= pending["pending_since"] + timedelta(hours=24):
+                updated = db.execute(
+                    "UPDATE accounts SET password_hash = %s, pending_since = %s, "
+                    "security_epoch = security_epoch + 1 "
+                    "WHERE id = %s AND verification = 'pending' AND status = 'active' "
+                    "AND kind = 'user' AND NOT mfa_required RETURNING *",
+                    (encoded, now, pending["id"]),
+                ).fetchone()
+                if not updated:
+                    return self.fake_challenge()
+                db.execute(
+                    "UPDATE identity_challenges SET consumed = true "
+                    "WHERE account_id = %s AND NOT consumed",
+                    (pending["id"],),
+                )
+                self.audit(db, "pending_reset", pending["id"])
+                return self.challenge(db, updated, "email")
+            if same_password:
                 return self.challenge(db, pending, "email")
             return self.fake_challenge()
         self.audit(db, "register", row["id"])
@@ -224,18 +258,30 @@ class IdentityService:
 
     def issue_offline_code(self, db: Db, account: dict[str, Any]) -> None:
         code = secrets.token_urlsafe(32)
+        now = self.clock()
         db.execute(
-            "INSERT INTO recovery_codes (account_id,verifier,used,expires_at) "
-            "VALUES (%s, %s, false, %s) ON CONFLICT (account_id) "
-            "DO UPDATE SET verifier = EXCLUDED.verifier, used = false, "
-            "expires_at = EXCLUDED.expires_at",
+            "INSERT INTO recovery_codes (account_id, verifier, used, revoked, expires_at, "
+            "issued_at) VALUES (%s, %s, false, false, NULL, %s) ON CONFLICT (account_id) "
+            "DO UPDATE SET verifier = EXCLUDED.verifier, used = false, revoked = false, "
+            "expires_at = NULL, issued_at = EXCLUDED.issued_at",
             (
                 account["id"],
                 self.verifier("offline", str(account["id"]), code),
-                self.clock() + timedelta(days=7),
+                now,
             ),
         )
         self.config.offline.deliver(account["login"], "offline-recovery", str(account["id"]), code)
+
+    def revoke_offline_code(self, db: Db, account_id: UUID) -> bool:
+        row = db.execute(
+            "UPDATE recovery_codes SET revoked = true "
+            "WHERE account_id = %s AND NOT revoked AND NOT used RETURNING account_id",
+            (account_id,),
+        ).fetchone()
+        if row:
+            self.audit(db, "recovery_code_revoked", account_id)
+            return True
+        return False
 
     def authorize_device(self, db: Db, account: dict[str, Any], response: JSONResponse) -> None:
         proof = secrets.token_urlsafe(32)
@@ -410,13 +456,15 @@ class IdentityService:
             return result(400, "recovery_failed")
         row, account = pair
         otp_ok = self.check_code(db, row, account, code)
+        now = self.clock()
         personal = db.execute(
             "SELECT * FROM recovery_codes WHERE account_id = %s FOR UPDATE", (account["id"],)
         ).fetchone()
         personal_ok = bool(
             personal
-            and personal["expires_at"] > self.clock()
             and not personal["used"]
+            and not personal["revoked"]
+            and (personal["expires_at"] is None or personal["expires_at"] > now)
             and hmac.compare_digest(
                 personal["verifier"], self.verifier("offline", str(account["id"]), offline_code)
             )
@@ -424,7 +472,10 @@ class IdentityService:
         if not otp_ok or not personal_ok:
             self.audit(db, "recovery_denied", account["id"])
             return result(400, "recovery_failed")
-        db.execute("UPDATE recovery_codes SET used = true WHERE account_id = %s", (account["id"],))
+        db.execute(
+            "UPDATE recovery_codes SET used = true, revoked = true WHERE account_id = %s",
+            (account["id"],),
+        )
         db.execute(
             "UPDATE accounts SET password_hash = %s, security_epoch = security_epoch + 1 "
             "WHERE id = %s",

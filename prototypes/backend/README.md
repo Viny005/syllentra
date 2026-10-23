@@ -1,8 +1,8 @@
 # Lokale experimentelle Backendgrundlage
 
-**Version:** 0.4 · **Stand:** 23.10.2026 · **Status:** Experimentell / Zur Prüfung
+**Version:** 0.5 · **Stand:** 23.10.2026 · **Status:** Experimentell / Zur Prüfung
 
-Mission 10 erweitert die lokale Sicherheitsprobe aus Mission 9 um tatsächlich testbare synthetische Identität; Mission 12 isoliert PostgreSQL-Testläufe pro Prozess; Mission 13 behebt R2 (Netzwerkbudget-Isolierung), R3 (Sortierung, effektiver Status und `offset`/`limit`-Paginierung bei `GET /sessions` und `GET /devices`), R5 (Aufrufer-isolierte Adressbudgets und Erhalt laufender Recovery-Challenges) sowie R12 (vollständige Sitzungs-/Geräteprüfung bei `approve_device`). Keine öffentliche Registrierung, produktive Authentifizierung, echte Mailzustellung oder endgültige Stackwahl. [Identitätsarchitektur](../../docs/development/IDENTITY_ARCHITECTURE.md), [aktueller Prüfbericht](../../docs/development/IDENTITY_PROTOTYPE_REVIEW.md), [historische Mission 9](../../docs/development/BACKEND_PROTOTYPE_REVIEW.md), [Lizenzen](LICENSES.md).
+Mission 10 erweitert die lokale Sicherheitsprobe aus Mission 9 um tatsächlich testbare synthetische Identität; Mission 12 isoliert PostgreSQL-Testläufe pro Prozess; Mission 13 behebt R2 (Netzwerkbudget-Isolierung), R3 (Sortierung, effektiver Status und `offset`/`limit`-Paginierung bei `GET /sessions` und `GET /devices`), R5 (Aufrufer-isolierte Adressbudgets und Erhalt laufender Recovery-Challenges) sowie R12 (vollständige Sitzungs-/Geräteprüfung bei `approve_device`); Mission 14 setzt die vom Projektinhaber freigegebenen Entscheidungen R1 (persönlicher Offline-Einmal-Recoverycode ohne automatischen 7-Tage-Ablauf, gültig bis Verbrauch, explizitem Widerruf, kontrollierter Rotation oder Sicherheitsinvalidierung bei unabhängiger 7-Tage-Gerätefrist) und R4 (kontrollierter Reset unverifizierter `pending`-Konten nach mindestens 24 Stunden ab `pending_since` mit neuem Argon2id-Passwort, neuem E-Mail-OTP, `security_epoch`-Erhöhung, Invalidierung alter Challenges und Anomalie-Sperre bei unerwarteten Daten) um. Keine öffentliche Registrierung, produktive Authentifizierung, echte Mailzustellung oder endgültige Stackwahl. [Identitätsarchitektur](../../docs/development/IDENTITY_ARCHITECTURE.md), [aktueller Prüfbericht](../../docs/development/IDENTITY_PROTOTYPE_REVIEW.md), [historische Mission 9](../../docs/development/BACKEND_PROTOTYPE_REVIEW.md), [Lizenzen](LICENSES.md).
 
 ## Aufbau und Grenzen
 
@@ -56,7 +56,7 @@ PostgreSQL liegt in ressourcenbegrenztem **tmpfs**. Stoppen/Entfernen des eigene
 
 ## Minimales Datenmodell und Migration
 
-001 bewahrt Konto-/Geräte-/Session-/Notiz-/Flagmodell mit Eigentums-FK und Constraints. 002 ergänzt Sicherheitsrevision, MFA-Pflicht, Ablauf und nicht geheime Verwaltungs-UUIDs sowie Identitätschallenges, Recoveryverifikatoren, persistente Budgets und sichere Ereignismetadaten. Altes synthetisches Vertrauen wird widerrufen. 003 ergänzt persönliche Codegültigkeit und vorherige OTPverifikatoren. Historische Migrationen nicht nachträglich ändern; Migrationen transaktional, wiederholbar und gegen Prüfsummenabweichung gesperrt. Kein destruktives Downgrade.
+001 bewahrt Konto-/Geräte-/Session-/Notiz-/Flagmodell mit Eigentums-FK und Constraints. 002 ergänzt Sicherheitsrevision, MFA-Pflicht, Ablauf und nicht geheime Verwaltungs-UUIDs sowie Identitätschallenges, Recoveryverifikatoren, persistente Budgets und sichere Ereignismetadaten. Altes synthetisches Vertrauen wird widerrufen. 003 ergänzt persönliche Codegültigkeit und vorherige OTPverifikatoren. 004 ([004_r1_r4_lifetimes.sql](migrations/004_r1_r4_lifetimes.sql)) ergänzt `revoked` und `issued_at` auf `recovery_codes`, entkoppelt neue persönliche Recoverycodes vom automatischen 7-Tage-Ablauf (`expires_at = NULL`, R1; bereits abgelaufene Altcodes werden widerrufen statt still reaktiviert) und führt `accounts.pending_since` für die 24-Stunden-Frist unverifizierter `pending`-Konten (R4) ein. Historische Migrationen nicht nachträglich ändern; Migrationen transaktional, wiederholbar und gegen Prüfsummenabweichung gesperrt. Kein destruktives Downgrade.
 
 Runtime hat kein DDL, keine Rollen-/Flagänderung und kein Notizeigentümer-/Gerätebesitzerwechselrecht. Benutzeranlage und Identitätszustände sind ausschließlich im festen serverseitigen Benutzerweg zugänglich. Notizlöschung bleibt bestätigter **Softdelete**, keine physische endgültige Löschung oder vollständiger Papierkorb. Datenexport, Retention aller Produktdaten, Nichtwiederbelebung und unabhängiger Restore bleiben offen.
 
@@ -68,10 +68,10 @@ Runtime hat kein DDL, keine Rollen-/Flagänderung und kein Notizeigentümer-/Ger
 |---|---|
 | GET /health | Lokaler Experimentstatus; kein DBbereitschaftsbeweis |
 | GET /auth/csrf | CSRFnonce und geschützter Cookie; kein Anmeldenachweis |
-| POST /auth/register, /auth/verify, /auth/resend | Synthetische Benutzerregistrierung, gebundener Einmalcode, begrenzter Neuversand |
+| POST /auth/register, /auth/verify, /auth/resend | Synthetische Benutzerregistrierung, gebundener Einmalcode, begrenzter Neuversand; unverifizierte `pending`-Konten ab 24h (`pending_since`) sicher mit neuem Passwort + neuem OTP rücksetzbar (R4), verifizierte Konten niemals |
 | POST /auth/login | Erst nach Passwort, aktivem verifiziertem Konto und berechtigtem Gerät; geforderte aber fehlende MFA sperrt |
 | POST /auth/device/complete | Vorherige Freigabe vom berechtigten Gerät plus gebundener Antragsteller; danach neu anmelden |
-| POST /auth/recover, /auth/recover/complete | Generische Anfrage; E-Mail-OTP **plus** persönlicher Einmalcode, Entzug alten Vertrauens; keine Dokumentenschlüsselrecovery |
+| POST /auth/recover, /auth/recover/complete | Generische Anfrage; E-Mail-OTP **plus** persönlicher Einmalcode (gültig bis Verbrauch/Widerruf/Rotation, R1), Entzug alten Vertrauens; keine Dokumentenschlüsselrecovery |
 | GET /session; POST /auth/logout | Eigene aktuelle Identität; aktuelle Session widerrufen und Cookie löschen |
 | GET /devices, /devices/requests; POST /devices/requests/{id}/approve, /devices/{id}/revoke | Nur eigenes Gerät/Anfrage, effektives `authorized` (`authorized AND expires_at > clock()`), aktives Gerät zuerst, Paginierung (`offset`/`limit`), Sitzungs-/Gerätesperre und Passwortbestätigung bei Geräteaktionen |
 | GET /sessions; POST /sessions/{id}/revoke | Nur eigene nicht geheime Verwaltungsreferenzen, effektives `revoked` (`revoked OR expires_at <= clock()`), aktive Sitzungen zuerst, Paginierung (`offset`/`limit`); niemals Token/Hashausgabe |

@@ -1,6 +1,6 @@
 # Syllentra AI — überprüfter Projektkontext
 
-**Version:** 0.14 · **Stand:** 23.10.2026 · **Status:** Zur Prüfung durch den Projektinhaber
+**Version:** 0.15 · **Stand:** 23.10.2026 · **Status:** Zur Prüfung durch den Projektinhaber
 
 ## Git-Snapshot und Geltung
 
@@ -119,3 +119,13 @@ Ausgangscommit `39f2e0646de9241684cfed254cf04cba34b2e6da` auf `docs/spec/p1-p2-m
 - **R1 & R4 zur Entscheidung vorbereitet:** Entscheidungsoptionen R1-A/B/C (Entkopplung der 7d-Offline-Recovery-Frist von der 7d-Gerätefrist) und R4-A/B/C (24h-Bereinigung abgelaufener unverifizierter `pending`-Konten) sind in [OPEN_DECISIONS.md](../development/OPEN_DECISIONS.md) Abschnitt 4 dokumentiert; unbestätigte Fristen und Aufbewahrungsregeln wurden im Code nicht geändert.
 
 [Validierungsbericht](../development/IDENTITY_PROTOTYPE_REVIEW.md) (Version 0.3) und [E3.29](../spec/E3-pruefnachweis.md#e329-mission-13--gezielte-sicherheitskorrekturen-der-identität-r2-r3-r5-r12-und-entscheidungsvorlagen-r1-r4): **96 Backendtests** gegen PostgreSQL 17.11 bestanden (92 bestehende + 4 neue Regressions-/Grenztests), `sweep 0` ohne verwaiste Datenbanken, Strict Mypy (14 Quelldateien), Ruff/Format (21 Pythondateien), `pip-audit` (0 bekannte Schwachstellen) sowie Frontend-Build/Lint/Format/Vitest (7/7) und `npm audit` (0 bekannte Schwachstellen) bestanden. 89 FE (`FE-56` offen), 66 UC, 25 DEC-V1, DEC-48/49, 46 REL und 14 TECH-O erhalten; alle Spezifikationen weiterhin Zur Prüfung.
+
+
+## Umsetzung der freigegebenen Eigentümerentscheidungen R1 und R4 nach Mission 14
+
+Ausgangscommit `d8123b7f84aad028202106f17eecdc6789e73118` auf `docs/spec/p1-p2-mobile-workspaces`, PR #1 OPEN. Mission 14 setzt die beiden vom Projektinhaber am 23.10.2026 bestätigten Identitätsentscheidungen um ([004_r1_r4_lifetimes.sql](../../prototypes/backend/migrations/004_r1_r4_lifetimes.sql), [migrate.py](../../prototypes/backend/scripts/migrate.py), [identity.py](../../prototypes/backend/src/syllentra_backend/identity.py), [test_mission12_audit.py](../../prototypes/backend/tests/test_mission12_audit.py)):
+
+- **R1 behoben (Einmal-Recoverycode ohne 7d-Autoablauf):** Persönliche Einmal-Recoverycodes werden mit `expires_at = NULL`, `used = false`, `revoked = false` und `issued_at` ausgestellt und bleiben unabhängig von der 7-Tage-Gerätefrist bis zur erfolgreichen Verwendung, zum expliziten Widerruf (`revoke_offline_code`, Audit `recovery_code_revoked`), zur kontrollierten Rotation (`issue_offline_code` bei Verifikation oder Recovery) oder zur Sicherheitsinvalidierung gültig. Bereits abgelaufene Altcodes werden durch Migration `004_r1_r4_lifetimes.sql` auf `revoked = true` gesetzt statt still reaktiviert.
+- **R4 behoben (Kontrollierter Reset unverifizierter `pending`-Konten ab 24h):** `accounts.pending_since` hält den serverseitigen Startzeitpunkt eines `pending`-Kontos fest und wird durch `POST /auth/resend` oder erneute Registrierung mit gleichem Passwort vor 24h nicht verlängert. Ab `clock() >= pending_since + 24h` setzt `POST /auth/register` ein `pending`-Konto unter `FOR UPDATE` transaktional zurück (neues Argon2id-Passwort, neues `pending_since`, `security_epoch + 1`, Invalidierung aller offenen Challenges, Audit `pending_reset`, neuer gebundener E-Mail-OTP), sofern das Konto nicht verifiziert ist und keine unerwarteten Daten (`notes`, `devices`, `sessions`, `recovery_codes`) besitzt (`pending_reset_blocked`).
+
+[Validierungsbericht](../development/IDENTITY_PROTOTYPE_REVIEW.md) (Version 0.4), [Offene Entscheidungen](../development/OPEN_DECISIONS.md) (Version 0.3) und [E3.30](../spec/E3-pruefnachweis.md#e330-mission-14--umsetzung-der-freigegebenen-eigentümerentscheidungen-r1-und-r4): **99 Backendtests** gegen PostgreSQL 17.11 bestanden (R1/R4-Tests in Regressionsprüfungen überführt + 3 neue Tests für Anomaliesperre, 24h-Parallelität und Migration 004), `sweep 0` ohne verwaiste Datenbanken, Strict Mypy (14 Quelldateien), Ruff/Format (21 Pythondateien), `pip-audit` (0 bekannte Schwachstellen) sowie Frontend-Build/Lint/Format/Vitest (7/7) und `npm audit` (0 bekannte Schwachstellen) bestanden. 89 FE (`FE-56` offen), 66 UC, 25 DEC-V1, DEC-48/49, 46 REL und 14 TECH-O erhalten; keine neuen konkurrierenden `DEC-*`-Nummern vergeben; alle Spezifikationsdokumente weiterhin Zur Prüfung.

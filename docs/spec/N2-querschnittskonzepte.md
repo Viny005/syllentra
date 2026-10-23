@@ -1,8 +1,8 @@
 # N2 — Querschnittskonzepte
 
 **Projekt:** Syllentra AI\
-**Version:** 0.7\
-**Stand:** 22.10.2026\
+**Version:** 0.8\
+**Stand:** 23.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber
 
 ## N2.1 Zweck und Ausarbeitungsgrenze
@@ -11,9 +11,9 @@ Dieser fachliche V1-Sicherheitsprüfentwurf vervollständigt die Schutzanforderu
 
 ## N2.2 Konten, Authentifizierung und Sitzungen
 
-- **SEC-01 — Verifizierter Zugang (FE-37, FE-38, FE-59 bis FE-62):** Offene Registrierung mit E-Mail und Passwort; E-Mail-OTP vor jedem erstmaligen Anwendungsdatenzugang. Unverifizierte Konten dürfen nur den beschränkten Verifikations-/Recoveryweg nutzen. Bekannte Geräte melden sich normal mit Passwort an; neue Geräte verlangen zusätzliche berechtigte Verifikation. Optionale Passkeys, OS-Biometrie, TOTP und SMS nur bei tatsächlicher Unterstützung; keine Rohbiometrie an Syllentra. SMS ist niemals alleiniger sensibler Recoverynachweis.
+- **SEC-01 — Verifizierter Zugang (FE-37, FE-38, FE-59 bis FE-62):** Offene Registrierung mit E-Mail und Passwort; E-Mail-OTP vor jedem erstmaligen Anwendungsdatenzugang. Unverifizierte Konten dürfen nur den beschränkten Verifikations-/Recoveryweg nutzen; bleibt ein Konto im Status `pending` über 24 Stunden ab seinem serverseitigen Startzeitpunkt unverifiziert (und wird diese Frist durch OTP-Neuversand nicht künstlich verlängert), kann es in einem neuen Registrierungsdurchlauf mit neuem Passwort, neuer E-Mail-OTP-Prüfung und Invalidierung alter Challenges ohne Daten-/Rechtetransfer zurückgesetzt werden, während bereits verifizierte Konten niemals zurückgesetzt werden (R4, bestätigt am 23.10.2026). Bekannte Geräte melden sich normal mit Passwort an; neue Geräte verlangen zusätzliche berechtigte Verifikation. Optionale Passkeys, OS-Biometrie, TOTP und SMS nur bei tatsächlicher Unterstützung; keine Rohbiometrie an Syllentra. SMS ist niemals alleiniger sensibler Recoverynachweis.
 - **SEC-02 — Getrennte Zustände (FE-36 bis FE-39, FE-61, FE-62):** Konto, Gerät, Serversitzung, lokale Sperre und Dokumentenschlüssel sind getrennt. Mehrtagessitzung und konfigurierbare lokale Inaktivitätssperre sind Ziele ohne erfundene Dauer. Lokales OS-Biometrie-/PIN-Entsperren verlängert keine abgelaufene Serversitzung. Neue Geräte durch bestehendes berechtigtes Gerät oder sichere Wiederherstellung bei Verlust autorisieren; Entzug sperrt weitere Zugriffe, beweist keine Fernlöschung bereits vorhandener Offlinekopien.
-- **SEC-03 — Recovery (FE-38, FE-70, FE-77):** Persönliche einmal nutzbare Kontorecoverycodes zusammen mit verifizierter E-Mail; Admin-MFA mit gesichertem Wiederherstellungsweg. Dokumentenschlüssel werden gesondert persönlich wiederhergestellt. Kontoerfolg ist kein Dokumentenschlüsselnachweis. OTP-/Versuchs-/Sitzungsgrenzen und konkrete Nachweisverfahren bleiben O-S1-06/07.
+- **SEC-03 — Recovery (FE-38, FE-70, FE-77):** Persönliche einmal nutzbare Kontorecoverycodes zusammen mit verifizierter E-Mail; der persönliche Einmal-Recoverycode läuft nicht automatisch nach sieben Tagen ab, sondern bleibt unabhängig von der Gerätevertrauensdauer bis zur erfolgreichen Verwendung, zum expliziten Widerruf, zur kontrollierten Regeneration/Rotation oder zur sicherheitsbegründeten Invalidierung gültig (R1, bestätigt am 23.10.2026). Admin-MFA mit gesichertem Wiederherstellungsweg. Dokumentenschlüssel werden gesondert persönlich wiederhergestellt. Kontoerfolg ist kein Dokumentenschlüsselnachweis. OTP-/Versuchs-/Sitzungsgrenzen und konkrete Nachweisverfahren bleiben O-S1-06/07.
 
 ## N2.3 Rollen, Isolation und Featuregrenzen
 

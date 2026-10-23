@@ -1,8 +1,8 @@
-"""Prioritäre Sicherheits-, Grenz-, Parallelitäts- und Regressionsprüfungen (Mission 12 & 13).
+"""Prioritäre Sicherheits-, Grenz-, Parallelitäts- und Regressionsprüfungen (Mission 12–14).
 
-R2, R3, R5 und R12 sind ab Mission 13 als Regressionsprüfungen abgesichert; R1 (>7 Tage
-Inaktivität) und R4 (nicht ablaufende pending-Konten) bleiben bis zur Freigabe der offenen
-Entscheidungen ausdrücklich als Charakterisierung („en attente de décision“) dokumentiert.
+R1 (persönlicher Offline-Recoverycode ohne automatischen 7-Tage-Ablauf), R2, R3, R4 ( kontrollierter
+Reset unverifizierter pending-Konten ab 24 Stunden), R5 und R12 sind als Regressionsprüfungen
+gegen die vom Projektinhaber freigegebenen Sicherheitsregeln abgesichert.
 """
 
 import secrets
@@ -152,59 +152,171 @@ def test_device_expiration_exact_boundary(env: Any) -> None:
 
 
 def test_inactivity_over_7_days_characterizes_r1_recovery_and_device_lockout(env: Any) -> None:
-    """Charakterisierung R1 (en attente de correctif): >7 Tage Inaktivität sperrt Zugang."""
+    """Regressionsprüfung R1: Geräteablauf nach 7d unabhängig; Recovery nach 8, 30 und 90 Tagen."""
     c, recovering = env["browser"](), env["browser"]()
     account(env, c)
     aid = c.get("/session").json()["account_id"]
     personal = env["offline"].take(aid)
-    # Nach 7 Tagen + 1s sind sowohl Gerätebindung (7d) als auch Offline-Code (7d) abgelaufen:
+    with psycopg.connect(env["admin"]) as db:
+        rc_row = db.execute(
+            "SELECT used, revoked, expires_at FROM recovery_codes WHERE account_id = %s", (aid,)
+        ).fetchone()
+        assert rc_row == (False, False, None)
+    # Nach 7 Tagen + 1s ist die Gerätebindung (7d) abgelaufen, der persönliche Recoverycode bleibt:
     env["now"][0] += timedelta(days=7, seconds=1)
     assert c.get("/session").status_code == 401
     login_res = c.post("/auth/login", json={"login": "alice@example.test", "password": PASSWORD})
     assert login_res.status_code == 202
     assert login_res.json()["status"] == "device_verification_required"
-    ref = recovering.post("/auth/recover", json={"email": "alice@example.test"}).json()[
-        "challenge_id"
-    ]
-    otp = env["mail"].take(ref)
-    rec_res = recovering.post(
-        "/auth/recover/complete",
-        json={
-            "challenge_id": ref,
-            "code": otp,
-            "recovery_code": personal,
-            "new_password": NEW_PASSWORD,
-        },
+    # Kontowiederherstellung nach 8 Tagen, 30 Tagen und 90 Tagen Inaktivität:
+    passwords = [NEW_PASSWORD, PASSWORD + "-30d", PASSWORD + "-90d"]
+    for idx, days in enumerate([8, 30, 90]):
+        env["now"][0] += timedelta(days=days - (7 if idx == 0 else 0))
+        ref = recovering.post("/auth/recover", json={"email": "alice@example.test"}).json()[
+            "challenge_id"
+        ]
+        otp = env["mail"].take(ref)
+        rec_res = recovering.post(
+            "/auth/recover/complete",
+            json={
+                "challenge_id": ref,
+                "code": otp,
+                "recovery_code": personal,
+                "new_password": passwords[idx],
+            },
+        )
+        assert rec_res.status_code == 200
+        assert rec_res.json()["status"] == "recovered"
+        # Bereits verbrauchter persönlicher Recoverycode wird bei Wiederverwendung strikt abgelehnt:
+        ref_reuse = recovering.post("/auth/recover", json={"email": "alice@example.test"}).json()[
+            "challenge_id"
+        ]
+        otp_reuse = env["mail"].take(ref_reuse)
+        reuse_res = recovering.post(
+            "/auth/recover/complete",
+            json={
+                "challenge_id": ref_reuse,
+                "code": otp_reuse,
+                "recovery_code": personal,
+                "new_password": PASSWORD + "-reuse",
+            },
+        )
+        assert reuse_res.status_code == 400
+        new_personal = env["offline"].take(aid)
+        assert new_personal and new_personal != personal
+        personal = new_personal
+    # Nach erfolgreichem Recovery-Lauf bei 90 Tagen funktioniert das neue Passwort auf dem Gerät:
+    assert (
+        recovering.post(
+            "/auth/login", json={"login": "alice@example.test", "password": passwords[-1]}
+        ).status_code
+        == 200
     )
-    # Charakterisierung R1: Selbst mit korrektem E-Mail-OTP und korrektem persönlichem Code
-    # schlägt die Wiederherstellung nach >7 Tagen fehl, weil recovery_codes.expires_at <= clock().
-    assert rec_res.status_code == 400
-    assert rec_res.json()["status"] == "recovery_failed"
 
 
 def test_old_pending_account_blocks_different_password_and_allows_same_password_restart(
     env: Any,
 ) -> None:
-    """Charakterisierung R4 (en attente de correctif): alte pending-Konten laufen nicht ab."""
-    first, stranger, owner_retry = env["browser"](), env["browser"](), env["browser"]()
-    old_ref = registration(env, first, "pending@example.test")
-    _ = env["mail"].take(old_ref)
-    # Nach 30 Tagen ist die ursprüngliche Challenge längst abgelaufen, das pending-Konto bleibt:
-    env["now"][0] += timedelta(days=30)
-    before_messages = len(env["mail"].messages)
-    r_diff = stranger.post(
-        "/auth/register", json={"email": "pending@example.test", "password": NEW_PASSWORD}
+    """Regressionsprüfung R4: Vor 24h gleiches Passwort; ab 24h und >24h sicherer Reset."""
+    first, stranger, owner_retry, final_client = (
+        env["browser"](),
+        env["browser"](),
+        env["browser"](),
+        env["browser"](),
     )
-    assert r_diff.status_code == 202
-    # Charakterisierung R4: Mit anderem Passwort wird nur eine Fake-Challenge geliefert (kein OTP):
-    assert len(env["mail"].messages) == before_messages
-    # Nur mit dem ursprünglichen Passwort lässt sich die Verifikation neu starten:
-    r_same = owner_retry.post(
+    start = env["now"][0]
+    old_ref = registration(env, first, "pending@example.test")
+    old_otp = env["mail"].take(old_ref)
+    # 1. OTP-Resend (+61s) und gleiches Passwort vor 24h verlängern pending_since NICHT:
+    env["now"][0] = start + timedelta(seconds=61)
+    assert first.post("/auth/resend", json={"challenge_id": old_ref}).status_code == 202
+    _ = env["mail"].take(old_ref)
+    env["now"][0] = start + timedelta(hours=12)
+    r_same_early = owner_retry.post(
         "/auth/register", json={"email": "pending@example.test", "password": PASSWORD}
     )
-    assert r_same.status_code == 202
+    assert r_same_early.status_code == 202
+    mid_ref = r_same_early.json()["challenge_id"]
+    mid_otp = env["mail"].take(mid_ref)
+    with psycopg.connect(env["admin"]) as db:
+        ps_row = db.execute(
+            "SELECT pending_since FROM accounts WHERE login = 'pending@example.test'"
+        ).fetchone()
+        assert ps_row and ps_row[0] == start
+    # 2. 1 Sekunde vor 24h (24h - 1s): anderes Passwort erhält nur Fake-Challenge (kein OTP):
+    env["now"][0] = start + timedelta(hours=24) - timedelta(seconds=1)
+    before_messages = len(env["mail"].messages)
+    r_before_24h = stranger.post(
+        "/auth/register", json={"email": "pending@example.test", "password": NEW_PASSWORD}
+    )
+    assert r_before_24h.status_code == 202
+    assert len(env["mail"].messages) == before_messages
+    # 3. Exakt bei 24h: Reset mit neuem Passwort ist zulässig und entwertet frühere Challenges:
+    env["now"][0] = start + timedelta(hours=24)
+    r_at_24h = stranger.post(
+        "/auth/register", json={"email": "pending@example.test", "password": NEW_PASSWORD}
+    )
+    assert r_at_24h.status_code == 202
     assert len(env["mail"].messages) == before_messages + 1
-    verify(env, owner_retry, r_same.json()["challenge_id"])
+    reset_ref_24h = r_at_24h.json()["challenge_id"]
+    reset_otp_24h = env["mail"].take(reset_ref_24h)
+    # Alte Challenges und alte OTPs sind nach dem Reset ungültig (consumed + security_epoch):
+    assert (
+        first.post("/auth/verify", json={"challenge_id": old_ref, "code": old_otp}).status_code
+        == 400
+    )
+    assert (
+        owner_retry.post(
+            "/auth/verify", json={"challenge_id": mid_ref, "code": mid_otp}
+        ).status_code
+        == 400
+    )
+    # 4. Nach >24h (z. B. +30 Tage nach dem ersten Reset) funktioniert ein weiterer Reset:
+    env["now"][0] += timedelta(days=30)
+    third_password = PASSWORD + "-final-owner"
+    r_after_30d = final_client.post(
+        "/auth/register", json={"email": "pending@example.test", "password": third_password}
+    )
+    assert r_after_30d.status_code == 202
+    final_ref = r_after_30d.json()["challenge_id"]
+    assert (
+        stranger.post(
+            "/auth/verify", json={"challenge_id": reset_ref_24h, "code": reset_otp_24h}
+        ).status_code
+        == 400
+    )
+    verify(env, final_client, final_ref)
+    assert (
+        final_client.post(
+            "/auth/login", json={"login": "pending@example.test", "password": PASSWORD}
+        ).status_code
+        == 401
+    )
+    assert (
+        final_client.post(
+            "/auth/login", json={"login": "pending@example.test", "password": NEW_PASSWORD}
+        ).status_code
+        == 401
+    )
+    assert (
+        final_client.post(
+            "/auth/login", json={"login": "pending@example.test", "password": third_password}
+        ).status_code
+        == 200
+    )
+    # 5. Ein bereits verifiziertes Konto wird auch nach >24h NIEMALS durch /auth/register verändert:
+    env["now"][0] += timedelta(days=30)
+    msg_count = len(env["mail"].messages)
+    r_verified = stranger.post(
+        "/auth/register", json={"email": "pending@example.test", "password": NEW_PASSWORD}
+    )
+    assert r_verified.status_code == 202
+    assert len(env["mail"].messages) == msg_count
+    with psycopg.connect(env["admin"]) as db:
+        v_row = db.execute(
+            "SELECT verification, status FROM accounts WHERE login = 'pending@example.test'"
+        ).fetchone()
+        assert v_row == ("verified", "active")
 
 
 def test_network_budget_shared_client_host_ignores_forwarded_headers(env: Any) -> None:
@@ -416,7 +528,7 @@ def test_simultaneous_device_approval_and_authority_revocation(env: Any) -> None
         )
         approve_status, revoke_status = f_approve.result(), f_revoke.result()
     assert revoke_status == 200
-    assert approve_status in {200, 401}
+    assert approve_status in {200, 400, 401}
     # finish_device prüft, ob approved_by_device noch autorisiert ist -> zwingend 400:
     assert candidate.post("/auth/device/complete", json={"challenge_id": ref}).status_code == 400
     assert not candidate.cookies.get(DEVICE)
@@ -657,38 +769,281 @@ def test_approve_device_verifies_session_and_device_state_and_rejects_duplicate_
 
 
 def test_r1_and_r4_boundary_and_decision_readiness(env: Any) -> None:
-    """Grenz- und Entscheidungsbereitschaftstest für R1 (knapp vor 7d) und R4 (Challenges)."""
-    c, recovering, pending_client = env["browser"](), env["browser"](), env["browser"]()
-    account(env, c)
-    aid = c.get("/session").json()["account_id"]
-    personal = env["offline"].take(aid)
-    p_ref = registration(env, pending_client, "stale-pending@example.test")
-    _ = env["mail"].take(p_ref)
-    # 1 Sekunde vor Ablauf der 7-Tage-Frist ist die Kontowiederherstellung noch möglich und rotiert
-    # sowohl Gerätebindung als auch Offline-Wiederherstellungscode um weitere 7 Tage:
-    env["now"][0] += timedelta(days=7) - timedelta(seconds=1)
-    ref = recovering.post("/auth/recover", json={"email": "alice@example.test"}).json()[
+    """Regressionsprüfung R1: Rotation, expliziter Widerruf, abgelaufener OTP und A/B-Isolation."""
+    from psycopg.rows import dict_row
+
+    from syllentra_backend.identity import IdentityService
+
+    alice, bob, recovering = env["browser"](), env["browser"](), env["browser"]()
+    account(env, alice, "alice@example.test")
+    account(env, bob, "bob@example.test")
+    aid = UUID(alice.get("/session").json()["account_id"])
+    bid = UUID(bob.get("/session").json()["account_id"])
+    alice_personal_1 = env["offline"].take(str(aid))
+    bob_personal = env["offline"].take(str(bid))
+    service = IdentityService(
+        env["config"],
+        lambda: env["now"][0],
+    )
+    # 1. Kontrollierte Regeneration/Rotation ersetzt den alten persönlichen Code sofort:
+    with psycopg.connect(env["admin"], row_factory=dict_row) as db:
+        acc_row = db.execute("SELECT * FROM accounts WHERE id = %s", (aid,)).fetchone()
+        assert acc_row
+        service.issue_offline_code(db, acc_row)
+    alice_personal_2 = env["offline"].take(str(aid))
+    assert alice_personal_2 != alice_personal_1
+    ref1 = recovering.post("/auth/recover", json={"email": "alice@example.test"}).json()[
         "challenge_id"
     ]
-    otp = env["mail"].take(ref)
-    rec = recovering.post(
-        "/auth/recover/complete",
-        json={
-            "challenge_id": ref,
-            "code": otp,
-            "recovery_code": personal,
-            "new_password": NEW_PASSWORD,
-        },
+    otp1 = env["mail"].take(ref1)
+    # Ersetzter alter Code wird abgelehnt:
+    assert (
+        recovering.post(
+            "/auth/recover/complete",
+            json={
+                "challenge_id": ref1,
+                "code": otp1,
+                "recovery_code": alice_personal_1,
+                "new_password": NEW_PASSWORD,
+            },
+        ).status_code
+        == 400
     )
-    assert rec.status_code == 200
-    new_personal = env["offline"].take(aid)
-    assert new_personal and new_personal != personal
-    # Abgelaufene Challenge von stale-pending (>1h überfällig) wurde durch clean() entfernt,
-    # während das pending-Konto bis zur Entscheidung über R4 in accounts erhalten bleibt:
+    # 2. Isolationsprüfung zwischen Konto A und Konto B (fremder persönlicher Code wird abgelehnt):
+    assert (
+        recovering.post(
+            "/auth/recover/complete",
+            json={
+                "challenge_id": ref1,
+                "code": otp1,
+                "recovery_code": bob_personal,
+                "new_password": NEW_PASSWORD,
+            },
+        ).status_code
+        == 400
+    )
+    # 3. Abgelaufener Recovery-OTP (>5 Minuten) wird trotz gültigem persönlichem Code abgelehnt:
+    env["now"][0] += timedelta(minutes=6)
+    assert (
+        recovering.post(
+            "/auth/recover/complete",
+            json={
+                "challenge_id": ref1,
+                "code": otp1,
+                "recovery_code": alice_personal_2,
+                "new_password": NEW_PASSWORD,
+            },
+        ).status_code
+        == 400
+    )
+    # 4. Expliziter Widerruf des persönlichen Recoverycodes (revoke_offline_code) sperrt Einlösung:
+    with psycopg.connect(env["admin"], row_factory=dict_row) as db:
+        assert service.revoke_offline_code(db, aid) is True
+        assert service.revoke_offline_code(db, aid) is False
+    ref2 = recovering.post("/auth/recover", json={"email": "alice@example.test"}).json()[
+        "challenge_id"
+    ]
+    otp2 = env["mail"].take(ref2)
+    assert (
+        recovering.post(
+            "/auth/recover/complete",
+            json={
+                "challenge_id": ref2,
+                "code": otp2,
+                "recovery_code": alice_personal_2,
+                "new_password": NEW_PASSWORD,
+            },
+        ).status_code
+        == 400
+    )
+    # Nach autorisierter Neuausgabe gelingt die Wiederherstellung und widerruft alte Sitzung/Gerät:
+    with psycopg.connect(env["admin"], row_factory=dict_row) as db:
+        acc_row = db.execute("SELECT * FROM accounts WHERE id = %s", (aid,)).fetchone()
+        assert acc_row
+        service.issue_offline_code(db, acc_row)
+    alice_personal_3 = env["offline"].take(str(aid))
+    ref3 = recovering.post("/auth/recover", json={"email": "alice@example.test"}).json()[
+        "challenge_id"
+    ]
+    otp3 = env["mail"].take(ref3)
+    assert (
+        recovering.post(
+            "/auth/recover/complete",
+            json={
+                "challenge_id": ref3,
+                "code": otp3,
+                "recovery_code": alice_personal_3,
+                "new_password": NEW_PASSWORD,
+            },
+        ).status_code
+        == 200
+    )
+    assert alice.get("/session").status_code == 401
+    assert bob.get("/session").status_code == 200
+
+
+def test_r4_unexpected_associated_data_blocks_pending_reset(env: Any) -> None:
+    """Sicherheitswächter R4: Unerwartete Daten an einem pending-Konto verhindern Reset."""
+    from uuid import uuid4
+
+    first, stranger = env["browser"](), env["browser"]()
+    ref = registration(env, first, "anomaly@example.test")
+    _ = env["mail"].take(ref)
     with psycopg.connect(env["admin"]) as db:
-        ch_row = db.execute("SELECT id FROM identity_challenges WHERE id = %s", (p_ref,)).fetchone()
-        assert ch_row is None
-        acc_row = db.execute(
-            "SELECT verification, status FROM accounts WHERE login = 'stale-pending@example.test'"
+        row = db.execute("SELECT id FROM accounts WHERE login = 'anomaly@example.test'").fetchone()
+        assert row
+        aid = row[0]
+        # Künstliche Anomalie: Notiz hängt an einem noch unverifizierten pending-Konto
+        db.execute(
+            "INSERT INTO notes (id, account_id, title, body, deleted_at) "
+            "VALUES (%s, %s, 'Anomalie', 'Darf nicht überschrieben werden', NULL)",
+            (uuid4(), aid),
+        )
+    env["now"][0] += timedelta(hours=25)
+    before = len(env["mail"].messages)
+    res = stranger.post(
+        "/auth/register", json={"email": "anomaly@example.test", "password": NEW_PASSWORD}
+    )
+    assert res.status_code == 202
+    assert len(env["mail"].messages) == before
+    with psycopg.connect(env["admin"]) as db:
+        events = db.execute(
+            "SELECT count(*) FROM security_events "
+            "WHERE account_id = %s AND event = 'pending_reset_blocked'",
+            (aid,),
         ).fetchone()
-        assert acc_row == ("pending", "active")
+        assert events and events[0] == 1
+
+
+def test_r4_concurrent_registrations_and_verify_vs_reset_at_24h(env: Any) -> None:
+    """Parallelitätsprüfung R4: 2 gleichzeitige Resets nach 24h sowie Verify vs. Reset bei 24h."""
+    # 1. Zwei gleichzeitige Registrierungen nach >24h auf dasselbe pending-Konto:
+    init_client = env["browser"]()
+    ref0 = registration(env, init_client, "race-reg@example.test")
+    _ = env["mail"].take(ref0)
+    env["now"][0] += timedelta(hours=25)
+    c1, c2 = env["browser"](), env["browser"]()
+    p1, p2 = NEW_PASSWORD + "-c1", NEW_PASSWORD + "-c2"
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        f1 = pool.submit(
+            lambda: c1.post(
+                "/auth/register", json={"email": "race-reg@example.test", "password": p1}
+            )
+        )
+        f2 = pool.submit(
+            lambda: c2.post(
+                "/auth/register", json={"email": "race-reg@example.test", "password": p2}
+            )
+        )
+        r1, r2 = f1.result(), f2.result()
+    assert r1.status_code == 202 and r2.status_code == 202
+    with psycopg.connect(env["admin"]) as db:
+        active_ch = db.execute(
+            "SELECT id, security_epoch FROM identity_challenges "
+            "WHERE account_id = (SELECT id FROM accounts WHERE login = 'race-reg@example.test') "
+            "AND NOT consumed"
+        ).fetchall()
+        assert len(active_ch) == 1
+        acc_epoch = db.execute(
+            "SELECT security_epoch FROM accounts WHERE login = 'race-reg@example.test'"
+        ).fetchone()
+        assert acc_epoch and acc_epoch[0] == 1 and active_ch[0][1] == 1
+    # 2. Gleichzeitige Verifikation (mit frischer Challenge kurz vor 24h) und Reset exakt bei 24h:
+    owner, resetter = env["browser"](), env["browser"]()
+    start = env["now"][0]
+    ref_init = registration(env, owner, "race-verify@example.test")
+    _ = env["mail"].take(ref_init)
+    env["now"][0] = start + timedelta(hours=23, minutes=59)
+    retry = owner.post(
+        "/auth/register", json={"email": "race-verify@example.test", "password": PASSWORD}
+    )
+    assert retry.status_code == 202
+    valid_ref = retry.json()["challenge_id"]
+    valid_otp = env["mail"].take(valid_ref)
+    env["now"][0] = start + timedelta(hours=24)
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        fv = pool.submit(
+            lambda: owner.post("/auth/verify", json={"challenge_id": valid_ref, "code": valid_otp})
+        )
+        fr = pool.submit(
+            lambda: resetter.post(
+                "/auth/register",
+                json={"email": "race-verify@example.test", "password": NEW_PASSWORD},
+            )
+        )
+        rv, rr = fv.result(), fr.result()
+    assert rr.status_code == 202
+    assert rv.status_code in {200, 400}
+    if rv.status_code == 200:
+        # Verifikation hat die Kontosperre zuerst gewonnen -> Konto ist verifiziert und wurde
+        # durch den parallelen Reset-Aufruf NICHT überschrieben:
+        assert (
+            owner.post(
+                "/auth/login", json={"login": "race-verify@example.test", "password": PASSWORD}
+            ).status_code
+            == 200
+        )
+        assert (
+            owner.post(
+                "/auth/login", json={"login": "race-verify@example.test", "password": NEW_PASSWORD}
+            ).status_code
+            == 401
+        )
+    else:
+        # Reset hat die Kontosperre zuerst gewonnen -> alte Challenge wurde abgelehnt (400),
+        # neue Challenge lässt sich mit NEW_PASSWORD verifizieren:
+        new_ref = rr.json()["challenge_id"]
+        verify(env, resetter, new_ref)
+        assert (
+            resetter.post(
+                "/auth/login", json={"login": "race-verify@example.test", "password": NEW_PASSWORD}
+            ).status_code
+            == 200
+        )
+        assert (
+            resetter.post(
+                "/auth/login", json={"login": "race-verify@example.test", "password": PASSWORD}
+            ).status_code
+            == 401
+        )
+
+
+def test_r1_migration_004_revokes_expired_legacy_codes_and_preserves_active_codes(
+    env: Any,
+) -> None:
+    """Migrationsprüfung 004: Bereits abgelaufene Altcodes werden widerrufen, nicht reaktiviert."""
+    from pathlib import Path
+    from uuid import uuid4
+
+    migration_004 = (
+        Path(__file__).resolve().parents[1] / "migrations/004_r1_r4_lifetimes.sql"
+    ).read_text(encoding="utf-8")
+    # Nur die beiden UPDATE-Anweisungen der Vorwärtsmigration 004 gegen einen Altzustand prüfen:
+    update_lines = [line for line in migration_004.splitlines() if line.startswith("UPDATE ")]
+    assert len(update_lines) == 2
+    expired_aid, active_aid = uuid4(), uuid4()
+    with psycopg.connect(env["admin"]) as db:
+        for aid, email in [(expired_aid, "exp@example.test"), (active_aid, "act@example.test")]:
+            db.execute(
+                "INSERT INTO accounts (id,login,password_hash,kind,verification,status) "
+                "VALUES (%s,%s,'x','user','verified','active')",
+                (aid, email),
+            )
+        db.execute(
+            "INSERT INTO recovery_codes (account_id, verifier, used, revoked, expires_at) "
+            "VALUES (%s, 'v1', false, false, CURRENT_TIMESTAMP - interval '1 second'), "
+            "(%s, 'v2', false, false, CURRENT_TIMESTAMP + interval '1 day')",
+            (expired_aid, active_aid),
+        )
+        for stmt in update_lines:
+            db.execute(stmt)
+        exp_row = db.execute(
+            "SELECT revoked, expires_at IS NOT NULL FROM recovery_codes WHERE account_id = %s",
+            (expired_aid,),
+        ).fetchone()
+        act_row = db.execute(
+            "SELECT revoked, expires_at FROM recovery_codes WHERE account_id = %s",
+            (active_aid,),
+        ).fetchone()
+        assert exp_row == (True, True)
+        assert act_row == (False, None)

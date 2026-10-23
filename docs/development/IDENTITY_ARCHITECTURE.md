@@ -1,6 +1,6 @@
-# Lokale Identitätsarchitektur — Mission 10 & Mission 13
+# Lokale Identitätsarchitektur — Mission 10, Mission 13 & Mission 14
 
-**Version:** 0.2 · **Stand:** 23.10.2026 · **Status:** Experimentell / Zur Prüfung
+**Version:** 0.3 · **Stand:** 23.10.2026 · **Status:** Experimentell / Zur Prüfung
 
 ## Umfang, Primärquellen und unveränderliche Grenzen
 
@@ -14,14 +14,14 @@ Der bisherige Einstieg `syllentra_backend.local:app` bleibt gesperrt (503 bei An
 
 | Weg | Voraussetzungen | Wirkung / sichere Sperre |
 |---|---|---|
-| Registrierung | Zulässige synthetische Adresse, Passwort mindestens 12/höchstens 256 Zeichen, Budgets | Neues Benutzerkonto pending; kein Zugriff auf Anwendungsdaten. ASCIIadresse kontrolliert trimmen und kleinschreiben; öffentliche Produktionsnormalisierung bleibt offen. |
-| Duplikat | Gleiche normalisierte Adresse | Kein zweites Konto, kein Überschreiben des Passworts. Antwort immer accepted mit Referenz. Pending und korrektes vorhandenes Passwort dürfen einen neuen gebundenen Verifikationslauf beginnen; falsches Passwort verändert den bestehenden Lauf nicht. |
-| Adressverifikation | Richtiger zweckgebundener OTP und geheimer Preauth-Cookie derselben Anfrage | verified, erstes servergebundenes Gerät und persönlicher Offline-Testcode; **keine automatische Appsession**. Danach Passwortanmeldung erforderlich. |
+| Registrierung | Zulässige synthetische Adresse, Passwort mindestens 12/höchstens 256 Zeichen, Budgets | Neues Benutzerkonto `pending` mit serverseitigem Startzeitpunkt `pending_since`; kein Zugriff auf Anwendungsdaten. ASCIIadresse kontrolliert trimmen und kleinschreiben; öffentliche Produktionsnormalisierung bleibt offen. |
+| Duplikat | Gleiche normalisierte Adresse | Kein zweites Konto; bereits verifizierte Konten werden niemals zurückgesetzt. Antwort immer `accepted` mit Referenz. Vor Ablauf von 24 Stunden (`clock() < pending_since + 24h`) darf ein `pending`-Konto nur mit dem ursprünglichen Passwort einen neuen gebundenen Verifikationslauf beginnen (ohne `pending_since` zu verlängern); falsches Passwort verändert den Lauf nicht. Ab 24 Stunden (`clock() >= pending_since + 24h`, R4) wird ein `pending`-Konto ohne unerwartete verknüpfte Daten unter `FOR UPDATE` sicher zurückgesetzt: neues Argon2id-Passwort, neues `pending_since`, erhöhte `security_epoch`, Invalidierung aller offenen Challenges und neuer E-Mail-OTP. |
+| Adressverifikation | Richtiger zweckgebundener OTP und geheimer Preauth-Cookie derselben Anfrage | `verified`, erstes servergebundenes Gerät (7 Tage) und persönlicher Offline-Einmalcode (ohne automatischen 7-Tage-Ablauf, R1); **keine automatische Appsession**. Danach Passwortanmeldung erforderlich. |
 | Bekanntes Gerät | Passwort, aktives verifiziertes Benutzerkonto, aktueller nicht widerrufener Gerätenachweis, keine unerfüllte MFA-Pflicht | Neue zufällige zeitbegrenzte Session; niemals eine vorgegebene Sessionkennung übernehmen. |
 | Neues/abgelaufenes Gerät | Richtiges Passwort, aber kein aktueller Gerätenachweis | Nur gebundene Geräteanfrage, noch keine Session. Bestehendes berechtigtes Gerät prüft passende nicht geheime Referenz und bestätigt mit Passwort. Antragsteller muss danach seinen gebundenen Cookie vorweisen; erst dann neuer Gerätenachweis und anschließende Anmeldung. |
 | Geräteverlust | Kein vorhandenes berechtigtes Gerät | Kein bloßes Vertrauen in Geräte-ID oder E-Mail allein; getrennter Recoveryweg nötig. |
 | Recoveryanfrage | Aktives verifiziertes Benutzerkonto ohne unerfüllte MFA-Pflicht | Generische Antwort; lokaler Recovery-OTP bei Zulässigkeit, ansonsten gleichförmige fiktive Referenz. |
-| Recoveryabschluss | Gebundener gültiger E-Mail-OTP **plus** gültiger persönlicher Offline-Einmalcode und neues Passwort | Alle alten Sessions/Geräte/Challenges entziehen, Sicherheitsrevision erhöhen, neuen lokalen Gerätenachweis und getrennten Offlinecode ausgeben; danach neu anmelden. Sicherheitsbenachrichtigung nur im lokalen Kanal. |
+| Recoveryabschluss | Gebundener gültiger E-Mail-OTP **plus** gültiger, unverbrauchter und nicht widerrufener persönlicher Offline-Einmalcode und neues Passwort | Alle alten Sessions/Geräte/Challenges entziehen, Sicherheitsrevision erhöhen, neuen lokalen Gerätenachweis (7 Tage) und neu rotierten Offlinecode ausgeben; danach neu anmelden. Sicherheitsbenachrichtigung nur im lokalen Kanal. |
 | MFA/Admin | Faktor-/Bootstrapverfahren fehlen | Keine Anmeldung oder Wiederherstellung, die eine geforderte MFA umgeht; Administration auch mit künstlichem Admin-Token unzugänglich. |
 
 Das initiale Einrichten eines persönlichen Recoverycodes erfolgt hier ausschließlich über einen **getrennten privaten lokalen Offline-Testkanal**, nicht über die Mailbox oder die API. Beide Kanäle liegen für das Experiment auf demselben Rechner; dies beweist keine unabhängige sichere reale Übergabe. Deren Verfahren bleibt vor Produktnutzung zu entscheiden. Kontorecovery gibt keine persönlichen Dokumentenschlüssel zurück, entschlüsselt keine privaten Dokumente und stellt kein Admin-Schlüsselrecht her.
@@ -40,17 +40,17 @@ Private Testmailboxen benötigen 0700-Verzeichnisse und eigene 0600-Dateien, ver
 
 ## Datenmodell, Rechte und Transaktionen
 
-[Migrationen](../../prototypes/backend/migrations/002_local_identity.sql) erweitern das bestehende Schema additiv; [003](../../prototypes/backend/migrations/003_proof_lifetimes.sql) ergänzt Lebensdauer und frühere OTPverifikatoren. Historische Migration 001 bleibt unverändert. Migration 002 entzieht altes synthetisches Geräte-/Sitzungsvertrauen, statt es als echte Verifikation zu übernehmen.
+[Migrationen](../../prototypes/backend/migrations/002_local_identity.sql) erweitern das bestehende Schema additiv; [003](../../prototypes/backend/migrations/003_proof_lifetimes.sql) ergänzt Lebensdauer und frühere OTPverifikatoren; [004](../../prototypes/backend/migrations/004_r1_r4_lifetimes.sql) setzt die freigegebenen Eigentümerentscheidungen R1 und R4 um (`revoked`, `issued_at`, optionales `expires_at` auf `recovery_codes` mit Widerruf bereits abgelaufener Altcodes sowie `pending_since` auf `accounts`). Historische Migrationen 001–003 bleiben unverändert. Migration 002 entzieht altes synthetisches Geräte-/Sitzungsvertrauen, statt es als echte Verifikation zu übernehmen.
 
 | Daten | Ergänzung / Integrität |
 |---|---|
-| accounts | Sicherheitsrevision und MFA-Pflicht; Rollenprüfung serverseitig. Runtime darf keine Adminrolle einfügen oder Kontorolle ändern. |
-| devices | Ablauf, Revision und servergenerierter geheimer Nachweis; Konto darf per Runtime nicht umgehängt werden. |
+| accounts | Sicherheitsrevision, MFA-Pflicht und serverseitiges `pending_since` (24h-Frist für unverifizierte Konten, durch OTP-Resends nicht verlängert); Rollenprüfung serverseitig. Runtime darf keine Adminrolle einfügen oder Kontorolle ändern. |
+| devices | Ablauf (7 Tage unabhängig vom persönlichen Recoverycode), Revision und servergenerierter geheimer Nachweis; Konto darf per Runtime nicht umgehängt werden. |
 | sessions | Zusätzliche nicht geheime UUID für Eigenverwaltung, Ablauf, Widerruf, Revision; Rohsessiontoken nie in DB. |
 | identity_challenges | Konto, Zweck, Bindinghash, OTP-HMAC, vorherige HMACs, Fristen, Versuche/Zustellungen, Verbrauch und Freigabegerät; FK verhindert fremdes Freigabegerät. |
-| recovery_codes | Kontobindung, HMAC, Verbrauch und endliche sieben Tage Testgültigkeit; Codewechsel invalidiert früheren Code. |
+| recovery_codes | Kontobindung, HMAC, Einmalverbrauch (`used`), expliziter Widerruf (`revoked`), Ausstellungszeit (`issued_at`) und Entkopplung vom automatischen 7-Tage-Ablauf (`expires_at = NULL` bei Neuausgabe, R1); Rotation bei Verifikation/Recovery invalidiert den früheren Code. |
 | identity_budgets | Pseudonymisierter Operationsschlüssel, Fenster und Zähler. |
-| security_events | Begrenzte zweckgebundene Metadaten ohne Geheimniswerte. |
+| security_events | Begrenzte zweckgebundene Metadaten ohne Geheimniswerte (einschließlich `pending_reset`, `pending_reset_blocked`, `recovery_code_revoked`). |
 
 Die Kontenzeilensperre wird bei jeder privaten Anfrage unter Zeilensperre gegen Rollen-/Kontozustandsänderungen gehalten; kritische Identitätsübergänge sperren zuerst Konto, dann Challenge. Das serialisiert lokale Operationen desselben Kontos, ohne globale Mehrnutzerlast zu beweisen. Bei der Gerätefreigabe (`approve_device`, R12) werden Konto, aktuelle Sitzung und freigebendes Gerät gemeinsam unter `FOR UPDATE` auf aktiven, nicht widerrufenen, nicht abgelaufenen Zustand und übereinstimmende `security_epoch` geprüft; bereits freigegebene Challenges (`approved = true`) werden nicht erneut freigegeben. Auch beim Abschluss (`finish_device`) wird der Freigabegerätenachweis erneut geprüft. `GET /sessions` und `GET /devices` sortieren das eigene aktuelle Element und aktive Einträge deterministisch vor abgelaufenen/widerrufenen Einträgen, weisen abgelaufene Sitzungen/Geräte effektiv als widerrufen bzw. nicht autorisiert aus und unterstützen Paginierung über `offset` und `limit` (R3). Serverseitige Notizfilter und Rollen-/Featurechecks bleiben erhalten; kein PostgreSQL-RLS oder allgemeiner Admin-Inhaltszugriff eingeführt. Migrationsrolle ist getrennt; Runtime erhält nur erforderliche zusätzliche Spalten-/Tabellenrechte, kein DDL und keine Flagschreibrechte. Produktionsrollen und atomic veröffentlichte Konfiguration bleiben weiter zu untersuchen.
 
