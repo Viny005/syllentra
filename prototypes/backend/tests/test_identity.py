@@ -428,7 +428,7 @@ def test_parallel_session_reads_then_revocation(env: Any) -> None:
 
 
 def test_multitab_csrf_cookie_refresh_and_controlled_recovery(env: Any) -> None:
-    """Zwei Tabs teilen sich den Cookie-Speicher: Tab 2 rotiert Cookie, Tab 1 erholt sich kontrolliert."""
+    """Zwei Tabs teilen sich Cookies: Tab 2 rotiert Cookie, Tab 1 erholt sich kontrolliert."""
     tab1 = env["browser"]()
     t1_token = tab1.headers["X-CSRF-Token"]
     assert tab1.cookies.get(CSRF) == t1_token

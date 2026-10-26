@@ -1052,7 +1052,6 @@ def test_r1_migration_004_revokes_expired_legacy_codes_and_preserves_active_code
 def test_migration_003_to_004_full_schema_and_legacy_data() -> None:
     """Baut ein echtes Schema 003 mit Altdaten auf und wendet 004_r1_r4_lifetimes.sql an."""
     import hashlib
-    from pathlib import Path
     from uuid import uuid4
 
     from scripts.migrate import ROOT, migrate
@@ -1076,22 +1075,34 @@ def test_migration_003_to_004_full_schema_and_legacy_data() -> None:
                 db.execute(sql_content)
                 db.execute("INSERT INTO schema_migrations VALUES (%s, %s)", (version, digest))
 
-            # 3a. pending-Konto frisch mit aktiver E-Mail-Challenge
+            # 1. Altzustand 003 vor der Migration prüfen: pending_since existiert noch nicht
+            col_check = db.execute(
+                "SELECT count(*) FROM information_schema.columns "
+                "WHERE table_name = 'accounts' AND column_name = 'pending_since'"
+            ).fetchone()
+            assert col_check == (0,)
+
+            # 2. Synthetische Altdaten im Schema 003 anlegen:
+            # 2a. pending-Konto frisch mit aktiver E-Mail-Challenge
             pending_recent_id = uuid4()
             db.execute(
                 "INSERT INTO accounts (id, login, password_hash, kind, verification, status) "
-                "VALUES (%s, 'pending_fresh@example.test', 'hash_fresh', 'user', 'pending', 'active')",
+                "VALUES (%s, 'pending_fresh@example.test', 'hash_fresh', 'user', 'pending', "
+                "'active')",
                 (pending_recent_id,),
             )
+            challenge_id = uuid4()
             db.execute(
-                "INSERT INTO identity_challenges (id, account_id, purpose, verifier, binding_hash, "
-                "expires_at, created_at, last_sent_at, attempts, sends, consumed, approved, security_epoch, prior_verifiers) "
-                "VALUES (gen_random_uuid(), %s, 'email', 'synth_verifier_1', %s, "
-                "CURRENT_TIMESTAMP + interval '10 minutes', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 1, false, false, 0, '{}')",
-                (pending_recent_id, "0" * 64),
+                "INSERT INTO identity_challenges (id, account_id, purpose, verifier, "
+                "binding_hash, expires_at, created_at, last_sent_at, attempts, sends, "
+                "consumed, approved, security_epoch, prior_verifiers) "
+                "VALUES (%s, %s, 'email', 'synth_verifier_1', %s, "
+                "CURRENT_TIMESTAMP + interval '10 minutes', CURRENT_TIMESTAMP, "
+                "CURRENT_TIMESTAMP, 0, 1, false, false, 0, '{}')",
+                (challenge_id, pending_recent_id, "0" * 64),
             )
 
-            # 3b. verified-Konten mit aktiven, abgelaufenen und benutzten Recoverycodes
+            # 2b. verified-Konten mit aktiven, abgelaufenen und benutzten Recoverycodes
             act_user_id = uuid4()
             exp_user_id = uuid4()
             used_user_id = uuid4()
@@ -1124,53 +1135,85 @@ def test_migration_003_to_004_full_schema_and_legacy_data() -> None:
                 (used_user_id,),
             )
 
-            # 3c. Altsitzungen und Altgeräte
+            # 2c. Altsitzungen und Altgeräte
             dev_id = uuid4()
             db.execute(
-                "INSERT INTO devices (id, account_id, proof_hash, authorized, expires_at, security_epoch) "
-                "VALUES (%s, %s, %s, false, CURRENT_TIMESTAMP - interval '1 hour', 0)",
+                "INSERT INTO devices (id, account_id, proof_hash, authorized, expires_at, "
+                "security_epoch) VALUES (%s, %s, %s, false, "
+                "CURRENT_TIMESTAMP - interval '1 hour', 0)",
                 (dev_id, act_user_id, "1" * 64),
             )
             db.execute(
-                "INSERT INTO sessions (token_hash, account_id, device_id, expires_at, revoked, security_epoch) "
-                "VALUES (%s, %s, %s, CURRENT_TIMESTAMP - interval '1 hour', true, 0)",
+                "INSERT INTO sessions (token_hash, account_id, device_id, expires_at, revoked, "
+                "security_epoch) VALUES (%s, %s, %s, CURRENT_TIMESTAMP - interval '1 hour', "
+                "true, 0)",
                 ("2" * 64, act_user_id, dev_id),
             )
 
-        # 4. Vorwärtsmigration 004 anwenden (via migrate())
+        # 3. Vorwärtsmigration 004 anwenden (via migrate())
         migrate(legacy_run.admin_url)
 
-        # 5. Invarianten nach Migration 003 -> 004 prüfen:
+        # 4. Invarianten nach Migration 003 -> 004 prüfen:
         with psycopg.connect(legacy_run.admin_url) as db:
-            # 5a. pending-Konto hat pending_since erhalten
+            # 4a. Schema-Prüfung: pending_since und R1-Spalten existieren nun
+            col_after = db.execute(
+                "SELECT count(*) FROM information_schema.columns "
+                "WHERE table_name = 'accounts' AND column_name = 'pending_since'"
+            ).fetchone()
+            assert col_after == (1,)
+
+            # 4b. pending-Konto hat pending_since erhalten
             row_pending = db.execute(
-                "SELECT verification, pending_since IS NOT NULL, security_epoch FROM accounts WHERE id = %s",
+                "SELECT verification, pending_since IS NOT NULL, security_epoch "
+                "FROM accounts WHERE id = %s",
                 (pending_recent_id,),
             ).fetchone()
             assert row_pending == ("pending", True, 0)
 
-            # 5b. R1: Aktiver Recoverycode hat nun expires_at = NULL, revoked = false, issued_at gesetzt
+            # 4c. E-Mail-Challenge bleibt unverändert aktiv erhalten (keine 24h-Wartepflicht)
+            row_chal = db.execute(
+                "SELECT consumed, verifier, security_epoch FROM identity_challenges WHERE id = %s",
+                (challenge_id,),
+            ).fetchone()
+            assert row_chal == (False, "synth_verifier_1", 0)
+
+            # 4d. R4-Schwellenwertprüfung: Nach 24h ist Reset möglich
+            db.execute(
+                "UPDATE accounts SET pending_since = CURRENT_TIMESTAMP - interval '25 hours' "
+                "WHERE id = %s",
+                (pending_recent_id,),
+            )
+            row_aged = db.execute(
+                "SELECT pending_since <= CURRENT_TIMESTAMP - interval '24 hours' "
+                "FROM accounts WHERE id = %s",
+                (pending_recent_id,),
+            ).fetchone()
+            assert row_aged == (True,)
+
+            # 4e. R1: Aktiver Recoverycode hat nun expires_at = NULL, revoked = false, issued_at
             row_act = db.execute(
-                "SELECT used, revoked, expires_at, issued_at IS NOT NULL FROM recovery_codes WHERE account_id = %s",
+                "SELECT used, revoked, expires_at, issued_at IS NOT NULL "
+                "FROM recovery_codes WHERE account_id = %s",
                 (act_user_id,),
             ).fetchone()
             assert row_act == (False, False, None, True)
 
-            # 5c. R1: Abgelaufener Altcode wurde widerrufen (revoked = true) und nicht wiederbelebt
+            # 4f. R1: Abgelaufener Altcode wurde widerrufen (revoked = true) und nicht reaktiviert
             row_exp = db.execute(
-                "SELECT used, revoked, expires_at IS NOT NULL FROM recovery_codes WHERE account_id = %s",
+                "SELECT used, revoked, expires_at IS NOT NULL "
+                "FROM recovery_codes WHERE account_id = %s",
                 (exp_user_id,),
             ).fetchone()
             assert row_exp == (False, True, True)
 
-            # 5d. R1: Bereits benutzter Code bleibt used = true
+            # 4g. R1: Bereits benutzter Code bleibt used = true
             row_used = db.execute(
                 "SELECT used, revoked FROM recovery_codes WHERE account_id = %s",
                 (used_user_id,),
             ).fetchone()
             assert row_used == (True, False)
 
-            # 5e. Keine Wiederbelebung alter Nachweise (Sessions / Devices)
+            # 4h. Keine Wiederbelebung alter Nachweise (Sessions / Devices)
             row_dev = db.execute(
                 "SELECT authorized FROM devices WHERE id = %s", (dev_id,)
             ).fetchone()

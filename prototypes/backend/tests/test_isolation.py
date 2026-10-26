@@ -1,4 +1,4 @@
-"""Isolation der Testläufe und Grenzen zwischen Test- und Normalumgebung (Mission 12)."""
+"""Isolation der Testläufe und Grenzen zwischen Test- und Normalumgebung (Mission 12/27/27B)."""
 
 import os
 import secrets
@@ -18,11 +18,11 @@ from scripts.test_db import (
     RUN_NAME,
     OwnershipError,
     RunDatabase,
+    _same_owner,
     assert_owned,
     create_run_database,
     drop_run_database,
     sweep,
-    touch_run_database,
     wipe,
 )
 from syllentra_backend.delivery import MemoryChannel
@@ -110,18 +110,18 @@ def test_sweep_lists_only_marked_old_databases() -> None:
     try:
         with psycopg.connect(decoy.maintenance_url, autocommit=True) as db:
             db.execute(f'CREATE DATABASE "{unmarked}" TEMPLATE template0')  # noqa: S608
-        assert decoy.name not in sweep(1, apply=False)  # frisch: nicht verwaist
-        listed = sweep(0, apply=False)  # nur Auflistung, niemals apply in Tests
+        # Solange decoy aktiv ist, schützt der Besitz-Lock die Datenbank:
+        assert decoy.name not in sweep(0, apply=False)
+        # Wenn der Besitzerprozess endet (Verbindung schließt), wird sie als verwaist erkannt:
+        if decoy.lock_conn and not decoy.lock_conn.closed:
+            decoy.lock_conn.close()
+        assert decoy.name not in sweep(1, apply=False)  # frisch (< 1 Stunde)
+        listed = sweep(0, apply=False)
         assert decoy.name in listed
         assert unmarked not in listed  # ohne Eigentumsvermerk: niemals anfassen
     finally:
         with psycopg.connect(decoy.maintenance_url, autocommit=True) as db:
-            db.execute(
-                sql.SQL("COMMENT ON DATABASE {} IS {}").format(
-                    sql.Identifier(unmarked), sql.Literal(decoy.comment)
-                )
-            )
-        drop_run_database(replace(decoy, name=unmarked))
+            db.execute(sql.SQL('DROP DATABASE IF EXISTS {}').format(sql.Identifier(unmarked)))
         drop_run_database(decoy)
 
 
@@ -158,7 +158,7 @@ def test_external_wipe_makes_session_reads_fail_mechanism(env: Any) -> None:
     assert c.get("/session").status_code == 200
     wipe(env["run"])  # simuliert eine andere Suite, die dieselbe Datenbank leert
     assert c.get("/session").status_code == 401
-    assert c.cookies.get(SESSION)  # Cookie ist unverändert vorhanden, die Zeile fehlt serverseitig
+    assert c.cookies.get(SESSION)  # Cookie unverändert vorhanden, Zeile fehlt serverseitig
 
 
 @pytest.mark.skipif(os.environ.get("SYLLENTRA_NESTED") == "1", reason="keine Rekursion")
@@ -183,27 +183,58 @@ def test_two_pytest_processes_run_in_parallel_without_interference() -> None:
     assert all("passed" in o and "failed" not in o for o in outputs)
 
 
+def test_same_owner_validates_both_markers_and_rejects_malformed_or_divergent() -> None:
+    name = "syllentra_t_0123456789ab"
+    valid = "syllentra-test-run:v1:0123456789ab:1000:" + "a" * 32
+    valid_diff_gen = "syllentra-test-run:v1:0123456789ab:2000:" + "a" * 32
+    valid_diff_token = "syllentra-test-run:v1:0123456789ab:1000:" + "b" * 32
+
+    # Gültiger identischer Vermerk
+    assert _same_owner(name, valid, valid) is True
+
+    # Malformierte Marker werden selbst bei Identität abgewiesen
+    assert _same_owner(name, "forged", "forged") is False
+    assert _same_owner(name, "syllentra-test-run:v1:x:0:y", "syllentra-test-run:v1:x:0:y") is False
+    assert _same_owner(name, None, valid) is False
+    assert _same_owner(name, valid, "") is False
+
+    # Abweichende Generation oder abweichender Token wird sicher abgewiesen
+    assert _same_owner(name, valid_diff_gen, valid) is False
+    assert _same_owner(name, valid_diff_token, valid) is False
+
+
 def test_sweep_rejects_invalid_negative_or_non_finite_hours() -> None:
     for invalid in [-1, -0.0001, float("nan"), float("inf"), float("-inf"), True, False, "1"]:
         with pytest.raises(ValueError, match="Stundenwert"):
             sweep(invalid, apply=False)  # type: ignore[arg-type]
 
 
-def test_sweep_skips_in_use_database_and_touch_refreshes_lease(run_db: RunDatabase) -> None:
-    # 1. Lease per touch_run_database auffrischen und assert_owned prüfen
-    updated_comment = touch_run_database(run_db)
-    assert updated_comment.startswith("syllentra-test-run:v1:")
+def test_active_run_without_open_connections_is_protected_at_zero_threshold(
+    run_db: RunDatabase,
+) -> None:
+    # Der Besitz-Lock auf lock_conn schützt die Datenbank selbst bei 0 offenen Runtime-Verbindungen
+    # und Schwellenwert 0 Stunden:
+    listed = sweep(0, apply=False)
+    assert run_db.name not in listed
+    # Auch ein sweep --apply berührt den aktiven Run niemals:
+    swept = sweep(0, apply=True)
+    assert run_db.name not in swept
     assert_owned(run_db)
 
-    # 2. Aktive Verbindung verhindert Aufnahme in sweep (selbst bei Schwellenwert 0)
-    with psycopg.connect(run_db.runtime_url) as conn:
-        conn.execute("SELECT 1")
-        listed = sweep(0, apply=False)
-        assert run_db.name not in listed
 
-    # 3. wipe() erneuert den Lease-Zeitstempel automatisch
-    wipe(run_db)
-    assert_owned(run_db)
+def test_loss_of_possession_lock_fails_closed(run_db: RunDatabase) -> None:
+    decoy = create_run_database()
+    try:
+        assert_owned(decoy)
+        # Wenn der Besitz-Lock verloren geht (z. B. Verbindungsabbruch):
+        if decoy.lock_conn:
+            decoy.lock_conn.close()
+        with pytest.raises(OwnershipError, match="Besitz-Verbindung"):
+            assert_owned(decoy)
+        with pytest.raises(OwnershipError, match="Besitz-Verbindung"):
+            wipe(decoy)
+    finally:
+        drop_run_database(decoy)
 
 
 def test_drop_refuses_actively_used_database(run_db: RunDatabase) -> None:
