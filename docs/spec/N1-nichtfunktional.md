@@ -1,8 +1,8 @@
 # N1 — Nichtfunktionale Anforderungen
 
 **Projekt:** Syllentra AI\
-**Version:** 0.10\
-**Stand:** 23.10.2026\
+**Version:** 0.11\
+**Stand:** 26.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber
 
 <a id="n11-zweck-und-begrenzter-ausarbeitungsstand"></a>
@@ -409,3 +409,11 @@ Mission 15 präzisiert NFR-02/05/06/08/25 und bestehende Qualitätsprofile, ohne
 | Kosten, Lizenz und Regression | Software, Stimmengewichte, Audiodateien und Dienstbedingungen getrennt inventarisieren; pro Zeichen/Minute/Request sowie Speicher/Transfer und Infrastruktur rechnen. Tarife/Versionen datieren, unbekannte Werte nicht null setzen. Katalog-/Motor-/Browserwechsel löst betroffene AT-AUDIO-Regressionsfälle aus. |
 
 Technische Alternativen und belegte Abrufgrenzen stehen in [S1.23](S1-nachbarsysteme.md#s123-audioverträge-fähigkeitsgrenzen-und-offene-alternativen). Keine Installationen, Browser-/Audiobenchmarks oder neuen Produktabnahmen; 46 Releasekontrollen und alle bisherigen Qualitätsziele gelten weiter. Das Untersuchungslimit bis 20 EUR brutto/Monat ist keine Ausgabenfreigabe.
+
+## N1.12 Qualitätsnachweise für Darstellung und anklickbare Quellen (Mission 23)
+
+NFR-02/03/08/18/19/20/21/25 werden konkretisiert, keine neue NFR-Kennung. Farbreichtum und Lernbereichsakzente dürfen Textlesbarkeit, Fokus, Kontrast, Reflow, Touchbedienung oder reduzierte Bewegung nicht beeinträchtigen; Information zusätzlich über Text/Symbol/Struktur vermitteln. Helle/dunkle/Systemvarianten und alle freigegebenen Tokens im tatsächlichen Zustand prüfen, auch mit eigenen Akzenten, langen DE/FR/EN-Texten und administrativ erzwungenem Theme. Grundzugänglichkeit bleibt verbindlich, WCAG 2.2 AA bleibt gemäß NFR-19 ausdrücklich zu bestätigendes Validierungsziel; keine Konformität aus bloßen Tokenwerten ableiten.
+
+Saisonwahl gegen die vorher bestätigte Regel mit vier Jahreszeiten, Hemisphäre, Datums-/Zeitzonengrenzen und fehlender Zuordnung prüfen. Geräteabgleich und Offlinegrenzen ehrlich ausweisen; bei Systemmodus keine identische OS-Darstellung aller Geräte versprechen. Vorschau/Veröffentlichung/Rücknahme bleiben beobachtbar getrennt und sprachlich konsistent; ungültige Eingaben erhalten die letzte gültige Fassung. Die lernzentrierte Erreichbarkeit von Studium, Materialien, Übungen und Fortschritt in aufgabenbezogenen Bedienprüfungen beurteilen, nicht aus einer dekorativen Dashboard-Ansicht ableiten.
+
+Quellenbelege müssen im Referenzkorpus tatsächlich anwählbar sein und zur berechtigten zitierten Fassung/Seite/Medienzeit führen; Hervorhebung nur bei zuverlässigem Anker. Fehlender Anker, veraltete Quelle, fehlender Schlüssel und Zugriffssperre getrennt prüfen, ohne private Metadaten zu offenbaren. [B1.14](B1-dialogspezifikation.md#b114-darstellung-konfiguration-und-quellennavigation-mission-23) enthält 16 Sollfälle. Konkrete Designfreigabe, Saisonregel, Geräte-/Viewer- und manuelle Accessibility-Nachweise bleiben offen; keine Produkttests durch Mission 23.

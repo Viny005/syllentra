@@ -2,8 +2,8 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** P1 — Ziele und Rahmenbedingungen\
-**Version:** 0.12\
-**Stand:** 23.10.2026\
+**Version:** 0.13\
+**Stand:** 26.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Spezifikationsmethode:** Bausteine nach Johannes Siedersleben\
 **Geltungsbereich:** Fachlicher Zielumfang der ersten Produktversion (V1)
@@ -881,3 +881,11 @@ Quelle: vollständiger Eigentümerauftrag „SYLLENTRA AI — MISSION 15“, Abs
 Die Rubrik „Töne und Stimmen“ umfasst persönliche Auswahl, Vorschau, unterstütztes Tempo/Volumen, Verfügbarkeitsanzeige und kontrolliertes Zurücksetzen. Getrennte Administration verwaltet nur zulässige Kataloge, Verfügbarkeit, Serverflags, Rollenrestriktionen und Kosten-/Quotengrenzen; sie darf keinen Hörmodus erzwingen oder private Inhalte frei lesen. Kein persönlicher TTS-Text ohne passende externe Freigabe, kein Dritttraining von Stimme/Audiodateien ohne geeignete Einwilligung. Bis zu 20 EUR brutto/Monat bleiben Untersuchungsrahmen, keine Ausgabe genehmigt.
 
 **Prüfbarer Erfolg:** SC-07/SC-29/SC-46 werden durch die zehn Sollfälle in [B1.13](B1-dialogspezifikation.md#b113-abnahmeszenarien-für-töne-und-stimmen) konkretisiert; FE-21/FE-74 und UC-20/UC-48/UC-65 bleiben unverändert identifiziert. [S1.23](S1-nachbarsysteme.md#s123-audioverträge-fähigkeitsgrenzen-und-offene-alternativen) trennt Vertragsgrenzen, geprüfte Quellen und offene technische Alternativen.
+
+### P1.10.7 Bestätigter visueller und konfigurierbarer Lernrahmen (Mission 23)
+
+Eigentümerauftrag Mission 23 vom 26.10.2026 präzisiert G-26/G-30/G-39/G-44, CON-22/41 sowie die bestehenden Konfigurations- und Quellenziele; keine neue FE, UC oder technische Auswahl. Syllentra erhält eine eigenständige, hochwertige, farbenfrohe Identität und eine lernzentrierte Führung über Semester, Module, Kurse, Materialien, Aufgaben, Planung, Übungen und Fortschritt statt einer ausschließlich chatzentrierten Oberfläche. Bereichsakzente, lesbare Typografie und sinnvolle barrierearme Übergänge dienen der Orientierung; Farben sind nie das einzige Signal. Helle/dunkle Darstellung, responsive Touchbedienung und ein einheitliches konfigurierbares Designsystem gehören zum Ziel. Konkretes Logo, Markenpalette, Schrift und Illustrationsstil bleiben **Zur Entscheidung**.
+
+Benutzer wählen innerhalb zentraler Freigaben Farbschema, erlaubte Akzente, Hell-/Dunkel-/Systemmodus oder ausdrücklich saisonale Automatik mit Vorschau und Reset. Der getrennt handelnde Super Admin kann unterstützte Varianten und Texte ohne Codeänderung verwalten, testen, veröffentlichen, sperren oder ein einziges Theme vorgeben. Sicherheits-, Datenschutz- und Accessibility-Regeln haben Vorrang, danach administrative Richtlinien, freigegebene Standards und zulässige persönliche Präferenzen. Neue Funktionen bleiben Entwicklungsaufträge, keine beliebige Programmierung über Einstellungen.
+
+Quellenbelege müssen tatsächlich anklickbar zur berechtigten Originalversion mit belegter Seite beziehungsweise Medienzeit führen. Fehlende Präzision, entzogener Zugriff oder gelöschte Quellen ergeben sichere erklärbare Zustände statt erfundener Ziele. Die vorhandene Quellenvorgabe DEC-V1-03 wird konkretisiert, nicht ersetzt. [P2.5.6](P2-architekturueberblick.md#p256-verbindlicher-darstellungs--und-konfigurationsrahmen-aus-mission-23) definiert den Rahmen; die 16 Sollfälle in [B1.14](B1-dialogspezifikation.md#b114-darstellung-konfiguration-und-quellennavigation-mission-23) konkretisieren überprüfbaren Erfolg. Keine Produktabnahme oder endgültige Designfreigabe.

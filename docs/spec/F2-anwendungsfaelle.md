@@ -2,8 +2,8 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** F2 — Anwendungsfälle\
-**Version:** 0.7\
-**Stand:** 23.10.2026\
+**Version:** 0.8\
+**Stand:** 26.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Spezifikationsmethode:** Bausteine nach Johannes Siedersleben\
 **Bezugsstand:** Vier bestätigte Entscheidungen vom 19.10.2026; Ausgangs-HEAD `53ef171be4783748b5c7e3a84bb0cc363d5b4194`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1; aktuelle Fassungen im [Index](README.md).\
@@ -198,6 +198,8 @@ flowchart LR
 **Schutz- und Freigabegrenzen:** Das persönliche Profil ist kein Administrationsrecht über fremde Daten. Werte sind veränderbare geschützte Nutzerdaten, nicht hart codiert; eigene manuelle Speicherung braucht keine künstliche zweite Bestätigung und keine neue externe Analyse.
 
 **Abnahmebeispiel:** Wenn eine Sprache geändert und gespeichert wird, bleibt sie nach erneutem Öffnen als bestätigte Präferenz verfügbar.
+
+**Darstellungsvariante Mission 23 (GP-01/14):** Das verifizierte Konto öffnet persönliche Darstellungseinstellungen, sieht erlaubte Themes und Einschränkungen, wählt Farbschema beziehungsweise erlaubte Akzente sowie Hell-/Dunkel-/Systemmodus, prüft die Vorschau und übernimmt oder verwirft. Saisonale Automatik ist eine ausdrückliche erlaubte Alternative, keine zusätzliche parallele manuelle Palette. Manuelle Wahl ist bei Freigabe wieder möglich. Reset zeigt und übernimmt den aktuell zulässigen Standard. P2.5.6 bestimmt Prioritäten und offene Saisonregel; DLG-50/B1.14 spezifizieren die Ansicht. Verfügbarkeit für unvollständige freiwillige Profile bleibt erhalten; kein Zugriff vor der erforderlichen Konto-Verifikation.
 
 ### UC-03 — Studieninformationen und Nachweise aktualisieren
 
@@ -610,6 +612,8 @@ Nachverfolgung und Soll-Abnahme: [DEC-V1-Matrix](ENTSCHEIDUNGSMATRIX.md).
 **DEC-V1-03 — Quellenpassage:** Von einer Ableitung zur tatsächlich verfügbaren Originalfassung und belegten PDF-Seite oder Audio-/Videozeit springen. Nur belegbare Präzision anzeigen; ohne Zeitanker Quelle/Abschnitt oder kenntliche Lücke anbieten, ohne zugängliches Original keine wörtliche Verifikation vortäuschen. Quellversion und heutige Inhaltsrechte gelten auch beim Sprung (DM-21/DM-23, DT-11).
 
 Nachverfolgung und Soll-Abnahme: [DEC-V1-Matrix](ENTSCHEIDUNGSMATRIX.md).
+
+**Anklickbarer Nachweis (Mission 23):** Der Nutzer wählt einen konkreten Quellenbeleg an einer Aussage. Syllentra prüft aktuell Konto, Objekt, Fassung und Inhaltsschutz, öffnet die referenzierte Originalversion und navigiert zur belegten Seite; zuverlässige Abschnittsmarkierung wird angeboten, soweit möglich. Audio/Video öffnet den belegten Zeitpunkt nur bei tatsächlicher Unterstützung. Externe Quellen führen zur echten verfügbaren zulässigen URL, ohne automatische externe Analyse oder Zugangsumgehung. Fehlt nur der Anker, bleibt ein erlaubtes Original mit erklärter Lücke erreichbar; gelöschte/entzogene Quellen werden weder offengelegt noch still durch eine neuere Fassung ersetzt. AT-VIS-13 bis AT-VIS-15 prüfen diese Variante.
 
 ### UC-16 — Zulässige Audio- oder Videoinhalte aufbereiten
 
@@ -1670,6 +1674,8 @@ Nachverfolgung und Soll-Abnahme: [DEC-V1-Matrix](ENTSCHEIDUNGSMATRIX.md).
 **Schutz- und Freigabegrenzen:** Profilinhalt ist kein öffentlicher Konfigurationstext. Kein ungeprüfter Code, keine beliebige neue Funktion, kein externer Kalenderschreibzugriff und keine nicht autorisierte Ausgabe entstehen durch Parameteränderung.
 
 **Abnahmebeispiel:** Nach Änderung eines unterstützten Seitentitels und des Listentitels bleiben beide nach Neustart erhalten. Derselbe Vorschlag hat überall unveränderten Entscheidungsstand; ein Parameter für externe Kalenderschreibrechte wird zurückgewiesen.
+
+**Theme-/Textverwaltung Mission 23:** Der Super Admin nutzt ausschließlich den gesonderten Administrationseinstieg für CFG-01/02/03/04/05/13/14/15/16/17. Unterstützte Themes erstellen/konfigurieren, bearbeiten, aktivieren/deaktivieren, ausblenden, freigeben, Standard wählen oder ein einziges Theme erzwingen; Saisonzuordnung und individuelle Akzente freigeben/sperren. Alle vorgesehenen freigegebenen Texte und Komponenten sind ohne Codeänderung konfigurierbar, einschließlich Hilfe, Tooltips, Startseite, Banner und Verfügbarkeitsmeldungen in unterstützten Sprachen. Vorschau, Validierung, Veröffentlichung und Rücknahme sind revisionsgebunden und nachvollziehbar. Neue Funktionen bleiben Entwicklung, Sicherheitsregeln nicht abschaltbar. Eine Zwangsdarstellung verdrängt nur wirksame persönliche Auswahl, nicht Accessibility-Schutz oder persönliche Lerninhalte; zulässig erhaltene Präferenzen werden erst nach erneuter Freigabe und Gültigkeitsprüfung berücksichtigt. DLG-48/56 und B1.14 konkretisieren FE-57/58, ohne neue UC.
 
 ### UC-49 — Persönliche Daten kontrolliert einsehen und exportieren
 

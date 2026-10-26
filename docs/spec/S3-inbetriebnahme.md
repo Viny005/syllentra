@@ -1,8 +1,8 @@
 # S3 — Inbetriebnahme, Rollout und Betriebsaufnahme
 
 **Projekt:** Syllentra AI\
-**Version:** 0.3\
-**Stand:** 23.10.2026\
+**Version:** 0.4\
+**Stand:** 26.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Ausgangsbasis:** `1885a9c76ed549367097ac15d3960399a8651b88`, bestehender Spezifikationsbranch und [PR #1](https://github.com/Viny005/syllentra/pull/1).
 
@@ -326,3 +326,9 @@ Alle folgenden Fälle sind geplante **Soll-Abnahmen**, während Mission 4 nicht 
 [Spezifikationsindex](README.md), [P1](P1-ziele-rahmenbedingungen.md), [P2](P2-architekturueberblick.md), [S1](S1-nachbarsysteme.md), [S2](S2-datenmigration.md), [N1](N1-nichtfunktional.md), [N2](N2-querschnittskonzepte.md), [Entscheidungsmatrix](ENTSCHEIDUNGSMATRIX.md), [Teilplan](ENTWICKLUNGSPLAN.md), [E3](E3-pruefnachweis.md), [Kontrollmatrix](../quality/RELEASE_KONTROLLMATRIX.md), [Freigabevoraussetzungen](../quality/FREIGABEVORAUSSETZUNGEN.md), [Referenzrahmen](../quality/REFERENZRAHMEN.md), [ADR](../ARCHITECTURE_DECISIONS.md), [historische Vision](../PROJECT_VISION.md), [ursprüngliche Anforderungen](../REQUIREMENTS.md), [historische Roadmap](../ROADMAP.md) und [PACE-Workflow](../ai/WORKFLOW.md).
 
 S3 legt fachliche Betriebsanforderungen zur Prüfung vor. Daraus folgt weder eine finale technische Architektur noch eine Ausführungsfreigabe. Sämtliche Produkt-/Betriebsnachweise und die in S3.14 benannten Entscheidungen stehen noch aus.
+
+## S3.17 Künftiges Freigabegate für Darstellung und Quellen (Mission 23)
+
+Vor späterer Produktfreigabe sind Theme-/Textkatalog, zulässige Design-Tokens, Konfigurationsrevisionen, unterstützte Sprachen, Veröffentlichungs-/Rücknahmeverfahren und eine bestätigte Saisonregel zu prüfen. Standard, erzwungenes Theme, deaktivierter Katalogeintrag, Testkontenscope, persönliche Altpräferenz, Offlineabgleich und Wiederherstellung müssen heutige Rechte bewahren. Der einzige Super Admin benötigt auch bei erzwungenem Theme zugängliche notwendige Verwaltungswege; kein zweiter Super Admin oder Sicherheitsbypass als Gestaltungslösung.
+
+B1.14 liefert 16 noch auszuführende Abnahmeszenarien. Relevante Gates bleiben die vorhandenen REL-S10/S04/S06, REL-Q04/Q06/Q19 und REL-A05/A16 mit ihren jeweiligen Geltungsbereichen; kein zusätzlicher Release-Kontrollpunkt und kein heute bestandenes Gate. Echte Geräte-, Screenreader-, E2E-, Quellen-/Viewer-, Saison- und Negativprüfungen sind durch passende spätere Aufträge und Implementierungen zu belegen. T01 bleibt CPU-/RAM-Koexistenz, T05 Audio-ASR; diese Protokolle ersetzen keine Theme-, Accessibility-, E2E-, TTS- oder Video-Pipeline-Produktabnahme. Mission 23 autorisiert ausschließlich Dokumentation, keine Betriebsaufnahme oder Integration in andere Branches.

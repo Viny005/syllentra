@@ -1,6 +1,8 @@
 # Syllentra AI — Design System
 
-**Version:** 0.2 · **Stand:** 22.10.2026 · **Status:** Empfohlen / Zur Entscheidung
+**Version:** 0.3 · **Stand:** 26.10.2026 · **Status:** Empfohlen / Zur Entscheidung
+
+> **Geltung seit Mission 23:** Der bestätigte Rahmen aus [P2.5.6](../spec/P2-architekturueberblick.md#p256-verbindlicher-darstellungs--und-konfigurationsrahmen-aus-mission-23) und Abschnitt 7 hat Vorrang. Die nachfolgenden konkreten Farb-, Schrift- und Animationsvorschläge bleiben unfreigegebene historische Entwürfe, keine Markenentscheidung.
 
 ## 1. Gestaltungsziel und Entscheidungsgrenze
 
@@ -69,3 +71,11 @@ Eigentümer bestätigt Richtung, Lesedichte und vorgeschlagene Zielwerte. Danach
 ## Fortschreibung aus Mission 8
 
 Der neue konkrete Eigentümerauftrag autorisiert eine lokale experimentelle UIprobe. Die früheren Nichtimplementierungs-/Nichtinstallationsaussagen dieses Mission-7-Studienstands sind historische Grenzen, keine Sperre des neueren Auftrags. [Code/Anleitung](../../prototypes/frontend/README.md) und [tatsächlicher UI-Prüfbericht](../design/PROTOTYPE_REVIEW.md) dokumentieren den begrenzten Fortschritt. Keine allgemeine Stack-/Bibliotheks-/Produktfreigabe; TECH-O-03 offen. Eigene CSS-Token und native Controls genügen für die Probe, daher keine Tailwind-/shadcn-/Richtext-/PDF-/Graph-/Kalenderinstallation. Fach- und Releaseziele bleiben vollständig bestehen, Backend-/Geräte-/Assistenztechnik-/Sicherheitsabnahmen offen.
+
+## 7. Bestätigter fachlicher Rahmen aus Mission 23
+
+**Quelle:** Eigentümerauftrag Mission 23 vom 26.10.2026; maßgeblich sind [P2.5.6](../spec/P2-architekturueberblick.md#p256-verbindlicher-darstellungs--und-konfigurationsrahmen-aus-mission-23) und [B1.14](../spec/B1-dialogspezifikation.md#b114-darstellung-konfiguration-und-quellennavigation-mission-23). Die Petrol-/Türkisfarben, Typografie- und Animationswerte oben bleiben historische Entwurfs-/Prototypvorschläge, keine endgültige Markenentscheidung. Bestätigt ist jetzt eine eigenständige hochwertige farbenfrohe Lernumgebung mit vielseitigen ausgewogenen Farbwelten, unterscheidbaren Lernbereichsakzenten, klarer Hierarchie und zugänglicher responsiver Bedienung. Eine generische Chat-/Kartenoberfläche genügt nicht; Semester, Module, Materialien, Aufgaben, Übungen und Fortschritt tragen die Orientierung.
+
+Unterstützte Design-Tokens, helle/dunkle/Systemvarianten, persönliche erlaubte Paletten/Akzente und ausdrückliche Saisonwahl sind zentral kontrollierbar. Sicherheits-/Datenschutz-/Accessibility-Regeln gehen administrativer Richtlinie, freigegebenen Standards und persönlicher Auswahl vor. Getrennte Administration verwaltet erlaubte Themes, Standard/Zwangsdarstellung, Saisonzuordnung, Texte/Übersetzungen, Navigation, Widgets und Featurezustände mit Vorschau, Validierung, Veröffentlichung und revalidierter Rücknahme. Neue Funktionen entstehen nicht aus Token oder Textfeldern.
+
+Logo, endgültige Palette, Schriften, Illustrationsstil, konkretes Token-/Komponentenschema und Saisonlogik bleiben **Zur Entscheidung**. Die alten Kontrast-/Animationswerte werden nicht als neue Freigabe ausgegeben. Keine neue Bibliothek, keine Assets oder UI implementiert; bestehende Prototypevidenz gilt ausschließlich für ihren damaligen Umfang. Die 16 AT-VIS-Sollfälle und manuelle Geräte-/Accessibility-/Viewerprüfungen sind erst künftig auszuführen. Die Architekturprinzipien aus Mission 21 bleiben unverändert; ältere TECH-O-Offen-Angaben dieses Dokuments sind historische Prüfstände.

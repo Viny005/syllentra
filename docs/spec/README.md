@@ -21,27 +21,27 @@ Hinweis: Diese Leseanleitung ist im README.md des Spezifikationsverzeichnisses i
 
 ## Index der Spezifikationsblöcke
 
-**Stand: 23.10.2026. Alle ausgearbeiteten Dokumente: Zur Prüfung durch den Projektinhaber.** S1.18.1 enthält sämtliche 89 FE-Einträge; FE-56 ist für V1 als Ausschluss von Postfachlektüre, -synchronisation und -überwachung bestätigt; eine spätere Integration bleibt unverbindlich. Keine Dokumenterstellung oder Git-Aktion bedeutet fachliche Abnahme oder implementierte Funktion.
+**Stand: 26.10.2026. Alle ausgearbeiteten Dokumente: Zur Prüfung durch den Projektinhaber.** S1.18.1 enthält sämtliche 89 FE-Einträge; FE-56 ist für V1 als Ausschluss von Postfachlektüre, -synchronisation und -überwachung bestätigt; eine spätere Integration bleibt unverbindlich. Keine Dokumenterstellung oder Git-Aktion bedeutet fachliche Abnahme oder implementierte Funktion.
 
 | Baustein | Version | Inhalt / Stand |
 |---|---|---|
-| [P1](P1-ziele-rahmenbedingungen.md) | 0.12 | Ziele, Rahmen, Mehrbenutzer-V1 und überprüfbare Erfolgskriterien. Zur Prüfung. |
-| [P2](P2-architekturueberblick.md) | 0.11 | Kontext, interne/externe Grenzen, zwölf Nachbarn und Informationsklassen. Zur Prüfung. |
-| [F1](F1-geschaeftsprozesse.md) | 0.7 | GP-01 bis GP-15 mit ergänzten Konten-, Import-, Integrations- und Datenkontrollabläufen. Zur Prüfung. |
-| [F2](F2-anwendungsfaelle.md) | 0.7 | UC-01 bis UC-66 mit Vorbedingungen, Szenarien, Schutz und Abnahme. Zur Prüfung. |
-| [F3](F3-anwendungsfunktionen.md) | 0.7 | AF-01 bis AF-37 als fachliche Prüf- und Auswahlfunktionen. Zur Prüfung. |
-| [D1](D1-datenmodell.md) | 0.7 | DM-01 bis DM-78 und INV-01 bis INV-31; Eigentum, Beziehungen und Lebenszyklen. Zur Prüfung. |
-| [D2](D2-datentypen.md) | 0.7 | DT-01 bis DT-95, Werte, Strukturfelder und Validierung. Zur Prüfung. |
-| [B1](B1-dialogspezifikation.md) | 0.7 | DLG-01 bis DLG-67; persönliche und getrennte administrative Bedienung sowie AT-AUDIO-01..10. Zur Prüfung. |
-| [B2](B2-batch.md) | 0.6 | BAT-01 bis BAT-26; autorisierte Hintergrundverarbeitung, Wiederanlauf und Löschfolgen. Zur Prüfung. |
-| [B3](B3-druckausgaben.md) | 0.6 | OUT-01 bis OUT-08; kontoisolierte Berichte und geschützte Exporte. Zur Prüfung. |
-| [S1](S1-nachbarsysteme.md) | 0.8 | NB-01 bis NB-12, vollständige FE-01..FE-89-Matrix und Schnittstellen-Abnahmeszenarien. Zur Prüfung. |
-| [S2](S2-datenmigration.md) | 0.5 | MIG-01 bis MIG-36, AT-S2-01 bis AT-S2-40; eigene Pakete, sichere Migration und Wiederherstellung. Zur Prüfung. |
-| [S3](S3-inbetriebnahme.md) | 0.3 | Vollständiger fachlicher Betriebsentwurf: Umgebungen, Bootstrap, unabhängiger Restore, 18 Veröffentlichungsschritte, Rollout, Rückweg, Betrieb und 46 Kontrollverweise. Zur Prüfung. |
-| [N1](N1-nichtfunktional.md) | 0.10 | Vollständiger fachlicher V1-Qualitätsentwurf: 25 Prüfprofile, Messverfahren und offene Zielwerte. Zur Prüfung. |
-| [N2](N2-querschnittskonzepte.md) | 0.10 | Fachlicher V1-Sicherheitsentwurf: 27 Prüfprofile, Vertrauensgrenzen, bestätigte R1/R4-Eckpunkte, Audioschutzgrenzen (N2.16) und offene technische Verfahren. Zur Prüfung. |
+| [P1](P1-ziele-rahmenbedingungen.md) | 0.13 | Ziele, Rahmen, Mehrbenutzer-V1 und überprüfbare Erfolgskriterien. Zur Prüfung. |
+| [P2](P2-architekturueberblick.md) | 0.12 | Kontext, interne/externe Grenzen, zwölf Nachbarn und Informationsklassen. Zur Prüfung. |
+| [F1](F1-geschaeftsprozesse.md) | 0.8 | GP-01 bis GP-15 mit ergänzten Konten-, Import-, Integrations- und Datenkontrollabläufen. Zur Prüfung. |
+| [F2](F2-anwendungsfaelle.md) | 0.8 | UC-01 bis UC-66 mit Vorbedingungen, Szenarien, Schutz und Abnahme. Zur Prüfung. |
+| [F3](F3-anwendungsfunktionen.md) | 0.8 | AF-01 bis AF-37 als fachliche Prüf- und Auswahlfunktionen. Zur Prüfung. |
+| [D1](D1-datenmodell.md) | 0.8 | DM-01 bis DM-78 und INV-01 bis INV-31; Eigentum, Beziehungen und Lebenszyklen. Zur Prüfung. |
+| [D2](D2-datentypen.md) | 0.8 | DT-01 bis DT-95, Werte, Strukturfelder und Validierung. Zur Prüfung. |
+| [B1](B1-dialogspezifikation.md) | 0.8 | DLG-01 bis DLG-67; persönliche und getrennte administrative Bedienung sowie AT-AUDIO-01..10. Zur Prüfung. |
+| [B2](B2-batch.md) | 0.7 | BAT-01 bis BAT-26; autorisierte Hintergrundverarbeitung, Wiederanlauf und Löschfolgen. Zur Prüfung. |
+| [B3](B3-druckausgaben.md) | 0.7 | OUT-01 bis OUT-08; kontoisolierte Berichte und geschützte Exporte. Zur Prüfung. |
+| [S1](S1-nachbarsysteme.md) | 0.9 | NB-01 bis NB-12, vollständige FE-01..FE-89-Matrix und Schnittstellen-Abnahmeszenarien. Zur Prüfung. |
+| [S2](S2-datenmigration.md) | 0.6 | MIG-01 bis MIG-36, AT-S2-01 bis AT-S2-40; eigene Pakete, sichere Migration und Wiederherstellung. Zur Prüfung. |
+| [S3](S3-inbetriebnahme.md) | 0.4 | Vollständiger fachlicher Betriebsentwurf: Umgebungen, Bootstrap, unabhängiger Restore, 18 Veröffentlichungsschritte, Rollout, Rückweg, Betrieb und 46 Kontrollverweise. Zur Prüfung. |
+| [N1](N1-nichtfunktional.md) | 0.11 | Vollständiger fachlicher V1-Qualitätsentwurf: 25 Prüfprofile, Messverfahren und offene Zielwerte. Zur Prüfung. |
+| [N2](N2-querschnittskonzepte.md) | 0.11 | Fachlicher V1-Sicherheitsentwurf: 27 Prüfprofile, Vertrauensgrenzen, bestätigte R1/R4-Eckpunkte, Audioschutzgrenzen (N2.16) und offene technische Verfahren. Zur Prüfung. |
 | [E2](E2-glossar.md) | 0.5 | Glossar mit fachlichen Begriffsgrenzen. Zur Prüfung. |
-| [E3](E3-pruefnachweis.md) | 0.20 | Änderungs-/Kennungsnachweis sowie tatsächliche Dokument- und lokale Prototypprüfungen. Zur Prüfung. |
+| [E3](E3-pruefnachweis.md) | 0.21 | Änderungs-/Kennungsnachweis sowie tatsächliche Dokument- und lokale Prototypprüfungen. Zur Prüfung. |
 
 E1 ist als Leseanleitung direkt in diesem README integriert; zusammen mit den **17 eigenständigen Bausteindateien (`P1` bis `E3`)** in der obigen Indextabelle umfasst die Spezifikation damit alle **18 Siedersleben-Elemente** und bleibt mit dem Index zur Prüfung. [S2 — Datenmigration](S2-datenmigration.md) ist zur Prüfung ausgearbeitet. [S3 — Inbetriebnahme](S3-inbetriebnahme.md) ist als fachlicher Prüfentwurf ausgearbeitet; zukünftiger Betriebsstart und Bootstrap des einzigen Super Admin sind beschrieben, nicht ausgeführt. Die [Entscheidungsmatrix](ENTSCHEIDUNGSMATRIX.md) ordnet jetzt alle 25 DEC-V1 den bestehenden Fach-/Dialog-/Datenbausteinen und überprüfbaren Soll-Abnahmen zu. Offene Präzisierungen und technische Nachweise bleiben ausdrücklich ausgewiesen; die Matrix ist keine Gesamtabnahme. Die technische Architektur wird separat erarbeitet.
 
@@ -153,3 +153,7 @@ F1-/F3-Zusammenfassungen, P2-Versionverweis und bereits behandelte B2-/B3-Fragen
 ## Architekturentscheidungen aus Mission 21 (TECH-O-01 bis TECH-O-14)
 
 In Mission 21 sind die vom Projektinhaber bestätigten **14 Architekturprinzipien (`TECH-O-01` bis `TECH-O-14`) sowie die übergreifende Multi-Provider-Architekturregel** in [ADR-0010 bis ADR-0024](../ARCHITECTURE_DECISIONS.md#adr-0010--evolutionärer-modularer-monolith-und-isolierte-worker-tech-o-01), dem aktualisierten Register [Offene technische Entscheidungen](../architecture/OFFENE_ENTSCHEIDUNGEN.md) (Version 0.4), der [Entscheidungsvorlage](../architecture/ENTSCHEIDUNGSVORLAGE.md) (Version 0.3), den sechs Fachkapiteln der [Architekturstudie](../architecture/README.md) (Version 0.5) und [OPEN_DECISIONS.md](../development/OPEN_DECISIONS.md) (Version 0.5) konsolidiert. Jede Entscheidung trennt strikt zwischen **A. bestätigtem Architekturprinzip**, **B. offenen technischen Unterentscheidungen** (konkrete Anbieter, Modelle, Stimmen, Schlüssel-/Restore-/DNS-/Warteschlangen-Konfigurationen) und **C. ausstehenden Nachweisen / zukünftigen Prüfungen** (`T01`–`T09`, Lizenz-/Vertrags-/DSGVO-Prüfungen, RPO/RTO/SLO vor Produktion). [E3.33](E3-pruefnachweis.md#e333-mission-21--konsolidierung-der-14-bestätigten-tech-o-architekturprinzipien-und-der-multi-provider-querschnittsregel) dokumentiert den Prüfnachweis. Alle **89 FE** (`FE-56` als bestätigter V1-Postfachausschluss), **66 UC**, **25 DEC-V1**, `DEC-48`/`DEC-49`, **46 REL**, `R1`/`R4`, `AUDIO-01..03` und `AT-AUDIO-01..10` bleiben unverändert erhalten; alle Siedersleben-Spezifikationsbausteine bleiben **Zur Prüfung durch den Projektinhaber**.
+
+## Bestätigter Darstellungsrahmen aus Mission 23
+
+[P2.5.6](P2-architekturueberblick.md#p256-verbindlicher-darstellungs--und-konfigurationsrahmen-aus-mission-23) präzisiert vorhandene CFG-01..17, FE-57/58 und persönliche Darstellungsfreiheit innerhalb zentraler Richtlinien. [B1.14](B1-dialogspezifikation.md#b114-darstellung-konfiguration-und-quellennavigation-mission-23) enthält 16 nicht ausgeführte AT-VIS-Sollfälle für Themes, Saisonen, Texte, Rechte und Originalquellen. [E3.34](E3-pruefnachweis.md#e334-mission-23--konfigurierbare-darstellung-und-anklickbare-quellen) dokumentiert Wiederverwendung, Lücken und tatsächliche Dokumentprüfungen. Keine neue FE/UC/REL, keine technische Implementierung; konkrete Marke und Saisonregel bleiben Zur Entscheidung.

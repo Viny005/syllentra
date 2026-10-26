@@ -2,8 +2,8 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** F3 — Anwendungsfunktionen\
-**Version:** 0.7\
-**Stand:** 23.10.2026\
+**Version:** 0.8\
+**Stand:** 26.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Spezifikationsmethode:** Bausteine nach Johannes Siedersleben\
 **Bezugsstand:** Vier bestätigte Entscheidungen vom 19.10.2026; Ausgangs-HEAD `53ef171be4783748b5c7e3a84bb0cc363d5b4194`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1; aktuelle Fassungen im [Index](README.md).\
@@ -1198,3 +1198,16 @@ AUDIO-01/02/03 vertiefen bestehende AF-01/AF-17/AF-18/AF-19/AF-25/AF-28/AF-32; k
 6. Rücksetzen zeigt den konkreten Bereich und wirksame Standards, wahrt persönliche Datenschutzentscheidungen und Rechte; es startet weder Vorschau noch Hörmodus und löscht keine Nachrichten oder Erinnerungen.
 
 **Ergebnis/Abnahme:** Gültige effektive Auswahl samt Herkunft/Fähigkeitsgrenze oder begründete Ablehnung; bei Lautlos bleibt visueller Hinweis, bei Mikrofonverweigerung bleibt zulässiges TTS. Administration kann einen Motor sperren, aber weder Kosten ohne Freigabe auslösen noch ein persönliches Opt-in ersetzen. [B1.13](B1-dialogspezifikation.md#b113-abnahmeszenarien-für-töne-und-stimmen) enthält die Sollfälle.
+
+## F3.15 Wirksame Darstellung und Quellenauflösung (Mission 23)
+
+AF-25 verwendet dieselben DM-48/49 und DT-61 für administrative Richtlinien, freigegebene Theme-Standards und persönliche Auswahl; AF-01 prüft Rechte, AF-27 den zulässigen Geräteabgleich. Kein neuer Algorithmusbezeichner:
+
+1. Verbindliche Sicherheits-/Datenschutz-/Accessibility-Grenzen und aktuelle Verwaltungs-/Kontorechte bestimmen.
+2. Administrative Richtlinie prüfen: erzwungenes Theme, zugelassener Katalog, persönliche Akzente, saisonale Verfügbarkeit und Testkontenscope.
+3. Persönliche gültige Präferenz innerhalb dieses Rahmens verwenden, sonst freigegebenen aktuellen Standard. Bei Systemmodus lokalen Hell-/Dunkelzustand anwenden; die gespeicherte Wahl ist geräteübergreifend gleich, lokale Systemwerte können verschieden sein.
+4. Bei expliziter saisonaler Wahl nur bestätigte vollständige Region-/Hemisphären-, Datums-, Zeitzonen- und Regelrevision auswerten; Frühling/Sommer/Herbst/Winter auf ein aktuell erlaubtes Theme abbilden. Ohne gültige Regel oder Zuordnung sicheren zulässigen Standard mit Erklärung liefern, keine Saison erfinden.
+5. Farben, Text, Fokus und Interaktionen einschließlich reduzierter Bewegung validieren. Vorschau wirkt nicht produktiv. Veröffentlichung/Rücknahme prüft Revisionen und heutige Grenzen erneut; letzte gültige Fassung bleibt bei Ablehnung erhalten.
+6. Gesperrte Altpräferenz nur zulässig aufbewahren, nicht anwenden; nach Freigabe erneut prüfen. Löschung wird weder durch Sync noch Reset/Rollback aufgehoben.
+
+AF-03 qualifiziert echte Originalanker. AF-01/03 lösen einen Beleg aus DM-21/23 und DT-09/11/36/76 für UC-15 erst nach heutiger Inhaltsprüfung auf: exakte Fassung, vorhandene Seite/Medienzeit, zulässige externe URL. Hervorhebung nur bei zuverlässigem Abschnittsanker. Fehlende Präzision und fehlender Zugriff bleiben getrennt; kein Versionsaustausch oder erfundener Locator. Eine Referenz ist keine dauerhafte Zugangsberechtigung. [B1.14](B1-dialogspezifikation.md#b114-darstellung-konfiguration-und-quellennavigation-mission-23) enthält die Sollfälle; technische Saison-/Viewer-Verfahren sind offen.

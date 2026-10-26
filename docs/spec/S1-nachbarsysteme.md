@@ -1,8 +1,8 @@
 # S1 — Nachbarsysteme und fachliche Schnittstellenverträge
 
 **Projekt:** Syllentra AI\
-**Version:** 0.8\
-**Stand:** 23.10.2026\
+**Version:** 0.9\
+**Stand:** 26.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Ausgangsstand:** `ace1d80e80245379beed02296c3c4dd184c8dd70` auf `docs/spec/p1-p2-mobile-workspaces`, bestehende [PR #1](https://github.com/Viny005/syllentra/pull/1).
 
@@ -519,3 +519,9 @@ Abrufdatum aller folgenden Quellen: **23.10.2026**. GitHub-Quelldateien wurden g
 | [Herold-Spezifikationskonvention](https://github.com/carstenlucke/herold/blob/fce50b47ae646a70bf4d796026dcd1a99d3ae3c2/docs/spec/README.md) | Fachliches Was/Warum in getrennten Bausteinen; Architektur und Code separat. Keine Herold-Produktentscheidung übernommen. |
 
 **Noch zu entscheiden/nachzuweisen:** zulässige konkrete Motoren, Stimm-/Tonassets und deren Rechte; DE-/FR-/EN-Kataloge und Qualität; unterstützte Browser/OS/PWA-/Hintergrund-/Offlinefähigkeiten; Lizenz- und Dienstverträglichkeit; Verarbeitungsregion, Vertrag, Retention/Training; Ressourcen/Quoten/Latenz und Widerrufserkennung. Keine Wiederaufnahmeregel für automatisches Hören nach neuer Sitzung/anderem Gerät allein aus technischen Annahmen schließen. Diese Punkte vertiefen bestehende O-S1-/TECH-O-Arbeiten, schließen sie nicht und erteilen keine Implementierungs- oder Kostenerlaubnis.
+
+## S1.24 Darstellungsabgleich und anklickbare Quellen ohne neue Nachbarrechte (Mission 23)
+
+NB-01 liefert unterstützte lokale Hell-/Dunkelpräferenz und Darstellungs-/Medienfähigkeiten; persönliche Auswahl und freigegebene Plattformkonfiguration werden nur kontobezogen nach dem bestehenden Gerätevertrag abgeglichen. Unterschiedliche OS-Einstellungen dürfen im Systemmodus verschiedene Darstellungen ergeben. Saisonlogik benötigt eine bestätigte Datums-/Region-/Hemisphären-/Zeitzonenbasis, keinen neuen Standort-, Kalender- oder Wetterzugriff. Clientpräferenzen umgehen keine serverseitige Theme-/Feature-Freigabe.
+
+Quellenöffnung bei NB-02/03/04/07/10/11 erfolgt nur über tatsächlich erlaubte Locator und vorhandene Quellenrevisionen; keine neue Integration oder Berechtigung entsteht durch einen Link. Interne Originalnavigation bleibt eine interne Syllentra-Funktion, kein dreizehntes Nachbarsystem. Quellenkennung, Fassung, Provenienz und verfügbare Seite/Medienzeit aus DM-21/23 und DT-09/11/36/76 bleiben erhalten. Externe URL ist ein reales Ziel, keine Zusage dauerhafter Verfügbarkeit. Abrufbeschränkung, fehlende Anmeldung, entzogener Scope oder gelöschte Quelle ergeben einen sicheren Fehler; kein Umgehen geschützter Zugänge, kein Token im sichtbaren Locator, keine Weitergabe privater Lerntexte durch Quellenöffnung. Medienstart und Abschnittsmarkierung nur bei belegter unterstützter Fähigkeit. FE-56 bleibt unverändert, E-Mail-Postfachzugriff in V1 ausgeschlossen. [B1.14](B1-dialogspezifikation.md#b114-darstellung-konfiguration-und-quellennavigation-mission-23) enthält die Soll-Abnahmen.

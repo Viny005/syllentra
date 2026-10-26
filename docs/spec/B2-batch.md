@@ -2,8 +2,8 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** B2 — Batch-Prozesse\
-**Version:** 0.6\
-**Stand:** 23.10.2026\
+**Version:** 0.7\
+**Stand:** 26.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Methode:** Bausteinspezifikation nach Johannes Siedersleben; periodische und zeitversetzte Fachabläufe\
 **Bezugsstand:** Vier bestätigte Entscheidungen vom 19.10.2026; Ausgangs-HEAD `53ef171be4783748b5c7e3a84bb0cc363d5b4194`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1; aktuelle Fassungen im [Index](README.md).\
@@ -1014,3 +1014,9 @@ Bestehende BAT-14-Gerätesynchronisation, BAT-16-Lösch-/Retentionpflege und BAT
 Die [25-zeilige Matrix](ENTSCHEIDUNGSMATRIX.md) ordnet BAT-09/11/26 nur der tatsächlich passenden Planungs-/Evidenzarbeit und BAT-14/16 nur Abgleich/Bereinigung zu. Wissenskarte, Quellenpassage, freiwilliges Feedback, diskrete Hilfe/Pause, Bilanz und Wochenzielwahl erzeugen keinen eigenen periodischen Batch. Vorhandene BAT dürfen diese Ansichten nicht als Freigabe für neue Analyse, Profilierung oder Sitzung missverstehen. Keine neuen BAT und keine festgelegten Häufigkeiten/Algorithmen.
 
 Aktivierte Reihenfolgeautomatik bleibt auf DM-75/DM-76 beschränkt; BAT-26 verschiebt keine Termine. Ablehnung oder Aufschub eines Wochenziels sowie Abschalten von Hilfe/Pause bleiben wirksam; Import/Restore startet weder Probeprüfung noch Feedbackabfrage, Hilfe, Pause, TTS oder Erinnerungsmail. Fehlende Rückmeldung ist keine negative Evidenz. Temporäre Daten und gelöschte Profilelemente werden nach BAT-16 ohne Schattenkopie behandelt; aktuelle Schutz-/Löschrechte gelten auch vor Retry.
+
+## B2.20 Darstellung als begrenzte Konfigurationsautomatik (Mission 23)
+
+BAT-14 gleicht nur zulässige eigene Darstellungspräferenzen und freigegebene Konfigurationsrevisionen ab; heutige Richtlinien, Rechte, Löschmarker und Bearbeitungskonflikte bleiben vorrangig. BAT-21 prüft bei geplanter Veröffentlichung einer unterstützten Theme-/Text-/Flag-Fassung dieselben aktuellen Rechte, Zielgruppen, Validierungsstände und Absagen wie bei anderen vorgesehenen Konfigurationen. Vorschau ist keine Veröffentlichung, eine Textmeldung keine neue Funktion.
+
+Ein ausdrücklich aktivierter und administrativ erlaubter Saisonmodus wertet nur die bestätigte vollständige Datums-/Region-/Hemisphären-/Zeitzonenregel aus P2.5.6 aus. Ob die Ermittlung beim Öffnen, Aktualisieren oder durch einen begrenzten Hintergrundlauf erfolgt, bleibt technisch offen; kein zusätzlicher dauernder Cloudjob oder externer Standort-/Wetterdienst beschlossen. Gleiche Regel-, Katalog-, Präferenzrevision und Saison ergeben dieselbe wirksame Auswahl ohne doppelte fachliche Wirkung. Entzug/Sperre stoppt die Automatik; fehlende Zuordnung führt erklärt zum zulässigen Standard, nicht zu einer unfreigegebenen Palette. Offline-/OS-Hintergrundgrenzen bleiben sichtbar. Quellenlinks lösen weder automatischen Neuimport noch Neuanalyse aus. [B1.14](B1-dialogspezifikation.md#b114-darstellung-konfiguration-und-quellennavigation-mission-23) enthält künftige Sollfälle; keine BAT-Neuvergabe oder ausgeführte Automatik.

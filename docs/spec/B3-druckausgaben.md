@@ -2,8 +2,8 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** B3 — Druckausgaben\
-**Version:** 0.6\
-**Stand:** 23.10.2026\
+**Version:** 0.7\
+**Stand:** 26.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Methode:** Baustein B3 nach Johannes Siedersleben — fachlich prüfbare Ausgaben, unabhängig von Layoutbibliothek und Drucktechnik\
 **Bezugsstand:** Vier bestätigte Entscheidungen vom 19.10.2026; Ausgangs-HEAD `53ef171be4783748b5c7e3a84bb0cc363d5b4194`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1; aktuelle Fassungen im [Index](README.md).
@@ -685,3 +685,9 @@ UC-65-Hinweisverlauf und Zustellnachweise werden nur bei eigener zulässiger Aus
 ## B3.17 DEC-V1-Sichten und Berichtsumfang
 
 Optionale Sitzungsbilanz und begründetes Dashboard bleiben Ansichten aus vorhandenen eigenen Nachweisen; ein ausdrücklicher Bericht nutzt die bestehenden OUT-01 bis OUT-08, keinen neuen OUT. Tatsächliche Zeit mit Messbasis/Lücken von Schätzung trennen, Training/Hilfe von selbstständiger Prüfung und geschätzte Beherrschung von amtlichen Noten. Wissenskarte und fächerübergreifende Links dürfen nur vorhandene erlaubte Beziehungen mit Herkunft abbilden, keine neue sichere Kompetenz. Wochenziel/Ablehnung/Aufschub erzeugt keine Pflicht oder automatische Veröffentlichung. [DEC-V1-Matrix](ENTSCHEIDUNGSMATRIX.md) führt Abnahme und Grenzen; Bericht/Reimport startet keine Lernfunktion.
+
+## B3.18 Darstellung und Quellen im Ausgabeumfang (Mission 23)
+
+OUT-01 bis OUT-08 behalten ihre Bedeutung. Ein UI-Theme erzeugt kein neues Ausgabeformat und darf Lesbarkeit, Quellenkennzeichnung oder geschützte Notenwege nicht beeinträchtigen. Druck-/Exportdarstellung bleibt zugänglich und nachvollziehbar; UI-Saisonfarben werden nicht als verbindliche Druckpalette zugesagt. In unterstützten digitalen Formaten Quellen tatsächlich anwählbar mit Original-/Versionsbezug und belegter Seite/Zeit ausgeben; statische Ausdrucke führen dieselben Nachweisangaben lesbar, ohne anklickbare Papierfunktion zu behaupten. Keine langlebigen Zugangstokens oder ungeschützten privaten Datei-URLs einbetten; späterer Linkaufruf prüft aktuelle Rechte und Originalverfügbarkeit. Externe Linkziele bleiben echte zulässige URLs, kein erfundener Beleg.
+
+OUT-08 kann ausgewählte eigene Theme-/Darstellungspräferenzen nach Retention und aktuellem Schema enthalten; administrative Richtlinien und andere Konten sind kein persönlicher Export. Reimport aktiviert weder gesperrte Varianten noch gelöschte Werte. Quellversion, Provenienz und vorhandene Anker bleiben erhalten; fehlende/gelöschte Belege werden nicht aus dem Bericht als Original rekonstruiert. [S2](S2-datenmigration.md) und [B1.14](B1-dialogspezifikation.md#b114-darstellung-konfiguration-und-quellennavigation-mission-23) bestimmen Grenzen und Soll-Abnahme.

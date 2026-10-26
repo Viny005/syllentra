@@ -1,8 +1,8 @@
 # N2 — Querschnittskonzepte
 
 **Projekt:** Syllentra AI\
-**Version:** 0.10\
-**Stand:** 23.10.2026\
+**Version:** 0.11\
+**Stand:** 26.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber
 
 ## N2.1 Zweck und Ausarbeitungsgrenze
@@ -472,3 +472,11 @@ AUDIO-01/02/03 konkretisieren SEC-02/04/05/06/07/11/13/14/19/20/24/26/27; keine 
 6. **Vertrauenswürdige Kataloge und Kosten:** Keine Ton-/Motorinstallation oder Codeausführung durch bloße URL. Herkunft/Fassung, Audio-/Stimmenrechte, Software-/Gewichtslizenzen und Lieferkette prüfen; externe Region, Aufbewahrung, Training und Vertragsrollen bleiben zur Bewertung. Keine obligatorische bezahlte API und keine Kosten ohne ausdrückliche Freigabe; unklare Kosten sperren kostenpflichtige Nutzung statt stillen Fallbacks.
 
 Lautlos für optionale Benachrichtigungen beseitigt keine visuellen Hinweise und ändert keine Zustellrechte/Ruhezeiten. Bewusstes Probehören und manuelles TTS sind getrennte Aktionen, kein Umgehen eines ausgeschalteten Hörmodus. Reset setzt keine Datenschutzentscheidung zurück. Verfahren für Entzugserkennung, sichere Audiopuffer und tatsächlich unterstützte lokale/entfernte Stimmen bleiben technische offene Punkte; kein Schutztest als bestanden behauptet.
+
+## N2.17 Schutzgrenzen für Themes, Texte und Quellenlinks (Mission 23)
+
+SEC-04/07/09/11/12/14/19/21 bleiben maßgeblich. Wirksame Konfiguration folgt der Hierarchie Sicherheit/Datenschutz/Accessibility → administrative Richtlinie → freigegebene Standards → erlaubte persönliche Präferenz (P2.5.6). Unterstützte Parameter, Eingabewerte und Zielgruppen serverseitig validieren; manipulierte API-, Client-, Alt- oder Importwerte erweitern keine Freigabe. Verfügbarkeit und Sichtbarkeit getrennt behandeln: verborgen, bald verfügbar oder nur für Tester ist kein allgemeines Ausführungsrecht. Deaktivierung bewahrt Daten und erlaubt nur vorhandene ausdrücklich sichere Lesesichten.
+
+Admintexte, Übersetzungen, Banner, Tooltips, Theme-Token und Assets sind untrusted Eingaben, keine ausführbaren HTML-/Script-/CSS-Felder. Unterstützte Inhalte sicher validieren und ausgeben; weder XSS noch unerlaubte externe Ressourcen dürfen private Daten übertragen. Vorschau verwendet synthetische Inhalte, nicht fremde Lerninhalte. Rolle, MFA, Änderungsrecht, Ziel und aktuelle Revision vor Veröffentlichung/Rücknahme erneut prüfen; Audit datensparsam und endlich, keine privaten Werte unnötig kopieren. Eine Zwangsdarstellung ersetzt keine notwendige Accessibility-Anpassung und sperrt den berechtigten Administrationsweg nicht.
+
+Quellenlinks sind Identifikatoren, keine Zugangsberechtigungen. Konto-/Objekt-/Versions-/Schlüssel-/Quellschutz vor jedem Zugriff einschließlich Vorschau, Snippet, Medienbereich, Cache und Export prüfen. Fremde Titel, Dateinamen, Textstellen oder Schlüssel nicht über Fehler preisgeben; gespeicherte URL enthält keine Zugangstokens. Fehlende verlässliche Anker dürfen nicht aus gelöschtem Vollinhalt rekonstruiert werden. Berechtigungsentzug und Löschung gelten auch für historische Belege und erneutes Öffnen. Saisonmodus braucht keine neue Ortungs- oder externe Datenfreigabe. Rollback und Geräteabgleich reaktivieren keine verbotene Konfiguration. [B1.14](B1-dialogspezifikation.md#b114-darstellung-konfiguration-und-quellennavigation-mission-23) enthält die noch auszuführenden Negativfälle.

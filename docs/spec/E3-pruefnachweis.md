@@ -1,8 +1,8 @@
 # E3 — Änderungs- und Prüfnachweis
 
 **Projekt:** Syllentra AI\
-**Version:** 0.20\
-**Stand:** 23.10.2026\
+**Version:** 0.21\
+**Stand:** 26.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber
 
 > **Historischer Nachweis:** E3.1 bis E3.6 dokumentieren die abgeschlossene S1-Lieferung bis `723af7fa1692f8dbaf888b694fa63806d7d5fc5f`. Die dortige damalige Dateiliste und „S2 geplant“ sind keine Aussagen zum aktuellen Bestand. E3.7 bis E3.10 dokumentieren den anschließend abgeschlossenen S2-Auftrag bis `53ef171be4783748b5c7e3a84bb0cc363d5b4194`. E3.11 bis E3.16 dokumentieren die vier Fachentscheidungen bis `0676f791c858765a005a32e2af8c8442eff9712e`. Die redaktionelle Bereinigung und ihre aktuellen Prüfungen stehen in E3.17. E3.18 und E3.19 halten die 40 Originalkontrollen und Mission 2 historisch fest; N1/N2 wurden anschließend in Mission 3 fachlich vervollständigt (E3.20). Historische Versionsmatrizen und Prüfzahlen beziehen sich jeweils auf die bezeichnete Lieferung, nicht auf den heutigen Gesamtbestand.
@@ -604,3 +604,40 @@ Alle technischen Empfehlungen bleiben zur Entscheidung und Fachentwürfe Zur Pr�
 - Null geänderte Dateien unter `prototypes/`; `docs/spec/p1-p2-mobile-workspaces` (`a70076fb4f8d5d22b171541b30b61b6e912ba342`) und `main` (`beb66e1cd399f4a0fab55d3fd476a77d7804c5a7`) unverändert; die Korrekturen aus Mission 21B (`0219499efff0ffc85fc1fbfa1175c00f20e3ab84`) und Mission 21C werden ausschließlich auf dem dedizierten Prüfzweig `docs/mission21-tech-o-consolidation` veröffentlicht.
 
 **Nicht ausgeführt (auftragsgemäß untersagt):** Änderungen an Anwendungscode oder Tests, Paketinstallationen, Modelldownloads, Cloud-Konten/-Ressourcen, Benchmarks `T01`–`T09`, Ausgaben sowie Änderungen oder Merges auf `main` oder `docs/spec/p1-p2-mobile-workspaces`.
+
+## E3.34 Mission 23 — Konfigurierbare Darstellung und anklickbare Quellen
+
+**Quelle, Geltung und Autorisierung (26.10.2026):** Vollständig übergebener Eigentümerauftrag „SYLLENTRA AI — MISSION 23“, Abschnitte 1–14; bestätigte fachliche Prinzipien für visuelle Identität, persönliche/administrative Darstellung, saisonale Automatik, unterstützte Texte/Funktionen und Quellenöffnung. Ausgangs-HEAD und Remote des Audit-Branches: `c16876c89e54e67dd48e8fcec6eceb00af51f43f`. Arbeit ausschließlich auf `docs/mission21-tech-o-consolidation`, EDIT + COMMIT_PUSH nach Diff-/Konsistenzprüfung; kein Merge, keine PR, keine Änderung an Anwendungscode, `main` oder Spezifikationsbranch. Die unabhängige Dokumentprüfung Mission 22C im vorangehenden Eigentümerdialog bewertete den Ausgang als integrationsbereit; das ist weder eine Integration noch eine Gesamtfreigabe der Spezifikation.
+
+### E3.34.1 Vorprüfung, Wiederverwendung und fachliche Lücken
+
+| Bereich | Bereits vorhanden am Ausgang | Notwendige Ergänzung aus Mission 23 |
+|---|---|---|
+| Visuelle Identität | G-26, CON-22; Design-System als unfreigegebener Vorschlag | Eigenständige farbenfrohe lernzentrierte Führung, keine generische Chat-/Kartengestaltung; konkrete Marke weiterhin offen. |
+| Administration | FE-57/58, CFG-01..17, UC-48/55, AF-25, DM-48/49/60/61, DLG-48/56 | Vollständiger unterstützter Text-/Themeumfang, Richtlinienhierarchie, Standard/Zwangsdarstellung, persönliche Freigaben, Testscope und kontrollierte Veröffentlichung. |
+| Persönliche Einstellungen | DM-02, DT-61, persönliche Sprach-/Audiowerte, UC-02/04 | Erlaubte Theme-/Akzentwahl, unabhängiger Hell-/Dunkel-/Systemmodus, Vorschau/Reset, inaktive Altpräferenz und sicherer Geräteabgleich. |
+| Jahreszeiten | Keine vollständige fachliche Saisonregel | Freiwilliger administrativ erlaubter Modus, vier Saisonzuordnungen, explizite Region/Hemisphäre/Datum/Zeitzone/Revision; konkrete Regel Zur Entscheidung. |
+| Quellen | DEC-V1-03, UC-15, DM-21/23, DT-09/11/36/76, DLG-19, NFR-21 | Echte anwählbare Originalfassung, Seite/Medienzeit, zuverlässige Hervorhebung, aktuelle Rechteprüfung und getrennte sichere Fehler-/Fallbackzustände. |
+| Abnahme | Bestehende fachliche und REL-Profile, keine neue Produktprüfung | 16 neue eindeutig bezeichnete Sollfälle AT-VIS-01..16 in B1.14; Anbindung bestehender REL, keine zusätzliche Kontrolle. |
+
+P1/P2 formulieren Ziele und Systemgrenzen; F1/F2/F3 Prozesse, bestehende Anwendungsvarianten und Auswahlregeln; D1/D2 verwenden vorhandene Entitäten/Typen; B1/B2/B3 definieren Dialoge, begrenzte Automatik und Ausgaben; S1/S2/S3 behandeln Nachbargrenzen, Migration und zukünftige Gates; N1/N2 Qualität und Schutz. Die Designstudie erhält einen expliziten Vorranghinweis und historische Einordnung ihrer alten Palette. Architekturwahl und ADR-0010..0024/TECH-O-01..14 bleiben unverändert; keine neue FE/UC/CFG/DM/DT/INV/NFR/SEC/REL.
+
+### E3.34.2 Status, offene Entscheidungen und Prüfgrenzen
+
+Die neuen fachlichen Prinzipien sind vom Eigentümer bestätigt, sämtliche betroffenen Spezifikationsfassungen bleiben **Zur Prüfung durch den Projektinhaber**. Logo, Markenpalette, Typografie, Illustrationsstil, genaue Theme-/Token-/Accessibility-Validierung, Saisonintervalle und Regions-/Zeitzonenstandards sowie endgültige Verwaltungsnavigation sind **Zur Entscheidung**. Viewer-/Seiten-/Zeitanker-, Offline-/Sync- und Veröffentlichungsverfahren benötigen technische Auswahl und reale Nachweise. Kein Standort-/Wetterdienst, kein Anbieter oder Modell neu ausgewählt.
+
+Alle 16 AT-VIS-Fälle sind nicht ausgeführte Soll-Abnahmen. Auch E2E-/Screenreader-/TTS-/Video-/Saison-/Restoreprüfungen bleiben ausstehend; T01 ist CPU-/RAM-Koexistenz, T05 Audio-ASR. Die vorhandenen historischen Prototypnachweise werden nicht als neue Funktionsprüfung ausgegeben. R1/R4, AUDIO-01..03, DEC-48/49, V1-Postfachausschluss FE-56, Konten-/Admin-/Schlüsselgrenzen und Ausgabenverbot bleiben erhalten.
+
+### E3.34.3 Tatsächliche Dokumentationsprüfung
+
+Am 26.10.2026 gegen Ausgang `c16876c89e54e67dd48e8fcec6eceb00af51f43f` tatsächlich ausgeführt: statische Dokumentkontrollen mit vorhandener Python-Standardbibliothek und Git; keine Installation.
+
+| Kontrolle | Tatsächliches Ergebnis | Grenze |
+|---|---|---|
+| Markdown-Dateiziele, lokale Links, Überschriftenanker und Tabellen | 76 versionierte Markdown-Dateien geprüft; keine fehlenden lokalen Ziele/Anker, keine ungleichen Tabellenspalten oder verlorenen Ausgangsanker festgestellt. | Statische Strukturprüfung, kein vollständiger Markdown-Renderer oder externer URL-Verfügbarkeitsnachweis. |
+| Kennungen, Erhaltung und Versionen | 89 FE, 66 UC, 25 DEC-V1, 46 REL, 17 CFG, 78 DM, 95 DT, 25 NFR, 27 SEC und 14 TECH-O erhalten; 16 eindeutige AT-VIS hinzugefügt. Alle 17 Dokumentversionen stimmen mit dem Index überein; Status Zur Prüfung erhalten. | Zählung/Existenz getrennt vom fachlichen Abgleich. FE-Registerzeilen, DEC-Datei, ADR-/TECH-O-Register und bisherige 46 REL-Profile inhaltlich unverändert. |
+| Fachliche Zuordnung | Hierarchie, Saisonregel-Lücken, FE-57/58, Quellen-/Versions-/Rechtegrenzen und AT-VIS-Zuordnung manuell gegen vorhandene Primärtexte abgeglichen. | Keine vollständige Produkt- oder Sicherheitsabnahme. |
+| Historie, Diagramme und öffentlicher Inhalt | Keine alten Anforderungs-/Abnahmeinhalte entfernt; 14 Mermaid-Quellen unverändert; keine Konfliktmarker und keine Treffer der gezielten Secretmustersuche in den Änderungen. | Kein erneutes Diagrammrendering oder vollständiger Secret-/Historienaudit. |
+| Git-Diff und Umfang | `git diff --check` erfolgreich; ausschließlich 21 Markdown-Dateien in Spezifikation, Design, Qualität und PACE-Kontext geändert, keine Anwendungs-/Test-/Abhängigkeitsdatei. | Kein Merge/PR, keine Änderung anderer Branches. Commit und normaler Push erst nach abschließender Kontrolle gemäß Auftrag. |
+
+**Nicht ausgeführt:** Produkt-/Browser-/Accessibility-/Saison-/Viewer-/Benchmark-/Restoretests, Installationen, Cloud-/Modellzugriffe oder Ausgaben. Alle AT-VIS bleiben Sollfälle; nach Veröffentlichung ist ein unabhängiger Audit abzuwarten. Keine zusätzlichen Freigaben durch diese Dokumentprüfungen.

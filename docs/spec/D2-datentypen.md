@@ -2,8 +2,8 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** D2 — Datentypen\
-**Version:** 0.7\
-**Stand:** 23.10.2026\
+**Version:** 0.8\
+**Stand:** 26.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Bezugsstand:** Vier bestätigte Entscheidungen vom 19.10.2026; Ausgangs-HEAD `53ef171be4783748b5c7e3a84bb0cc363d5b4194`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1; aktuelle Fassungen im [Index](README.md).\
 **Methode:** Spezifikationsbaustein nach Johannes Siedersleben, fachlich vergleichbar mit der [Herold-D2-Referenz](https://github.com/carstenlucke/herold/blob/main/docs/spec/D2-datentypen.md).
@@ -1867,3 +1867,20 @@ INV-26 bis INV-31 aus [D1](D1-datenmodell.md) gelten unverändert auch für die 
 DM-25/DM-26 referenzieren den zulässigen Antwort-/Fassungsbezug; DT-07 beschreibt die Ausgabesprache, DT-61 die unterstützten persistenten persönlichen Parameter. Der vorübergehende Wiedergabestand unterscheidet fachlich bereit, laufend, pausiert, beendet und nicht verfügbar/Fehler samt tatsächlicher Position oder unbekannt. Das sind weder DT-38-Gesprächsstatus noch neue DM-/DT-Kennungen oder technische API-Enums. Pause/Fortsetzung/Replay und Medienfehler dürfen Text und Gesprächskontext nicht verwerfen. Wiederanlauf muss heutige Inhalts-/Geräte-/Anbieterrechte erneut prüfen; kein garantierter Browser-Hintergrund- oder Offlinebetrieb. Audio-/Positionkopien erben Quellschutz und zulässige Lösch-/Temporärregeln; keine Speicherung von Mikrofoninhalt beim bloßen Hören.
 
 **Abnahme:** Standard aus verhindert automatische neue Ausgabe, ausdrückliches Einschalten erlaubt nur aktuell zulässige Antworten; unbekannte Stimme bleibt unverfügbar. Mikrofonverweigerung sperrt eine tatsächlich verfügbare erlaubte TTS-Ausgabe nicht. Prüfbezüge: UC-20, DLG-26/DLG-50 und [FE-21-Abnahme](ENTSCHEIDUNGSMATRIX.md#4-fe-21--getrennte-ausgabevariante-und-abnahme).
+
+## D2.16 Darstellungsparameter und anklickbare Belege in vorhandenen Typen (Mission 23)
+
+DT-61 erhält ausschließlich folgende unterstützte fachliche Parametergruppen für DM-48/49; keine neue CFG oder frei ausführbare Konfigurationssprache. DT-06/07 tragen Texte/Sprachen, DT-03/04 Datum/Zeitzone, DT-55 den Revisionsstand.
+
+| Gruppe | Werte und Validierung |
+|---|---|
+| Theme-Katalog | Stabile Referenz/Fassung, mehrsprachiger Name/Beschreibung, unterstützte Design-Tokens, helle/dunkle Variante, Validierungs-/Veröffentlichungsstand; Verfügbarkeit und Zielgruppe nach DT-72. Keine ungeprüften Skripte, Styles, externen Assets oder Geheimnis-URLs. |
+| Administrative Richtlinie | Aktueller freigegebener Standard; optional genau ein erzwungener Theme-Bezug; zulässige Themes; individuelle Akzente erlaubt/gesperrt; saisonale Automatik erlaubt/gesperrt. Referenzen müssen zum wirksamen freigegebenen Katalog passen. |
+| Persönliche Präferenz | Eigenes Konto, Auswahlart Standard/manuell/saisonal, zulässiger Theme-/Akzentbezug; unabhängig davon Farbmodus hell/dunkel/system. Inaktive Altpräferenz von wirksamer Auswahl trennen, keine widersprüchlichen gleichzeitigen Auswahlarten. |
+| Saisonregel | Regelreferenz/Fassung; bestätigte Region beziehungsweise Hemisphäre, Datums-/Zeitzonenbasis und eindeutige Saisonintervalle; Frühling/Sommer/Herbst/Winter jeweils einem erlaubten Theme zugeordnet. Fehlende Regel ist unbekannt, keine automatische Standortermittlung. Konkrete Grenzen und Vorgaben bleiben Zur Entscheidung. |
+| Texte und Komponenten | Unterstützter CFG-Schlüssel und Sprachfassung für Titel, Menüs, Beschreibung, Einführung, Hilfe/Tooltip, Startseite, Banner, Theme-Beschreibung und Verfügbarkeitsmeldung; aktivierte/deaktivierte/vorgemerkte/Testkonten-Verfügbarkeit nach FE-58/DT-72. Kein Text erzeugt eine neue Funktion oder überschreibt persönliche Lerninhalte. |
+| Wirksame Auswahl | Bezug auf aktuelle Richtlinien-, Standard-, Katalog- und persönliche Revision, ermittelter erlaubter Theme-Bezug und erklärbarer Einschränkungs-/Fallbackgrund; keine neue persönliche Trackinghistorie. |
+
+Farb-/Kontrastprüfung erfolgt für reale Tokenkombinationen und Zustände. Unzulässige Werte zurückweisen oder vor bewusster Übernahme nachvollziehbar geeignet anpassen; letzte gültige Fassung erhalten. Systemmodus speichert die Präferenz, nicht die lokale OS-Darstellung aller Geräte. Reset verwendet heutigen zulässigen Standard. Reimport oder Rücknahme prüft heutige Regeln erneut; eine gelöschte Präferenz wird nicht wiederbelebt. Diese Darstellungshierarchie ändert keine Hörmodus-/Sprachpriorität aus AUDIO-01..03.
+
+DT-11 wird für anklickbare Belege zusammen mit DT-09/36/76 verwendet: Quellenkennung, interne Dokument-/Versionskennung oder tatsächlicher externer Locator, nachweisbarer Seiten-/Abschnittsanker beziehungsweise Medienstart und gegebenenfalls -ende, Herkunft und Prüfstand. Nicht vorhandene Anker sind optional/unbekannt; Zeitwerte mit Einheit und Bezug auf dieselbe Medienfassung, nicht negativ und nicht außerhalb der bekannten Dauer. Seitenzählung und technische Viewerabbildung bleiben zu spezifizieren; nur vorhandene bestätigte Zuordnung anzeigen. Keine abgeleitete Sicherheit durch bloßen Hash, Dateinamen oder Linkbesitz. Heutige Objekt-/Inhaltsrechte bei jedem Aufruf prüfen; keine Tokens oder privaten Metadaten in sichtbaren URLs. [B1.14](B1-dialogspezifikation.md#b114-darstellung-konfiguration-und-quellennavigation-mission-23) liefert positive und negative Sollfälle.

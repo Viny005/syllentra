@@ -2,8 +2,8 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** F1 — Geschäftsprozesse\
-**Version:** 0.7\
-**Stand:** 23.10.2026\
+**Version:** 0.8\
+**Stand:** 26.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Spezifikationsmethode:** Bausteine nach Johannes Siedersleben\
 **Geltungsbereich:** Fachlicher Zielumfang der ersten Produktversion (V1), auf Grundlage der aktuellen P1-/P2-Fassungen im [Spezifikationsindex](README.md)
@@ -658,3 +658,11 @@ UC-60 bleibt für eigene Sicherung/Restore zuständig; UC-49 für Export. Die op
 Die 25 bestätigten DEC-V1 werden in der [Matrix](ENTSCHEIDUNGSMATRIX.md) einzeln verfolgt. GP-02/03 verbinden die zugängliche Themenliste mit einer einfachen optionalen Wissenskarte und belegten Quellenpassagen. GP-04/05 tragen freiwillig gestartete Übungen/Probeprüfungen, adaptive Erklärungsalternativen, freiwillige Sitzungsrückmeldung, diskrete Hilfe/Pausenangebote und optionale Bilanz. GP-01/11 halten ein einsehbares korrigierbares Lernprofil sowie belegabhängige aktuelle Einschätzungen; keine feste Lernstil- oder Gesundheitsklassifikation. GP-06 umfasst manuelle/automatische/hybride pädagogische Priorität und freiwillige Wochenziele unter erhaltenem Schutz manueller Termine. GP-15 wahrt die Daten-/Lösch-/Restoregrenzen einschließlich DEC-49. Das sind Varianten der 15 bestehenden Prozesse, keine neue Produktentscheidung, keine neuen GP/UC und keine implizite Freigabe externer Datenverarbeitung.
 
 Alle freiwilligen Angebote sind ohne erfundene negative Bewertung ablehnbar; fehlende Rückmeldung bleibt unbekannt. Reine Ansichten/Bilanzen/Quellenzugänge starten keinen neuen KI-Auftrag oder Kalenderlauf. Konkrete Algorithmen, Impulsschwellen und Wirksamkeitsnachweise bleiben offen; kein Gesundheitsurteil oder Erfolg allein aus gelesener Zeit.
+
+## F1.14 Darstellung und Quellen als bestehende Prozessvarianten (Mission 23)
+
+GP-01/GP-14: Nutzer wählen in ihrem persönlichen Bereich eine erlaubte Darstellung, prüfen Vorschau und wirksame Richtlinie und speichern oder verwerfen; Reset verwendet den aktuellen zulässigen Standard. Die getrennte Administration verwaltet freigegebene Themes, Saisonzuordnung, personalisierbare Optionen und unterstützte Texte einschließlich DE/FR/EN-Fassungen. Bearbeiten, Vorschau, Veröffentlichen, Verlauf und Rücknahme bleiben unterschiedliche Schritte; die bewusste direkte Übernahme verlangt keine künstliche zweite Bestätigung. FE-57/58 und heutige serverseitige Rechte gelten vor jeder Wirkung.
+
+GP-02/03/04/09/10: Die Lernarbeit bleibt über Semester, Module, Kurse, Materialien, Aufgaben, Planung und Fortschritt erreichbar; der Assistent unterstützt diese Kontexte. Beim Quellenklick wird die tatsächliche verwendete Originalrevision samt belegter Seite/Zeit geöffnet, soweit zugänglich und unterstützt. Bei fehlendem Anker wird nur eine erreichbare Quelle mit kenntlicher Präzisionslücke angeboten; bei fehlendem Recht kein Inhalt oder verräterischer Metadatensatz.
+
+GP-15: Persönliche Darstellungswerte werden geschützt abgeglichen, exportiert, zurückgesetzt oder gelöscht; eine zeitweise administrativ gesperrte Präferenz bleibt nur innerhalb erlaubter Retention erhalten. Entsperren, Reimport oder Rücknahme kann weder gelöschte Werte noch Rechte reaktivieren. Rahmen: [P2.5.6](P2-architekturueberblick.md#p256-verbindlicher-darstellungs--und-konfigurationsrahmen-aus-mission-23); Sollfälle: [B1.14](B1-dialogspezifikation.md#b114-darstellung-konfiguration-und-quellennavigation-mission-23). Keine neuen GP/FE.

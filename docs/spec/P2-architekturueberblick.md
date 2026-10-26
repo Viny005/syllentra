@@ -2,8 +2,8 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** P2 — Architekturüberblick\
-**Version:** 0.11\
-**Stand:** 23.10.2026\
+**Version:** 0.12\
+**Stand:** 26.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Spezifikationsmethode:** Bausteine nach Johannes Siedersleben\
 **Geltungsbereich:** Fachlicher Zielumfang der ersten Produktversion (V1)
@@ -334,6 +334,39 @@ Der Administrationsbereich darf nicht durch bloße Text- oder Variablenänderung
 Dieser Baustein legt den fachlichen Anspruch an administrative Konfigurierbarkeit fest. Die konkreten Administrationsdialoge gehören nach B1, die fachlichen Funktionen nach F2/F3 und das Konfigurations-, Berechtigungs- und Sicherheitskonzept nach N2. Das zugehörige fachliche Datenmodell wird in D1 definiert.
 
 ---
+
+### P2.5.6 Verbindlicher Darstellungs- und Konfigurationsrahmen aus Mission 23
+
+Quelle: Eigentümerauftrag Mission 23, vollständig übergeben am 26.10.2026. Die folgenden fachlichen Prinzipien sind bestätigt; Dokumentfreigabe, konkrete Gestaltung und Produktnachweise bleiben getrennt. CFG-01 bis CFG-17 werden erweitert, nicht ersetzt. Es entstehen weder ein neues Nachbarsystem noch neue FE oder UC.
+
+Syllentra ist eine eigenständige, hochwertige, farbenfrohe Lernumgebung mit wiedererkennbarer Typografie, ausgewogenen Farbwelten und unterscheidbaren Lernbereichsakzenten. Semester, Module, Kurse, Materialien, Aufgaben, Planung, Übungen, Fortschritt und persönliche Wissensorganisation tragen die Navigation; der KI-Assistent ist darin eingebettet. Ein austauschbares Chatfenster mit dekorativen Dashboard-Karten erfüllt diesen Anspruch nicht. Responsive, touchfreundliche Bedienung, klare Hierarchie, helle/dunkle Varianten, sichtbarer Fokus, zusätzliche Text-/Symbolsignale und reduzierte Bewegung bleiben verbindlich. Unterstützte Design-Tokens bilden ein einheitliches Designsystem; Logo, Markenpalette, konkrete Schriften und Illustrationsstil sind **Zur Entscheidung**, nicht durch Beispiele ausgewählt.
+
+**Konfigurationshierarchie, von höchstem zu niedrigstem Vorrang:**
+
+1. Verbindliche Sicherheits-, Datenschutz- und Barrierefreiheitsregeln.
+2. Zentrale administrative Richtlinien.
+3. Administrativ freigegebene System- und Theme-Standards.
+4. Persönliche Benutzerpräferenzen innerhalb des erlaubten Rahmens.
+
+Persönliche Auswahl darf freigegebene Standards übersteuern, soweit keine übergeordnete Richtlinie entgegensteht; ein Standard allein ist keine erzwungene Auswahl. AF-25 prüft die wirksame Darstellung gegen alle vier Ebenen. Zentrale Freigaben und Sperren werden serverseitig geprüft, auch bei manipuliertem Client, direktem API-Aufruf, Altpräferenz oder Reimport. Das ist keine Garantie über die Darstellung eines beliebig manipulierten Clients, sondern eine verbindliche Grenze der akzeptierten Konfiguration und geschützten Funktionen.
+
+| Vorhandener Bereich | Bestätigte Präzisierung |
+|---|---|
+| CFG-01/02 | Branding, Seitentitel, Bereichs-/Navigationsnamen, Beschreibungen, Begrüßung, Einführung, Hilfe, Tooltips, Verfügbarkeitsmeldungen, Wartungs-/Ankündigungsbanner, freigegebene Startseitentexte und Theme-Namen/-Beschreibungen in unterstützten Sprachfassungen bearbeiten. |
+| CFG-03/14 | Persönlich erlaubtes Farbschema, Akzentfarbe/-palette und unabhängig davon Hell-/Dunkel-/Systemmodus wählen, vor Übernahme ansehen und auf den aktuell gültigen Standard zurücksetzen. Nicht zulässige Farb-/Kontrastkombinationen begrenzen oder nachvollziehbar geeignet anpassen. |
+| CFG-03/13 | Super Admin verwaltet im getrennten Administrationsbereich unterstützte Themes: erstellen/konfigurieren, bearbeiten, aktivieren/deaktivieren, ausblenden, zur Auswahl freigeben, Standard bestimmen oder ein einziges Theme erzwingen; individuelle Farbauswahl und saisonale Automatik erlauben/sperren. |
+| CFG-04/05/15/16/17 | Unterstützte Navigation, Startseite, Dashboard-Komponenten und Bereichssichtbarkeit lernzentriert konfigurieren; Gesprächs- und Kurs-/Projektoptionen bleiben bereichsbezogen, keine neue Funktion durch Umbenennung. Mobile Zugänge zu Einwilligungen, Sicherheit und Datenkontrolle erreichbar halten. |
+| CFG-03/13 und FE-58 | Theme-Testvarianten nur für ausdrücklich berechtigte Testkonten nach den bestehenden Rollen-/Serverflag-Regeln freigeben; die normale Benutzeroberfläche enthält keine administrativen Veröffentlichungsrechte. |
+
+**Saisonale Darstellung:** Ein Benutzer kann bei administrativer Freigabe ausdrücklich „Automatisch nach Jahreszeit“ wählen. Frühling, Sommer, Herbst und Winter werden konfigurierbar freigegebenen Themes zugeordnet, nicht fest in fachlicher Programmlogik an Paletten gebunden. Die geltende Regel muss Region beziehungsweise Hemisphäre, Datum und Zeitzone eindeutig auswerten und eine Regelrevision benennen. Eine feste kalenderbasierte Zuordnung ist lediglich ein V1-Kandidat. Saisonbeginn/-grenzen, Herkunft und Standard von Region/Zeitzone sowie konkrete Saisonlogik bleiben **Zur Entscheidung**; keine stille Standortermittlung oder Wetterintegration. Ohne bestätigte vollständige Regel keine vorgetäuschte automatische Saisonbestimmung; zulässigen Standard mit Erklärung zeigen. Manuelle Wahl bleibt möglich, soweit freigegeben.
+
+Wird ein Theme erzwungen oder eine persönliche Option gesperrt, gilt die zentrale Richtlinie. Gesperrte Optionen sind verborgen oder verständlich als nicht verfügbar gekennzeichnet, entsprechend FE-58. Frühere persönliche Präferenzen bleiben nur nach geltenden Retentions-/Löschregeln erhalten und werden erst nach erneuter Freigabe und erneuter Gültigkeitsprüfung berücksichtigt. Gelöschte Werte werden nicht rekonstruiert. Veraltete oder deaktivierte Theme-Referenzen führen zum aktuell zulässigen Standard und einer verständlichen Erklärung. Accessibility-Bedürfnisse haben Vorrang vor einer Markenentscheidung; insbesondere Kontrast, Fokus, Zoom und Bewegungsreduktion bleiben nutzbar.
+
+**Grenzen und Veröffentlichung:** (a) Unterstützte Inhalte/Einstellungen sind ohne Codeänderung administrierbar; (b) Funktionsverfügbarkeit ist nur innerhalb des implementierten, bestätigten Flag-Systems steuerbar; (c) verbindliche Sicherheitsregeln sind durch gewöhnliche Verwaltungsfelder nicht abschaltbar; (d) neue Funktionen und strukturelle Softwareänderungen benötigen einen gesonderten Entwicklungsauftrag. Diese Aufzählung ist keine neue ADR-A/B/C-Klassifikation. FE-58 umfasst aktiviert, deaktiviert/verborgen, sichtbar „Bald verfügbar“ mit editierbarer Meldung sowie nur für berechtigte Tester verfügbar. Sichtbarkeit verleiht nie Ausführungsrechte; zulässige sichere Lesesichten bei Deaktivierung bleiben erhalten.
+
+Entwurf, Vorschau, validierte persistente Fassung, kontrollierte Veröffentlichung, Änderungsverlauf und revalidierte Rücknahme werden unterschieden. Eingaben dürfen weder Skripte/XSS noch freie ausführbare Styles oder neue Softwarelogik einschleusen. Verbundene Geräte übernehmen gültige Revisionen nach zulässigem Abgleich; Offlinegeräte erhalten keine Sofortaktualisierungsgarantie. Neue administrative Gestaltung verändert keine persönlichen Lerninhalte und schafft kein privates Inhaltsleserecht. Auch die getrennte Administration bleibt hell/dunkel und zugänglich bedienbar; ein Plattformtheme darf notwendige Administrationsfunktionen nicht unerreichbar machen. Die vorgeschlagene Gruppierung in Plattform, Branding/Themes, Texte/Lokalisierung, Navigation/Dashboard, Flags/Testfreigaben, zulässige Rechte und Änderungsverlauf bleibt eine zu prüfende Navigationsgestaltung.
+
+Primärbezüge: [F2](F2-anwendungsfaelle.md) UC-04/15/48, [F3](F3-anwendungsfunktionen.md) AF-03/25, [D1](D1-datenmodell.md) DM-02/21/23/48/49, [D2](D2-datentypen.md) DT-11/36/61/72/76 und [B1.14](B1-dialogspezifikation.md#b114-darstellung-konfiguration-und-quellennavigation-mission-23). Keine Architektur-, Anbieter-, Logo- oder Farbentscheidung.
 
 ## P2.6 Informationsverarbeitung, persönliche Erinnerung und Löschung
 

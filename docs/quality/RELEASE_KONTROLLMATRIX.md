@@ -1,6 +1,6 @@
 # Syllentra AI — konsolidierte Release-Kontrollmatrix
 
-**Version:** 0.3 · **Stand:** 23.10.2026 · **Status:** Zur Prüfung durch den Projektinhaber
+**Version:** 0.4 · **Stand:** 26.10.2026 · **Status:** Zur Prüfung durch den Projektinhaber
 
 ## 1. Bestand, Zählung und Abgrenzung
 
@@ -738,3 +738,18 @@ REL-A16 führt WCAG 2.2 AA ausdrücklich als **zu bestätigendes Ziel**. Bestehe
 ## 5. Betriebszuordnung aus S3
 
 [S3.8](../spec/S3-inbetriebnahme.md#s38-einbindung-aller-46-release-kontrollen) referenziert alle 46 bestehenden Profile mit Pflichtzeitpunkt, Ergebnisprüfung, Sperrwirkung und Neubewertung. Erwartetes Ergebnis, Anwendbarkeit und Beleg bleiben hier maßgeblich, ohne neue REL-Kennungen. S3 beschreibt zukünftige Verfahren; alle Kontrollen bleiben nicht implementiert/nicht produktgetestet. S3.7/13 verlangen zusätzlich die konkrete menschliche Veröffentlichungsgenehmigung; die hier dokumentierten Prüfziele sind keine Genehmigung.
+
+## 6. Vertiefung der bestehenden Kontrollen durch Mission 23
+
+Die 46 eigenständigen Kontrollprofile und ihre bisherigen Kriterien bleiben erhalten; keine neue REL. Die 16 Sollfälle AT-VIS-01 bis AT-VIS-16 in [B1.14](../spec/B1-dialogspezifikation.md#b114-darstellung-konfiguration-und-quellennavigation-mission-23) ergänzen folgende Prüfbereiche:
+
+| Vorhandene Kontrolle | Zusätzlicher Nachweisumfang |
+|---|---|
+| REL-S10 | Sichere Eingabe/Ausgabe von administrativen Texten, Token und Assets; AT-VIS-12. |
+| REL-S04/S06 | Kontoisolation, aktuelle administrative Rechte und serverseitige Theme-/Feature-/Testkontenfreigabe; AT-VIS-05/06/09/15. |
+| REL-Q04/Q06 | Erklärbare Sperr-/Fehlerzustände, konfigurierbare Verfügbarkeitsmeldungen, keine Scheinfunktion durch Text; AT-VIS-02/04/10/14/15. |
+| REL-Q19 | Konkurrenz-/Revisionskonflikte bei Veröffentlichung und Rücknahme ohne Kontenvermischung; AT-VIS-08/16 unter SEC-07/14. |
+| REL-A05 | Tatsächlich anwählbare Originalfassungen mit belegten Seiten-/Medienankern, ehrliche Quellenlücken; AT-VIS-13/14/15. |
+| REL-A16 | Zulässige persönliche/erzwungene Themevarianten, Hell/Dunkel/System, Kontrast, Fokus, Bewegung und unterstützte Sprachen; AT-VIS-01/05/11/12. |
+
+Weitere AT-VIS-Fälle prüfen persönliche Gültigkeit, Geräteabgleich und bestätigte Saisonregeln nach N1/N2. Sämtliche Zuordnungen bezeichnen zukünftige Produktprüfungen, keine ausgeführten Nachweise. WCAG 2.2 AA bleibt ein ausdrücklich zu bestätigendes Ziel; Grundzugänglichkeit bleibt verbindlich.

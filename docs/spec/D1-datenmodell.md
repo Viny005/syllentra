@@ -2,8 +2,8 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** D1 — Datenmodell\
-**Version:** 0.7\
-**Stand:** 23.10.2026\
+**Version:** 0.8\
+**Stand:** 26.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Spezifikationsmethode:** Bausteine nach Johannes Siedersleben\
 **Bezugsstand:** Vier bestätigte Entscheidungen vom 19.10.2026; Ausgangs-HEAD `53ef171be4783748b5c7e3a84bb0cc363d5b4194`, Branch `docs/spec/p1-p2-mobile-workspaces`, PR #1; aktuelle Fassungen im [Index](README.md).
@@ -1615,3 +1615,11 @@ Die folgenden Ergänzungen schließen die L-08-/L-04-Lücken. Sie trennen nichtt
 **Integrität/Lebenszyklus:** M8-Ausbau, keine aktive Integration durch das Modell. Berechtigung/Präferenz, Ruhezeit, aktuelle Relevanz und Widerruf vor jedem Versuch; unbekannte Wirkung zuerst prüfen, keine blinde Doppelzustellung. Keine Note, unnötigen Lerninhalte, Geheimnisse oder Rohadressen im technischen Nachweis. Kontrollierte Historienlöschung und endliche minimale Wiederholungs-/Löschinformation verhindern Neuversand gelöschter Hinweise, ohne ein privates Schattenarchiv zu schaffen. Eine physische Genau-einmal-Zustellung eines fremden Dienstes wird nicht garantiert.
 
 **Abnahme:** Providerannahme ohne Auslieferungsbeleg zeigt „Auslieferung unbekannt“. Nach Widerruf keine weiteren Versuche; der zulässige In-App-Hinweis bleibt unabhängig verfügbar.
+
+## D1.17 Erweiterung vorhandener Konfigurations- und Quellenbeziehungen (Mission 23)
+
+DM-02 referenziert die eigenen Darstellungspräferenzen in DM-48/49. Administrative Kataloge/Richtlinien, freigegebene Standards und persönliche Auswahl sind durch Geltung und Verwaltungsrecht getrennt, auch wenn alle DM-48/49 verwenden. Die Besitzerzuordnung zu DM-01 verleiht kein administratives Inhaltsrecht auf andere Konten. DM-48 erhält innerhalb seiner vorhandenen Attribute den Geltungsbereich Plattform/eigenes Konto und den Parameterzweck; DM-49 hält Katalog-/Regelrevision, Validierung, Veröffentlichungsstand, wirksamen Zeitpunkt und zulässige Änderungshistorie. Keine neue Entität oder persistente laufende UI-Sitzung.
+
+Theme-Einträge enthalten stabile Theme-Referenz und Fassung, mehrsprachigen Namen/Beschreibung, unterstützte Design-Token, Hell-/Dunkelvarianten, Verfügbarkeits-/Testscope und Validierungsstand. Zentraler Standard, optional erzwungener Theme-Bezug, Akzent-/Saisonfreigaben und vier Saisonzuordnungen sind administrativ geschützte Werte. Persönliche Auswahl enthält Theme-/Akzentbezug, Farbmodus und Saisonwahl sowie gegebenenfalls die bestätigte Region-/Zeitzonenbasis. Gespeicherte Präferenz, aktuell wirksames Theme und Grund einer Einschränkung bleiben unterscheidbar. Gesperrte Präferenz ist kein Recht; Retention, Export und Löschung folgen dem eigenen Umfang und heutigen Schutzregeln.
+
+DM-21 bleibt eine konkrete Originalfassung; DM-23 führt Provenienz und zulässigen Locator. Quellenbelege an Ableitungen DM-24 oder Nachrichten DM-26 referenzieren die tatsächlich verwendete DM-21/23 und gegebenenfalls belegte Seite, Abschnitt oder Medienzeit. Ein Beleg kann mehrere einzeln prüfbare Quellenbezüge besitzen. Fehlender Anker bleibt unbekannt, keine Nullseite/-zeit als Ersatz. Beleg, Fassung, Inhalt und heutiger Berechtigungsstatus werden nicht gleichgesetzt. Bei Quellenlöschung nur rechtmäßig erforderliche minimale Lückenmetadaten behalten, keine Schattenkopie oder verräterische Vorschau. Bestehende Versions-, Eigentums- und Löschinvarianten bleiben maßgeblich; [D2](D2-datentypen.md) präzisiert vorhandene Typen und [B1.14](B1-dialogspezifikation.md#b114-darstellung-konfiguration-und-quellennavigation-mission-23) die Abnahme.
