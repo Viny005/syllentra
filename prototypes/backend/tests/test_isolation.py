@@ -24,6 +24,7 @@ from scripts.test_db import (
     assert_owned,
     create_run_database,
     drop_run_database,
+    reclaim_orphaned_database,
     sweep,
     wipe,
 )
@@ -124,7 +125,10 @@ def test_sweep_lists_only_marked_old_databases() -> None:
     finally:
         with psycopg.connect(decoy.maintenance_url, autocommit=True) as db:
             db.execute(sql.SQL('DROP DATABASE IF EXISTS {}').format(sql.Identifier(unmarked)))
-        drop_run_database(decoy)
+        if decoy.lock_conn and not decoy.lock_conn.closed:
+            drop_run_database(decoy)
+        else:
+            reclaim_orphaned_database(decoy.name)
 
 
 def test_identity_mode_accepts_only_local_allowlisted_databases(run_db: RunDatabase) -> None:
@@ -229,14 +233,19 @@ def test_loss_of_possession_lock_fails_closed(run_db: RunDatabase) -> None:
     try:
         assert_owned(decoy)
         # Wenn der Besitz-Lock verloren geht (z. B. Verbindungsabbruch):
-        if decoy.lock_conn:
+        if decoy.lock_conn and not decoy.lock_conn.closed:
             decoy.lock_conn.close()
         with pytest.raises(OwnershipError, match="Besitz-Verbindung"):
             assert_owned(decoy)
         with pytest.raises(OwnershipError, match="Besitz-Verbindung"):
             wipe(decoy)
+        with pytest.raises(OwnershipError, match="Besitz-Verbindung"):
+            drop_run_database(decoy)
     finally:
-        drop_run_database(decoy)
+        if decoy.lock_conn and not decoy.lock_conn.closed:
+            drop_run_database(decoy)
+        else:
+            reclaim_orphaned_database(decoy.name)
 
 
 def test_drop_refuses_actively_used_database(run_db: RunDatabase) -> None:
@@ -246,8 +255,15 @@ def test_drop_refuses_actively_used_database(run_db: RunDatabase) -> None:
             conn.execute("SELECT 1")
             with pytest.raises(OwnershipError, match="aktiv verwendet"):
                 drop_run_database(decoy)
-    finally:
+            # Besitz-Lock MUSS weiterhin gehalten werden (kein ungeschützter Zustand):
+            assert decoy.lock_conn is not None and not decoy.lock_conn.closed
+            assert_owned(decoy)
+        # Nachdem die Runtime-Verbindung beendet ist, gelingt das Löschen über denselben Run:
         drop_run_database(decoy)
+        assert decoy.lock_conn.closed
+    finally:
+        if decoy.lock_conn and not decoy.lock_conn.closed:
+            drop_run_database(decoy)
 
 
 def test_assert_owned_verifies_pg_locks_classid_and_objid_representation(
@@ -273,3 +289,28 @@ def test_assert_owned_verifies_pg_locks_classid_and_objid_representation(
             (pid, classid, objid),
         ).fetchone()
         assert row == (classid, objid, 1, True)
+
+
+def test_assert_owned_and_drop_reject_when_lock_conn_is_none(run_db: RunDatabase) -> None:
+    detached = replace(run_db, lock_conn=None)
+    with pytest.raises(OwnershipError, match="Besitz-Verbindung"):
+        assert_owned(detached)
+    with pytest.raises(OwnershipError, match="Besitz-Verbindung"):
+        wipe(detached)
+    with pytest.raises(OwnershipError, match="Besitz-Verbindung"):
+        drop_run_database(detached)
+
+
+def test_reclaim_orphaned_database_refuses_active_owner(run_db: RunDatabase) -> None:
+    # Solange run_db aktiv ist und den Besitz-Lock hält, verweigert Parcours B das Reclaiming:
+    with pytest.raises(OwnershipError, match="wird aktiv verwendet"):
+        reclaim_orphaned_database(run_db.name)
+
+
+def test_reclaim_orphaned_database_rejects_invalid_or_unmarked_db(
+    run_db: RunDatabase,
+) -> None:
+    with pytest.raises(ValueError, match="Namensschema"):
+        reclaim_orphaned_database("invalid_db_name")
+    with pytest.raises(OwnershipError, match="ohne gültigen Syllentra-Eigentumsvermerk"):
+        reclaim_orphaned_database("syllentra_t_ffffffffffff")

@@ -1,13 +1,17 @@
-"""Isolierte PostgreSQL-Testdatenbanken pro Testlauf (Mission 12/27/27B/27C).
+"""Isolierte PostgreSQL-Testdatenbanken pro Testlauf (Mission 12/27/27B/27C/27D).
 
 Jeder Lauf erzeugt eine eigene Datenbank ``syllentra_t_<12 Hex>`` mit einem Eigentumsvermerk
 (Datenbankkommentar mit zufälligem Token) und hält über eine persistente Maintenance-Verbindung
-einen exklusiven Session-Advisory-Lock. Zerstörende Operationen (DELETE/DROP) werden nur
-ausgeführt, wenn Name, Eigentumsvermerk und aktiver Besitz verifiziert sind.
+einen exklusiven Session-Advisory-Lock.
+
+Parcours A: Normale Löschung durch den aktiven Besitzer (erfordert gehaltenen Lock auf lock_conn).
+Parcours B: Kontrollierte Übernahme und Bereinigung verwaister Läufe (sweep / reclaim).
+
 Gemeinsame Datenbanken (``syllentra_test``, ``syllentra_prototype``) werden hier nie verändert.
 """
 
 import json
+import logging
 import math
 import re
 import secrets
@@ -129,6 +133,7 @@ def create_run_database() -> RunDatabase:
 
     # 1. Persistente Maintenance-Verbindung öffnen und exklusiven Run-Lock VOR der DB-Erstellung
     lock_conn = psycopg.connect(maintenance, autocommit=True)
+    created_db = False
     try:
         lock_key = _lock_key(run_id)
         acquired = lock_conn.execute(
@@ -138,16 +143,31 @@ def create_run_database() -> RunDatabase:
             raise OwnershipError(
                 "Besitz-Lock für die neue Lauf-Datenbank konnte nicht erworben werden."
             )
-        # 2. Datenbank anlegen und Eigentumsvermerk setzen (während der Lock bereits gehalten wird)
+        # 2. Datenbank anlegen
         lock_conn.execute(
             sql.SQL("CREATE DATABASE {} TEMPLATE template0").format(sql.Identifier(name))
         )
+        created_db = True
+
+        # 3. Eigentumsvermerk setzen (während der Lock bereits gehalten wird)
         lock_conn.execute(
             sql.SQL("COMMENT ON DATABASE {} IS {}").format(
                 sql.Identifier(name), sql.Literal(comment)
             )
         )
-    except Exception:
+    except Exception as create_exc:
+        # Falls DB bereits erzeugt wurde, unter gehaltenem Lock aufräumen
+        if created_db:
+            try:
+                lock_conn.execute(
+                    sql.SQL("DROP DATABASE {}").format(sql.Identifier(name))
+                )
+            except Exception as drop_exc:
+                logging.getLogger("syllentra.test_db").error(
+                    "Partielle Testdatenbank %s konnte nicht bereinigt werden.", name
+                )
+                lock_conn.close()
+                raise create_exc from drop_exc
         lock_conn.close()
         raise
 
@@ -160,11 +180,17 @@ def create_run_database() -> RunDatabase:
         maintenance,
         lock_conn=lock_conn,
     )
-    # 3. Migration anwenden; bei Fehlschlag sauber aufräumen
+    # 4. Migration anwenden; bei Fehlschlag sauber aufräumen und Primärfehler erhalten
     try:
         migrate(run.admin_url)
-    except Exception:
-        drop_run_database(run)
+    except Exception as migrate_exc:
+        try:
+            drop_run_database(run)
+        except Exception as drop_exc:
+            logging.getLogger("syllentra.test_db").error(
+                "Lauf-Datenbank %s konnte nach Migrationsfehler nicht gelöscht werden.", name
+            )
+            raise migrate_exc from drop_exc
         raise
     return run
 
@@ -181,29 +207,28 @@ def assert_owned(run: RunDatabase, url: str | None = None) -> None:
     """Verweigert jede Aktion, falls Verbindung/Name/Eigentumsvermerk nicht zu ``run`` passen."""
     if not RUN_NAME.fullmatch(run.name):
         raise OwnershipError("Kein zulässiger Lauf-Datenbankname.")
-    if run.lock_conn is not None:
-        if run.lock_conn.closed:
-            raise OwnershipError("Besitz-Verbindung der Lauf-Datenbank wurde geschlossen.")
-        key = _lock_key(run.run_id)
-        classid, objid = _lock_parts(key)
-        pid = run.lock_conn.info.backend_pid
-        # Gemäß PostgreSQL-Doku: bigint-Locks haben classid = obere 32 Bit, objid = untere 32 Bit
-        # und objsubid = 1, locktype = 'advisory' auf der Maintenance-Datenbank.
-        row = run.lock_conn.execute(
-            "SELECT EXISTS ("
-            "SELECT 1 FROM pg_locks "
-            "WHERE locktype = 'advisory' "
-            "AND classid = %s "
-            "AND objid = %s "
-            "AND objsubid = 1 "
-            "AND pid = %s "
-            "AND granted = true "
-            "AND database = (SELECT oid FROM pg_database WHERE datname = current_database())"
-            ")",
-            (classid, objid, pid),
-        ).fetchone()
-        if not row or not row[0]:
-            raise OwnershipError("Besitz-Lock der Lauf-Datenbank ging verloren.")
+    if run.lock_conn is None or run.lock_conn.closed:
+        raise OwnershipError("Besitz-Verbindung der Lauf-Datenbank fehlt oder wurde geschlossen.")
+    key = _lock_key(run.run_id)
+    classid, objid = _lock_parts(key)
+    pid = run.lock_conn.info.backend_pid
+    # Gemäß PostgreSQL-Doku: bigint-Locks haben classid = obere 32 Bit, objid = untere 32 Bit
+    # und objsubid = 1, locktype = 'advisory' auf der Maintenance-Datenbank.
+    row = run.lock_conn.execute(
+        "SELECT EXISTS ("
+        "SELECT 1 FROM pg_locks "
+        "WHERE locktype = 'advisory' "
+        "AND classid = %s "
+        "AND objid = %s "
+        "AND objsubid = 1 "
+        "AND pid = %s "
+        "AND granted = true "
+        "AND database = (SELECT oid FROM pg_database WHERE datname = current_database())"
+        ")",
+        (classid, objid, pid),
+    ).fetchone()
+    if not row or not row[0]:
+        raise OwnershipError("Besitz-Lock der Lauf-Datenbank ging verloren.")
     with psycopg.connect(run.maintenance_url) as conn:
         if not _same_owner(run.name, _owned_comment(conn, run.name), run.comment):
             raise OwnershipError("Eigentumsvermerk der Lauf-Datenbank stimmt nicht überein.")
@@ -226,37 +251,61 @@ def wipe(run: RunDatabase) -> None:
 
 
 def drop_run_database(run: RunDatabase) -> None:
-    """Eigene Lauf-Datenbank löschen; verweigert bei unbestätigtem Eigentum oder Fremdnutzung."""
+    """Eigene Lauf-Datenbank löschen (Parcours A); erfordert aktiven Besitz-Lock."""
     assert_owned(run)
 
-    # Wenn lock_conn existiert und offen ist, nutzen wir diese Verbindung zum Löschen,
-    # während der Advisory Lock noch aktiv gehalten wird.
-    conn_to_use = (
-        run.lock_conn
-        if (run.lock_conn is not None and not run.lock_conn.closed)
-        else None
-    )
-    own_conn = False
-    if conn_to_use is None:
-        conn_to_use = psycopg.connect(run.maintenance_url, autocommit=True)
-        own_conn = True
-
+    # Nutze die bestehende lock_conn, die den Lock bereits hält
+    for _ in range(5):
+        if not _database_in_use(run.lock_conn, run.name):
+            break
+        time.sleep(0.05)
+    else:
+        raise OwnershipError("Lauf-Datenbank wird noch aktiv verwendet.")
     try:
-        for _ in range(5):
-            if not _database_in_use(conn_to_use, run.name):
-                break
-            time.sleep(0.05)
-        else:
-            raise OwnershipError("Lauf-Datenbank wird noch aktiv verwendet.")
+        run.lock_conn.execute(sql.SQL("DROP DATABASE {}").format(sql.Identifier(run.name)))
+    except psycopg.errors.ObjectInUse as exc:
+        # Besitz-Verbindung bleibt offen und geschützt!
+        raise OwnershipError("Lauf-Datenbank wird noch aktiv verwendet.") from exc
+    # Erst nach erfolgreichem DROP Verbindung schließen (gibt Lock frei)
+    run.lock_conn.close()
+
+
+def reclaim_orphaned_database(name: str) -> None:
+    """Verwaiste Lauf-Datenbank kontrolliert übernehmen und löschen (Parcours B)."""
+    if not RUN_NAME.fullmatch(name):
+        raise OwnershipError("Kein zulässiger Lauf-Datenbankname.")
+    creds = _credentials()
+    maintenance = creds["migration"] + "postgres"
+    with psycopg.connect(maintenance, autocommit=True) as db:
+        comment = _owned_comment(db, name)
+        parsed = _parse_comment(name, comment)
+        if not parsed:
+            raise OwnershipError(
+                "Datenbank ist nicht als verwaister Syllentra-Testlauf verifiziert."
+            )
+        run_id, _, _ = parsed
+        run_key = _lock_key(run_id)
+        acquired = db.execute(
+            "SELECT pg_try_advisory_lock(%s)", (run_key,)
+        ).fetchone()
+        if not acquired or not acquired[0]:
+            raise OwnershipError(
+                "Lauf-Datenbank wird noch von einem aktiven Prozess besessen."
+            )
         try:
-            conn_to_use.execute(sql.SQL("DROP DATABASE {}").format(sql.Identifier(run.name)))
-        except psycopg.errors.ObjectInUse as exc:
-            raise OwnershipError("Lauf-Datenbank wird noch aktiv verwendet.") from exc
-    finally:
-        if own_conn:
-            conn_to_use.close()
-        elif run.lock_conn is not None and not run.lock_conn.closed:
-            run.lock_conn.close()
+            rechecked = _parse_comment(name, _owned_comment(db, name))
+            if not rechecked or rechecked != parsed:
+                raise OwnershipError(
+                    "Eigentumsvermerk hat sich während der Übernahme verändert."
+                )
+            if _database_in_use(db, name):
+                raise OwnershipError("Lauf-Datenbank hat noch aktive Verbindungen.")
+            try:
+                db.execute(sql.SQL("DROP DATABASE {}").format(sql.Identifier(name)))
+            except psycopg.errors.ObjectInUse as exc:
+                raise OwnershipError("Lauf-Datenbank wird noch aktiv verwendet.") from exc
+        finally:
+            db.execute("SELECT pg_advisory_unlock(%s)", (run_key,))
 
 
 def sweep(older_than_hours: float, *, apply: bool) -> list[str]:
