@@ -2,7 +2,7 @@
 
 **Version:** 0.1.0 · **Stand:** 22.10.2026 · **Status:** Experimentell / Zur Prüfung durch den Projektinhaber
 
-Interaktive, reversible UI-Probe aus Mission 8. **Keine operative V1:** ausschließlich synthetische Daten, kein Backend, keine Anmeldung, keine Kontoisolation, keine echte KI oder Cloudverbindung. Bitte keine persönlichen Daten eingeben. TECH-O-03 bleibt offen; React/Vite/TypeScript ist nur für diesen Versuch ausgewählt.
+Interaktive, reversible UI-Probe aus Mission 8. **Keine operative V1:** ausschließlich synthetische Daten, kein Backend, keine Anmeldung, keine Kontoisolation, keine echte KI oder Cloudverbindung. Bitte keine persönlichen Daten eingeben. Das Architekturprinzip TECH-O-03 ist auf Prinzipienebene (A) bestätigt; technische Unterentscheidungen (B) und Benchmarks (C) bleiben offen. React/Vite/TypeScript ist nur für diesen Versuch ausgewählt.
 
 ## Lokal ausführen
 
@@ -52,7 +52,7 @@ Sprache und Theme werden ausschließlich als bekannte Auswahlwerte mit `syllentr
 
 ## Offene Entscheidungen
 
-Eigentümerreview von Design, Lesedichte, Geräten/Browsern, Bedienpfaden und experimentellem Stack; danach separat genehmigte Backend-/Auth-/Isolationsprobe. Alle 14 TECH-O sowie FE-56 bleiben offen. [Design System](../../docs/design/DESIGN_SYSTEM.md), [fachliche Spezifikation](../../docs/spec/README.md), [Prüfbericht](../../docs/design/PROTOTYPE_REVIEW.md). Keine Ausgabe, Cloud, KI-API, neue MCPverbindung, Veröffentlichung oder Merge freigegeben.
+Eigentümerreview von Design, Lesedichte, Geräten/Browsern, Bedienpfaden und experimentellem Stack; danach separat genehmigte Backend-/Auth-/Isolationsprobe. Die 14 Architekturprinzipien TECH-O-01 bis TECH-O-14 sowie die Multi-Provider-Entscheidung sind auf Prinzipienebene (A) bestätigt; technische Unterentscheidungen (B) und Benchmarks/Nachweise (C) bleiben offen. FE-56 ist für V1 fachlich entschieden (kein Auslesen, Synchronisieren oder Überwachen von E-Mail-Postfächern in V1). [Design System](../../docs/design/DESIGN_SYSTEM.md), [fachliche Spezifikation](../../docs/spec/README.md), [Prüfbericht](../../docs/design/PROTOTYPE_REVIEW.md). Keine Ausgabe, Cloud, KI-API, neue MCPverbindung, Veröffentlichung oder Merge freigegeben.
 
 ## Separater lokaler Identitätsversuch aus Mission 10
 

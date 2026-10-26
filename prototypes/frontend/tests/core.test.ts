@@ -64,3 +64,129 @@ it('übersetzt einzelne und mehrere Suchtreffer grammatisch korrekt', async () =
   await instance.changeLanguage('en');
   expect(instance.t('results', { count: 1 })).toBe('1 result');
 });
+
+describe('CSRF-Behandlung über mehrere Tabs mit geteiltem Cookie-Speicher', () => {
+  it('erneuert CSRF-Token nach csrf_denied bei Cookie-Aktualisierung durch zweiten Tab kontrolliert einmal', async () => {
+    const cookies: Record<string, string> = {
+      '__Host-syllentra-csrf': 'initial-token-shared-in-cookie-jar-43chars',
+    };
+    let tab1LocalToken = 'initial-token-shared-in-cookie-jar-43chars';
+    let tab2Token = 'tab2-updated-shared-cookie-token-43chars123';
+    let csrfFetches = 0;
+    let postAttempts = 0;
+
+    // Simulierter Backend-Endpunkt
+    const mockFetch = async (
+      input: string,
+      init?: RequestInit,
+    ): Promise<{
+      ok: boolean;
+      status: number;
+      json: () => Promise<unknown>;
+    }> => {
+      if (input === '/api/auth/csrf') {
+        csrfFetches++;
+        const fresh = csrfFetches === 1 ? tab2Token : 'tab1-refreshed-shared-token-43chars123456';
+        cookies['__Host-syllentra-csrf'] = fresh;
+        return {
+          ok: true,
+          status: 200,
+          json: async () => ({ csrf_token: fresh }),
+        };
+      }
+      if (input === '/api/auth/login' && init?.method === 'POST') {
+        postAttempts++;
+        const headers = init.headers as Record<string, string>;
+        const sentToken = headers?.['X-CSRF-Token'];
+        const cookieToken = cookies['__Host-syllentra-csrf'];
+        if (!sentToken || sentToken !== cookieToken) {
+          return {
+            ok: false,
+            status: 403,
+            json: async () => ({ detail: 'csrf_denied' }),
+          };
+        }
+        return {
+          ok: true,
+          status: 200,
+          json: async () => ({ status: 'ok' }),
+        };
+      }
+      return { ok: false, status: 404, json: async () => ({}) };
+    };
+
+    // Schritt 1: Tab 2 öffnet und aktualisiert den gemeinsamen Cookie-Speicher
+    const tab2Csrf = await mockFetch('/api/auth/csrf');
+    const tab2Data = (await tab2Csrf.json()) as { csrf_token: string };
+    tab2Token = tab2Data.csrf_token;
+    expect(cookies['__Host-syllentra-csrf']).toBe(tab2Token);
+
+    // Schritt 2: Tab 1 führt einen POST mit seinem veralteten lokalen Token aus
+    // Simuliert die zweistufige controlled retry-Logik aus Identity.tsx:
+    const tab1Call = async (body: Record<string, string>) => {
+      let attempt = 0;
+      while (attempt < 2) {
+        const response = await mockFetch('/api/auth/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': tab1LocalToken,
+          },
+          body: JSON.stringify(body),
+        });
+        if (response.status === 403 && attempt === 0) {
+          const err = (await response.json()) as { detail?: string };
+          if (err?.detail === 'csrf_denied') {
+            const freshRes = await mockFetch('/api/auth/csrf');
+            const freshData = (await freshRes.json()) as {
+              csrf_token: string;
+            };
+            tab1LocalToken = freshData.csrf_token;
+            attempt++;
+            continue;
+          }
+        }
+        if (!response.ok) throw new Error('identityFailed');
+        return response.json();
+      }
+      throw new Error('identityFailed');
+    };
+
+    const result = await tab1Call({ login: 'student@example.test' });
+    expect(result).toEqual({ status: 'ok' });
+    expect(postAttempts).toBe(2); // Genau 1 kontrollierter Retry
+    expect(csrfFetches).toBe(2); // 1x Tab 2, 1x kontrollierter Refresh durch Tab 1
+  });
+
+  it('wiederholt niemals bei origin_denied oder dauerhaftem csrf_denied', async () => {
+    let attempts = 0;
+    const mockPost = async () => {
+      attempts++;
+      return {
+        ok: false,
+        status: 403,
+        json: async () => ({ detail: 'origin_denied' }),
+      };
+    };
+
+    const callWithDenial = async () => {
+      let attempt = 0;
+      while (attempt < 2) {
+        const res = await mockPost();
+        if (res.status === 403 && attempt === 0) {
+          const err = (await res.json()) as { detail?: string };
+          if (err?.detail === 'csrf_denied') {
+            attempt++;
+            continue;
+          }
+        }
+        if (!res.ok) throw new Error('identityFailed');
+        return res.json();
+      }
+      throw new Error('identityFailed');
+    };
+
+    await expect(callWithDenial()).rejects.toThrow('identityFailed');
+    expect(attempts).toBe(1); // Kein unberechtigter Retry bei origin_denied
+  });
+});

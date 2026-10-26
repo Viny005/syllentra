@@ -1047,3 +1047,137 @@ def test_r1_migration_004_revokes_expired_legacy_codes_and_preserves_active_code
         ).fetchone()
         assert exp_row == (True, True)
         assert act_row == (False, None)
+
+
+def test_migration_003_to_004_full_schema_and_legacy_data() -> None:
+    """Baut ein echtes Schema 003 mit Altdaten auf und wendet 004_r1_r4_lifetimes.sql an."""
+    import hashlib
+    from pathlib import Path
+    from uuid import uuid4
+
+    from scripts.migrate import ROOT, migrate
+    from scripts.test_db import create_run_database, drop_run_database
+
+    legacy_run = create_run_database()
+    try:
+        with psycopg.connect(legacy_run.admin_url) as db:
+            db.execute("DROP SCHEMA public CASCADE; CREATE SCHEMA public;")
+            db.execute(
+                "CREATE TABLE schema_migrations (version text PRIMARY KEY, sha256 text NOT NULL)"
+            )
+            migrations_dir = ROOT / "migrations"
+            for version in [
+                "001_foundation.sql",
+                "002_local_identity.sql",
+                "003_proof_lifetimes.sql",
+            ]:
+                sql_content = (migrations_dir / version).read_text(encoding="utf-8")
+                digest = hashlib.sha256(sql_content.encode()).hexdigest()
+                db.execute(sql_content)
+                db.execute("INSERT INTO schema_migrations VALUES (%s, %s)", (version, digest))
+
+            # 3a. pending-Konto frisch mit aktiver E-Mail-Challenge
+            pending_recent_id = uuid4()
+            db.execute(
+                "INSERT INTO accounts (id, login, password_hash, kind, verification, status) "
+                "VALUES (%s, 'pending_fresh@example.test', 'hash_fresh', 'user', 'pending', 'active')",
+                (pending_recent_id,),
+            )
+            db.execute(
+                "INSERT INTO identity_challenges (id, account_id, purpose, verifier, binding_hash, "
+                "expires_at, created_at, last_sent_at, attempts, sends, consumed, approved, security_epoch, prior_verifiers) "
+                "VALUES (gen_random_uuid(), %s, 'email', 'synth_verifier_1', %s, "
+                "CURRENT_TIMESTAMP + interval '10 minutes', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 1, false, false, 0, '{}')",
+                (pending_recent_id, "0" * 64),
+            )
+
+            # 3b. verified-Konten mit aktiven, abgelaufenen und benutzten Recoverycodes
+            act_user_id = uuid4()
+            exp_user_id = uuid4()
+            used_user_id = uuid4()
+            for uid, email in [
+                (act_user_id, "active@example.test"),
+                (exp_user_id, "expired@example.test"),
+                (used_user_id, "used@example.test"),
+            ]:
+                db.execute(
+                    "INSERT INTO accounts (id, login, password_hash, kind, verification, status) "
+                    "VALUES (%s, %s, 'hash_verified', 'user', 'verified', 'active')",
+                    (uid, email),
+                )
+            # Aktiver 003-Code (expires_at in der Zukunft, used=false)
+            db.execute(
+                "INSERT INTO recovery_codes (account_id, verifier, used, expires_at) "
+                "VALUES (%s, 'verifier_act', false, CURRENT_TIMESTAMP + interval '5 days')",
+                (act_user_id,),
+            )
+            # Abgelaufener 003-Code (expires_at in der Vergangenheit, used=false)
+            db.execute(
+                "INSERT INTO recovery_codes (account_id, verifier, used, expires_at) "
+                "VALUES (%s, 'verifier_exp', false, CURRENT_TIMESTAMP - interval '1 hour')",
+                (exp_user_id,),
+            )
+            # Bereits benutzter 003-Code (used=true)
+            db.execute(
+                "INSERT INTO recovery_codes (account_id, verifier, used, expires_at) "
+                "VALUES (%s, 'verifier_used', true, CURRENT_TIMESTAMP + interval '1 day')",
+                (used_user_id,),
+            )
+
+            # 3c. Altsitzungen und Altgeräte
+            dev_id = uuid4()
+            db.execute(
+                "INSERT INTO devices (id, account_id, proof_hash, authorized, expires_at, security_epoch) "
+                "VALUES (%s, %s, %s, false, CURRENT_TIMESTAMP - interval '1 hour', 0)",
+                (dev_id, act_user_id, "1" * 64),
+            )
+            db.execute(
+                "INSERT INTO sessions (token_hash, account_id, device_id, expires_at, revoked, security_epoch) "
+                "VALUES (%s, %s, %s, CURRENT_TIMESTAMP - interval '1 hour', true, 0)",
+                ("2" * 64, act_user_id, dev_id),
+            )
+
+        # 4. Vorwärtsmigration 004 anwenden (via migrate())
+        migrate(legacy_run.admin_url)
+
+        # 5. Invarianten nach Migration 003 -> 004 prüfen:
+        with psycopg.connect(legacy_run.admin_url) as db:
+            # 5a. pending-Konto hat pending_since erhalten
+            row_pending = db.execute(
+                "SELECT verification, pending_since IS NOT NULL, security_epoch FROM accounts WHERE id = %s",
+                (pending_recent_id,),
+            ).fetchone()
+            assert row_pending == ("pending", True, 0)
+
+            # 5b. R1: Aktiver Recoverycode hat nun expires_at = NULL, revoked = false, issued_at gesetzt
+            row_act = db.execute(
+                "SELECT used, revoked, expires_at, issued_at IS NOT NULL FROM recovery_codes WHERE account_id = %s",
+                (act_user_id,),
+            ).fetchone()
+            assert row_act == (False, False, None, True)
+
+            # 5c. R1: Abgelaufener Altcode wurde widerrufen (revoked = true) und nicht wiederbelebt
+            row_exp = db.execute(
+                "SELECT used, revoked, expires_at IS NOT NULL FROM recovery_codes WHERE account_id = %s",
+                (exp_user_id,),
+            ).fetchone()
+            assert row_exp == (False, True, True)
+
+            # 5d. R1: Bereits benutzter Code bleibt used = true
+            row_used = db.execute(
+                "SELECT used, revoked FROM recovery_codes WHERE account_id = %s",
+                (used_user_id,),
+            ).fetchone()
+            assert row_used == (True, False)
+
+            # 5e. Keine Wiederbelebung alter Nachweise (Sessions / Devices)
+            row_dev = db.execute(
+                "SELECT authorized FROM devices WHERE id = %s", (dev_id,)
+            ).fetchone()
+            assert row_dev == (False,)
+            row_sess = db.execute(
+                "SELECT revoked FROM sessions WHERE token_hash = %s", ("2" * 64,)
+            ).fetchone()
+            assert row_sess == (True,)
+    finally:
+        drop_run_database(legacy_run)

@@ -30,46 +30,69 @@ export function Identity() {
     setDevices([]);
     setRequests([]);
   }
+  async function refreshCsrf(): Promise<string> {
+    const response = await fetch('/api/auth/csrf', {
+      credentials: 'same-origin',
+      cache: 'no-store',
+      signal: AbortSignal.timeout(8000),
+    });
+    const data: unknown = await response.json().catch(() => null);
+    if (
+      !response.ok ||
+      !object(data) ||
+      typeof data.csrf_token !== 'string' ||
+      data.csrf_token.length !== 43
+    )
+      throw new Error('identityUnavailable');
+    csrf.current = data.csrf_token;
+    return data.csrf_token;
+  }
   async function call(
     path: string,
     body?: Record<string, string>,
   ): Promise<Record<string, unknown> | unknown[]> {
     if (!localEnabled()) throw new Error('identityUnavailable');
     if (body && !csrf.current) {
-      const response = await fetch('/api/auth/csrf', {
-        credentials: 'same-origin',
-        cache: 'no-store',
-        signal: AbortSignal.timeout(8000),
-      });
-      const data: unknown = await response.json();
-      if (!response.ok || !object(data) || typeof data.csrf_token !== 'string')
-        throw new Error('identityUnavailable');
-      csrf.current = data.csrf_token;
+      await refreshCsrf();
     }
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 8000);
-    try {
-      const response = await fetch(`/api${path}`, {
-        method: body ? 'POST' : 'GET',
-        credentials: 'same-origin',
-        cache: 'no-store',
-        signal: controller.signal,
-        headers: body ? { 'Content-Type': 'application/json', 'X-CSRF-Token': csrf.current } : {},
-        body: body ? JSON.stringify(body) : undefined,
-      });
-      if (response.status === 401) {
-        clearAccount();
-        throw new Error(path === '/auth/login' ? 'identityFailed' : 'identityDisconnected');
+    let attempt = 0;
+    while (attempt < 2) {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 8000);
+      try {
+        const response = await fetch(`/api${path}`, {
+          method: body ? 'POST' : 'GET',
+          credentials: 'same-origin',
+          cache: 'no-store',
+          signal: controller.signal,
+          headers: body ? { 'Content-Type': 'application/json', 'X-CSRF-Token': csrf.current } : {},
+          body: body ? JSON.stringify(body) : undefined,
+        });
+        if (response.status === 403 && body && attempt === 0) {
+          // Kontrollierte Wiederherstellung bei eindeutigem csrf_denied (z. B. zweiter Tab hat Cookie aktualisiert)
+          const errData: unknown = await response.json().catch(() => null);
+          if (object(errData) && errData.detail === 'csrf_denied') {
+            csrf.current = '';
+            await refreshCsrf();
+            attempt++;
+            continue;
+          }
+        }
+        if (response.status === 401) {
+          clearAccount();
+          throw new Error(path === '/auth/login' ? 'identityFailed' : 'identityDisconnected');
+        }
+        if (!response.ok)
+          throw new Error(response.status === 429 ? 'identityLimited' : 'identityFailed');
+        if (response.status === 204) return {};
+        const data: unknown = await response.json();
+        if (!object(data) && !Array.isArray(data)) throw new Error('identityFailed');
+        return data;
+      } finally {
+        clearTimeout(timer);
       }
-      if (!response.ok)
-        throw new Error(response.status === 429 ? 'identityLimited' : 'identityFailed');
-      if (response.status === 204) return {};
-      const data: unknown = await response.json();
-      if (!object(data) && !Array.isArray(data)) throw new Error('identityFailed');
-      return data;
-    } finally {
-      clearTimeout(timer);
     }
+    throw new Error('identityFailed');
   }
   async function refresh() {
     const session = await call('/session');

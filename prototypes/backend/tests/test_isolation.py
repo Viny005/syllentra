@@ -22,6 +22,7 @@ from scripts.test_db import (
     create_run_database,
     drop_run_database,
     sweep,
+    touch_run_database,
     wipe,
 )
 from syllentra_backend.delivery import MemoryChannel
@@ -180,3 +181,37 @@ def test_two_pytest_processes_run_in_parallel_without_interference() -> None:
     outputs = [p.communicate(timeout=900)[0] for p in procs]
     assert [p.returncode for p in procs] == [0, 0], "\n".join(outputs)
     assert all("passed" in o and "failed" not in o for o in outputs)
+
+
+def test_sweep_rejects_invalid_negative_or_non_finite_hours() -> None:
+    for invalid in [-1, -0.0001, float("nan"), float("inf"), float("-inf"), True, False, "1"]:
+        with pytest.raises(ValueError, match="Stundenwert"):
+            sweep(invalid, apply=False)  # type: ignore[arg-type]
+
+
+def test_sweep_skips_in_use_database_and_touch_refreshes_lease(run_db: RunDatabase) -> None:
+    # 1. Lease per touch_run_database auffrischen und assert_owned prüfen
+    updated_comment = touch_run_database(run_db)
+    assert updated_comment.startswith("syllentra-test-run:v1:")
+    assert_owned(run_db)
+
+    # 2. Aktive Verbindung verhindert Aufnahme in sweep (selbst bei Schwellenwert 0)
+    with psycopg.connect(run_db.runtime_url) as conn:
+        conn.execute("SELECT 1")
+        listed = sweep(0, apply=False)
+        assert run_db.name not in listed
+
+    # 3. wipe() erneuert den Lease-Zeitstempel automatisch
+    wipe(run_db)
+    assert_owned(run_db)
+
+
+def test_drop_refuses_actively_used_database(run_db: RunDatabase) -> None:
+    decoy = create_run_database()
+    try:
+        with psycopg.connect(decoy.runtime_url) as conn:
+            conn.execute("SELECT 1")
+            with pytest.raises(OwnershipError, match="aktiv verwendet"):
+                drop_run_database(decoy)
+    finally:
+        drop_run_database(decoy)

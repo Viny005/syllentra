@@ -10,7 +10,7 @@ import pytest
 from fastapi.testclient import TestClient
 from helpers import NEW_PASSWORD, PASSWORD, account, registration, verify
 
-from syllentra_backend.identity import DEVICE, PREAUTH, SESSION
+from syllentra_backend.identity import CSRF, DEVICE, PREAUTH, SESSION
 
 
 def test_registration_duplicate_normalization_and_no_privileges(env: Any) -> None:
@@ -425,3 +425,41 @@ def test_parallel_session_reads_then_revocation(env: Any) -> None:
     assert owner.post("/auth/logout").status_code == 204
     for c in clients:
         assert c.get("/session").status_code == 401
+
+
+def test_multitab_csrf_cookie_refresh_and_controlled_recovery(env: Any) -> None:
+    """Zwei Tabs teilen sich den Cookie-Speicher: Tab 2 rotiert Cookie, Tab 1 erholt sich kontrolliert."""
+    tab1 = env["browser"]()
+    t1_token = tab1.headers["X-CSRF-Token"]
+    assert tab1.cookies.get(CSRF) == t1_token
+
+    # Tab 2 ruft GET /auth/csrf auf und rotiert damit das gemeinsame Cookie im Browser
+    t2_res = tab1.get("/auth/csrf")
+    assert t2_res.status_code == 200
+    t2_token = t2_res.json()["csrf_token"]
+    assert t2_token != t1_token
+    assert tab1.cookies.get(CSRF) == t2_token
+
+    # Tab 1 versucht POST mit veraltetem Header t1_token => sichere Vorab-Ablehnung
+    tab1.headers["X-CSRF-Token"] = t1_token
+    rejected = tab1.post(
+        "/auth/register", json={"email": "multitab@example.test", "password": PASSWORD}
+    )
+    assert rejected.status_code == 403
+    assert rejected.json() == {"detail": "csrf_denied"}
+
+    # Kontrollierte Wiederherstellung: genau 1 Wiederholungsversuch mit aktuellem Token gelingt
+    tab1.headers["X-CSRF-Token"] = t2_token
+    accepted = tab1.post(
+        "/auth/register", json={"email": "multitab@example.test", "password": PASSWORD}
+    )
+    assert accepted.status_code == 202
+
+    # Gefälschte Herkunft bleibt strikt gesperrt
+    tab1.headers["Origin"] = "https://evil.example.test"
+    assert (
+        tab1.post(
+            "/auth/register", json={"email": "evil@example.test", "password": PASSWORD}
+        ).status_code
+        == 403
+    )
