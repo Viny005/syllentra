@@ -32,16 +32,16 @@ Hinweis: Diese Leseanleitung ist im README.md des Spezifikationsverzeichnisses i
 | [F3](F3-anwendungsfunktionen.md) | 0.8 | AF-01 bis AF-37 als fachliche Prüf- und Auswahlfunktionen. Zur Prüfung. |
 | [D1](D1-datenmodell.md) | 0.8 | DM-01 bis DM-78 und INV-01 bis INV-31; Eigentum, Beziehungen und Lebenszyklen. Zur Prüfung. |
 | [D2](D2-datentypen.md) | 0.8 | DT-01 bis DT-95, Werte, Strukturfelder und Validierung. Zur Prüfung. |
-| [B1](B1-dialogspezifikation.md) | 0.8 | DLG-01 bis DLG-67; persönliche und getrennte administrative Bedienung sowie AT-AUDIO-01..10. Zur Prüfung. |
+| [B1](B1-dialogspezifikation.md) | 0.9 | DLG-01 bis DLG-67; persönliche und getrennte administrative Bedienung sowie AT-AUDIO-01..10. Zur Prüfung. |
 | [B2](B2-batch.md) | 0.7 | BAT-01 bis BAT-26; autorisierte Hintergrundverarbeitung, Wiederanlauf und Löschfolgen. Zur Prüfung. |
 | [B3](B3-druckausgaben.md) | 0.7 | OUT-01 bis OUT-08; kontoisolierte Berichte und geschützte Exporte. Zur Prüfung. |
 | [S1](S1-nachbarsysteme.md) | 0.9 | NB-01 bis NB-12, vollständige FE-01..FE-89-Matrix und Schnittstellen-Abnahmeszenarien. Zur Prüfung. |
 | [S2](S2-datenmigration.md) | 0.6 | MIG-01 bis MIG-36, AT-S2-01 bis AT-S2-40; eigene Pakete, sichere Migration und Wiederherstellung. Zur Prüfung. |
 | [S3](S3-inbetriebnahme.md) | 0.4 | Vollständiger fachlicher Betriebsentwurf: Umgebungen, Bootstrap, unabhängiger Restore, 18 Veröffentlichungsschritte, Rollout, Rückweg, Betrieb und 46 Kontrollverweise. Zur Prüfung. |
-| [N1](N1-nichtfunktional.md) | 0.11 | Vollständiger fachlicher V1-Qualitätsentwurf: 25 Prüfprofile, Messverfahren und offene Zielwerte. Zur Prüfung. |
-| [N2](N2-querschnittskonzepte.md) | 0.11 | Fachlicher V1-Sicherheitsentwurf: 27 Prüfprofile, Vertrauensgrenzen, bestätigte R1/R4-Eckpunkte, Audioschutzgrenzen (N2.16) und offene technische Verfahren. Zur Prüfung. |
+| [N1](N1-nichtfunktional.md) | 0.12 | Vollständiger fachlicher V1-Qualitätsentwurf: 25 Prüfprofile, Messverfahren und offene Zielwerte. Zur Prüfung. |
+| [N2](N2-querschnittskonzepte.md) | 0.12 | Fachlicher V1-Sicherheitsentwurf: 27 Prüfprofile, Vertrauensgrenzen, bestätigte R1/R4-Eckpunkte, Audioschutzgrenzen (N2.16) und offene technische Verfahren. Zur Prüfung. |
 | [E2](E2-glossar.md) | 0.5 | Glossar mit fachlichen Begriffsgrenzen. Zur Prüfung. |
-| [E3](E3-pruefnachweis.md) | 0.21 | Änderungs-/Kennungsnachweis sowie tatsächliche Dokument- und lokale Prototypprüfungen. Zur Prüfung. |
+| [E3](E3-pruefnachweis.md) | 0.22 | Änderungs-/Kennungsnachweis sowie tatsächliche Dokument- und lokale Prototypprüfungen. Zur Prüfung. |
 
 E1 ist als Leseanleitung direkt in diesem README integriert; zusammen mit den **17 eigenständigen Bausteindateien (`P1` bis `E3`)** in der obigen Indextabelle umfasst die Spezifikation damit alle **18 Siedersleben-Elemente** und bleibt mit dem Index zur Prüfung. [S2 — Datenmigration](S2-datenmigration.md) ist zur Prüfung ausgearbeitet. [S3 — Inbetriebnahme](S3-inbetriebnahme.md) ist als fachlicher Prüfentwurf ausgearbeitet; zukünftiger Betriebsstart und Bootstrap des einzigen Super Admin sind beschrieben, nicht ausgeführt. Die [Entscheidungsmatrix](ENTSCHEIDUNGSMATRIX.md) ordnet jetzt alle 25 DEC-V1 den bestehenden Fach-/Dialog-/Datenbausteinen und überprüfbaren Soll-Abnahmen zu. Offene Präzisierungen und technische Nachweise bleiben ausdrücklich ausgewiesen; die Matrix ist keine Gesamtabnahme. Die technische Architektur wird separat erarbeitet.
 
@@ -157,3 +157,5 @@ In Mission 21 sind die vom Projektinhaber bestätigten **14 Architekturprinzipie
 ## Bestätigter Darstellungsrahmen aus Mission 23
 
 [P2.5.6](P2-architekturueberblick.md#p256-verbindlicher-darstellungs--und-konfigurationsrahmen-aus-mission-23) präzisiert vorhandene CFG-01..17, FE-57/58 und persönliche Darstellungsfreiheit innerhalb zentraler Richtlinien. [B1.14](B1-dialogspezifikation.md#b114-darstellung-konfiguration-und-quellennavigation-mission-23) enthält 16 nicht ausgeführte AT-VIS-Sollfälle für Themes, Saisonen, Texte, Rechte und Originalquellen. [E3.34](E3-pruefnachweis.md#e334-mission-23--konfigurierbare-darstellung-und-anklickbare-quellen) dokumentiert Wiederverwendung, Lücken und tatsächliche Dokumentprüfungen. Keine neue FE/UC/REL, keine technische Implementierung; konkrete Marke und Saisonregel bleiben Zur Entscheidung.
+
+**Präzisierung Mission 23B:** [B1.14.3](B1-dialogspezifikation.md#b1143-teststatus-voraussetzungen-und-offene-entscheidungen-mission-23b) trennt Nichtausführung, Voraussetzungen und offene Entscheidungen für dieselben 16 AT-VIS. N1.12/N2.17 und die REL-Matrix enthalten Rückzuordnungen; [E3.34.4](E3-pruefnachweis.md#e3344-mission-23b-quellenstatus-und-sechs-gezielte-korrekturen) erläutert Belegstatus, Markdown-Zählbasis und aktuelle Dokumentkontrollen. [TECH-O-Register](../architecture/OFFENE_ENTSCHEIDUNGEN.md) jetzt Version 0.5: zusätzliche offene B/C-Arbeiten in TECH-O-03/06 und ADR-0012/0015, keine neue Architekturwahl.

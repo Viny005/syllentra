@@ -1,6 +1,6 @@
 # Syllentra AI — konsolidierte Release-Kontrollmatrix
 
-**Version:** 0.4 · **Stand:** 26.10.2026 · **Status:** Zur Prüfung durch den Projektinhaber
+**Version:** 0.5 · **Stand:** 26.10.2026 · **Status:** Zur Prüfung durch den Projektinhaber
 
 ## 1. Bestand, Zählung und Abgrenzung
 
@@ -745,11 +745,15 @@ Die 46 eigenständigen Kontrollprofile und ihre bisherigen Kriterien bleiben erh
 
 | Vorhandene Kontrolle | Zusätzlicher Nachweisumfang |
 |---|---|
-| REL-S10 | Sichere Eingabe/Ausgabe von administrativen Texten, Token und Assets; AT-VIS-12. |
+| REL-S10 | Sichere Eingabe/Ausgabe von administrativen Texten, Token, Assets sowie Quellen-/Zeitmetadaten; AT-VIS-12/13/14. |
 | REL-S04/S06 | Kontoisolation, aktuelle administrative Rechte und serverseitige Theme-/Feature-/Testkontenfreigabe; AT-VIS-05/06/09/15. |
-| REL-Q04/Q06 | Erklärbare Sperr-/Fehlerzustände, konfigurierbare Verfügbarkeitsmeldungen, keine Scheinfunktion durch Text; AT-VIS-02/04/10/14/15. |
+| REL-Q04/Q06 | Erklärbare Sperr-/Fehlerzustände, konfigurierbare Verfügbarkeitsmeldungen, keine Scheinfunktion durch Text; AT-VIS-02/03/04/10/14/15. |
 | REL-Q19 | Konkurrenz-/Revisionskonflikte bei Veröffentlichung und Rücknahme ohne Kontenvermischung; AT-VIS-08/16 unter SEC-07/14. |
+| REL-S12/A07 | Gefährliche Schemata, verfälschte Quellenmetadaten, unzulässige Redirects und private Netzwerkziele bei Quellenöffnung; AT-VIS-13/15 unter SEC-12/21. |
+| REL-Q16 | Veraltete Geräte-/Konfigurationsstände und gelöschte Präferenzen ohne Wiederbelebung; AT-VIS-01/07. |
 | REL-A05 | Tatsächlich anwählbare Originalfassungen mit belegten Seiten-/Medienankern, ehrliche Quellenlücken; AT-VIS-13/14/15. |
 | REL-A16 | Zulässige persönliche/erzwungene Themevarianten, Hell/Dunkel/System, Kontrast, Fokus, Bewegung und unterstützte Sprachen; AT-VIS-01/05/11/12. |
 
 Weitere AT-VIS-Fälle prüfen persönliche Gültigkeit, Geräteabgleich und bestätigte Saisonregeln nach N1/N2. Sämtliche Zuordnungen bezeichnen zukünftige Produktprüfungen, keine ausgeführten Nachweise. WCAG 2.2 AA bleibt ein ausdrücklich zu bestätigendes Ziel; Grundzugänglichkeit bleibt verbindlich.
+
+**Rückverweise Mission 23B:** Alle 16 AT-VIS sind über diese Zuordnung an bestehende REL angeschlossen; AT-VIS-03 über REL-Q06 (richtige Zustandsanzeige), AT-VIS-07 über REL-Q16 (Alt-/Löschstände). Einzige Kriterienquelle: [B1.14.2](../spec/B1-dialogspezifikation.md#b1142-prüffälle-zur-späteren-produktabnahme). [B1.14.3](../spec/B1-dialogspezifikation.md#b1143-teststatus-voraussetzungen-und-offene-entscheidungen-mission-23b) nennt entscheidungsabhängige Voraussetzungen, [N1.12](../spec/N1-nichtfunktional.md#n112-qualitätsnachweise-für-darstellung-und-anklickbare-quellen-mission-23) Qualitätsanteile und [N2.17](../spec/N2-querschnittskonzepte.md#n217-schutzgrenzen-für-themes-texte-und-quellenlinks-mission-23) Schutzanteile. [E3.34](../spec/E3-pruefnachweis.md#e334-mission-23--konfigurierbare-darstellung-und-anklickbare-quellen) dokumentiert ausschließlich tatsächliche Dokumentprüfungen. Alle Sollfälle bleiben nicht ausgeführt; insbesondere Saisonregel, konkrete Accessibility-Kriterien/Schwellen und Viewerfähigkeiten dürfen nicht als bereits beschlossen oder belegt vorausgesetzt werden.

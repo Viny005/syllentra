@@ -1,7 +1,7 @@
 # N1 — Nichtfunktionale Anforderungen
 
 **Projekt:** Syllentra AI\
-**Version:** 0.11\
+**Version:** 0.12\
 **Stand:** 26.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber
 
@@ -417,3 +417,19 @@ NFR-02/03/08/18/19/20/21/25 werden konkretisiert, keine neue NFR-Kennung. Farbre
 Saisonwahl gegen die vorher bestätigte Regel mit vier Jahreszeiten, Hemisphäre, Datums-/Zeitzonengrenzen und fehlender Zuordnung prüfen. Geräteabgleich und Offlinegrenzen ehrlich ausweisen; bei Systemmodus keine identische OS-Darstellung aller Geräte versprechen. Vorschau/Veröffentlichung/Rücknahme bleiben beobachtbar getrennt und sprachlich konsistent; ungültige Eingaben erhalten die letzte gültige Fassung. Die lernzentrierte Erreichbarkeit von Studium, Materialien, Übungen und Fortschritt in aufgabenbezogenen Bedienprüfungen beurteilen, nicht aus einer dekorativen Dashboard-Ansicht ableiten.
 
 Quellenbelege müssen im Referenzkorpus tatsächlich anwählbar sein und zur berechtigten zitierten Fassung/Seite/Medienzeit führen; Hervorhebung nur bei zuverlässigem Anker. Fehlender Anker, veraltete Quelle, fehlender Schlüssel und Zugriffssperre getrennt prüfen, ohne private Metadaten zu offenbaren. [B1.14](B1-dialogspezifikation.md#b114-darstellung-konfiguration-und-quellennavigation-mission-23) enthält 16 Sollfälle. Konkrete Designfreigabe, Saisonregel, Geräte-/Viewer- und manuelle Accessibility-Nachweise bleiben offen; keine Produkttests durch Mission 23.
+
+### N1.12.1 Zuordnung und entscheidungsabhängige Prüfung (Mission 23B)
+
+Die Kriterien stehen ausschließlich in [B1.14.2](B1-dialogspezifikation.md#b1142-prüffälle-zur-späteren-produktabnahme); [B1.14.3](B1-dialogspezifikation.md#b1143-teststatus-voraussetzungen-und-offene-entscheidungen-mission-23b) trennt Teststatus, Voraussetzungen und offene Entscheidungen. Alle 16 sind nicht ausgeführt.
+
+| Qualitätsprofile | Zugeordnete vorhandene Sollfälle |
+|---|---|
+| NFR-02/03/25 — Geräteabgleich, Versionen und heutige Konfiguration | AT-VIS-01/07/16 |
+| NFR-18/25 — deterministische Regel, verständliche Zustände | AT-VIS-02/03/04/10 |
+| NFR-08/19/20 — grundlegende Zugänglichkeit, Zielniveau und Sprache | AT-VIS-05/11/12 |
+| NFR-01/25 — zulässige Konfiguration und sichere Verfügbarkeit | AT-VIS-06/09 |
+| NFR-10/25 — datensparsame Nachweise und veröffentlichte Revision | AT-VIS-08 |
+| NFR-21 — belegte Originalfassung und zulässiger Locator | AT-VIS-13/15 |
+| NFR-02/21 — reale Viewerfähigkeit und gültiger Medienanker | AT-VIS-14 |
+
+Saisonprüfungen AT-VIS-02/03 benötigen die bestätigte Regel; AT-VIS-11/12 benötigen festgelegte anwendbare Kriterien und Schwellen, wobei Grundzugänglichkeit verbindlich bleibt und formale AA-Abnahme zusätzliche Zielbestätigung benötigt. AT-VIS-14 benötigt das konkrete nachgewiesene Viewerprofil. Kein fehlender Beschluss gilt als bestandener Test. Manipulierte URLs, ungültige Metadaten und negative/zu große Medienzeiten sind mit sicherem Abbruch/Fallback gemäß B1.14.2 und [N2.17](N2-querschnittskonzepte.md#n217-schutzgrenzen-für-themes-texte-und-quellenlinks-mission-23) zu prüfen. Rückzuordnung zu bestehenden REL: [Kontrollmatrix, Abschnitt 6](../quality/RELEASE_KONTROLLMATRIX.md#6-vertiefung-der-bestehenden-kontrollen-durch-mission-23); tatsächliche Dokumentprüfungen: [E3.34](E3-pruefnachweis.md#e334-mission-23--konfigurierbare-darstellung-und-anklickbare-quellen).

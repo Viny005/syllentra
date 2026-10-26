@@ -1,7 +1,7 @@
 # N2 — Querschnittskonzepte
 
 **Projekt:** Syllentra AI\
-**Version:** 0.11\
+**Version:** 0.12\
 **Stand:** 26.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber
 
@@ -480,3 +480,18 @@ SEC-04/07/09/11/12/14/19/21 bleiben maßgeblich. Wirksame Konfiguration folgt de
 Admintexte, Übersetzungen, Banner, Tooltips, Theme-Token und Assets sind untrusted Eingaben, keine ausführbaren HTML-/Script-/CSS-Felder. Unterstützte Inhalte sicher validieren und ausgeben; weder XSS noch unerlaubte externe Ressourcen dürfen private Daten übertragen. Vorschau verwendet synthetische Inhalte, nicht fremde Lerninhalte. Rolle, MFA, Änderungsrecht, Ziel und aktuelle Revision vor Veröffentlichung/Rücknahme erneut prüfen; Audit datensparsam und endlich, keine privaten Werte unnötig kopieren. Eine Zwangsdarstellung ersetzt keine notwendige Accessibility-Anpassung und sperrt den berechtigten Administrationsweg nicht.
 
 Quellenlinks sind Identifikatoren, keine Zugangsberechtigungen. Konto-/Objekt-/Versions-/Schlüssel-/Quellschutz vor jedem Zugriff einschließlich Vorschau, Snippet, Medienbereich, Cache und Export prüfen. Fremde Titel, Dateinamen, Textstellen oder Schlüssel nicht über Fehler preisgeben; gespeicherte URL enthält keine Zugangstokens. Fehlende verlässliche Anker dürfen nicht aus gelöschtem Vollinhalt rekonstruiert werden. Berechtigungsentzug und Löschung gelten auch für historische Belege und erneutes Öffnen. Saisonmodus braucht keine neue Ortungs- oder externe Datenfreigabe. Rollback und Geräteabgleich reaktivieren keine verbotene Konfiguration. [B1.14](B1-dialogspezifikation.md#b114-darstellung-konfiguration-und-quellennavigation-mission-23) enthält die noch auszuführenden Negativfälle.
+
+### N2.17.1 Negative Link-/Ankerfälle und Rückverfolgbarkeit (Mission 23B)
+
+AT-VIS-13/15 prüfen verfälschte URLs und Quellenmetadaten, gefährliche Schemata einschließlich `javascript:` sowie manipulierte/nicht autorisierte Redirects. Maßgeblich bleibt DT-11: erlaubtes HTTPS-Ziel oder explizite interne Referenz, keine Zugangstokens oder implizite Deep-Link-Ausführung. Angezeigter Beleg und tatsächliches Ziel müssen zum gespeicherten Quellen-/Versionsbezug passen; Inkonsistenz oder nicht sicher prüfbare Navigation führt zum erklärten Abbruch, nicht zu Skriptausführung oder einem stillen Ersatzlink. Serverseitige Abrufe prüfen nach Auflösung und jedem Redirect erneut die zulässige Zielgrenze gemäß SEC-21; private, Loopback-, Link-Local- und Metadatenziele sind für unvertrauenswürdige externe Abrufe gesperrt. Interne Dokumentnavigation braucht stattdessen explizite eigene Objekt-/Versionsrechte. Keine pauschale Garantie über spätere Navigation auf fremden Websites oder manipulierte Browser; keine geprüfte Appnavigation behaupten, wenn deren sichere Prüfung fehlt.
+
+AT-VIS-14 prüft negative Zeiten, Zeiten jenseits bekannter Mediendauer, Ende vor Start, ungültige Einheit/Metadaten und falsche Medienfassung. Vor Wiedergabesprung ablehnen; weder auf 0/Ende begrenzen noch eine neue Fassung unterschieben. Bei fehlender Präzision oder unbekannter Dauer nur eine zulässige Originalöffnung mit kenntlicher Einschränkung, kein fingierter validierter Zeitanker. Zugriffssperren aus AT-VIS-15 liefern keine fremden Titel, Snippets, Dateinamen oder Schlüssel.
+
+| Schutzprofile | Zugeordnete vorhandene Sollfälle / Schutzanteil |
+|---|---|
+| SEC-04/07 — eigene Präferenzen, Regel-/Katalogfreigabe und heutige Serverpolitik | AT-VIS-01/02/03/04/05/06/07/09/10 |
+| SEC-07/12/14 — sichere konfigurierte Inhalte, Vorschau, Veröffentlichung, Verlauf und Rücknahme | AT-VIS-08/12/16 |
+| SEC-07/12 — unveränderliche Accessibility-Grenzen auch bei Zwangsdarstellung | AT-VIS-05/11/12; qualitative Kriterien nach N1.12 |
+| SEC-04/09/11/12/19/21 — Quellenrechte, Metadaten, Anker, sichere URLs und Abrufe | AT-VIS-13/14/15 |
+
+Einzige Kriterienquelle ist [B1.14.2](B1-dialogspezifikation.md#b1142-prüffälle-zur-späteren-produktabnahme); deren [Status- und Voraussetzungstrennung](B1-dialogspezifikation.md#b1143-teststatus-voraussetzungen-und-offene-entscheidungen-mission-23b) bleibt maßgeblich. Gesonderter Ausführungsauftrag und geeignete Implementierung sind immer nötig; die Prüfung sicherer Fehlerpfade ersetzt keine noch entscheidungsabhängige positive Saison-/Accessibility-/Viewerabnahme. [N1.12](N1-nichtfunktional.md#n112-qualitätsnachweise-für-darstellung-und-anklickbare-quellen-mission-23), [REL-Abschnitt 6](../quality/RELEASE_KONTROLLMATRIX.md#6-vertiefung-der-bestehenden-kontrollen-durch-mission-23) und [E3.34](E3-pruefnachweis.md#e334-mission-23--konfigurierbare-darstellung-und-anklickbare-quellen) führen die Rückverweise. Alle Sollfälle bleiben nicht ausgeführt. Konkrete CSP, Ausgabeenkodierung/Sanitizing, Token-/Parameterprüfung und serverseitige Durchsetzung sind offene technische Unterentscheidungen nach ADR-0012/0015 und TECH-O-03/06, keine durch diesen Text ausgewählte Implementierung.
