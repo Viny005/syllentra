@@ -18,6 +18,8 @@ from scripts.test_db import (
     RUN_NAME,
     OwnershipError,
     RunDatabase,
+    _lock_key,
+    _lock_parts,
     _same_owner,
     assert_owned,
     create_run_database,
@@ -246,3 +248,28 @@ def test_drop_refuses_actively_used_database(run_db: RunDatabase) -> None:
                 drop_run_database(decoy)
     finally:
         drop_run_database(decoy)
+
+
+def test_assert_owned_verifies_pg_locks_classid_and_objid_representation(
+    run_db: RunDatabase,
+) -> None:
+    # 1. Normalzustand: assert_owned gelingt bei gehaltenem Besitz-Lock
+    assert_owned(run_db)
+
+    # 2. Reale Repräsentation in pg_locks prüfen:
+    key = _lock_key(run_db.run_id)
+    classid, objid = _lock_parts(key)
+    pid = run_db.lock_conn.info.backend_pid
+
+    # Regressionstest für Altbefund: 64-Bit-Key kann unmöglich gleich 32-Bit-objid sein
+    assert key > 0xFFFFFFFF
+    assert objid <= 0xFFFFFFFF
+    assert key != objid
+
+    with psycopg.connect(run_db.maintenance_url) as conn:
+        row = conn.execute(
+            "SELECT classid, objid, objsubid, granted FROM pg_locks "
+            "WHERE locktype = 'advisory' AND pid = %s AND classid = %s AND objid = %s",
+            (pid, classid, objid),
+        ).fetchone()
+        assert row == (classid, objid, 1, True)
