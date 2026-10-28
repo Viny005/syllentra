@@ -31,13 +31,13 @@ wurde in einer isolierten Linux-Containerumgebung ohne Host-Port-Exponierung aus
 
 ## 2. Testergebnisse
 
-| Testbereich | Befehl | Ergebnis | Dauer |
+| Testbereich | Ausgeführter Prüfumfang / Befehl | Ergebnis | Dauer |
 |---|---|---|---|
-| **Code-Qualität (Ruff)** | `ruff check scripts tests` | 0 Fehler, 0 Warnungen | < 1 s |
-| **Typ-Prüfung (Mypy)** | `mypy scripts/test_db.py` | 0 Fehler (Success) | 1 s |
-| **Locks & Besitz (Phasen B–D)** | Gezielte dynamische Tests | Alle Prüfpfade bestanden | 4 s |
-| **PostgreSQL-Isolation (Phase E)** | `pytest -q -x tests/test_isolation.py` | **24 / 24 bestanden** (100 %) | 7,4 s |
-| **Backend-Gesamtsuite (Phase F)** | `pytest -q -x` | **116 / 116 bestanden** (100 %) | 76,5 s |
+| **Code-Qualität (Ruff)** | `ruff check scripts/test_db.py tests/test_isolation.py tests/conftest.py` *(gezielte Dateiprüfung, kein Verzeichnischeck)* | 0 Fehler, 0 Warnungen | < 1 s |
+| **Typ-Prüfung (Mypy)** | `mypy --config-file pyproject.toml scripts/test_db.py` *(beschränkt auf `test_db.py`)* | 0 Fehler (Success) | 1 s |
+| **Locks & Besitz (Phasen B–D)** | Gezielte dynamische Prüfskripte (Verbindung, Advisory-Locks, Fail-closed, Concurrency) | Alle Prüfpfade bestanden | 4 s |
+| **PostgreSQL-Isolation (Phase E)** | `pytest -q -x -p no:cacheprovider tests/test_isolation.py` | **24 / 24 bestanden** (100 %) | 7,4 s |
+| **Backend-Gesamtsuite (Phase F)** | `pytest -q -x -p no:cacheprovider` | **116 / 116 bestanden** (100 %) | 76,5 s |
 
 ### Wichtigste dynamisch verifizierte Invarianten auf echtem PostgreSQL
 
@@ -62,6 +62,10 @@ wurde in einer isolierten Linux-Containerumgebung ohne Host-Port-Exponierung aus
 ## 3. Wichtige Einschränkungen und bekannte Betriebsgrenzen
 
 * **Enthaltene Tests:** Die 24 Isolationstests sind eine Teilmenge der 116 Backendtests.
+* **Prüfumfang von Linter und Typprüfung:** Die statischen Prüfungen in Mission 31D beschränkten
+  sich auf die betroffenen Dateien (`scripts/test_db.py`, `tests/test_isolation.py`,
+  `tests/conftest.py` für Ruff; `scripts/test_db.py` für Mypy). Sie stellen keinen vollständigen
+  Verzeichnischeck des gesamten Repositories dar.
 * **Unabhängige Wiederholung:** Das unabhängige Codex-Audit (Mission 32) hat den bereitgestellten
   Testbericht und den Code geprüft, die PostgreSQL-Läufe jedoch nicht in eigener Infrastruktur
   wiederholt.
@@ -72,6 +76,9 @@ wurde in einer isolierten Linux-Containerumgebung ohne Host-Port-Exponierung aus
   keine unnötigen Diffs zu erzeugen.
 * **Geltungsbereich:** Frontend-E2E-Tests, Penetrationstests und produktive Sicherheitsnachweise
   sind ausdrücklich nicht Gegenstand dieser isolierten PostgreSQL-Validierung.
+* **Keine Aussage über produktive V1-Freigabe:** Die erfolgreichen Tests belegen das sichere
+  Verhalten des Prototyps unter synthetischen Bedingungen, stellen jedoch keine Freigabe für
+  den Produktivbetrieb (V1) dar.
 * **Bekannte Betriebsgrenze bei Verbindungsverlust:** Ein verlorener PostgreSQL-Advisory-Lock
   beweist nicht zwingend, dass der ursprüngliche Besitzerprozess beendet ist (z. B. bei
   Netzwerkunterbrechung der Maintenance-Verbindung). Verwaiste Datenbanken werden durch `sweep()`
