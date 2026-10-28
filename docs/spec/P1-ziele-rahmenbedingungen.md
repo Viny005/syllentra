@@ -2,8 +2,8 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** P1 — Ziele und Rahmenbedingungen\
-**Version:** 0.13\
-**Stand:** 26.10.2026\
+**Version:** 0.14\
+**Stand:** 28.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Spezifikationsmethode:** Bausteine nach Johannes Siedersleben\
 **Geltungsbereich:** Fachlicher Zielumfang der ersten Produktversion (V1)
@@ -456,7 +456,7 @@ Rahmenbedingungen definieren Vorgaben, innerhalb derer die spätere Lösung entw
 |---|---|
 | CON-01 | V1 unterstützt offene Selbstregistrierung mehrerer voneinander isolierter Konten; E-Mail/Passwort und E-Mail-OTP sind vor Zugriff auf Anwendungsdaten erforderlich (FE-59, FE-60). |
 | CON-02 | Persönliche Datenhoheit und Administration sind getrennt. Genau ein Super Admin verwaltet sekundäre Administratoren; diese dürfen weder sich selbst erweitern noch andere Administratoren verwalten (FE-63, FE-70 bis FE-72). |
-| CON-03 | V1 ist eine installierbare PWA mit Startbildschirmidentität auf unterstützten Geräten; konkrete Frameworks und native spätere Verteilung bleiben offen. PWA-/OS-Berechtigungen und Fähigkeiten werden geprüft, fehlende Funktionen transparent ersetzt (FE-55). |
+| CON-03 | V1 ist eine installierbare PWA mit Startbildschirmidentität auf unterstützten Geräten. Als Architekturprinzip bestätigt sind React + Vite + TypeScript im Frontend sowie FastAPI + Python im Backend (ADR-0012, TECH-O-03); native App-Verteilung, Service-Worker-Details und technische Unterentscheidungen (B) bleiben offen. PWA-/OS-Berechtigungen und Fähigkeiten werden geprüft, fehlende Funktionen transparent ersetzt (FE-55). |
 | CON-04 | Die Anwendung soll unterschiedliche Fachgebiete, Lerninhalte und individuelle Lernsituationen unterstützen. |
 | CON-05 | Mehrbenutzerfähigkeit mit strikter Kontoisolation ist V1-Umfang. Lehrenden-, Team- oder Hochschulverwaltungsrollen und gemeinsame private Arbeitsbereiche sind dadurch nicht eingeführt. |
 
@@ -525,9 +525,9 @@ Alle akzeptierten fachlichen Funktionen gehören zum angestrebten Zielumfang von
 
 Die Reihenfolge ihrer Implementierung wird später anhand fachlicher Abhängigkeiten, technischer Machbarkeit und verfügbarer Ressourcen festgelegt.
 
-Ein verbindlicher Fertigstellungstermin sowie konkrete Technologie-, Hosting- und Budgetentscheidungen wurden noch nicht festgelegt.
+Ein verbindlicher Fertigstellungstermin sowie konkrete Hosting- und Budgetentscheidungen wurden noch nicht festgelegt.
 
-Die Entscheidung über Programmiersprachen, Frameworks, Datenbanken, KI-Modelle und Betriebsumgebungen ist Gegenstand einer späteren technischen Bewertung und Architekturdokumentation.
+Grundlegende Technologieentscheidungen sind in den Architekturentscheidungen verankert: Als Architekturprinzip (A) bestätigt sind React + Vite + TypeScript im Frontend und FastAPI + Python im Backend (ADR-0012, TECH-O-03) sowie PostgreSQL als primäre relationale Datenbank mit getrenntem geschütztem Dateispeicher und Referenz auf Volltextsuche (ADR-0013, TECH-O-04). Technische Unterentscheidungen (B, z. B. konkrete UI-Bibliotheken, ORM/Treiber, pgvector/pg-queue-Prüfung) und Nachweise (C) bleiben offen und werden getrennt von der fachlichen Spezifikation geführt.
 
 ---
 
@@ -778,21 +778,20 @@ Die weitere Detaillierung erfolgt insbesondere in folgenden Spezifikationsbauste
 | N1 | Detaillierte nichtfunktionale Anforderungen |
 | N2 | Übergreifende Konzepte, insbesondere Datenschutz, Berechtigungen, Fehlerbehandlung und Nachvollziehbarkeit |
 
-Technische Architekturentscheidungen werden nicht durch die Projektziele vorweggenommen.
 
 Die Spezifikationsbausteine beschreiben die fachlichen und nutzerbezogenen Anforderungen.
 
-Die technische Architektur und ihre wesentlichen Entscheidungen werden später getrennt dokumentiert.
+Die technische Architektur und ihre wesentlichen Entscheidungen sind in den Architekturunterlagen dokumentiert: Die Architekturprinzipien (A) für Frontend (React + Vite + TypeScript), Backend (FastAPI + Python, ADR-0012) und relationale Datenhaltung (PostgreSQL mit getrenntem Dateispeicher, ADR-0013) sind bestätigt; technische Unterentscheidungen (B) und Nachweise/Benchmarks (C) bleiben offen.
 
 ### Bestehende Projektdokumente
 
 Die folgenden bereits vorhandenen Dokumente bleiben erhalten:
 
-- [P2 — Architekturüberblick](P2-architekturueberblick.md), fachlicher Kontext zu P1 Version 0.6
+- [P2 — Architekturüberblick](P2-architekturueberblick.md), fachlicher Kontext zu P1
 - [Spezifikationsindex und Leseanleitung](README.md)
 - [Projektvision](../PROJECT_VISION.md), insbesondere „Expected capabilities“ und „Design principles“
 - [Bisherige Anforderungen](../REQUIREMENTS.md), insbesondere Abschnitte 1, 3 und 6
-- [Architekturentscheidungen](../ARCHITECTURE_DECISIONS.md), insbesondere „Current position“: kein festgelegter Technologie-Stack
+- [Architekturentscheidungen](../ARCHITECTURE_DECISIONS.md), insbesondere ADR-0010 bis ADR-0024 (14 bestätigte Architekturprinzipien TECH-O-01 bis TECH-O-14; Unterentscheidungen B und Nachweise C offen)
 - [Roadmap](../ROADMAP.md), insbesondere Phasen 2 bis 5
 
 Diese Dokumente dienen als ergänzende beziehungsweise historische Projektunterlagen.

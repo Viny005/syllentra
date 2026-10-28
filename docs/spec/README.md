@@ -25,8 +25,8 @@ Hinweis: Diese Leseanleitung ist im README.md des Spezifikationsverzeichnisses i
 
 | Baustein | Version | Inhalt / Stand |
 |---|---|---|
-| [P1](P1-ziele-rahmenbedingungen.md) | 0.13 | Ziele, Rahmen, Mehrbenutzer-V1 und überprüfbare Erfolgskriterien. Zur Prüfung. |
-| [P2](P2-architekturueberblick.md) | 0.12 | Kontext, interne/externe Grenzen, zwölf Nachbarn und Informationsklassen. Zur Prüfung. |
+| [P1](P1-ziele-rahmenbedingungen.md) | 0.14 | Ziele, Rahmen, Mehrbenutzer-V1, bestätigte Architekturprinzipien (ADR-0012/ADR-0013) und überprüfbare Erfolgskriterien. Zur Prüfung. |
+| [P2](P2-architekturueberblick.md) | 0.13 | Kontext, interne/externe Grenzen, zwölf Nachbarn, Informationsklassen und Verankerung der Architekturprinzipien. Zur Prüfung. |
 | [F1](F1-geschaeftsprozesse.md) | 0.8 | GP-01 bis GP-15 mit ergänzten Konten-, Import-, Integrations- und Datenkontrollabläufen. Zur Prüfung. |
 | [F2](F2-anwendungsfaelle.md) | 0.8 | UC-01 bis UC-66 mit Vorbedingungen, Szenarien, Schutz und Abnahme. Zur Prüfung. |
 | [F3](F3-anwendungsfunktionen.md) | 0.8 | AF-01 bis AF-37 als fachliche Prüf- und Auswahlfunktionen. Zur Prüfung. |

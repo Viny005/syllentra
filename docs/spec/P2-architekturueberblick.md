@@ -2,8 +2,8 @@
 
 **Projekt:** Syllentra AI\
 **Dokument:** P2 — Architekturüberblick\
-**Version:** 0.12\
-**Stand:** 26.10.2026\
+**Version:** 0.13\
+**Stand:** 28.10.2026\
 **Status:** Zur Prüfung durch den Projektinhaber\
 **Spezifikationsmethode:** Bausteine nach Johannes Siedersleben\
 **Geltungsbereich:** Fachlicher Zielumfang der ersten Produktversion (V1)
@@ -16,7 +16,7 @@
 
 Dieser Baustein ordnet Syllentra AI in seine Systemumgebung ein. Er benennt Benutzer, Nachbarsysteme, wesentliche Informationsflüsse, Zugriffsrichtungen und fachliche Systemgrenzen. Er beschreibt außerdem die für diese Beziehungen grundlegenden Freigabe- und Konfigurationsprinzipien.
 
-**P2 ist keine Festlegung einer technischen Komponentenarchitektur.** Entscheidungen über Programmiersprachen, Frameworks, Datenbanken, Hosting, konkrete APIs und Implementierungsmuster werden erst nach einer gesonderten Bewertung getroffen. Detaillierte Schnittstellenverträge gehören in S1, Dialogabläufe in B1, Hintergrundverarbeitungen in B2 und übergreifende Sicherheits- und Konfigurationskonzepte in N2.
+**P2 ist keine Festlegung einer technischen Komponentenarchitektur.** Die grundlegenden Architekturprinzipien sind in den Architekturentscheidungen verankert (ADR-0012: React + Vite + TypeScript im Frontend, FastAPI + Python im Backend; ADR-0013: PostgreSQL als primäre relationale Datenbank mit getrenntem geschütztem Dateispeicher; TECH-O-01 bis TECH-O-14). Technische Unterentscheidungen (B) und Nachweise (C) bleiben offen. Detaillierte Schnittstellenverträge gehören in S1, Dialogabläufe in B1, Hintergrundverarbeitungen in B2 und übergreifende Sicherheits- und Konfigurationskonzepte in N2.
 
 ### P2.1.2 Fachlicher Systemkern
 
@@ -41,7 +41,7 @@ Begriffe und Zielumfang entsprechen P1.4 K bis P. Ein Kurs bezeichnet eine Lehrv
 
 ### P2.1.3 Benutzer und Systemgrenze
 
-V1 unterstützt mehrere isolierte verifizierte Nutzerkonten und eine getrennte Administration. Die installierbare PWA besitzt auf unterstützten Android-/iOS-Konfigurationen eigene Identität und ein Startbildschirmsymbol; Smartphone-, Tablet- und Computeroberflächen sind angepasst. Framework und spätere native Apps bleiben offen. PWA-/Browser-/OS-Fähigkeiten werden geprüft, fehlende Funktionen verständlich durch Datei- oder Manuelleingabe ersetzt.
+V1 unterstützt mehrere isolierte verifizierte Nutzerkonten und eine getrennte Administration. Die installierbare PWA besitzt auf unterstützten Android-/iOS-Konfigurationen eigene Identität und ein Startbildschirmsymbol; Smartphone-, Tablet- und Computeroberflächen sind angepasst. Als Architekturprinzip bestätigt sind React + Vite + TypeScript im Frontend sowie FastAPI + Python im Backend (ADR-0012, TECH-O-03); native Apps, Service-Worker-Details und technische Unterentscheidungen (B) bleiben offen. PWA-/Browser-/OS-Fähigkeiten werden geprüft, fehlende Funktionen verständlich durch Datei- oder Manuelleingabe ersetzt.
 
 Lernende und Administratoren sind getrennte menschliche Rollen. V1 unterstützt mehrere isolierte Konten; genau ein Super Admin vergibt und entzieht die Rechte sekundärer Administratoren. Der KI-Assistent ist eine interne Assistenzfunktion, kein unabhängiger Akteur mit eigenen Entscheidungsrechten. Lehrende, Beratungsstellen und Hochschule bleiben externe fachliche Verantwortliche; Dienstanbieter verantworten ihre jeweiligen Nachbarsysteme. Eine Gerätefreigabe ist keine neue Benutzerrolle.
 
@@ -106,7 +106,7 @@ Die Bezeichnungen sind zunächst **fachliche Systemkategorien** und keine Zusage
 
 ### P2.2.2 NB-01 — Benutzergeräte und ihre Betriebssystemumgebung
 
-Die Anwendung muss auf den in P1 definierten Geräteklassen bedienbar und auf Android und iOS installierbar sein. Der Benutzer kann Lernmaterialien bereitstellen, schriftlich oder sprachlich lernen, Profil und Unterhaltungen verwalten, Semester, Module, Kurse und Projekte organisieren, den internen Studienkalender verwenden sowie Daten und administrative Einstellungen ändern. V1 verwendet eine installierbare PWA; Framework und spätere native Apps bleiben offen. Tatsächliche PWA-/OS-Fähigkeiten werden geprüft und fehlende Zugänge durch manuelle oder dateibasierte Wege ersetzt (FE-55).
+Die Anwendung muss auf den in P1 definierten Geräteklassen bedienbar und auf Android und iOS installierbar sein. Der Benutzer kann Lernmaterialien bereitstellen, schriftlich oder sprachlich lernen, Profil und Unterhaltungen verwalten, Semester, Module, Kurse und Projekte organisieren, den internen Studienkalender verwenden sowie Daten und administrative Einstellungen ändern. V1 verwendet eine installierbare PWA mit React + Vite + TypeScript (ADR-0012); native Apps, Service-Worker-Details und technische Unterentscheidungen (B) bleiben offen. Tatsächliche PWA-/OS-Fähigkeiten werden geprüft und fehlende Zugänge durch manuelle oder dateibasierte Wege ersetzt (FE-55).
 
 Die Syllentra-Client-Anwendungen gehören zum Produkt. Als Nachbar NB-01 wird die umgebende Geräte- und Betriebssystemfunktionalität betrachtet, über die Benutzeraktionen, Aufnahme und Berechtigungen vermittelt werden; die bisherige Kennung bleibt erhalten. Profil und Identität werden nicht als feste persönliche Angaben im Client hinterlegt.
 
