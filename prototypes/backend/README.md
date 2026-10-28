@@ -25,6 +25,20 @@ PYTHONPATH=src .venv/bin/python -m scripts.identity_server
 
 `prepare_identity.py` erzeugt ausschließlich lokale 0600-Dateien für Servergeheimnis und zweitägiges selbst signiertes Loopback-TLS. Bestehende Dateien werden nicht überschrieben; abgelaufene Testzertifikate bewusst prüfen/erneuern. Keine vertrauenswürdige öffentliche Zertifikatskette behauptet. `identity_server` bindet fest an Loopback:8443, erlaubt ausschließlich lokale bekannte Datenbankziele und startet ohne Konten. Option `--test` ausschließlich für Browserprüfungen gegen `syllentra_test`. Backend-Pytestläufe erzeugen seit Mission 12 über [scripts/test_db.py](scripts/test_db.py) je Prozess eine eigene Datenbank `syllentra_t_<12 Hex>` (`TEMPLATE template0`) mit Eigentumsvermerk (`COMMENT ON DATABASE`) und berühren `syllentra_test` oder `syllentra_prototype` niemals. Zerstörende Bereinigungen (`wipe`/`drop_run_database`) prüfen vor jedem `DELETE`/`DROP` Namen und Eigentumskommentar. Verwaiste Laufdatenbanken lassen sich kontrolliert mit `.venv/bin/python -m scripts.test_db sweep <Stunden>` auflisten und nur mit `--apply` entfernen.
 
+### Betriebsregeln für Testdatenbank-Bereinigung und Betriebsgrenzen
+
+Für die Verwaltung und Bereinigung von Testdatenbanken ([scripts/test_db.py](scripts/test_db.py)) gelten verbindliche Betriebsregeln:
+
+* **Kein automatischer oder unbeaufsichtigter Sweep:** Ein destruktiver Sweep darf niemals automatisch während laufender Testläufe oder über unbeaufsichtigte Hintergrundjobs (Cron, Scheduler) ausgeführt werden.
+* **Advisory-Locks und Prozesslebenszyklus:** Ein verlorener PostgreSQL-Advisory-Lock beweist nicht zwingend, dass der ursprüngliche Testprozess beendet wurde (z. B. bei Verbindungsabbruch oder Timeout). Ebenso ist ein reines Mindestalter allein kein hinreichender Nachweis für das Ende des Besitzerprozesses.
+* **Manuelle Bestandskontrolle:** Verwaiste Testdatenbanken dürfen ausschließlich nach Überprüfung der aktiven Prozesse und Verbindungen manuell bereinigt werden. Der Befehl `sweep <Stunden>` (ohne `--apply`) dient der sicheren, rein lesenden Bestandsaufnahme.
+* **Destruktive Bereinigung:** `sweep <Stunden> --apply` und `reclaim_orphaned_database()` sind destruktive Operationen und ausschließlich für ausdrücklich autorisierte, isolierte Testumgebungen bestimmt. Sie dürfen niemals gegen gemeinsame (`syllentra_test`, `syllentra_prototype`) oder gar produktive Datenbanken gerichtet werden.
+* **Schwellenwert 0:** Der Altersschwellenwert `0` (`sweep 0 --apply`) ist ausschließlich für gezielte automatisierte Testfälle in einem dedizierten Wegwerf-Container zugelassen.
+* **Kein erzwungener Verbindungsabbruch:** Es wird grundsätzlich kein `DROP DATABASE ... WITH (FORCE)` eingesetzt; laufende Verbindungen blockieren die Löschung, um versehentliche Datenzerstörung bei noch aktiven Prozessen zu verhindern.
+* **Grenzen des Prototyps:** Diese Regeln sind als betriebliche Schutzgrenzen für die lokale Testisolation des experimentellen Prototyps zu verstehen, nicht als produktionsreife Sicherheitsgarantie.
+
+Der dokumentierte Validierungsnachweis der PostgreSQL-Testisolation (116/116 Tests bestanden) ist in [docs/development/PR1_PREMERGE_TEST_EVIDENCE.md](../../docs/development/PR1_PREMERGE_TEST_EVIDENCE.md) hinterlegt.
+
 **Hinweis für Windows / WSL / Linux-Container:** `LocalFileChannel` ([delivery.py](src/syllentra_backend/delivery.py)) und `identity_server.py` erzwingen POSIX-Dateirechte (`0600`/`0700`, `os.getuid()`, `os.O_NOFOLLOW`). Auf Windows-Hosts ohne native Linux-WSL-Distribution sind Backend-Tests und Linter deshalb in einem nativen Linux-Dateisystem (z. B. WSL2 oder im gepinnten Container `ghcr.io/astral-sh/uv:python3.12-bookworm-slim` im selben Loopback-Netz wie `syllentra-mission9-local`) auszuführen, da Windows-Bind-Mounts in Docker Desktop standardmäßig Modus `0777` zeigen.
 
 In einem zweiten Terminal:
