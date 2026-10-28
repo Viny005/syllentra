@@ -15,11 +15,17 @@ from psycopg import sql
 
 from scripts.migrate import urls
 from scripts.test_db import (
+    RUN_LOCK_PREFIX,
     RUN_NAME,
+    SWEEP_LOCK_KEY,
+    ActiveOwnerError,
+    DatabaseInUseError,
     OwnershipError,
     RunDatabase,
+    UnmarkedDatabaseError,
     _lock_key,
     _lock_parts,
+    _reclaim_orphan,
     _same_owner,
     assert_owned,
     create_run_database,
@@ -43,6 +49,21 @@ def count_accounts(url: str) -> int:
         row = db.execute("SELECT count(*) FROM accounts").fetchone()
         assert row
         return int(row[0])
+
+
+def database_exists(maintenance_url: str, name: str) -> bool:
+    with psycopg.connect(maintenance_url) as db:
+        row = db.execute(
+            "SELECT EXISTS (SELECT 1 FROM pg_database WHERE datname = %s)", (name,)
+        ).fetchone()
+        return bool(row and row[0])
+
+
+def orphan(run: RunDatabase) -> RunDatabase:
+    """Simuliert einen abgestürzten Besitzerprozess: Besitz-Verbindung schließen."""
+    if run.lock_conn is not None and not run.lock_conn.closed:
+        run.lock_conn.close()
+    return run
 
 
 def test_run_database_is_unique_and_owned(run_db: RunDatabase) -> None:
@@ -253,7 +274,7 @@ def test_drop_refuses_actively_used_database(run_db: RunDatabase) -> None:
     try:
         with psycopg.connect(decoy.runtime_url) as conn:
             conn.execute("SELECT 1")
-            with pytest.raises(OwnershipError, match="aktiv verwendet"):
+            with pytest.raises(DatabaseInUseError, match="aktiv verwendet"):
                 drop_run_database(decoy)
             # Besitz-Lock MUSS weiterhin gehalten werden (kein ungeschützter Zustand):
             assert decoy.lock_conn is not None and not decoy.lock_conn.closed
@@ -301,16 +322,94 @@ def test_assert_owned_and_drop_reject_when_lock_conn_is_none(run_db: RunDatabase
         drop_run_database(detached)
 
 
-def test_reclaim_orphaned_database_refuses_active_owner(run_db: RunDatabase) -> None:
-    # Solange run_db aktiv ist und den Besitz-Lock hält, verweigert Parcours B das Reclaiming:
-    with pytest.raises(OwnershipError, match="wird aktiv verwendet"):
+def test_sweep_lock_key_is_outside_run_lock_namespace() -> None:
+    # Regressionstest: der Koordinations-Lock darf nie mit dem Besitz-Lock eines Laufs kollidieren.
+    assert SWEEP_LOCK_KEY >> 48 != RUN_LOCK_PREFIX
+    assert _lock_key("ffffffffffff") >> 48 == RUN_LOCK_PREFIX
+    assert _lock_key("000000000000") >> 48 == RUN_LOCK_PREFIX
+
+
+def test_reclaim_rejects_invalid_names_before_any_database_access() -> None:
+    # Eingabefehler => ValueError, bevor Zugangsdaten gelesen oder Verbindungen geöffnet werden.
+    bad_names = ["invalid_db_name", "postgres", "syllentra_test", "syllentra_t_ABCDEF123456"]
+    for bad in [*bad_names, 'x";--']:
+        with pytest.raises(ValueError, match="Namensschema"):
+            reclaim_orphaned_database(bad)
+
+
+def test_reclaim_refuses_active_owner_without_runtime_connection(run_db: RunDatabase) -> None:
+    # Aktiver Besitzer ohne offene Runtime-Verbindung: Lock wird von anderer Sitzung gehalten.
+    with pytest.raises(ActiveOwnerError):
         reclaim_orphaned_database(run_db.name)
+    assert database_exists(run_db.maintenance_url, run_db.name)
+    assert_owned(run_db)  # Besitz des Laufs bleibt unverändert erhalten
 
 
-def test_reclaim_orphaned_database_rejects_invalid_or_unmarked_db(
-    run_db: RunDatabase,
-) -> None:
-    with pytest.raises(ValueError, match="Namensschema"):
-        reclaim_orphaned_database("invalid_db_name")
-    with pytest.raises(OwnershipError, match="ohne gültigen Syllentra-Eigentumsvermerk"):
-        reclaim_orphaned_database("syllentra_t_ffffffffffff")
+def test_reclaim_refuses_and_keeps_unmarked_database(run_db: RunDatabase) -> None:
+    unmarked = "syllentra_t_" + secrets.token_hex(6)
+    with psycopg.connect(run_db.maintenance_url, autocommit=True) as db:
+        create = sql.SQL("CREATE DATABASE {} TEMPLATE template0")
+        db.execute(create.format(sql.Identifier(unmarked)))
+    try:
+        with pytest.raises(UnmarkedDatabaseError):
+            reclaim_orphaned_database(unmarked)
+        assert database_exists(run_db.maintenance_url, unmarked)  # niemals angetastet
+    finally:
+        with psycopg.connect(run_db.maintenance_url, autocommit=True) as db:
+            db.execute(sql.SQL("DROP DATABASE IF EXISTS {}").format(sql.Identifier(unmarked)))
+
+
+def test_reclaim_drops_orphan_and_is_idempotent_for_removed_databases() -> None:
+    decoy = orphan(create_run_database())
+    try:
+        assert reclaim_orphaned_database(decoy.name) is True
+        assert not database_exists(decoy.maintenance_url, decoy.name)
+        assert reclaim_orphaned_database(decoy.name) is False  # bereits entfernt
+        assert reclaim_orphaned_database("syllentra_t_" + secrets.token_hex(6)) is False
+    finally:
+        reclaim_orphaned_database(decoy.name)
+
+
+def test_reclaim_refuses_orphan_with_active_connection_then_succeeds() -> None:
+    decoy = create_run_database()
+    try:
+        with psycopg.connect(decoy.runtime_url) as conn:
+            conn.execute("SELECT 1")
+            orphan(decoy)
+            with pytest.raises(DatabaseInUseError):
+                reclaim_orphaned_database(decoy.name)
+            assert decoy.name not in sweep(0, apply=False)
+            assert database_exists(decoy.maintenance_url, decoy.name)
+        assert reclaim_orphaned_database(decoy.name) is True
+    finally:
+        reclaim_orphaned_database(orphan(decoy).name)
+
+
+def test_concurrent_cleanup_is_serialized_by_run_lock() -> None:
+    decoy = orphan(create_run_database())
+    competitor = psycopg.connect(decoy.maintenance_url, autocommit=True)
+    try:
+        # Eine parallele Bereinigung hält den Run-Lock: keine zweite Übernahme, kein Listing.
+        competitor.execute("SELECT pg_advisory_lock(%s)", (_lock_key(decoy.run_id),))
+        with pytest.raises(ActiveOwnerError):
+            reclaim_orphaned_database(decoy.name)
+        assert decoy.name not in sweep(0, apply=False)
+        assert database_exists(decoy.maintenance_url, decoy.name)
+        competitor.execute("SELECT pg_advisory_unlock(%s)", (_lock_key(decoy.run_id),))
+        assert reclaim_orphaned_database(decoy.name) is True
+    finally:
+        competitor.close()
+        reclaim_orphaned_database(decoy.name)
+
+
+def test_reclaim_helper_refuses_reentrant_session_lock() -> None:
+    # Session-Advisory-Locks sind reentrant: die lock_conn eines aktiven Laufs darf niemals als
+    # Übernahme-Verbindung dienen, sonst würde pg_try_advisory_lock erneut „gelingen“.
+    decoy = create_run_database()
+    try:
+        with pytest.raises(OwnershipError, match="bereits von dieser Sitzung"):
+            _reclaim_orphan(decoy.lock_conn, decoy.name, min_age_seconds=0.0, drop=True)
+        assert database_exists(decoy.maintenance_url, decoy.name)
+        assert_owned(decoy)  # Lock weder verdoppelt noch freigegeben
+    finally:
+        drop_run_database(decoy)
