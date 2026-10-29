@@ -51,7 +51,7 @@ jobs:
         run: npm run format:check
 
       - name: Install uv
-        uses: astral-sh/setup-uv@16922262cc29c54a9386c12b7a9f992f8ce6b093 # v5.1.0
+        uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v5.1.0
         with:
           version: "0.5.24"
           enable-cache: true
@@ -112,7 +112,7 @@ jobs:
           persist-credentials: false
 
       - name: Install uv
-        uses: astral-sh/setup-uv@16922262cc29c54a9386c12b7a9f992f8ce6b093 # v5.1.0
+        uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v5.1.0
         with:
           version: "0.5.24"
           enable-cache: true
