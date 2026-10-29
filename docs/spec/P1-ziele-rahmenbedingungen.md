@@ -373,7 +373,7 @@ Eine Konfigurationsmöglichkeit bedeutet nicht, dass beliebige neue Programmlogi
 
 ### J. Installierbare Anwendungen und Gerätezugriff
 
-Syllentra muss auf Android-Smartphones und iPhones als eigenständige Anwendung installierbar sein, eine eigene Anwendungsidentität und ein eigenes Symbol besitzen und vom Startbildschirm geöffnet werden können. Eine ausschließlich über eine Website erreichbare Oberfläche genügt diesem Ziel nicht. Smartphone- und Tablet-Oberflächen müssen an die Gerätebedienung angepasst sein; die Nutzung auf Computern bleibt erforderlich. Framework, Installationsverfahren und Vertriebswege werden nicht vorweggenommen.
+Syllentra muss auf Android-Smartphones und iPhones als eigenständige Anwendung installierbar sein, eine eigene Anwendungsidentität und ein eigenes Symbol besitzen und vom Startbildschirm geöffnet werden können. Eine ausschließlich über eine Website erreichbare Oberfläche genügt diesem Ziel nicht. Smartphone- und Tablet-Oberflächen müssen an die Gerätebedienung angepasst sein; die Nutzung auf Computern bleibt erforderlich. Für V1 gelten die bestätigten Architekturprinzipien gemäß ADR-0012; technische Installations- und Vertriebsdetails sowie die zugehörigen Nachweise bleiben offen.
 
 Text- und Sprachunterhaltungen, autorisierte Benachrichtigungen und lesender Zugriff auf verfügbare Kalenderfunktionen gehören zum Zielumfang. Mikrofon-, Kalender- und Benachrichtigungszugriffe setzen die jeweils erforderliche Zustimmung voraus. Ablehnung oder Widerruf müssen angezeigt werden und dürfen nicht umgangen werden; weiterhin mögliche Funktionen bleiben nutzbar. Private Inhalte sollen nicht unnötig auf dem Sperrbildschirm erscheinen.
 
