@@ -1,0 +1,141 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  static-checks:
+    name: Static Code Analysis & Typechecking
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+
+      - name: Setup Node.js 24
+        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: prototypes/frontend/package-lock.json
+
+      - name: Install Frontend Dependencies
+        working-directory: prototypes/frontend
+        run: npm ci
+
+      - name: Frontend Typecheck (tsc)
+        working-directory: prototypes/frontend
+        run: npm run typecheck
+
+      - name: Frontend Lint (ESLint)
+        working-directory: prototypes/frontend
+        run: npm run lint
+
+      - name: Frontend Code Style (Prettier)
+        working-directory: prototypes/frontend
+        run: npm run format:check
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@16922262cc29c54a9386c12b7a9f992f8ce6b093 # v5.1.0
+        with:
+          version: "0.5.24"
+          enable-cache: true
+          cache-dependency-glob: prototypes/backend/uv.lock
+
+      - name: Setup Python 3.12
+        uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0
+        with:
+          python-version: "3.12"
+
+      - name: Backend Ruff Linting (src, scripts, tests)
+        working-directory: prototypes/backend
+        run: uv run ruff check src scripts tests
+
+      - name: Backend Mypy Typecheck (src, scripts)
+        working-directory: prototypes/backend
+        run: uv run mypy --config-file pyproject.toml src scripts
+
+  frontend-tests:
+    name: Frontend Unit Tests & Build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+
+      - name: Setup Node.js 24
+        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: prototypes/frontend/package-lock.json
+
+      - name: Install Frontend Dependencies
+        working-directory: prototypes/frontend
+        run: npm ci
+
+      - name: Run Unit Tests (Vitest)
+        working-directory: prototypes/frontend
+        run: npm test
+
+      - name: Build Frontend Application (Vite)
+        working-directory: prototypes/frontend
+        run: npm run build
+
+  backend-postgres-tests:
+    name: Backend Isolated PostgreSQL Integration Tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@16922262cc29c54a9386c12b7a9f992f8ce6b093 # v5.1.0
+        with:
+          version: "0.5.24"
+          enable-cache: true
+          cache-dependency-glob: prototypes/backend/uv.lock
+
+      - name: Setup Python 3.12
+        uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0
+        with:
+          python-version: "3.12"
+
+      - name: Install Backend Dependencies
+        working-directory: prototypes/backend
+        run: uv sync --locked
+
+      - name: Start Isolated CI PostgreSQL Container
+        working-directory: prototypes/backend
+        run: uv run python scripts/ci_test_db.py start
+
+      - name: Run Backend Pytest Suite
+        working-directory: prototypes/backend
+        run: uv run pytest -q -x -p no:cacheprovider
+
+      - name: Teardown Isolated CI PostgreSQL Container
+        if: always()
+        working-directory: prototypes/backend
+        run: uv run python scripts/ci_test_db.py stop
