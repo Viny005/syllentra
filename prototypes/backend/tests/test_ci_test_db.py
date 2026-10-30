@@ -168,7 +168,7 @@ def test_role_initialization_failure(mock_ci_env: Path) -> None:
 
     with patch.object(ci_test_db, "_run_docker", side_effect=fake_run):
         with pytest.raises(
-            CIPostgresError, match="Docker-Daemon nicht erreichbar"
+            CIPostgresError, match="PostgreSQL-Rolleninitialisierung fehlgeschlagen"
         ):
             ci_test_db.start()
 
