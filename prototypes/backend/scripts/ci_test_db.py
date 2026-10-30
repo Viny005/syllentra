@@ -6,6 +6,7 @@ Keine Docker-Fehler werden ignoriert; alle kritischen Operationen besitzen Timeo
 """
 
 import json
+import logging
 import os
 import secrets
 import subprocess
@@ -31,7 +32,12 @@ class CIPostgresError(RuntimeError):
     """Fehler während des CI-PostgreSQL-Lebenszyklus."""
 
 
-def _run_docker(args: list[str], timeout: float = DOCKER_CMD_TIMEOUT, input_text: str | None = None) -> subprocess.CompletedProcess[str]:
+def _run_docker(
+    args: list[str],
+    timeout: float = DOCKER_CMD_TIMEOUT,
+    input_text: str | None = None,
+    env: dict[str, str] | None = None,
+) -> subprocess.CompletedProcess[str]:
     """Führt einen Docker-Befehl mit kontrolliertem Timeout und erfasster Ausgabe aus."""
     try:
         return subprocess.run(
@@ -41,9 +47,12 @@ def _run_docker(args: list[str], timeout: float = DOCKER_CMD_TIMEOUT, input_text
             capture_output=True,
             timeout=timeout,
             check=False,
+            env=env,
         )
     except subprocess.TimeoutExpired as exc:
-        raise CIPostgresError(f"Docker-Befehl lief in Timeout ({timeout}s): docker {' '.join(args)}") from exc
+        raise CIPostgresError(
+            f"Docker-Befehl lief in Timeout ({timeout}s): docker {' '.join(args)}"
+        ) from exc
     except FileNotFoundError as exc:
         raise CIPostgresError("Docker-CLI ('docker') nicht gefunden.") from exc
 
@@ -55,9 +64,12 @@ def _read_meta() -> dict[str, str] | None:
     try:
         data = json.loads(META_FILE.read_text(encoding="utf-8"))
         if isinstance(data, dict) and "container_name" in data and "owner_token" in data:
-            return {"container_name": str(data["container_name"]), "owner_token": str(data["owner_token"])}
-    except Exception:
-        pass
+            return {
+                "container_name": str(data["container_name"]),
+                "owner_token": str(data["owner_token"]),
+            }
+    except Exception as exc:
+        logging.warning("Konnte CI-Metadaten nicht parsen: %s", exc)
     return None
 
 
@@ -87,7 +99,8 @@ def _check_container_exists(name: str) -> tuple[bool, str, dict[str, str]]:
     if "cannot connect to the docker daemon" in stderr or "is the docker daemon running" in stderr:
         raise CIPostgresError(f"Docker-Daemon nicht erreichbar: {res.stderr.strip()}")
     if "permission denied" in stderr:
-        raise CIPostgresError(f"Docker-Zugriff verweigert (Permission denied): {res.stderr.strip()}")
+        msg = f"Docker-Zugriff verweigert (Permission denied): {res.stderr.strip()}"
+        raise CIPostgresError(msg)
 
     # Unklarer Fehler: fail-closed behandeln
     raise CIPostgresError(f"Unerwarteter Fehler bei docker inspect: {res.stderr.strip()}")
@@ -97,9 +110,14 @@ def start() -> None:
     """Startet den isolierten CI-PostgreSQL-Container mit strikter Eigentumsbindung."""
     # 1. Schutz bestehender Zustandsdateien
     if STATE.exists():
-        raise CIPostgresError(f"Start verweigert: {STATE} existiert bereits. Bestehende Datenbank darf nicht überschrieben werden.")
+        raise CIPostgresError(
+            f"Start verweigert: {STATE} existiert bereits. "
+            "Bestehende Datenbank darf nicht überschrieben werden."
+        )
     if META_FILE.exists():
-        raise CIPostgresError(f"Start verweigert: {META_FILE} existiert bereits. Ein aktiver CI-Zustand liegt vor.")
+        raise CIPostgresError(
+            f"Start verweigert: {META_FILE} existiert bereits. Ein aktiver CI-Zustand liegt vor."
+        )
 
     container_id = uuid4().hex[:12]
     name = f"{CONTAINER_PREFIX}{container_id}"
@@ -132,31 +150,41 @@ def start() -> None:
     ]
 
     try:
-        run_res = _run_docker(run_args, timeout=20.0)
+        run_res = _run_docker(run_args, timeout=20.0, env=env)
         if run_res.returncode != 0:
-            raise CIPostgresError(f"docker run fehlgeschlagen (Code {run_res.returncode}): {run_res.stderr.strip()}")
+            raise CIPostgresError(
+                f"docker run fehlgeschlagen (Code {run_res.returncode}): {run_res.stderr.strip()}"
+            )
 
         # 3. Healthcheck mit monotoner Frist (READY_TIMEOUT)
         start_time = time.monotonic()
         ready = False
         while time.monotonic() - start_time < READY_TIMEOUT:
-            probe = _run_docker(["exec", name, "pg_isready", "-U", "postgres", "-h", "127.0.0.1"], timeout=3.0)
+            probe = _run_docker(["exec", name, "pg_isready", "-U", "postgres"], timeout=3.0)
             if probe.returncode == 0:
                 ready = True
                 break
             time.sleep(READY_INTERVAL)
 
         if not ready:
-            raise CIPostgresError(f"PostgreSQL im CI-Container wurde nicht innerhalb von {READY_TIMEOUT}s bereit.")
+            raise CIPostgresError(
+                f"PostgreSQL im CI-Container wurde nicht innerhalb von {READY_TIMEOUT}s bereit."
+            )
 
         # 4. Rollen- und Datenbank-Initialisierung
         sql = (
             f"CREATE ROLE syllentra_runtime LOGIN PASSWORD '{runtime_password}';\n"
             "CREATE DATABASE syllentra_prototype;\nCREATE DATABASE syllentra_test;\n"
         )
-        init_res = _run_docker(["exec", "-i", name, "psql", "-v", "ON_ERROR_STOP=1", "-U", "postgres"], input_text=sql, timeout=10.0)
+        init_res = _run_docker(
+            ["exec", "-i", name, "psql", "-v", "ON_ERROR_STOP=1", "-U", "postgres"],
+            input_text=sql,
+            timeout=10.0,
+        )
         if init_res.returncode != 0:
-            raise CIPostgresError(f"PostgreSQL-Rolleninitialisierung fehlgeschlagen: {init_res.stderr.strip()}")
+            raise CIPostgresError(
+                f"PostgreSQL-Rolleninitialisierung fehlgeschlagen: {init_res.stderr.strip()}"
+            )
 
         # 5. Konfiguration atomar schreiben (0600)
         fd = os.open(STATE, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
@@ -164,7 +192,9 @@ def start() -> None:
             json.dump(
                 {
                     "migration_url": f"postgresql://postgres:{password}@127.0.0.1:{PORT}/",
-                    "runtime_url": f"postgresql://syllentra_runtime:{runtime_password}@127.0.0.1:{PORT}/",
+                    "runtime_url": (
+                        f"postgresql://syllentra_runtime:{runtime_password}@127.0.0.1:{PORT}/"
+                    ),
                 },
                 f,
             )
@@ -176,7 +206,10 @@ def start() -> None:
         try:
             stop()
         except Exception as stop_exc:
-            print(f"Zusätzlicher Fehler beim Teardown nach Start-Abbruch: {stop_exc}", file=sys.stderr)
+            print(
+                f"Zusätzlicher Fehler beim Teardown nach Start-Abbruch: {stop_exc}",
+                file=sys.stderr,
+            )
         raise
 
 
@@ -186,7 +219,10 @@ def stop() -> None:
     if meta is None:
         # Falls keine Meta-Datei existiert, aber eine STATE-Datei: Gefahr, fremde DB zu berühren!
         if STATE.exists():
-            raise CIPostgresError(f"Teardown verweigert: {STATE} existiert, aber keine gültige CI-Metadaten-Datei {META_FILE}. Fremde Instanz geschützt.")
+            raise CIPostgresError(
+                f"Teardown verweigert: {STATE} existiert, aber keine gültige CI-Metadaten-Datei "
+                f"{META_FILE}. Fremde Instanz geschützt."
+            )
         print("Kein CI-Zustand vorhanden. Teardown nicht erforderlich.")
         return
 
@@ -194,21 +230,26 @@ def stop() -> None:
     expected_token = meta["owner_token"]
 
     if not name.startswith(CONTAINER_PREFIX):
-        raise CIPostgresError(f"Teardown verweigert: Containername '{name}' entspricht nicht dem CI-Namenspräfix.")
+        raise CIPostgresError(
+            f"Teardown verweigert: Containername '{name}' entspricht nicht dem CI-Namenspräfix."
+        )
 
     # 1. Existenz und Eigentümerschaft prüfen
     exists, status, labels = _check_container_exists(name)
     if exists:
         # Labels validieren
-        if labels.get("syllentra.ci") != "true" or labels.get("syllentra.owner_token") != expected_token:
+        if (
+            labels.get("syllentra.ci") != "true"
+            or labels.get("syllentra.owner_token") != expected_token
+        ):
             raise CIPostgresError(
-                f"Teardown verweigert: Container '{name}' besitzt nicht die erforderlichen Eigentums-Labels "
-                f"(syllentra.ci={labels.get('syllentra.ci')}, owner_token={labels.get('syllentra.owner_token')})."
+                f"Teardown verweigert: Container '{name}' besitzt nicht die erforderlichen "
+                f"Eigentums-Labels (syllentra.ci={labels.get('syllentra.ci')}, "
+                f"owner_token={labels.get('syllentra.owner_token')})."
             )
 
         # 2. Container stoppen
         stop_res = _run_docker(["stop", "--time", "5", name], timeout=15.0)
-        # Wenn stop fehlschlägt, versuchen wir trotzdem rm --force, aber prüfen danach die Abwesenheit
 
         # 3. Container entfernen
         rm_res = _run_docker(["rm", "--force", name], timeout=15.0)
@@ -219,8 +260,9 @@ def stop() -> None:
             # Container ist IMMER NOCH da -> FAIL CLOSED!
             # Zustandsdateien NICHT löschen, Fehler werfen
             raise CIPostgresError(
-                f"Container-Cleanup fehlgeschlagen: Container '{name}' existiert weiterhin (Status: {post_status}). "
-                f"Stop-Output: {stop_res.stderr.strip()}; Rm-Output: {rm_res.stderr.strip()}"
+                f"Container-Cleanup fehlgeschlagen: Container '{name}' existiert weiterhin "
+                f"(Status: {post_status}). Stop-Output: {stop_res.stderr.strip()}; "
+                f"Rm-Output: {rm_res.stderr.strip()}"
             )
 
         print(f"CI-Container nachweislich entfernt: {name}")

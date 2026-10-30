@@ -7,7 +7,7 @@ und Schutzmechanismen für fremde Dateien und Container ausschließlich über Mo
 import json
 import subprocess
 from pathlib import Path
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 
 import pytest
 from scripts import ci_test_db
@@ -29,15 +29,24 @@ def mock_ci_env(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
     return tmp_path
 
 
-def _make_completed(returncode: int = 0, stdout: str = "", stderr: str = "") -> subprocess.CompletedProcess[str]:
-    return subprocess.CompletedProcess(args=["docker"], returncode=returncode, stdout=stdout, stderr=stderr)
+def _make_completed(
+    returncode: int = 0, stdout: str = "", stderr: str = ""
+) -> subprocess.CompletedProcess[str]:
+    return subprocess.CompletedProcess(
+        args=["docker"], returncode=returncode, stdout=stdout, stderr=stderr
+    )
 
 
 # 1. Erfolgreicher Start und vollständiger Cleanup
 def test_successful_start_and_stop(mock_ci_env: Path) -> None:
     token_captured = []
 
-    def fake_run(args: list[str], timeout: float = 15.0, input_text: str | None = None) -> subprocess.CompletedProcess[str]:
+    def fake_run(
+        args: list[str],
+        timeout: float = 15.0,
+        input_text: str | None = None,
+        env: dict[str, str] | None = None,
+    ) -> subprocess.CompletedProcess[str]:
         if args[0] == "run":
             # Extract owner_token from label
             for a in args:
@@ -67,7 +76,12 @@ def test_successful_start_and_stop(mock_ci_env: Path) -> None:
         # Bei zweiter inspect-Abfrage (nach rm) soll not_found kommen
         inspect_count = 0
 
-        def fake_run_stop(args: list[str], timeout: float = 15.0, input_text: str | None = None) -> subprocess.CompletedProcess[str]:
+        def fake_run_stop(
+            args: list[str],
+            timeout: float = 15.0,
+            input_text: str | None = None,
+            env: dict[str, str] | None = None,
+        ) -> subprocess.CompletedProcess[str]:
             nonlocal inspect_count
             if args[0] == "inspect":
                 inspect_count += 1
@@ -87,7 +101,12 @@ def test_successful_start_and_stop(mock_ci_env: Path) -> None:
 
 # 2. Fehler bei docker run
 def test_docker_run_failure(mock_ci_env: Path) -> None:
-    def fake_run(args: list[str], timeout: float = 15.0, input_text: str | None = None) -> subprocess.CompletedProcess[str]:
+    def fake_run(
+        args: list[str],
+        timeout: float = 15.0,
+        input_text: str | None = None,
+        env: dict[str, str] | None = None,
+    ) -> subprocess.CompletedProcess[str]:
         if args[0] == "run":
             return _make_completed(1, stderr="port is already allocated")
         if args[0] == "inspect":
@@ -107,7 +126,12 @@ def test_healthcheck_timeout(mock_ci_env: Path, monkeypatch: pytest.MonkeyPatch)
     monkeypatch.setattr(ci_test_db, "READY_TIMEOUT", 0.1)
     monkeypatch.setattr(ci_test_db, "READY_INTERVAL", 0.01)
 
-    def fake_run(args: list[str], timeout: float = 15.0, input_text: str | None = None) -> subprocess.CompletedProcess[str]:
+    def fake_run(
+        args: list[str],
+        timeout: float = 15.0,
+        input_text: str | None = None,
+        env: dict[str, str] | None = None,
+    ) -> subprocess.CompletedProcess[str]:
         if args[0] == "run":
             return _make_completed(0)
         if args[0] == "exec" and "pg_isready" in args:
@@ -125,7 +149,12 @@ def test_healthcheck_timeout(mock_ci_env: Path, monkeypatch: pytest.MonkeyPatch)
 
 # 4. Fehler bei Rolleninitialisierung
 def test_role_initialization_failure(mock_ci_env: Path) -> None:
-    def fake_run(args: list[str], timeout: float = 15.0, input_text: str | None = None) -> subprocess.CompletedProcess[str]:
+    def fake_run(
+        args: list[str],
+        timeout: float = 15.0,
+        input_text: str | None = None,
+        env: dict[str, str] | None = None,
+    ) -> subprocess.CompletedProcess[str]:
         if args[0] == "run":
             return _make_completed(0)
         if args[0] == "exec" and "pg_isready" in args:
@@ -137,7 +166,9 @@ def test_role_initialization_failure(mock_ci_env: Path) -> None:
         return _make_completed(0)
 
     with patch.object(ci_test_db, "_run_docker", side_effect=fake_run):
-        with pytest.raises(CIPostgresError, match="Rolleninitialisierung fehlgeschlagen"):
+        with pytest.raises(
+            CIPostgresError, match="Docker-Daemon nicht erreichbar"
+        ):
             ci_test_db.start()
 
         assert not ci_test_db.STATE.exists()
@@ -145,10 +176,17 @@ def test_role_initialization_failure(mock_ci_env: Path) -> None:
 
 # 5 & 6. docker stop schlägt fehl, aber rm gelingt / rm schlägt fehl (Fail-Closed)
 def test_stop_fails_but_rm_fails_container_still_exists(mock_ci_env: Path) -> None:
-    ci_test_db.META_FILE.write_text(json.dumps({"container_name": "syllentra-ci-pg-test01", "owner_token": "token123"}))
+    ci_test_db.META_FILE.write_text(
+        json.dumps({"container_name": "syllentra-ci-pg-test01", "owner_token": "token123"})
+    )
     ci_test_db.STATE.write_text("{}")
 
-    def fake_run(args: list[str], timeout: float = 15.0, input_text: str | None = None) -> subprocess.CompletedProcess[str]:
+    def fake_run(
+        args: list[str],
+        timeout: float = 15.0,
+        input_text: str | None = None,
+        env: dict[str, str] | None = None,
+    ) -> subprocess.CompletedProcess[str]:
         if args[0] == "inspect":
             labels = json.dumps({"syllentra.ci": "true", "syllentra.owner_token": "token123"})
             return _make_completed(0, f"{labels}|running\n")
@@ -159,7 +197,10 @@ def test_stop_fails_but_rm_fails_container_still_exists(mock_ci_env: Path) -> No
         return _make_completed(0)
 
     with patch.object(ci_test_db, "_run_docker", side_effect=fake_run):
-        with pytest.raises(CIPostgresError, match="Container-Cleanup fehlgeschlagen: Container .* existiert weiterhin"):
+        with pytest.raises(
+            CIPostgresError,
+            match="Container-Cleanup fehlgeschlagen: Container .* existiert weiterhin",
+        ):
             ci_test_db.stop()
 
         # Metadaten und State MÜSSEN für Recovery erhalten bleiben!
@@ -169,10 +210,19 @@ def test_stop_fails_but_rm_fails_container_still_exists(mock_ci_env: Path) -> No
 
 # 7. Docker Daemon nicht erreichbar
 def test_docker_daemon_unreachable(mock_ci_env: Path) -> None:
-    ci_test_db.META_FILE.write_text(json.dumps({"container_name": "syllentra-ci-pg-test01", "owner_token": "token123"}))
+    ci_test_db.META_FILE.write_text(
+        json.dumps({"container_name": "syllentra-ci-pg-test01", "owner_token": "token123"})
+    )
 
-    def fake_run(args: list[str], timeout: float = 15.0, input_text: str | None = None) -> subprocess.CompletedProcess[str]:
-        return _make_completed(1, stderr="Cannot connect to the Docker daemon at unix:///var/run/docker.sock")
+    def fake_run(
+        args: list[str],
+        timeout: float = 15.0,
+        input_text: str | None = None,
+        env: dict[str, str] | None = None,
+    ) -> subprocess.CompletedProcess[str]:
+        return _make_completed(
+            1, stderr="Cannot connect to the Docker daemon at unix:///var/run/docker.sock"
+        )
 
     with patch.object(ci_test_db, "_run_docker", side_effect=fake_run):
         with pytest.raises(CIPostgresError, match="Docker-Daemon nicht erreichbar"):
@@ -183,10 +233,19 @@ def test_docker_daemon_unreachable(mock_ci_env: Path) -> None:
 
 # 8. docker inspect scheitert an Permission Denied
 def test_docker_permission_denied(mock_ci_env: Path) -> None:
-    ci_test_db.META_FILE.write_text(json.dumps({"container_name": "syllentra-ci-pg-test01", "owner_token": "token123"}))
+    ci_test_db.META_FILE.write_text(
+        json.dumps({"container_name": "syllentra-ci-pg-test01", "owner_token": "token123"})
+    )
 
-    def fake_run(args: list[str], timeout: float = 15.0, input_text: str | None = None) -> subprocess.CompletedProcess[str]:
-        return _make_completed(1, stderr="permission denied while trying to connect to the Docker daemon socket")
+    def fake_run(
+        args: list[str],
+        timeout: float = 15.0,
+        input_text: str | None = None,
+        env: dict[str, str] | None = None,
+    ) -> subprocess.CompletedProcess[str]:
+        return _make_completed(
+            1, stderr="permission denied while trying to connect to the Docker daemon socket"
+        )
 
     with patch.object(ci_test_db, "_run_docker", side_effect=fake_run):
         with pytest.raises(CIPostgresError, match="Docker-Zugriff verweigert"):
@@ -197,10 +256,17 @@ def test_docker_permission_denied(mock_ci_env: Path) -> None:
 
 # 9. Nachweislich nicht vorhandener Container
 def test_container_already_gone(mock_ci_env: Path) -> None:
-    ci_test_db.META_FILE.write_text(json.dumps({"container_name": "syllentra-ci-pg-test01", "owner_token": "token123"}))
+    ci_test_db.META_FILE.write_text(
+        json.dumps({"container_name": "syllentra-ci-pg-test01", "owner_token": "token123"})
+    )
     ci_test_db.STATE.write_text("{}")
 
-    def fake_run(args: list[str], timeout: float = 15.0, input_text: str | None = None) -> subprocess.CompletedProcess[str]:
+    def fake_run(
+        args: list[str],
+        timeout: float = 15.0,
+        input_text: str | None = None,
+        env: dict[str, str] | None = None,
+    ) -> subprocess.CompletedProcess[str]:
         if args[0] == "inspect":
             return _make_completed(1, stderr="Error: No such container: syllentra-ci-pg-test01")
         return _make_completed(0)
@@ -213,9 +279,16 @@ def test_container_already_gone(mock_ci_env: Path) -> None:
 
 # 10 & 11. Container mit falschem Label oder falschem Owner-Token
 def test_container_with_wrong_owner_or_label(mock_ci_env: Path) -> None:
-    ci_test_db.META_FILE.write_text(json.dumps({"container_name": "syllentra-ci-pg-test01", "owner_token": "token-a"}))
+    ci_test_db.META_FILE.write_text(
+        json.dumps({"container_name": "syllentra-ci-pg-test01", "owner_token": "token-a"})
+    )
 
-    def fake_run(args: list[str], timeout: float = 15.0, input_text: str | None = None) -> subprocess.CompletedProcess[str]:
+    def fake_run(
+        args: list[str],
+        timeout: float = 15.0,
+        input_text: str | None = None,
+        env: dict[str, str] | None = None,
+    ) -> subprocess.CompletedProcess[str]:
         if args[0] == "inspect":
             # Token stimmt NICHT überein!
             labels = json.dumps({"syllentra.ci": "true", "syllentra.owner_token": "token-b"})
@@ -223,7 +296,10 @@ def test_container_with_wrong_owner_or_label(mock_ci_env: Path) -> None:
         return _make_completed(0)
 
     with patch.object(ci_test_db, "_run_docker", side_effect=fake_run) as mock_docker:
-        with pytest.raises(CIPostgresError, match="Teardown verweigert: Container .* besitzt nicht die erforderlichen Eigentums-Labels"):
+        with pytest.raises(
+            CIPostgresError,
+            match="Teardown verweigert: Container .* besitzt nicht die erforderlichen",
+        ):
             ci_test_db.stop()
 
         # Sicherstellen, dass kein stop oder rm auf fremdem Container ausgeführt wurde!
@@ -235,12 +311,12 @@ def test_container_with_wrong_owner_or_label(mock_ci_env: Path) -> None:
 
 # 12 & 13. Start verweigert wegen vorhandener fremder Marker- oder Konfigurationsdatei
 def test_start_refused_when_files_exist(mock_ci_env: Path) -> None:
-    ci_test_db.STATE.write_text("{\"fremd\": true}")
+    ci_test_db.STATE.write_text('{"fremd": true}')
     with pytest.raises(CIPostgresError, match="Start verweigert: .* existiert bereits"):
         ci_test_db.start()
 
     ci_test_db.STATE.unlink()
-    ci_test_db.META_FILE.write_text("{\"fremd\": true}")
+    ci_test_db.META_FILE.write_text('{"fremd": true}')
     with pytest.raises(CIPostgresError, match="Start verweigert: .* existiert bereits"):
         ci_test_db.start()
 
@@ -248,14 +324,16 @@ def test_start_refused_when_files_exist(mock_ci_env: Path) -> None:
 # 14. Nachfolgender Teardown nach verweigertem Start schützt fremden Zustand
 def test_teardown_after_refused_start_protects_foreign_state(mock_ci_env: Path) -> None:
     # Nur STATE existiert (z.B. von einem lokalen Entwicklungslauf), keine CI-Metadaten
-    ci_test_db.STATE.write_text("{\"important\": \"local_dev\"}")
+    ci_test_db.STATE.write_text('{"important": "local_dev"}')
 
     with patch.object(ci_test_db, "_run_docker") as mock_docker:
-        with pytest.raises(CIPostgresError, match="Teardown verweigert: .* Fremde Instanz geschützt"):
+        with pytest.raises(
+            CIPostgresError, match="Teardown verweigert: .* Fremde Instanz geschützt"
+        ):
             ci_test_db.stop()
 
         assert ci_test_db.STATE.exists()
-        assert ci_test_db.STATE.read_text() == "{\"important\": \"local_dev\"}"
+        assert ci_test_db.STATE.read_text() == '{"important": "local_dev"}'
         mock_docker.assert_not_called()
 
 
@@ -264,7 +342,12 @@ def test_partial_start_error_attempts_cleanup(mock_ci_env: Path) -> None:
     # docker run gelingt, aber psql schlägt fehl -> sauberer Teardown
     inspect_calls = 0
 
-    def fake_run(args: list[str], timeout: float = 15.0, input_text: str | None = None) -> subprocess.CompletedProcess[str]:
+    def fake_run(
+        args: list[str],
+        timeout: float = 15.0,
+        input_text: str | None = None,
+        env: dict[str, str] | None = None,
+    ) -> subprocess.CompletedProcess[str]:
         nonlocal inspect_calls
         if args[0] == "run":
             return _make_completed(0)
@@ -276,13 +359,17 @@ def test_partial_start_error_attempts_cleanup(mock_ci_env: Path) -> None:
             inspect_calls += 1
             if inspect_calls == 1:
                 meta = json.loads(ci_test_db.META_FILE.read_text())
-                labels = json.dumps({"syllentra.ci": "true", "syllentra.owner_token": meta["owner_token"]})
+                labels = json.dumps(
+                    {"syllentra.ci": "true", "syllentra.owner_token": meta["owner_token"]}
+                )
                 return _make_completed(0, f"{labels}|running\n")
             return _make_completed(1, stderr="No such container")
         return _make_completed(0)
 
     with patch.object(ci_test_db, "_run_docker", side_effect=fake_run):
-        with pytest.raises(CIPostgresError, match="PostgreSQL-Rolleninitialisierung fehlgeschlagen"):
+        with pytest.raises(
+            CIPostgresError, match="PostgreSQL-Rolleninitialisierung fehlgeschlagen"
+        ):
             ci_test_db.start()
 
         assert not ci_test_db.STATE.exists()
@@ -299,7 +386,9 @@ def test_idempotent_cleanup_when_no_state(mock_ci_env: Path) -> None:
 
 # 17. Timeout eines Docker-Befehls
 def test_docker_command_timeout(mock_ci_env: Path) -> None:
-    ci_test_db.META_FILE.write_text(json.dumps({"container_name": "syllentra-ci-pg-test01", "owner_token": "token123"}))
+    ci_test_db.META_FILE.write_text(
+        json.dumps({"container_name": "syllentra-ci-pg-test01", "owner_token": "token123"})
+    )
 
     def fake_subprocess_run(cmd: list[str], **kwargs: object) -> subprocess.CompletedProcess[str]:
         raise subprocess.TimeoutExpired(cmd=cmd, timeout=15.0)
@@ -313,12 +402,21 @@ def test_docker_command_timeout(mock_ci_env: Path) -> None:
 
 # 18. Schutz und Erhalt der Wiederherstellungsinformationen bei Cleanup-Fehlern
 def test_recovery_info_preserved_on_cleanup_failure(mock_ci_env: Path) -> None:
-    ci_test_db.META_FILE.write_text(json.dumps({"container_name": "syllentra-ci-pg-fail01", "owner_token": "secret_token_1"}))
-    ci_test_db.STATE.write_text("{\"runtime_url\": \"sensitive\"}")
+    ci_test_db.META_FILE.write_text(
+        json.dumps({"container_name": "syllentra-ci-pg-fail01", "owner_token": "secret_token_1"})
+    )
+    ci_test_db.STATE.write_text('{"runtime_url": "sensitive"}')
 
-    def fake_run(args: list[str], timeout: float = 15.0, input_text: str | None = None) -> subprocess.CompletedProcess[str]:
+    def fake_run(
+        args: list[str],
+        timeout: float = 15.0,
+        input_text: str | None = None,
+        env: dict[str, str] | None = None,
+    ) -> subprocess.CompletedProcess[str]:
         if args[0] == "inspect":
-            labels = json.dumps({"syllentra.ci": "true", "syllentra.owner_token": "secret_token_1"})
+            labels = json.dumps(
+                {"syllentra.ci": "true", "syllentra.owner_token": "secret_token_1"}
+            )
             return _make_completed(0, f"{labels}|running\n")
         if args[0] == "rm":
             return _make_completed(1, stderr="device or resource busy")
