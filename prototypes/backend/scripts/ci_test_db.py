@@ -1,12 +1,12 @@
 """CI-spezifischer temporärer Test-PostgreSQL-Lebenszyklus mit Fail-Closed-Härtung.
 
-Verwendet einen eindeutigen Container, flüchtiges tmpfs, bindet ausschließlich an 127.0.0.1:55439,
-bindet den Container an ein kryptografisches Eigentumstoken und schützt alle Zustandsdateien.
-Keine Docker-Fehler werden ignoriert; alle kritischen Operationen besitzen Timeouts.
+Verwendet einen eindeutigen Container, flüchtiges tmpfs, bindet ausschließlich an 127.0.0.1:55439.
+Jede Programminvokation benötigt ein unabhängig bereitgestelltes Invocation-Token.
+Eine gespeicherte Containeridentität allein berechtigt niemals eine neue Invocation zur Löschung.
+Keine Geheimnisse, Passwörter oder Token erscheinen in Fehlertexten oder Logs.
 """
 
 import json
-import logging
 import os
 import secrets
 import subprocess
@@ -21,6 +21,7 @@ META_FILE = ROOT / ".local" / ".ci_pg_meta.json"
 IMAGE = "postgres@sha256:858bb5e98eed02eb8cafbcdc007f9a65d1b613972028944a8ec2133ccaf80d27"
 CONTAINER_PREFIX = "syllentra-ci-pg-"
 PORT = 55439
+ENV_TOKEN_KEY = "SYLLENTRA_CI_INVOCATION_TOKEN"
 
 # Timeouts in Sekunden
 DOCKER_CMD_TIMEOUT = 15.0
@@ -30,6 +31,26 @@ READY_INTERVAL = 0.5
 
 class CIPostgresError(RuntimeError):
     """Fehler während des CI-PostgreSQL-Lebenszyklus."""
+
+
+def get_current_invocation_token() -> str:
+    """Liest und validiert das Invocation-Token der aktuellen Ausführung."""
+    token = os.environ.get(ENV_TOKEN_KEY, "").strip()
+    if not token or len(token) < 16:
+        raise CIPostgresError(
+            f"Ungültiges oder fehlendes Invocation-Token in Umgebungsvariable {ENV_TOKEN_KEY}. "
+            "Jede Ausführung muss vorab ein unabhängiges Token erhalten."
+        )
+    return token
+
+
+def _sanitize_output(text: str, *sensitive_values: str) -> str:
+    """Entfernt sensible Werte (Passwörter, Token) aus Fehlerausgaben."""
+    clean = text
+    for val in sensitive_values:
+        if val and len(val) >= 4:
+            clean = clean.replace(val, "[REDACTED]")
+    return clean.strip()
 
 
 def _run_docker(
@@ -50,65 +71,113 @@ def _run_docker(
             env=env,
         )
     except subprocess.TimeoutExpired as exc:
+        safe_args = " ".join(args[:2])  # Keine vollständigen Argumente protokollieren
         raise CIPostgresError(
-            f"Docker-Befehl lief in Timeout ({timeout}s): docker {' '.join(args)}"
+            f"Docker-Befehl lief in Timeout ({timeout}s): docker {safe_args}..."
         ) from exc
     except FileNotFoundError as exc:
         raise CIPostgresError("Docker-CLI ('docker') nicht gefunden.") from exc
 
 
 def _read_meta() -> dict[str, str] | None:
-    """Liest die geschützten Metadaten des aktuellen CI-Laufs."""
+    """Liest und validiert die geschützten Metadaten des aktuellen CI-Laufs.
+
+    Unterscheidet sauber zwischen 'Datei existiert nicht' (None)
+    und 'Datei existiert, ist aber beschädigt/ungültig' (CIPostgresError).
+    """
     if not META_FILE.exists():
         return None
+
     try:
-        data = json.loads(META_FILE.read_text(encoding="utf-8"))
-        if isinstance(data, dict) and "container_name" in data and "owner_token" in data:
+        content = META_FILE.read_text(encoding="utf-8").strip()
+        if not content:
+            raise CIPostgresError(
+                f"Metadatendatei {META_FILE} ist leer oder beschädigt. "
+                "Teardown verweigert; fremde Ressourcen geschützt."
+            )
+        data = json.loads(content)
+        if (
+            isinstance(data, dict)
+            and "container_name" in data
+            and "owner_token" in data
+            and "container_id" in data
+        ):
             return {
                 "container_name": str(data["container_name"]),
                 "owner_token": str(data["owner_token"]),
+                "container_id": str(data["container_id"]),
             }
-    except Exception as exc:
-        logging.warning("Konnte CI-Metadaten nicht parsen: %s", exc)
-    return None
+        raise CIPostgresError(
+            f"Metadatendatei {META_FILE} enthält unvollständige Felder. "
+            "Teardown verweigert; fremde Ressourcen geschützt."
+        )
+    except json.JSONDecodeError as exc:
+        raise CIPostgresError(
+            f"Metadatendatei {META_FILE} ist kein gültiges JSON: {exc}. "
+            "Teardown verweigert; fremde Ressourcen geschützt."
+        ) from exc
+    except OSError as exc:
+        raise CIPostgresError(
+            f"Metadatendatei {META_FILE} konnte nicht gelesen werden: {exc}."
+        ) from exc
 
 
-def _check_container_exists(name: str) -> tuple[bool, str, dict[str, str]]:
-    """Prüft verlässlich, ob der Container existiert, erreichbar ist und welche Labels er trägt.
+def _check_container_exists(name: str) -> tuple[bool, str, dict[str, str], str]:
+    """Prüft verlässlich, ob der Zielcontainer existiert und welche Labels er trägt.
 
-    Rückgabe: (exists, status_detail, labels_dict)
+    Unterscheidet präzise zwischen:
+    A. Existenz bestätigt (True, status, labels, full_id)
+    B. Abwesenheit des konkreten Zielcontainers eindeutig bestätigt (False, 'not_found', {}, '')
+    C. Daemon nicht erreichbar / Permission Denied / unklarer Fehler (CIPostgresError)
     """
-    res = _run_docker(["inspect", "--format", "{{json .Config.Labels}}|{{.State.Status}}", name])
+    fmt = "{{.Id}}|{{json .Config.Labels}}|{{.State.Status}}"
+    res = _run_docker(["inspect", "--format", fmt, name])
     if res.returncode == 0:
         out = res.stdout.strip()
-        if "|" in out:
-            labels_json, status = out.split("|", 1)
+        parts = out.split("|", 2)
+        if len(parts) == 3:
+            full_id, labels_json, status = parts[0], parts[1], parts[2]
             try:
                 labels = json.loads(labels_json) or {}
             except Exception:
                 labels = {}
-            return True, status, labels
-        return True, "running", {}
+            return True, status, labels, full_id
+        return True, "running", {}, ""
 
-    stderr = res.stderr.lower()
-    # Eindeutige Abwesenheit erkennen
-    if "no such container" in stderr or "no such object" in stderr or "not found" in stderr:
-        return False, "not_found", {}
+    stderr = res.stderr.strip()
+    stderr_lower = stderr.lower()
 
-    # Daemon- oder Berechtigungsfehler
-    if "cannot connect to the docker daemon" in stderr or "is the docker daemon running" in stderr:
-        raise CIPostgresError(f"Docker-Daemon nicht erreichbar: {res.stderr.strip()}")
-    if "permission denied" in stderr:
-        msg = f"Docker-Zugriff verweigert (Permission denied): {res.stderr.strip()}"
-        raise CIPostgresError(msg)
+    # Daemon- oder Berechtigungsfehler MÜSSEN vor jeder Textprüfung abgefangen werden
+    if (
+        "cannot connect to the docker daemon" in stderr_lower
+        or "is the docker daemon running" in stderr_lower
+    ):
+        raise CIPostgresError(f"Docker-Daemon nicht erreichbar: {stderr}")
+    if "permission denied" in stderr_lower:
+        raise CIPostgresError(f"Docker-Zugriff verweigert (Permission denied): {stderr}")
 
-    # Unklarer Fehler: fail-closed behandeln
-    raise CIPostgresError(f"Unerwarteter Fehler bei docker inspect: {res.stderr.strip()}")
+    # Präzise Abwesenheitsprüfung: Docker gibt 'Error: No such container: <name>' zurück
+    if (
+        ("no such container" in stderr_lower or "no such object" in stderr_lower)
+        and name.lower() in stderr_lower
+    ):
+        return False, "not_found", {}, ""
+
+    # Falls der Fehlertext nur unspezifisches 'not found' enthält: docker ps -a
+    ps_res = _run_docker(["ps", "-a", "--filter", f"name=^/{name}$", "--format", "{{.Names}}"])
+    if ps_res.returncode == 0 and not ps_res.stdout.strip():
+        return False, "not_found", {}, ""
+
+    # Unklarer oder mehrdeutiger Fehler: Immer FAIL CLOSED!
+    raise CIPostgresError(f"Unerwarteter Fehler bei Überprüfung von Container '{name}': {stderr}")
 
 
 def start() -> None:
-    """Startet den isolierten CI-PostgreSQL-Container mit strikter Eigentumsbindung."""
-    # 1. Schutz bestehender Zustandsdateien
+    """Startet den isolierten CI-PostgreSQL-Container mit strikter Invocation-Bindung."""
+    # 1. Unabhängig bereitgestelltes Invocation-Token einfordern
+    invocation_token = get_current_invocation_token()
+
+    # 2. Schutz bestehender Zustandsdateien
     if STATE.exists():
         raise CIPostgresError(
             f"Start verweigert: {STATE} existiert bereits. "
@@ -116,23 +185,32 @@ def start() -> None:
         )
     if META_FILE.exists():
         raise CIPostgresError(
-            f"Start verweigert: {META_FILE} existiert bereits. Ein aktiver CI-Zustand liegt vor."
+            f"Start verweigert: {META_FILE} existiert bereits. "
+            "Ein aktiver oder verwaister CI-Zustand liegt vor."
         )
 
-    container_id = uuid4().hex[:12]
-    name = f"{CONTAINER_PREFIX}{container_id}"
-    owner_token = secrets.token_hex(16)  # 32 Hex-Zeichen
+    container_uid = uuid4().hex[:12]
+    name = f"{CONTAINER_PREFIX}{container_uid}"
     password = secrets.token_urlsafe(32)
     runtime_password = secrets.token_urlsafe(32)
 
     ROOT.joinpath(".local").mkdir(mode=0o700, exist_ok=True)
 
-    # Metadaten-Datei atomar mit 0600 anlegen, BEVOR der Container gestartet wird
-    fd_meta = os.open(META_FILE, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+    # 3. Metadaten atomar anlegen (.tmp -> rename), BEVOR der Container erzeugt wird
+    tmp_meta = ROOT / ".local" / f".ci_pg_meta_{container_uid}.tmp"
+    fd_meta = os.open(tmp_meta, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
     with os.fdopen(fd_meta, "w", encoding="utf-8") as f_meta:
-        json.dump({"container_name": name, "owner_token": owner_token}, f_meta)
+        json.dump(
+            {
+                "container_name": name,
+                "owner_token": invocation_token,
+                "container_id": "",
+            },
+            f_meta,
+        )
+    os.replace(tmp_meta, META_FILE)
 
-    # 2. Container starten mit strikten Eigentums-Labels
+    # 4. Container starten mit strikten Eigentums-Labels
     env = dict(os.environ, POSTGRES_PASSWORD=password)
     run_args = [
         "run",
@@ -140,7 +218,7 @@ def start() -> None:
         "--name", name,
         "--label", "syllentra.ci=true",
         "--label", "syllentra.synthetic=true",
-        "--label", f"syllentra.owner_token={owner_token}",
+        "--label", f"syllentra.owner_token={invocation_token}",
         "--publish", f"127.0.0.1:{PORT}:5432",
         "--tmpfs", "/var/lib/postgresql/data:rw",
         "--memory", "512m",
@@ -152,13 +230,28 @@ def start() -> None:
     try:
         run_res = _run_docker(run_args, timeout=20.0, env=env)
         if run_res.returncode != 0:
+            err_msg = _sanitize_output(run_res.stderr, password, invocation_token)
             raise CIPostgresError(
-                f"docker run fehlgeschlagen (Code {run_res.returncode}): {run_res.stderr.strip()}"
+                f"docker run fehlgeschlagen (Code {run_res.returncode}): {err_msg}"
             )
 
-        # 3. Healthcheck mit monotoner Frist (READY_TIMEOUT)
-        # PostgreSQL führt beim ersten Start oft einen internen Restart durch.
-        # Wir verlangen 2 aufeinanderfolgende erfolgreiche Probes.
+        container_long_id = run_res.stdout.strip()
+
+        # Container-ID in Metadaten atomar aktualisieren
+        tmp_meta_update = ROOT / ".local" / f".ci_pg_meta_up_{container_uid}.tmp"
+        fd_up = os.open(tmp_meta_update, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+        with os.fdopen(fd_up, "w", encoding="utf-8") as f_up:
+            json.dump(
+                {
+                    "container_name": name,
+                    "owner_token": invocation_token,
+                    "container_id": container_long_id,
+                },
+                f_up,
+            )
+        os.replace(tmp_meta_update, META_FILE)
+
+        # 5. Healthcheck mit Frist (READY_TIMEOUT)
         start_time = time.monotonic()
         consecutive_ok = 0
         ready = False
@@ -175,36 +268,34 @@ def start() -> None:
 
         if not ready:
             raise CIPostgresError(
-                f"PostgreSQL im CI-Container wurde nicht innerhalb von {READY_TIMEOUT}s bereit."
+                f"PostgreSQL im CI-Container wurde nicht innerhalb von ca. {READY_TIMEOUT}s bereit."
             )
 
-        # 4. Rollen- und Datenbank-Initialisierung mit Retries
+        # 6. Rollen- und Datenbank-Initialisierung (sicher idempotent mit IF NOT EXISTS)
         sql = (
-            f"CREATE ROLE syllentra_runtime LOGIN PASSWORD '{runtime_password}';\n"
-            "CREATE DATABASE syllentra_prototype;\nCREATE DATABASE syllentra_test;\n"
+            "DO $$ BEGIN\n"
+            "  IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'syllentra_runtime') THEN\n"
+            f"    CREATE ROLE syllentra_runtime LOGIN PASSWORD '{runtime_password}';\n"
+            "  END IF;\n"
+            "END $$;\n"
+            "SELECT 'CREATE DATABASE syllentra_prototype' WHERE NOT EXISTS "
+            "(SELECT FROM pg_database WHERE datname = 'syllentra_prototype')\\gexec\n"
+            "SELECT 'CREATE DATABASE syllentra_test' WHERE NOT EXISTS "
+            "(SELECT FROM pg_database WHERE datname = 'syllentra_test')\\gexec\n"
         )
-        init_success = False
-        init_err = ""
-        for _ in range(5):
-            init_res = _run_docker(
-                ["exec", "-i", name, "psql", "-v", "ON_ERROR_STOP=1", "-U", "postgres"],
-                input_text=sql,
-                timeout=10.0,
-            )
-            if init_res.returncode == 0:
-                init_success = True
-                break
-            init_err = init_res.stderr.strip()
-            time.sleep(1.0)
+        init_res = _run_docker(
+            ["exec", "-i", name, "psql", "-v", "ON_ERROR_STOP=1", "-U", "postgres"],
+            input_text=sql,
+            timeout=10.0,
+        )
+        if init_res.returncode != 0:
+            clean_err = _sanitize_output(init_res.stderr, runtime_password, password)
+            raise CIPostgresError(f"PostgreSQL-Rolleninitialisierung fehlgeschlagen: {clean_err}")
 
-        if not init_success:
-            raise CIPostgresError(
-                f"PostgreSQL-Rolleninitialisierung fehlgeschlagen: {init_err}"
-            )
-
-        # 5. Konfiguration atomar schreiben (0600)
-        fd = os.open(STATE, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
-        with os.fdopen(fd, "w", encoding="utf-8") as f:
+        # 7. Konfiguration atomar schreiben (.tmp -> rename mit 0600)
+        tmp_state = ROOT / ".local" / f"database_{container_uid}.tmp"
+        fd_state = os.open(tmp_state, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+        with os.fdopen(fd_state, "w", encoding="utf-8") as f:
             json.dump(
                 {
                     "migration_url": f"postgresql://postgres:{password}@127.0.0.1:{PORT}/",
@@ -214,11 +305,12 @@ def start() -> None:
                 },
                 f,
             )
+        os.replace(tmp_state, STATE)
         print(f"CI-PostgreSQL erfolgreich gestartet: {name}")
 
     except Exception as exc:
         print(f"Fehler während CI-PostgreSQL-Start: {exc}", file=sys.stderr)
-        # Kontrollierten Teardown für den soeben angelegten Container versuchen
+        # Kontrollierten Teardown NUR für den soeben autorisierten aktuellen Lauf versuchen
         try:
             stop()
         except Exception as stop_exc:
@@ -230,10 +322,11 @@ def start() -> None:
 
 
 def stop() -> None:
-    """Stoppt und entfernt den CI-Container mit fail-closed Überprüfung der Eigentümerschaft."""
+    """Stoppt und entfernt den CI-Container mit fail-closed Autorisierung."""
+    current_token = get_current_invocation_token()
+
     meta = _read_meta()
     if meta is None:
-        # Falls keine Meta-Datei existiert, aber eine STATE-Datei: Gefahr, fremde DB zu berühren!
         if STATE.exists():
             raise CIPostgresError(
                 f"Teardown verweigert: {STATE} existiert, aber keine gültige CI-Metadaten-Datei "
@@ -243,25 +336,45 @@ def stop() -> None:
         return
 
     name = meta["container_name"]
-    expected_token = meta["owner_token"]
+    stored_token = meta["owner_token"]
+    stored_id = meta.get("container_id", "")
+
+    # STRIKTE AUTORISIERUNG:
+    # Die aktuelle Invocation darf NUR löschen, wenn das übergebene Invocation-Token
+    # exakt mit dem in den Metadaten gespeicherten Token übereinstimmt!
+    if current_token != stored_token:
+        raise CIPostgresError(
+            "Teardown verweigert: Aktuelles Invocation-Token stimmt nicht mit "
+            "Besitzer-Token überein. Ressourcen eines anderen oder älteren Laufs "
+            "dürfen nicht gelöscht werden!"
+        )
 
     if not name.startswith(CONTAINER_PREFIX):
         raise CIPostgresError(
             f"Teardown verweigert: Containername '{name}' entspricht nicht dem CI-Namenspräfix."
         )
 
-    # 1. Existenz und Eigentümerschaft prüfen
-    exists, status, labels = _check_container_exists(name)
+    # 1. Existenz und Eigentümerschaft am Docker-Dämon verifizieren
+    exists, status, labels, full_id = _check_container_exists(name)
     if exists:
         # Labels validieren
         if (
             labels.get("syllentra.ci") != "true"
-            or labels.get("syllentra.owner_token") != expected_token
+            or labels.get("syllentra.owner_token") != current_token
         ):
             raise CIPostgresError(
-                f"Teardown verweigert: Container '{name}' besitzt nicht die erforderlichen "
-                f"Eigentums-Labels (syllentra.ci={labels.get('syllentra.ci')}, "
-                f"owner_token={labels.get('syllentra.owner_token')})."
+                f"Teardown verweigert: Container '{name}' besitzt nicht passende Eigentums-Labels."
+            )
+
+        # Falls eine Container-ID hinterlegt war, muss sie übereinstimmen
+        if (
+            stored_id
+            and full_id
+            and not full_id.startswith(stored_id)
+            and not stored_id.startswith(full_id)
+        ):
+            raise CIPostgresError(
+                f"Teardown verweigert: Container-ID '{full_id}' weicht von gespeicherter ID ab."
             )
 
         # 2. Container stoppen
@@ -271,32 +384,38 @@ def stop() -> None:
         rm_res = _run_docker(["rm", "--force", name], timeout=15.0)
 
         # 4. Abwesenheit nachweislich verifizieren
-        post_exists, post_status, _ = _check_container_exists(name)
+        post_exists, post_status, _, _ = _check_container_exists(name)
         if post_exists:
             # Container ist IMMER NOCH da -> FAIL CLOSED!
-            # Zustandsdateien NICHT löschen, Fehler werfen
+            # Metadaten MÜSSEN für Recovery erhalten bleiben!
+            clean_err = _sanitize_output(f"{stop_res.stderr} {rm_res.stderr}", current_token)
             raise CIPostgresError(
                 f"Container-Cleanup fehlgeschlagen: Container '{name}' existiert weiterhin "
-                f"(Status: {post_status}). Stop-Output: {stop_res.stderr.strip()}; "
-                f"Rm-Output: {rm_res.stderr.strip()}"
+                f"(Status: {post_status}). Fehlerausgabe: {clean_err}"
             )
 
         print(f"CI-Container nachweislich entfernt: {name}")
     else:
-        print(f"CI-Container '{name}' existiert nicht mehr (bereits entfernt).")
+        print(f"CI-Container '{name}' existiert nicht mehr (bereits abwesend).")
 
     # 5. Erst NACH nachgewiesener Abwesenheit Zustandsdateien aufräumen
+    # Reihenfolge: zuerst database.json, dann META_FILE
+    # Fehler beim Löschen müssen als echter Fehler gemeldet werden!
     if STATE.exists():
         try:
             STATE.unlink()
         except OSError as e:
-            print(f"Warnung beim Löschen von {STATE}: {e}", file=sys.stderr)
+            raise CIPostgresError(
+                f"Cleanup unvollständig: Konnte {STATE} nicht löschen: {e}"
+            ) from e
 
     if META_FILE.exists():
         try:
             META_FILE.unlink()
         except OSError as e:
-            print(f"Warnung beim Löschen von {META_FILE}: {e}", file=sys.stderr)
+            raise CIPostgresError(
+                f"Cleanup unvollständig: Konnte {META_FILE} nicht löschen: {e}"
+            ) from e
 
 
 if __name__ == "__main__":

@@ -127,6 +127,11 @@ jobs:
         working-directory: prototypes/backend
         run: uv sync --locked
 
+      - name: Generate CI Invocation Token
+        run: |
+          TOKEN=$(python3 -c "import secrets; print(secrets.token_hex(16))")
+          echo "SYLLENTRA_CI_INVOCATION_TOKEN=$TOKEN" >> "$GITHUB_ENV"
+
       - name: Start Isolated CI PostgreSQL Container
         id: start_ci_db
         working-directory: prototypes/backend
@@ -137,6 +142,6 @@ jobs:
         run: uv run --locked pytest -q -x -p no:cacheprovider
 
       - name: Teardown Isolated CI PostgreSQL Container
-        if: always() && steps.start_ci_db.outcome != 'skipped'
+        if: always()
         working-directory: prototypes/backend
         run: python3 scripts/ci_test_db.py stop
