@@ -10,6 +10,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 import pytest
+
 from scripts import ci_test_db
 from scripts.ci_test_db import CIPostgresError
 

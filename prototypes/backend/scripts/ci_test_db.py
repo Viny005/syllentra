@@ -157,13 +157,20 @@ def start() -> None:
             )
 
         # 3. Healthcheck mit monotoner Frist (READY_TIMEOUT)
+        # PostgreSQL führt beim ersten Start oft einen internen Restart durch.
+        # Wir verlangen 2 aufeinanderfolgende erfolgreiche Probes.
         start_time = time.monotonic()
+        consecutive_ok = 0
         ready = False
         while time.monotonic() - start_time < READY_TIMEOUT:
             probe = _run_docker(["exec", name, "pg_isready", "-U", "postgres"], timeout=3.0)
             if probe.returncode == 0:
-                ready = True
-                break
+                consecutive_ok += 1
+                if consecutive_ok >= 2:
+                    ready = True
+                    break
+            else:
+                consecutive_ok = 0
             time.sleep(READY_INTERVAL)
 
         if not ready:
@@ -171,19 +178,28 @@ def start() -> None:
                 f"PostgreSQL im CI-Container wurde nicht innerhalb von {READY_TIMEOUT}s bereit."
             )
 
-        # 4. Rollen- und Datenbank-Initialisierung
+        # 4. Rollen- und Datenbank-Initialisierung mit Retries
         sql = (
             f"CREATE ROLE syllentra_runtime LOGIN PASSWORD '{runtime_password}';\n"
             "CREATE DATABASE syllentra_prototype;\nCREATE DATABASE syllentra_test;\n"
         )
-        init_res = _run_docker(
-            ["exec", "-i", name, "psql", "-v", "ON_ERROR_STOP=1", "-U", "postgres"],
-            input_text=sql,
-            timeout=10.0,
-        )
-        if init_res.returncode != 0:
+        init_success = False
+        init_err = ""
+        for _ in range(5):
+            init_res = _run_docker(
+                ["exec", "-i", name, "psql", "-v", "ON_ERROR_STOP=1", "-U", "postgres"],
+                input_text=sql,
+                timeout=10.0,
+            )
+            if init_res.returncode == 0:
+                init_success = True
+                break
+            init_err = init_res.stderr.strip()
+            time.sleep(1.0)
+
+        if not init_success:
             raise CIPostgresError(
-                f"PostgreSQL-Rolleninitialisierung fehlgeschlagen: {init_res.stderr.strip()}"
+                f"PostgreSQL-Rolleninitialisierung fehlgeschlagen: {init_err}"
             )
 
         # 5. Konfiguration atomar schreiben (0600)
