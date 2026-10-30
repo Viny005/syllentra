@@ -5,7 +5,6 @@ und Schutzmechanismen für fremde Dateien und Container ausschließlich über Mo
 """
 
 import json
-import os
 import subprocess
 from pathlib import Path
 from unittest.mock import patch
@@ -29,7 +28,7 @@ def mock_ci_env(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
     monkeypatch.setattr(ci_test_db, "ROOT", tmp_path)
     monkeypatch.setattr(ci_test_db, "STATE", state_file)
     monkeypatch.setattr(ci_test_db, "META_FILE", meta_file)
-    monkeypatch.setenv(ci_test_db.ENV_TOKEN_KEY, DEFAULT_TEST_TOKEN)
+    monkeypatch.setenv(ci_test_db.ENV_INVOCATION_VAR, DEFAULT_TEST_TOKEN)
 
     return tmp_path
 
@@ -110,11 +109,11 @@ def test_successful_start_and_stop(mock_ci_env: Path) -> None:
 def test_missing_or_invalid_invocation_token(
     mock_ci_env: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    monkeypatch.delenv(ci_test_db.ENV_TOKEN_KEY, raising=False)
+    monkeypatch.delenv(ci_test_db.ENV_INVOCATION_VAR, raising=False)
     with pytest.raises(CIPostgresError, match="Ungültiges oder fehlendes Invocation-Token"):
         ci_test_db.get_current_invocation_token()
 
-    monkeypatch.setenv(ci_test_db.ENV_TOKEN_KEY, "short_tok")
+    monkeypatch.setenv(ci_test_db.ENV_INVOCATION_VAR, "short_tok")
     with pytest.raises(CIPostgresError, match="Ungültiges oder fehlendes Invocation-Token"):
         ci_test_db.get_current_invocation_token()
 
@@ -407,7 +406,7 @@ def test_teardown_refused_when_token_mismatch_with_meta(
     ci_test_db.STATE.write_text('{"db": "foreign"}')
 
     # Aktueller Lauf hat ein anderes Token
-    monkeypatch.setenv(ci_test_db.ENV_TOKEN_KEY, "current_run_token_987654321012")
+    monkeypatch.setenv(ci_test_db.ENV_INVOCATION_VAR, "current_run_token_987654321012")
 
     with patch.object(ci_test_db, "_run_docker") as mock_docker:
         with pytest.raises(

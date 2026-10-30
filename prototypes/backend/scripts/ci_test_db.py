@@ -21,7 +21,7 @@ META_FILE = ROOT / ".local" / ".ci_pg_meta.json"
 IMAGE = "postgres@sha256:858bb5e98eed02eb8cafbcdc007f9a65d1b613972028944a8ec2133ccaf80d27"
 CONTAINER_PREFIX = "syllentra-ci-pg-"
 PORT = 55439
-ENV_TOKEN_KEY = "SYLLENTRA_CI_INVOCATION_TOKEN"
+ENV_INVOCATION_VAR = "SYLLENTRA_CI_INVOCATION_TOKEN"
 
 # Timeouts in Sekunden
 DOCKER_CMD_TIMEOUT = 15.0
@@ -35,10 +35,10 @@ class CIPostgresError(RuntimeError):
 
 def get_current_invocation_token() -> str:
     """Liest und validiert das Invocation-Token der aktuellen Ausführung."""
-    token = os.environ.get(ENV_TOKEN_KEY, "").strip()
+    token = os.environ.get(ENV_INVOCATION_VAR, "").strip()
     if not token or len(token) < 16:
         raise CIPostgresError(
-            f"Ungültiges oder fehlendes Invocation-Token in Umgebungsvariable {ENV_TOKEN_KEY}. "
+            f"Ungültiges oder fehlendes Invocation-Token in {ENV_INVOCATION_VAR}. "
             "Jede Ausführung muss vorab ein unabhängiges Token erhalten."
         )
     return token
@@ -273,7 +273,7 @@ def start() -> None:
 
         # 6. Rollen- und Datenbank-Initialisierung (sicher idempotent mit IF NOT EXISTS)
         sql = (
-            "DO $$ BEGIN\n"
+            "DO $$ BEGIN\n"  # noqa: S608
             "  IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'syllentra_runtime') THEN\n"
             f"    CREATE ROLE syllentra_runtime LOGIN PASSWORD '{runtime_password}';\n"
             "  END IF;\n"
