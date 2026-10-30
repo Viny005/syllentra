@@ -51,7 +51,7 @@ jobs:
         run: npm run format:check
 
       - name: Install uv
-        uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v5.1.0
+        uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
         with:
           version: "0.5.24"
           enable-cache: true
@@ -64,11 +64,11 @@ jobs:
 
       - name: Backend Ruff Linting (src, scripts, tests)
         working-directory: prototypes/backend
-        run: uv run ruff check src scripts tests
+        run: uv run --locked ruff check src scripts tests
 
       - name: Backend Mypy Typecheck (src, scripts)
         working-directory: prototypes/backend
-        run: uv run mypy --config-file pyproject.toml src scripts
+        run: uv run --locked mypy --config-file pyproject.toml src scripts
 
   frontend-tests:
     name: Frontend Unit Tests & Build
@@ -112,7 +112,7 @@ jobs:
           persist-credentials: false
 
       - name: Install uv
-        uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v5.1.0
+        uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
         with:
           version: "0.5.24"
           enable-cache: true
@@ -128,14 +128,15 @@ jobs:
         run: uv sync --locked
 
       - name: Start Isolated CI PostgreSQL Container
+        id: start_ci_db
         working-directory: prototypes/backend
-        run: uv run python scripts/ci_test_db.py start
+        run: python3 scripts/ci_test_db.py start
 
       - name: Run Backend Pytest Suite
         working-directory: prototypes/backend
-        run: uv run pytest -q -x -p no:cacheprovider
+        run: uv run --locked pytest -q -x -p no:cacheprovider
 
       - name: Teardown Isolated CI PostgreSQL Container
-        if: always()
+        if: always() && steps.start_ci_db.outcome != 'skipped'
         working-directory: prototypes/backend
-        run: uv run python scripts/ci_test_db.py stop
+        run: python3 scripts/ci_test_db.py stop

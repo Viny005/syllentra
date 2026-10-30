@@ -9,6 +9,8 @@ Die automatisierte CI-Pipeline stellt sicher, dass jede Änderung an Spezifikati
 > **Wichtiger Grundsatz:**
 > **CI erfolgreich ≠ Produkt produktionsreif.**
 > Ein erfolgreicher CI-Lauf belegt die Einhaltung statischer Regeln und das fehlerfreie Verhalten der experimentellen Prototypen unter synthetischen Testdaten. Er ersetzt weder die fachliche Abnahme der Siedersleben-Bausteine durch den Projektinhaber noch formale Sicherheitsaudits, Penetrationstests oder produktive V1-Freigaben.
+>
+> Die CI prüft insbesondere **keine vollständige Siedersleben-Markdown-Konformität** und der Frontend-Build beweist **weder eine vollständige native PWA-Installation noch Browser-E2E-Funktionalität**.
 
 ---
 
@@ -22,23 +24,49 @@ Die Pipeline besteht aus drei parallelen Jobs auf Standard-Runnern (`ubuntu-24.0
   * `npm run lint` (`eslint .`)
   * `npm run format:check` (`prettier --check .`)
 * **Backend:**
-  * `uv run ruff check src scripts tests`
-  * `uv run mypy --config-file pyproject.toml src scripts`
+  * `uv run --locked ruff check src scripts tests`
+  * `uv run --locked mypy --config-file pyproject.toml src scripts`
 
 ### Job B: `frontend-tests` (Unit-Tests & Build)
 * `npm test` (`vitest run` — 13 Unit-Tests, i18n, Kalender, Präferenzen, CSRF-Retry)
 * `npm run build` (`tsc --noEmit && vite build` — PWA-Artefaktkompilierung)
 
 ### Job C: `backend-postgres-tests` (Isolierte PostgreSQL-Tests)
-* Startet einen ephemeren Docker-Container mit fixiertem PostgreSQL-17.11-Image (`scripts/ci_test_db.py start`)
-* Konfiguriert flüchtiges `tmpfs`, interne Loopback-Bindung (`127.0.0.1:55439`) und zufällige Passwörter
-* Schützt `.local/database.json` mit Dateirechten `0600`
-* Führt alle 116 Backend-Pytest-Tests aus (`pytest -q -x -p no:cacheprovider`), einschließlich 24 Datenbank-Isolations- und Concurrency-Tests
-* Stoppt und entfernt den CI-Container zuverlässig im Teardown (`if: always()`)
+* Startet einen ephemeren Docker-Container mit fixiertem PostgreSQL-17.11-Image (`python3 scripts/ci_test_db.py start`)
+* Unabhängig vom Paketmanager: Start und Teardown nutzen direkt die Standard-Python-Laufzeit (`python3`), um auch bei Fehlschlägen von Paketinstallationen handlungsfähig zu bleiben
+* Erzwingt strikte Lockfile-Bindung über `uv sync --locked` und `uv run --locked pytest -q -x -p no:cacheprovider`
+* Führt alle Backend-Pytest-Tests aus (einschließlich der 24 Datenbank-Isolations- und Concurrency-Tests sowie der 18 Regressionstests für Fehlerpfade in `test_ci_test_db.py`)
+* Führt kontrollierten Teardown im Teardown-Schritt aus (`if: always() && steps.start_ci_db.outcome != 'skipped'`)
 
 ---
 
-## 3. Lokale Ausführung der Prüfungen
+## 3. PostgreSQL-Lifecycle & Fail-Closed-Härtung (`ci_test_db.py`)
+
+Die Verwaltung des CI-PostgreSQL-Containers folgt strengen Sicherheits- und Isolationsprinzipien:
+
+### Eigentumsbindung pro CI-Run
+* Jeder Start erzeugt ein kryptografisches 32-Hex-Eigentumstoken (`secrets.token_hex(16)`) und einen eindeutigen Containernamen (`syllentra-ci-pg-<uuid>`).
+* Der Container wird beim Start mit eindeutigen Docker-Labels versehen:
+  * `syllentra.ci=true`
+  * `syllentra.synthetic=true`
+  * `syllentra.owner_token=<token>`
+* Vor dem Containerstart wird eine atomare Metadaten-Datei `.local/.ci_pg_meta.json` mit Dateirechten `0600` im geschützten Ordner `.local` (`0700`) abgelegt.
+
+### Fail-Closed-Teardown
+* **Kontrollierter Best-Effort-Vorgang:** Teardown prüft vor jeder Aktion, ob der Zielcontainer existiert und ob seine Docker-Labels exakt mit dem gespeicherten `owner_token` übereinstimmen.
+* **Schutz fremder Instanzen:** Existieren Zustandsdateien ohne zugehörige CI-Metadaten oder stimmen Labels nicht überein, verweigert das Skript jede destruktive Aktion mit einem Fehler (`CIPostgresError`).
+* **Verweigerter Start:** War der Start verweigert (z. B. weil eine fremde `.local/database.json` vorlag), verhindert die Workflow-Bedingung `steps.start_ci_db.outcome != 'skipped'` und die Skript-Prüfung einen unberechtigten Teardown fremder Ressourcen.
+* **Eindeutiger Abwesenheitsnachweis:** Ein erfolgreicher Cleanup wird **nur dann gemeldet**, wenn nach `docker rm` eine erneute `docker inspect`-Prüfung nachweislich `not_found` ergibt.
+* **Erhalt von Recovery-Informationen:** Kann der Container nicht gestoppt oder entfernt werden (z. B. Docker-Fehler, Daemon blockiert), werden die Metadaten- und Konfigurationsdateien **nicht gelöscht**, und es wird ein Fehlercode zurückgegeben. Dies ermöglicht eine gezielte manuelle Fehleranalyse ohne verwaiste unidentifizierbare Ressourcen.
+* **Keine destruktiven globalen Sweeps:** Weder `docker system prune` noch pauschale Datenbanklöschungen werden ausgeführt.
+
+### Timeouts
+* Alle Docker-Befehle werden mit Timeouts abgesichert (`_run_docker` mit max. 15s bzw. 20s).
+* Der Healthcheck (`pg_isready`) verwendet eine echte monotone Frist (`time.monotonic()`) von maximal 30 Sekunden.
+
+---
+
+## 4. Lokale Ausführung der Prüfungen
 
 Alle in der CI ausgeführten Prüfungen können lokal reproduziert werden:
 
@@ -55,20 +83,23 @@ npm run build
 ### Backend (`prototypes/backend`)
 ```bash
 uv sync --locked
-uv run ruff check src scripts tests
-uv run mypy --config-file pyproject.toml src scripts
+uv run --locked ruff check src scripts tests
+uv run --locked mypy --config-file pyproject.toml src scripts
 
-# Für Pytest-Ausführung gegen lokalen oder CI-Container:
-python scripts/ci_test_db.py start
-uv run pytest -q -x -p no:cacheprovider
-python scripts/ci_test_db.py stop
+# Unit- & Regressionstests ohne Docker ausführen:
+uv run --locked pytest -q -x -p no:cacheprovider tests/test_ci_test_db.py
+
+# Vollständige Suite gegen CI-Container ausführen:
+python3 scripts/ci_test_db.py start
+uv run --locked pytest -q -x -p no:cacheprovider
+python3 scripts/ci_test_db.py stop
 ```
 
 ---
 
-## 4. Sicherheitsregeln der CI
+## 5. Sicherheitsregeln der CI
 
 * **Minimale Berechtigungen:** `permissions: contents: read`. Keine Schreibberechtigungen für Tokens.
 * **Keine produktiven Secrets:** Sämtliche Testpasswörter werden zur Laufzeit flüchtig generiert.
 * **Keine automatischen Merges:** Pull Requests erfordern weiterhin menschliche Prüfung und Autorisierung.
-* **Isolierte Container:** Der CI-Container trägt spezifische Labels (`syllentra.ci=true`) und bindet ausschließlich an `127.0.0.1:55439`. Vorhandene lokale Container werden weder berührt noch gelöscht.
+* **Isolierte Container:** Der CI-Container trägt spezifische Labels (`syllentra.ci=true`, `syllentra.owner_token=...`) und bindet ausschließlich an `127.0.0.1:55439`. Vorhandene lokale Container werden weder berührt noch gelöscht.
